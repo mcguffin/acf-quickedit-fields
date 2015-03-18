@@ -8,9 +8,6 @@ Author: Jörn Lund
 Version: 1.0.0
 Author URI: 
 License: GPL3
-
-Text Domain: acf-quick-edit
-Domain Path: /languages/
 */
 
 /*  Copyright 2015  Jörn Lund
@@ -54,6 +51,14 @@ class ACFToQuickEdit {
 		add_action( 'admin_init' , array( &$this , 'init_columns' ) );
 		add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 		add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
+		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
+	}
+	/**
+	 * Hooked on 'plugins_loaded' 
+	 * Load text domain
+	 */
+	public function load_textdomain() {
+		load_plugin_textdomain( 'acf-quick-edit-fields' , false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 	
 	function admin_init() {
@@ -71,29 +76,29 @@ class ACFToQuickEdit {
 		if ( $parent->post_type == 'acf-field-group' ) {
 			// show column: todo: allow sortable
 			acf_render_field_setting( $field, array(
-				'label'			=> __('Show Column','acf-quick-edit'),
+				'label'			=> __('Show Column','acf-quick-edit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'show_column',
-				'message'		=> __("Show a column in the posts list table", 'acf-quick-edit')
+				'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields')
 			));
 		
 			// add to quick edit
 			acf_render_field_setting( $field, array(
-				'label'			=> __('Allow QuickEdit','acf-quick-edit'),
+				'label'			=> __('Allow QuickEdit','acf-quick-edit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'allow_quickedit',
-				'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit')
+				'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
 			));
 		
 			// add to bulk edit
 			acf_render_field_setting( $field, array(
-				'label'			=> __('Allow Bulk Edit','acf-quick-edit'),
+				'label'			=> __('Allow Bulk Edit','acf-quick-edit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'allow_bulkedit',
-				'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit')
+				'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit-fields')
 			));
 		}
 	}
