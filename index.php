@@ -56,11 +56,16 @@ class ACFToQuickEdit {
 	/**
 	 * Hooked on 'plugins_loaded' 
 	 * Load text domain
+	 *
+	 * @action 'plugins_loaded'
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'acf-quick-edit-fields' , false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 	
+	/**
+	 * @action 'admin_init'
+	 */
 	function admin_init() {
 		// ACF Field Settings
 		$types = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
@@ -69,6 +74,9 @@ class ACFToQuickEdit {
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
 	}
 	
+	/**
+	 * @action 'acf/render_field_settings/type={$type}'
+	 */
 	function render_column_settings( $field ) {
 		$post = get_post($field['ID']);
 		$parent = get_post( $post->post_parent );
@@ -103,6 +111,9 @@ class ACFToQuickEdit {
 		}
 	}
 	
+	/**
+	 * @action 'admin_init'
+	 */
 	function init_columns( $cols ) {
 		global $typenow;
 		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
@@ -153,6 +164,9 @@ class ACFToQuickEdit {
 		}
 	}
 	
+	/**
+	 * @action 'wp_ajax_get_acf_post_meta'
+	 */
 	function ajax_get_acf_post_meta() {
 		header('Content-Type: application/json');
 		if ( isset( $_REQUEST['post_id'] , $_REQUEST['acf_field_keys'] ) ) {
