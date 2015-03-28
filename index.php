@@ -52,6 +52,8 @@ class ACFToQuickEdit {
 		add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 		add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
+		add_filter( 'acf/format_value/type=radio' , array( &$this , 'format_radio') , 10 , 3 );
+// 		add_filter( "acf/format_value/type=checkbox" , array( &$this , 'format_checkbox') , 10 , 3 );
 	}
 	/**
 	 * Hooked on 'plugins_loaded' 
@@ -72,6 +74,15 @@ class ACFToQuickEdit {
 		$types = apply_filters( 'acf_scalar_fields' , $types);
 		foreach ( $types as $type )
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
+	
+	}
+	/**
+	 * @filter 'acf/format_value/type=radio'
+	 */
+	function format_radio( $value, $post_id, $field ) {
+		if ( ( $nice_value = $field['choices'][$value]) )
+			return $nice_value;
+		return $value;
 	}
 	
 	/**
@@ -115,14 +126,22 @@ class ACFToQuickEdit {
 	 * @action 'admin_init'
 	 */
 	function init_columns( $cols ) {
-		global $typenow;
+		global $typenow, $pagenow;
 		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
-		$field_groups = acf_get_field_groups( array(
-			'post_type' => $post_type,
-		) );
+		if ( ! $post_type && $pagenow == 'upload.php' ) {
+			$post_type = 'attachment';
+			$field_groups = acf_get_field_groups( array(
+	 			'attachment' => 'all|image',
+			) );
+		} else {
+			$field_groups = acf_get_field_groups( array(
+				'post_type' => $post_type,
+			) );
+		}
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
+//			var_dump($field_group);
 			foreach ( $fields as $field ) {
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
@@ -201,7 +220,7 @@ class ACFToQuickEdit {
 	function display_field_column( $column , $post ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
-			the_field($column);
+			the_field($field['key']);
 		}
 	}
 	
