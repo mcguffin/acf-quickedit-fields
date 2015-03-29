@@ -16,3 +16,8 @@ If you encounter an issue or wish for a certain feature, please do not ask me to
 fix it for you. I will not, but I would really appreciate when you fix it youself 
 and send me a pull request.
 
+ToDo:
+-----
+ - [ ] Code Docs
+ - [ ] Plugin localization
+ - [ ] Nice Format for `color_picker` and `date_picker` fields
