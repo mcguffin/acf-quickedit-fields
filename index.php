@@ -52,9 +52,8 @@ class ACFToQuickEdit {
 		add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 		add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
-		add_filter( 'acf/format_value/type=radio' , array( &$this , 'format_radio') , 10 , 3 );
-// 		add_filter( "acf/format_value/type=checkbox" , array( &$this , 'format_checkbox') , 10 , 3 );
 	}
+	
 	/**
 	 * Hooked on 'plugins_loaded' 
 	 * Load text domain
@@ -70,12 +69,21 @@ class ACFToQuickEdit {
 	 */
 	function admin_init() {
 		// ACF Field Settings
-		$types = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		$types_column = array( 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		$types_can_qe = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		$types_can_be = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		$types = apply_filters( 'acf_scalar_fields' , $types);
-		foreach ( $types as $type )
+		foreach ( $types_column as $type ) {
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
-	
+		}
+		foreach ( $types_can_qe as $type ) {
+			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
+		}
+		foreach ( $types_can_be as $type ) {
+			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
+		}
 	}
+	
 	/**
 	 * @filter 'acf/format_value/type=radio'
 	 */
@@ -101,7 +109,17 @@ class ACFToQuickEdit {
 				'name'			=> 'show_column',
 				'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields')
 			));
+		}
+	}
+	
+	/**
+	 * @action 'acf/render_field_settings/type={$type}'
+	 */
+	function render_quick_edit_settings( $field ) {
+		$post = get_post($field['ID']);
+		$parent = get_post( $post->post_parent );
 		
+		if ( $parent->post_type == 'acf-field-group' ) {
 			// add to quick edit
 			acf_render_field_setting( $field, array(
 				'label'			=> __('Allow QuickEdit','acf-quick-edit-fields'),
@@ -111,6 +129,18 @@ class ACFToQuickEdit {
 				'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
 			));
 		
+		}
+	}
+	
+	/**
+	 * @action 'acf/render_field_settings/type={$type}'
+	 */
+	function render_bulk_edit_settings( $field ) {
+		$post = get_post($field['ID']);
+		$parent = get_post( $post->post_parent );
+		
+		if ( $parent->post_type == 'acf-field-group' ) {
+			// show column: todo: allow sortable
 			// add to bulk edit
 			acf_render_field_setting( $field, array(
 				'label'			=> __('Allow Bulk Edit','acf-quick-edit-fields'),
@@ -220,7 +250,15 @@ class ACFToQuickEdit {
 	function display_field_column( $column , $post ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
-			the_field($field['key']);
+			switch ( $field['type'] ) {
+				case 'image':
+					if ( $image_id = get_field( $field['key'] ) )
+						echo wp_get_attachment_image( $image_id , array(80,80) );
+					break;
+				default:
+					the_field($field['key']);
+					break;
+			}
 		}
 	}
 	
