@@ -47,11 +47,8 @@ class ACFToQuickEdit {
 	 * Private constructor
 	 */
 	private function __construct() {
-		add_action( 'admin_init' , array(&$this,'admin_init') );
-		add_action( 'admin_init' , array( &$this , 'init_columns' ) );
-		add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
-		add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
+		add_action( 'plugins_loaded' , array( &$this , 'setup' ) );
 	}
 	
 	/**
@@ -62,6 +59,19 @@ class ACFToQuickEdit {
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'acf-quick-edit-fields' , false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+	/**
+	 * Setup plugin
+	 *
+	 * @action 'plugins_loaded'
+	 */
+	public function setup() {
+		if ( class_exists( 'acf' ) ) {
+			add_action( 'admin_init' , array(&$this,'admin_init') );
+			add_action( 'admin_init' , array( &$this , 'init_columns' ) );
+			add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
+			add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
+		}
 	}
 	
 	/**
@@ -270,12 +280,12 @@ class ACFToQuickEdit {
 	}
 	
 	function display_quick_edit( $column, $post_type ) {
-		if ( $field = $this->quickedit_fields[$column] ) {
+		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
 			$this->display_quickedit_field( $column, $post_type , $field  );
 		}
 	}
 	function display_bulk_edit( $column, $post_type ) {
-		if ( $field = $this->bulkedit_fields[$column] ) {
+		if ( isset($this->bulkedit_fields[$column]) && $field = $this->bulkedit_fields[$column] ) {
 			$this->display_quickedit_field( $column, $post_type , $field  );
 		}
 	}
