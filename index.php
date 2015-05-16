@@ -267,10 +267,14 @@ class ACFToQuickEdit {
 	function display_field_column( $column , $post ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
+			var_dump($field);
 			switch ( $field['type'] ) {
 				case 'image':
 					if ( $image_id = get_field( $field['key'] ) )
 						echo wp_get_attachment_image( $image_id , array(80,80) );
+					break;
+				case 'select':
+					echo $field['choices'][get_field($field['key'])];
 					break;
 				default:
 					the_field($field['key']);
