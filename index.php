@@ -295,7 +295,19 @@ class ACFToQuickEdit {
 				?><label class="inline-edit-group"><?php 
 					?><span class="title"><?php echo $field['label']; ?></span><?php
 					?><span class="input-text-wrap"><?php
-						?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+						switch ($field['type']) {
+							case 'select':
+								?><select class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>"><?php
+									foreach($field['choices'] as $name => $label) {
+										echo '<option value="' . $name . '">' . $label;
+									}
+								?></select><?php
+								break;
+							
+							default:
+								?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+								break;
+						}
 					?></span><?php
 				?></label><?php 
 			?></div><?php 
