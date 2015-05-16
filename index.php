@@ -267,11 +267,19 @@ class ACFToQuickEdit {
 	function display_field_column( $column , $post ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
-			var_dump($field);
 			switch ( $field['type'] ) {
 				case 'image':
-					if ( $image_id = get_field( $field['key'] ) )
+					$image_id = get_field( $field['key'] );
+					if( is_array( $image_id ) ) {
+						// Image field is an object
+						echo wp_get_attachment_image( $image_id['id'] , array(80,80) );
+					} else if( is_numeric( $image_id ) ) {
+						// Image field is an ID
 						echo wp_get_attachment_image( $image_id , array(80,80) );
+					} else {
+						// Image field is a url
+						echo '<img src="' . $image_id . '" width="80" height="80" />';
+					};
 					break;
 				case 'select':
 					echo $field['choices'][get_field($field['key'])];
