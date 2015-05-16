@@ -216,6 +216,7 @@ class ACFToQuickEdit {
 				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
 			add_filter( $cols_hook ,    array( &$this , 'add_field_columns' ) );
+			add_filter( $cols_hook , 	array( &$this , 'move_date_to_end' ) );
 			add_filter( $display_hook , array( &$this , 'display_field_column' ) , 10 , 2 );
 		}
 		if ( count( $this->quickedit_fields ) ) {
@@ -290,6 +291,15 @@ class ACFToQuickEdit {
 			}
 		}
 	}
+
+	function move_date_to_end($defaults) {  
+
+	    $date = $defaults['date'];
+	    unset($defaults['date']);
+	    $defaults['date'] = $date;
+	    return $defaults; 
+
+	} 
 	
 	function display_quick_edit( $column, $post_type ) {
 		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
