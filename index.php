@@ -222,7 +222,7 @@ class ACFToQuickEdit {
 		if ( count( $this->quickedit_fields ) ) {
 			add_action( 'quick_edit_custom_box',  array(&$this,'display_quick_edit') , 10, 2);
 			add_action( 'save_post', array( &$this , 'quickedit_save_acf_meta' ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', __FILE__), false, null, true );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', __FILE__), array('inline-edit-post'), null, true );
 		}
 		
 		if ( count( $this->bulkedit_fields ) ) {
