@@ -216,6 +216,7 @@ class ACFToQuickEdit {
 				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
 			add_filter( $cols_hook ,    array( &$this , 'add_field_columns' ) );
+			add_filter( $cols_hook , 	array( &$this , 'move_date_to_end' ) );
 			add_filter( $display_hook , array( &$this , 'display_field_column' ) , 10 , 2 );
 		}
 		if ( count( $this->quickedit_fields ) ) {
@@ -269,8 +270,20 @@ class ACFToQuickEdit {
 			$field = $this->column_fields[$column];
 			switch ( $field['type'] ) {
 				case 'image':
-					if ( $image_id = get_field( $field['key'] ) )
+					$image_id = get_field( $field['key'] );
+					if( is_array( $image_id ) ) {
+						// Image field is an object
+						echo wp_get_attachment_image( $image_id['id'] , array(80,80) );
+					} else if( is_numeric( $image_id ) ) {
+						// Image field is an ID
 						echo wp_get_attachment_image( $image_id , array(80,80) );
+					} else {
+						// Image field is a url
+						echo '<img src="' . $image_id . '" width="80" height="80" />';
+					};
+					break;
+				case 'select':
+					echo $field['choices'][get_field($field['key'])];
 					break;
 				default:
 					the_field($field['key']);
@@ -278,6 +291,15 @@ class ACFToQuickEdit {
 			}
 		}
 	}
+
+	function move_date_to_end($defaults) {  
+
+	    $date = $defaults['date'];
+	    unset($defaults['date']);
+	    $defaults['date'] = $date;
+	    return $defaults; 
+
+	} 
 	
 	function display_quick_edit( $column, $post_type ) {
 		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
@@ -295,7 +317,19 @@ class ACFToQuickEdit {
 				?><label class="inline-edit-group"><?php 
 					?><span class="title"><?php echo $field['label']; ?></span><?php
 					?><span class="input-text-wrap"><?php
-						?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+						switch ($field['type']) {
+							case 'select':
+								?><select class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>"><?php
+									foreach($field['choices'] as $name => $label) {
+										echo '<option value="' . $name . '">' . $label;
+									}
+								?></select><?php
+								break;
+							
+							default:
+								?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+								break;
+						}
 					?></span><?php
 				?></label><?php 
 			?></div><?php 
