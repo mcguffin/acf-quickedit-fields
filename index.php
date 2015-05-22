@@ -283,7 +283,15 @@ class ACFToQuickEdit {
 					};
 					break;
 				case 'select':
-					echo $field['choices'][get_field($field['key'])];
+					$field_value = get_field($field['key']);
+					
+					// 
+					if ( is_array( $field_value ) ) {
+						_e( '(Default value)' , 'acf-quick-edit-fields' );
+					} else if ( isset( $field['choices'][ $field_value ] ) ) {	
+						echo $field['choices'][get_field($field['key'])];
+					}
+					
 					break;
 				default:
 					the_field($field['key']);
