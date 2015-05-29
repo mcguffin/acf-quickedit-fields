@@ -17,8 +17,16 @@
 				var key = $(this).data('acf-field-key');
 				try {
 					$(this).prop('readonly',false);
-					$(this).val( result[ key ] );
+					switch ( $(this).attr('type') ) {
+						case 'radio':
+							$(this).prop( 'checked', result[ key ] == $(this).val() );
+							break;
+						default:
+							$(this).val( result[ key ] );
+							break;
+					}
 				} catch(err){
+					console.log(err);
 				}
 			})
 		});
@@ -26,6 +34,21 @@
 	
 	// we create a copy of the WP inline edit post function
 	var _wp_inline_edit = inlineEditPost.edit;
+	// and then we overwrite the function with our own code
+	inlineEditPost.edit = function( id ) {
+		var post_id, req_data;
+		// "call" the original WP edit function
+		// we don't want to leave WordPress hanging
+		_wp_inline_edit.apply( this, arguments );
+
+		// get the post ID
+		post_id = 0;
+		if ( typeof( id ) == 'object' ) {
+			post_id = parseInt( this.getId( id ) );
+		}
+		get_acf_post_data( post_id , $('.inline-edit-row')	 );
+	};
+	
 	$(document).on( 'click' , '.bulkactions .button.action' , function( e ) {
 		var post_ids = [];
 		var req_data = {
@@ -40,20 +63,5 @@
 		get_acf_post_data( post_ids , $( '#bulk-edit' ) );
 	});
 	
-	// and then we overwrite the function with our own code
-	inlineEditPost.edit = function( id ) {
-		var post_id, req_data;
-		// "call" the original WP edit function
-		// we don't want to leave WordPress hanging
-		_wp_inline_edit.apply( this, arguments );
-
-		// get the post ID
-		post_id = 0;
-		if ( typeof( id ) == 'object' ) {
-			post_id = parseInt( this.getId( id ) );
-		}
-		get_acf_post_data( post_id , $('.inline-edit-row')	 );
-		
-	};
 
 })(jQuery);

@@ -293,6 +293,9 @@ class ACFToQuickEdit {
 					}
 					
 					break;
+				case 'true_false':
+					echo get_field($field['key']) ? __('Yes') : __('No');
+					break;
 				default:
 					the_field($field['key']);
 					break;
@@ -333,7 +336,16 @@ class ACFToQuickEdit {
 									}
 								?></select><?php
 								break;
-							
+							case 'true_false':
+								?><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
+									?><input id="<?php echo $this->post_field_prefix . $column; ?>-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+									_e('Yes')
+								?></label><?php
+								?><label for="<?php echo $this->post_field_prefix . $column; ?>-no"><?php 
+									?><input id="<?php echo $this->post_field_prefix . $column; ?>-no"  type="radio" value="0" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+									_e('No')
+								?></label><?php
+								break;
 							default:
 								?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
 								break;
