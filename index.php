@@ -89,7 +89,7 @@ class ACFToQuickEdit {
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
 		}
 		foreach ( $types_can_be as $type ) {
-			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
+			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_bulk_edit_settings' ) );
 		}
 	}
 	
