@@ -303,6 +303,20 @@ class ACFToQuickEdit {
 				case 'true_false':
 					echo get_field($field['key']) ? __('Yes') : __('No');
 					break;
+				case 'color_picker':
+					$value = get_field($field['key']);
+					if ( $value )
+						echo '<div class="color-indicator" style="border-radius:2px;border:1px solid #d2d2d2;width:26px;height:20px;background-color:'.$value.'"></div>';
+					else
+						_e('(No value)', 'acf-quick-edit-fields');
+					break;
+				case 'number':
+					$value = get_field($field['key']);
+					if ( $value === "" )
+						_e('(No value)', 'acf-quick-edit-fields');
+					else
+						echo number_format_i18n($value, strlen(substr(strrchr($value, "."), 1)) );
+					break;
 				default:
 					the_field($field['key']);
 					break;
@@ -311,12 +325,10 @@ class ACFToQuickEdit {
 	}
 
 	function move_date_to_end($defaults) {  
-
 	    $date = $defaults['date'];
 	    unset($defaults['date']);
 	    $defaults['date'] = $date;
 	    return $defaults; 
-
 	} 
 	
 	function display_quick_edit( $column, $post_type ) {
