@@ -342,7 +342,7 @@ class ACFToQuickEdit {
 		}
 	}
 	function display_quickedit_field( $column, $post_type , $field ) {
-		?><fieldset class="inline-edit-col-right inline-edit-<?php echo $post_type ?>"><?php 
+		?><fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>"><?php 
 			?><div class="inline-edit-col column-<?php echo $column; ?>"><?php 
 				?><label class="inline-edit-group"><?php 
 					?><span class="title"><?php echo $field['label']; ?></span><?php

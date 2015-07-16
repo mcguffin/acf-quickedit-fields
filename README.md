@@ -21,11 +21,11 @@ ToDo:
 -----
  - [ ] Code Docs
  - [x] Plugin localization
- - [ ] Nice Format for `color_picker` and `date_picker` fields
+ - [x] Nice display for `color_picker` and `date_picker` fields
  - [ ] QuickEdit: 
  	- [ ] Select: does not work with multiple values
-    - [ ] Checkbox: add checkboxes
-    - [ ] Date: 
-    - [ ] Number
+    - [ ] Checkbox
     - [ ] Radio
+    - [ ] Date: use datepicker
+    - [x] Number: use `type="number"`
  
