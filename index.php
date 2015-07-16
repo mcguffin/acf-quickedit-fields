@@ -79,7 +79,7 @@ class ACFToQuickEdit {
 	 */
 	function admin_init() {
 		// ACF Field Settings
-		$types_column = array( 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		$types_column = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' , 'image' );
 		$types_can_qe = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		$types_can_be = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		foreach ( $types_column as $type ) {
@@ -174,7 +174,8 @@ class ACFToQuickEdit {
 	 */
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
-		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
+		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : 
+			( ! empty( $typenow ) ? $typenow : 'post' );
 		if ( ! $post_type && $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
 			$field_groups = acf_get_field_groups( array(
@@ -271,16 +272,18 @@ class ACFToQuickEdit {
 			switch ( $field['type'] ) {
 				case 'image':
 					$image_id = get_field( $field['key'] );
-					if( is_array( $image_id ) ) {
-						// Image field is an object
-						echo wp_get_attachment_image( $image_id['id'] , array(80,80) );
-					} else if( is_numeric( $image_id ) ) {
-						// Image field is an ID
-						echo wp_get_attachment_image( $image_id , array(80,80) );
-					} else {
-						// Image field is a url
-						echo '<img src="' . $image_id . '" width="80" height="80" />';
-					};
+					if ( $image_id ) {
+						if ( is_array( $image_id ) ) {
+							// Image field is an object
+							echo wp_get_attachment_image( $image_id['id'] , array(80,80) );
+						} else if( is_numeric( $image_id ) ) {
+							// Image field is an ID
+							echo wp_get_attachment_image( $image_id , array(80,80) );
+						} else {
+							// Image field is a url
+							echo '<img src="' . $image_id . '" width="80" height="80" />';
+						};
+					}
 					break;
 				case 'select':
 					$field_value = get_field($field['key']);
