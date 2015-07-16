@@ -347,9 +347,16 @@ class ACFToQuickEdit {
 				?><label class="inline-edit-group"><?php 
 					?><span class="title"><?php echo $field['label']; ?></span><?php
 					?><span class="input-text-wrap"><?php
+						$input_atts = array(
+							'data-acf-field-key' => $field['key'],
+							'name' => $this->post_field_prefix . $column,
+						);
 						switch ($field['type']) {
 							case 'select':
-								?><select class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>"><?php
+								$input_atts += array(
+									'class' => 'acf-quick-edit',
+								);
+								?><select <?php echo acf_esc_attr( $input_atts ) ?>><?php
 									foreach($field['choices'] as $name => $label) {
 										echo '<option value="' . $name . '">' . $label;
 									}
@@ -365,8 +372,22 @@ class ACFToQuickEdit {
 									_e('No')
 								?></label><?php
 								break;
+							case 'number':
+								$input_atts += array(
+									'class' => 'acf-quick-edit',
+									 'type' => 'number', 
+									 'min' => $field['min'], 
+									 'max' => $field['max'],
+									 'step' => $field['step'], 
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								break;
 							default:
-								?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+								$input_atts += array(
+									'class' => 'acf-quick-edit',
+									 'type' => 'text', 
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 						}
 					?></span><?php
