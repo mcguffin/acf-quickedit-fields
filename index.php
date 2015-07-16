@@ -286,6 +286,7 @@ class ACFToQuickEdit {
 					}
 					break;
 				case 'select':
+				case 'radio':
 				case 'checkbox':
 					$field_value = get_field($field['key']);
 					$values = array();
@@ -293,7 +294,11 @@ class ACFToQuickEdit {
 						$values[] = isset( $field['choices'][ $value ] ) 
 										? $field['choices'][ $value ] 
 										: $value;
-					echo implode( __(', ', 'acf-quick-edit-fields' ) , $values );
+					
+					$output = implode( __(', ', 'acf-quick-edit-fields' ) , $values );
+					if ( empty( $output ) )
+						$output = __('(No value)', 'acf-quick-edit-fields');
+					echo $output;
 					break;
 				case 'true_false':
 					echo get_field($field['key']) ? __('Yes') : __('No');
