@@ -286,21 +286,13 @@ class ACFToQuickEdit {
 					}
 					break;
 				case 'select':
-					$field_value = get_field($field['key']);
-					
-					// 
-					if ( is_array( $field_value ) ) {
-						_e( '(Default value)' , 'acf-quick-edit-fields' );
-					} else if ( isset( $field['choices'][ $field_value ] ) ) {	
-						echo $field['choices'][get_field($field['key'])];
-					}
-					
-					break;
 				case 'checkbox':
 					$field_value = get_field($field['key']);
 					$values = array();
 					foreach ( (array) $field_value as $value )
-						$values[] = isset( $field['choices'][ $value ] ) ? $field['choices'][ $value ] : $value;
+						$values[] = isset( $field['choices'][ $value ] ) 
+										? $field['choices'][ $value ] 
+										: $value;
 					echo implode( __(', ', 'acf-quick-edit-fields' ) , $values );
 					break;
 				case 'true_false':
