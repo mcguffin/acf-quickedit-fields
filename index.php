@@ -331,6 +331,9 @@ class ACFToQuickEdit {
 						switch ($field['type']) {
 							case 'select':
 								?><select class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>"><?php
+									if ( $field['allow_null'] ) {
+										echo '<option value="">' . '- ' . __( 'Select', 'acf' ) . ' -';
+									}
 									foreach($field['choices'] as $name => $label) {
 										echo '<option value="' . $name . '">' . $label;
 									}
