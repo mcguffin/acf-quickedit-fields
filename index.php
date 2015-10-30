@@ -271,7 +271,7 @@ class ACFToQuickEdit {
 			switch ( $field['type'] ) {
 				case 'file':
 					$value = acf_get_value( $post_id, $field );
-					if ( ! is_null($value) ) {
+					if ( ! is_null($value) && ! empty($value) ) {
 						$file = get_post($value);
 						printf( __('Edit: <a href="%s">%s</a>','acf-quick-edit-fields') , get_edit_post_link( $value ) , $file->post_title );
 					}
