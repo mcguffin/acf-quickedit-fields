@@ -78,8 +78,8 @@ class ACFToQuickEdit {
 	 * @action 'admin_init'
 	 */
 	function admin_init() {
-		// ACF Field Settings
-		$types_column = array( 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		// Suported ACF Fields
+		$types_column = array( 'file' , 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		$types_can_qe = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		$types_can_be = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
 		foreach ( $types_column as $type ) {
@@ -265,10 +265,17 @@ class ACFToQuickEdit {
 		return $columns;
 	}
 	
-	function display_field_column( $column , $post ) {
+	function display_field_column( $column , $post_id ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
 			switch ( $field['type'] ) {
+				case 'file':
+					$value = acf_get_value( $post_id, $field );
+					if ( ! is_null($value) ) {
+						$file = get_post($value);
+						printf( __('Edit: <a href="%s">%s</a>','acf-quick-edit-fields') , get_edit_post_link( $value ) , $file->post_title );
+					}
+					break;
 				case 'image':
 					$image_id = get_field( $field['key'] );
 					if( is_array( $image_id ) ) {
