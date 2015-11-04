@@ -175,8 +175,14 @@ class ACFToQuickEdit {
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
 		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
-		if ( ! $post_type && $pagenow == 'upload.php' ) {
-			$post_type = 'attachment';
+		if ( ! $post_type )  {
+			if ( $pagenow == 'upload.php') {
+				$post_type = 'attachment';
+			} else {
+				$post_type = 'post';
+			}
+		}
+		if ( $post_type == 'attachment' ) {
 			$field_groups = acf_get_field_groups( array(
 	 			'attachment' => 'all|image',
 			) );
@@ -188,7 +194,6 @@ class ACFToQuickEdit {
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
-//			var_dump($field_group);
 			foreach ( $fields as $field ) {
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
