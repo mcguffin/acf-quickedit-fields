@@ -346,6 +346,16 @@ class ACFToQuickEdit {
 									}
 								?></select><?php
 								break;
+							case 'radio':
+							foreach($field['choices'] as $name => $value){?>
+                        <label for="<?php echo $this->post_field_prefix . $column.'-'.$value; ?>">
+                        	<input id="<?php echo $this->post_field_prefix . $column.'-'.$value; ?>" type="radio" value="<?php echo $value; ?>" 
+                              class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>"
+                              name="<?php echo $this->post_field_prefix . $column; ?>" /><?php echo $value; ?>
+                        </label>
+                     <?php
+							}
+								break;
 							case 'true_false':
 								?><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
 									?><input id="<?php echo $this->post_field_prefix . $column; ?>-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
