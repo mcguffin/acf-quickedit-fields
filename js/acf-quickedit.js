@@ -12,23 +12,39 @@
 		});
 		
 		$.post(ajaxurl,req_data,function(result){
-			var i;
-			$parent.find('[data-acf-field-key]').each(function(i,elem){
+			var i,key,value;
+			var keys = [];
+			$parent.find('[data-acf-field-key]').each(function() {
 				var key = $(this).data('acf-field-key');
-				try {
-					$(this).prop('readonly',false);
-					switch ( $(this).attr('type') ) {
-						case 'radio':
-							$(this).prop( 'checked', result[ key ] == $(this).val() );
-							break;
-						default:
-							$(this).val( result[ key ] );
-							break;
-					}
-				} catch(err){
-					console.log(err);
+				keys.push(key);
+			});
+			for (i=0;i<keys.length;i++) {
+				key=keys[i],value=result[key];
+				var $selected;
+				if (typeof(value) === 'boolean') {
+					value*=1;
 				}
-			})
+
+				// remove readonly prop
+				$('input[data-acf-field-key="'+key+'"]')
+					.prop('readonly',false);
+
+
+				// set text field values
+				$('input[type!="radio"][data-acf-field-key="'+key+'"]')
+					.val(value);
+
+				// set val for radio buttons
+				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"]')
+					.find('[value="'+value+'"]')
+					.prop( 'checked',true);
+				if ( ! $selected.length ) {
+					if ( !! value )
+						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[value="other"]').prop( 'checked', true );
+					else 
+						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[type="text"]').val('');
+				}
+			}
 		});
 	}
 	
@@ -61,6 +77,9 @@
 			post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
 		});
 		get_acf_post_data( post_ids , $( '#bulk-edit' ) );
+	}).on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
+		var $this = $(this), $list = $this.closest('.acf-radio-list'), 
+			$other = $list.find('[type="text"]').prop('disabled',$this.val() != 'other');
 	});
 	
 
