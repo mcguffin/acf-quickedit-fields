@@ -48,7 +48,7 @@ class ACFToQuickEdit {
 	 */
 	private function __construct() {
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
-		add_action( 'plugins_loaded' , array( &$this , 'setup' ) );
+		add_action( 'after_setup_theme' , array( &$this , 'setup' ) );
 	}
 	
 	/**
