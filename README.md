@@ -10,6 +10,37 @@ Edit field values in Quick Edit and / or Bulk edit.
 Proofed to work with ACF Pro 5.x.
 Will cause a fatal error when used with ACF Free (version 4.x).
 
+**Supported fields:**
+
+| Field Type   | Column display | Quick Edit | Bulk Edit |
+|--------------|----------------|------------|-----------|
+| Text         | Yes            | Yes        | Yes       |
+| Textarea     |                |            |           |
+| Number       | Yes            | Yes        | Yes       |
+| Email        | Yes            | Yes        | Yes       |
+| URL          | Yes            | Yes        | Yes       |
+| WYSIWYG      |                |            |           |
+| oEmbed       |                |            |           |
+| Image        | Yes            |            |           |
+| File         | Yes            |            |           |
+| Gallery      |                |            |           |
+| Select       | Yes            | Yes        | Yes       |
+| Checkbox     | Yes            | Yes        | Yes       |
+| Radio        | Yes            | Yes        | Yes       |
+| True/False   | Yes            | Yes        | Yes       |
+| Post Object  |                |            |           |
+| Page Link    |                |            |           |
+| Relationship |                |            |           |
+| Taxonomy     |                |            |           |
+| User         |                |            |           |
+| Google Map   |                |            |           |
+| Datepicker   | Yes            | Yes        | Yes       |
+| Colorpicker  | Yes            | Yes        | Yes       |
+| Message      |                |            |           |
+| Tab          |                |            |           |
+| Repeater     |                |            |           |
+| Flaxible     |                |            |           |
+
 Developers note
 ---------------
 This plugin is still a stub. I am not quite sure if I will continue developing it.

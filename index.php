@@ -48,7 +48,7 @@ class ACFToQuickEdit {
 	 */
 	private function __construct() {
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
-		add_action( 'plugins_loaded' , array( &$this , 'setup' ) );
+		add_action( 'after_setup_theme' , array( &$this , 'setup' ) );
 	}
 	
 	/**
@@ -174,8 +174,7 @@ class ACFToQuickEdit {
 	 */
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
-		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : 
-			( ! empty( $typenow ) ? $typenow : 'post' );
+		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
 		if ( ! $post_type && $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
 			$field_groups = acf_get_field_groups( array(
@@ -189,7 +188,6 @@ class ACFToQuickEdit {
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
-//			var_dump($field_group);
 			foreach ( $fields as $field ) {
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
@@ -372,15 +370,41 @@ class ACFToQuickEdit {
 									}
 								?></select><?php
 								break;
+							case 'radio':
+								// + others
+								// 
+								
+								?><ul class="acf-radio-list<?php echo $field['other_choice'] ? ' other' : '' ?>" data-acf-field-key="<?php echo $field['key'] ?>"><?php
+								foreach($field['choices'] as $name => $value) {
+									?><li><label for="<?php echo $this->post_field_prefix . $column.'-'.$name; ?>"><?php
+										?><input id="<?php echo $this->post_field_prefix . $column.'-'.$name; ?>" type="radio" value="<?php echo $name; ?>" 
+										  class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>"
+										  name="<?php echo $this->post_field_prefix . $column; ?>" /><?php echo $value; ?><?php
+									?></label></li><?php
+								}
+								if ( $field['other_choice'] ) {
+									?><li><label for="<?php echo $this->post_field_prefix . $column.'-other'; ?>"><?php
+										?><input id="<?php echo $this->post_field_prefix . $column.'-other'; ?>" type="radio" value="other" 
+										  class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>"
+										  name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+										?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" 
+											name="<?php echo $this->post_field_prefix . $column; ?>" style="width:initial" /><?php
+										?></li><?php
+									?></label><?php
+								}
+								?></ul><?php
+								break;
 							case 'true_false':
-								?><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
-									?><input id="<?php echo $this->post_field_prefix . $column; ?>-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
-									_e('Yes')
-								?></label><?php
-								?><label for="<?php echo $this->post_field_prefix . $column; ?>-no"><?php 
-									?><input id="<?php echo $this->post_field_prefix . $column; ?>-no"  type="radio" value="0" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
-									_e('No')
-								?></label><?php
+								?><ul class="acf-radio-list" data-acf-field-key="<?php echo $field['key'] ?>"><?php
+									?><li><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
+										?><input id="<?php echo $this->post_field_prefix . $column; ?>-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+										_e('Yes')
+									?></label></li><?php
+									?><li><label for="<?php echo $this->post_field_prefix . $column; ?>-no"><?php 
+										?><input id="<?php echo $this->post_field_prefix . $column; ?>-no"  type="radio" value="0" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
+										_e('No')
+									?></label></li><?php
+								?></ul><?php
 								break;
 							case 'number':
 								$input_atts += array(
