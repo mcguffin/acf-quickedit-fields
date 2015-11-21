@@ -41,6 +41,7 @@ Will cause a fatal error when used with ACF Free (version 4.x).
 | Repeater     |                |            |           |
 | Flaxible     |                |            |           |
 
+
 Developers note
 ---------------
 This plugin is still a stub. I am not quite sure if I will continue developing it.
@@ -55,8 +56,10 @@ ToDo:
  - [x] Nice display for `color_picker` and `date_picker` fields
  - [ ] QuickEdit: 
  	- [ ] Select: does not work with multiple values
-    - [ ] Checkbox
-    - [ ] Radio
+    - [ ] Select: support multiple
     - [ ] Date: use datepicker
+    - [ ] Color: use colorpicker
+    - [x] Checkbox
+    - [x] Radio
     - [x] Number: use `type="number"`
  

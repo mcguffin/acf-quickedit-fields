@@ -174,7 +174,7 @@ class ACFToQuickEdit {
 	 */
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
-		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : $typenow;
+		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : ( ! empty( $typenow ) ? $typenow : 'post' );
 		if ( ! $post_type && $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
 			$field_groups = acf_get_field_groups( array(
@@ -357,10 +357,31 @@ class ACFToQuickEdit {
 							'name' => $this->post_field_prefix . $column,
 						);
 						switch ($field['type']) {
+							case 'checkbox':
+								$input_atts += array(
+									'class' => 'acf-quick-edit',
+									'id' => $this->post_field_prefix . $column,
+								);
+								$field['value'] = acf_get_array($field['value'], false);
+								$input_atts['name'] .= '[]';
+								foreach($field['choices'] as $value => $label) {
+									$atts = array(
+										'type' => 'checkbox',
+										'value' => $value ) + $input_atts;
+									if( in_array($value, $field['value']) ) {
+										$atts['checked'] = 'checked';
+									} else {
+										$all_checked = false;
+									}
+									$atts['id'] .= '-'.$value;
+									echo '<label><input ' . acf_esc_attr( $atts ) . '/>' . $label . '</label>';
+								}
 							case 'select':
 								$input_atts += array(
 									'class' => 'acf-quick-edit',
+									'id' => $this->post_field_prefix . $column,
 								);
+
 								?><select <?php echo acf_esc_attr( $input_atts ) ?>><?php
 									if ( $field['allow_null'] ) {
 										echo '<option value="">' . '- ' . __( 'Select', 'acf' ) . ' -';
