@@ -39,7 +39,7 @@ Will cause a fatal error when used with ACF Free (version 4.x).
 | Message      |                |            |           |
 | Tab          |                |            |           |
 | Repeater     |                |            |           |
-| Flaxible     |                |            |           |
+| Flexible     |                |            |           |
 
 
 Developers note

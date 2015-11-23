@@ -10,11 +10,11 @@
 			req_data.acf_field_keys.push( $(this).data('acf-field-key') );
 			$(this).prop('readonly',true);
 		});
-		
 		$.post(ajaxurl,req_data,function(result){
-			var i,key,value;
+			var i,key,value,$tr;
 			var keys = [];
 			$parent.find('[data-acf-field-key]').each(function() {
+				!$tr && ($tr = $(this).closest('tr.inline-edit-post'));
 				var key = $(this).data('acf-field-key');
 				keys.push(key);
 			});
@@ -33,7 +33,7 @@
 				// set text field values
 				$('input[type!="radio"][data-acf-field-key="'+key+'"]')
 					.val(value);
-
+				
 				// set val for radio buttons
 				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"]')
 					.find('[value="'+value+'"]')
@@ -44,7 +44,12 @@
 					else 
 						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[type="text"]').val('');
 				}
+				
+				
 			}
+			$tr.find('input.acf-quick-edit-color_picker').wpColorPicker();
+//			setTimeout(function(){$('.inline-edit-post input.acf-quick-edit-color_picker').wpColorPicker();console.log('now');},1000);
+			
 		});
 	}
 	
