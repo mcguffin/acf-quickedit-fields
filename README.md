@@ -58,7 +58,7 @@ ToDo:
  	- [ ] Select: does not work with multiple values
     - [ ] Select: support multiple
     - [ ] Date: use datepicker
-    - [ ] Color: use colorpicker
+    - [x] Color: use colorpicker
     - [x] Checkbox
     - [x] Radio
     - [x] Number: use `type="number"`
