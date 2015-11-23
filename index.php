@@ -221,7 +221,8 @@ class ACFToQuickEdit {
 		if ( count( $this->quickedit_fields ) ) {
 			add_action( 'quick_edit_custom_box',  array(&$this,'display_quick_edit') , 10, 2);
 			add_action( 'save_post', array( &$this , 'quickedit_save_acf_meta' ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', __FILE__), array('inline-edit-post','wp-color-picker' ), null, true );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', __FILE__), array('jquery-ui-datepicker','inline-edit-post','wp-color-picker' ), null, true );
+			wp_enqueue_style('acf-datepicker');
 		}
 		
 		if ( count( $this->bulkedit_fields ) ) {
@@ -376,11 +377,14 @@ class ACFToQuickEdit {
 									$atts['id'] .= '-'.$value;
 									echo '<label><input ' . acf_esc_attr( $atts ) . '/>' . $label . '</label>';
 								}
+								break;
 							case 'select':
 								$input_atts += array(
-									'class' => 'acf-quick-edit',
+									'class' => 'acf-quick-edit widefat',
 									'id' => $this->post_field_prefix . $column,
 								);
+								if ( $field['multiple'] )
+									$input_atts['multiple'] = 'multiple';
 
 								?><select <?php echo acf_esc_attr( $input_atts ) ?>><?php
 									if ( $field['allow_null'] ) {
@@ -430,17 +434,29 @@ class ACFToQuickEdit {
 							case 'number':
 								$input_atts += array(
 									'class' => 'acf-quick-edit',
-									 'type' => 'number', 
-									 'min' => $field['min'], 
-									 'max' => $field['max'],
-									 'step' => $field['step'], 
+									'type' => 'number', 
+									'min' => $field['min'], 
+									'max' => $field['max'],
+									'step' => $field['step'], 
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
+
+							case 'date_picker':
+								$input_atts += array(
+									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type' => 'text', 
+									'data-display_format' => acf_convert_date_to_js($field['display_format']),
+									'data-first_day' => $field['first_day'],
+									
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								break;
+
 							default:
 								$input_atts += array(
 									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									 'type' => 'text', 
+									'type' => 'text', 
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;

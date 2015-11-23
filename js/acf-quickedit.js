@@ -48,8 +48,24 @@
 				
 			}
 			$tr.find('input.acf-quick-edit-color_picker').wpColorPicker();
-//			setTimeout(function(){$('.inline-edit-post input.acf-quick-edit-color_picker').wpColorPicker();console.log('now');},1000);
 			
+			// init datepicker
+			$tr.find('input.acf-quick-edit-date_picker').each(function(i,el){
+				var args = {
+					dateFormat		:	'yymmdd',
+					altFormat		:	'yymmdd',
+					changeYear		:	true,
+					yearRange		:	"-100:+100",
+					changeMonth		:	true,
+					showButtonPanel	:	true,
+					firstDay		:	$(this).data('first_day')
+				};
+				console.log($(this).next('input'));
+				$(this).datepicker(args);
+			});
+			if( $('body > #ui-datepicker-div').length > 0 ) {
+				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
+			}
 		});
 	}
 	

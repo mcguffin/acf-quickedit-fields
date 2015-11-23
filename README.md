@@ -54,10 +54,10 @@ ToDo:
  - [ ] Code Docs
  - [x] Plugin localization
  - [x] Nice display for `color_picker` and `date_picker` fields
- - [ ] QuickEdit: 
- 	- [ ] Select: does not work with multiple values
-    - [ ] Select: support multiple
-    - [ ] Date: use datepicker
+ - [x] QuickEdit: 
+ 	- [x] Select: does not work with multiple values
+    - [x] Select: support multiple
+    - [x] Date: use datepicker
     - [x] Color: use colorpicker
     - [x] Checkbox
     - [x] Radio
