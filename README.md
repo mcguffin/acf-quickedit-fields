@@ -15,7 +15,7 @@ Will cause a fatal error when used with ACF Free (version 4.x).
 | Field Type   | Column display | Quick Edit | Bulk Edit |
 |--------------|----------------|------------|-----------|
 | Text         | Yes            | Yes        | Yes       |
-| Textarea     |                |            |           |
+| Textarea     | Yes            | Yes        | Yes       |
 | Number       | Yes            | Yes        | Yes       |
 | Email        | Yes            | Yes        | Yes       |
 | URL          | Yes            | Yes        | Yes       |
