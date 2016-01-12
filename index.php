@@ -79,9 +79,9 @@ class ACFToQuickEdit {
 	 */
 	function admin_init() {
 		// Suported ACF Fields
-		$types_column = array( 'file' , 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
-		$types_can_qe = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
-		$types_can_be = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'true_false' , 'url' );
+		$types_column = array( 'file' , 'image' , 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'textarea' , 'true_false' , 'url' );
+		$types_can_qe = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'textarea' , 'true_false' , 'url' );
+		$types_can_be = array( 'checkbox' , 'color_picker' , 'date_picker' , 'email' , 'number' , 'radio' , 'select' , 'text' , 'textarea' , 'true_false' , 'url' );
 		foreach ( $types_column as $type ) {
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
 		}
@@ -323,6 +323,11 @@ class ACFToQuickEdit {
 					else
 						echo number_format_i18n($value, strlen(substr(strrchr($value, "."), 1)) );
 					break;
+				case 'textarea':
+					?><pre><?php
+						the_field($field['key']);
+					?></pre><?php
+					break;
 				default:
 					the_field($field['key']);
 					break;
@@ -452,7 +457,13 @@ class ACFToQuickEdit {
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
-
+							case 'textarea':
+								$input_atts += array(
+									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type' => 'text', 
+								);
+								echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($field['value']).'</textarea>';
+								break;
 							default:
 								$input_atts += array(
 									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],

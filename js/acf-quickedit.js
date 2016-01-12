@@ -20,18 +20,19 @@
 			});
 			for (i=0;i<keys.length;i++) {
 				key=keys[i],value=result[key];
+				console.
 				var $selected;
 				if (typeof(value) === 'boolean') {
 					value*=1;
 				}
 
 				// remove readonly prop
-				$('input[data-acf-field-key="'+key+'"]')
+				$('input[data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
 					.prop('readonly',false);
 
 
 				// set text field values
-				$('input[type!="radio"][data-acf-field-key="'+key+'"]')
+				$('input[type!="radio"][data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
 					.val(value);
 				
 				// set val for radio buttons
