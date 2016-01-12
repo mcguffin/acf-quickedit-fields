@@ -20,7 +20,6 @@
 			});
 			for (i=0;i<keys.length;i++) {
 				key=keys[i],value=result[key];
-				console.
 				var $selected;
 				if (typeof(value) === 'boolean') {
 					value*=1;
