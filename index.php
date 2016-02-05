@@ -177,13 +177,9 @@ class ACFToQuickEdit {
 		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : ( ! empty( $typenow ) ? $typenow : 'post' );
 		if ( ! $post_type && $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
-			$field_groups = acf_get_field_groups( array(
-	 			'attachment' => 'all|image',
-			) );
+			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'attachment' => 'all|image' ) ) );
 		} else {
-			$field_groups = acf_get_field_groups( array(
-				'post_type' => $post_type,
-			) );
+			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'post_type' => $post_type ) ) );
 		}
 
 		foreach ( $field_groups as $field_group ) {
