@@ -33,6 +33,9 @@ class ACFToQuickEdit {
 	private $column_fields = array();	
 	private $quickedit_fields = array();	
 	private $bulkedit_fields = array();	
+
+	private $_left_columns = array();	
+
 	/**
 	 * Getting a singleton.
 	 *
@@ -50,6 +53,8 @@ class ACFToQuickEdit {
 		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
 		add_action( 'after_setup_theme' , array( &$this , 'setup' ) );
 	}
+
+
 	
 	/**
 	 * Hooked on 'plugins_loaded' 
@@ -71,6 +76,7 @@ class ACFToQuickEdit {
 			add_action( 'admin_init' , array( &$this , 'init_columns' ) );
 			add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
+			$this->_left_columns = apply_filters( 'acf_quick_edit_left_columns', array( 'cb' ) );
 		}
 	}
 	
@@ -117,7 +123,22 @@ class ACFToQuickEdit {
 					'instructions'	=> '',
 					'type'			=> 'true_false',
 					'name'			=> 'show_column',
-					'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields')
+					'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
+					'width'			=> 50,
+				));
+
+				acf_render_field_setting( $field, array(
+					'label'			=> __('Column Weight','acf-quick-edit-fields'),
+					'instructions'	=> __('Columns with a lower value will be shifted left','acf-quick-edit-fields'),
+					'type'			=> 'number',
+					'name'			=> 'show_column_weight',
+					'message'		=> __("Column weight", 'acf-quick-edit-fields'),
+					'default_value'	=> '0',
+					'min'			=> '-10000',
+					'max'			=> '10000',
+					'step'			=> '1',
+					'placeholder'	=> '',
+					'width'			=> '50',
 				));
 			}
 		}
@@ -258,7 +279,22 @@ class ACFToQuickEdit {
 		foreach ( $this->column_fields as $field_slug => $field ) {
 			$columns[ $field_slug ] = $field['label'];
 		}
+		uksort($columns, array( $this, '_sort_columns_by_weight' ));
 		return $columns;
+	}
+	private function _sort_columns_by_weight( $a_slug, $b_slug ) {
+		$a = $b = 0;
+		if ( in_array( $a_slug ,  $this->_left_columns ) ) {
+			$a = -10001;
+		} else if ( isset( $this->column_fields[ $a_slug ] ) ) {
+			$a = $this->column_fields[ $a_slug ]['show_column_weight'];
+		}
+		if ( in_array( $b_slug ,  $this->_left_columns ) ) {
+			$b = -10001;
+		} else if ( isset( $this->column_fields[ $b_slug ] ) ) {
+			$b = $this->column_fields[ $b_slug ]['show_column_weight'];
+		}
+		return $a - $b;
 	}
 	
 	function display_field_column( $column , $post_id ) {
