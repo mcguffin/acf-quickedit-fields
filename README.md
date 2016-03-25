@@ -28,9 +28,9 @@ Will cause a fatal error when used with ACF Free (version 4.x).
 | Checkbox     | Yes            | Yes         | Yes         |
 | Radio        | Yes            | Yes         | Yes         |
 | True/False   | Yes            | Yes         | Yes         |
-| Post Object  | Maybe later    | Maybe later | Maybe later |
-| Page Link    | Maybe later    | Maybe later | Maybe later |
-| Relationship | Maybe later    | Maybe later | Maybe later |
+| Post Object  | Yes            | Maybe later | Maybe later |
+| Page Link    | Yes            | Maybe later | Maybe later |
+| Relationship | Yes            | Maybe later | Maybe later |
 | Taxonomy     | No             | No          | No          |
 | User         | No             | No          | No          |
 | Google Map   | No             | No          | No          |
