@@ -12,34 +12,34 @@ Will cause a fatal error when used with ACF Free (version 4.x).
 
 **Supported fields:**
 
-| Field Type   | Column display | Quick Edit | Bulk Edit |
-|--------------|----------------|------------|-----------|
-| Text         | Yes            | Yes        | Yes       |
-| Textarea     | Yes            | Yes        | Yes       |
-| Number       | Yes            | Yes        | Yes       |
-| Email        | Yes            | Yes        | Yes       |
-| URL          | Yes            | Yes        | Yes       |
-| WYSIWYG      |                |            |           |
-| oEmbed       |                |            |           |
-| Image        | Yes            |            |           |
-| File         | Yes            |            |           |
-| Gallery      |                |            |           |
-| Select       | Yes            | Yes        | Yes       |
-| Checkbox     | Yes            | Yes        | Yes       |
-| Radio        | Yes            | Yes        | Yes       |
-| True/False   | Yes            | Yes        | Yes       |
-| Post Object  |                |            |           |
-| Page Link    |                |            |           |
-| Relationship |                |            |           |
-| Taxonomy     |                |            |           |
-| User         |                |            |           |
-| Google Map   |                |            |           |
-| Datepicker   | Yes            | Yes        | Yes       |
-| Colorpicker  | Yes            | Yes        | Yes       |
-| Message      |                |            |           |
-| Tab          |                |            |           |
-| Repeater     |                |            |           |
-| Flexible     |                |            |           |
+| Field Type   | Column display | Quick Edit  | Bulk Edit   |
+|--------------|----------------|-------------|-------------|
+| Text         | Yes            | Yes         | Yes         |
+| Textarea     | Yes            | Yes         | Yes         |
+| Number       | Yes            | Yes         | Yes         |
+| Email        | Yes            | Yes         | Yes         |
+| URL          | Yes            | Yes         | Yes         |
+| WYSIWYG      | No             | No          | No          |
+| oEmbed       | No             | No          | No          |
+| Image        | Yes            | Maybe later | Maybe later |
+| File         | Yes            | Maybe later | Maybe later |
+| Gallery      | No             | No          | No          |
+| Select       | Yes            | Yes         | Yes         |
+| Checkbox     | Yes            | Yes         | Yes         |
+| Radio        | Yes            | Yes         | Yes         |
+| True/False   | Yes            | Yes         | Yes         |
+| Post Object  | Yes            | Maybe later | Maybe later |
+| Page Link    | Yes            | Maybe later | Maybe later |
+| Relationship | Yes            | Maybe later | Maybe later |
+| Taxonomy     | No             | No          | No          |
+| User         | No             | No          | No          |
+| Google Map   | No             | No          | No          |
+| Datepicker   | Yes            | Yes         | Yes         |
+| Colorpicker  | Yes            | Yes         | Yes         |
+| Message      | No             | No          | No          |
+| Tab          | No             | No          | No          |
+| Repeater     | No             | No          | No          |
+| Flexible     | No             | No          | No          |
 
 
 Developers note
@@ -51,6 +51,7 @@ and send me a pull request.
 
 ToDo:
 -----
+ - [ ] Load main class only in admin
  - [ ] Code Docs
  - [x] Plugin localization
  - [x] Nice display for `color_picker` and `date_picker` fields
