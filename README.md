@@ -51,6 +51,7 @@ and send me a pull request.
 
 ToDo:
 -----
+ - [ ] Load main class only in admin
  - [ ] Code Docs
  - [x] Plugin localization
  - [x] Nice display for `color_picker` and `date_picker` fields
