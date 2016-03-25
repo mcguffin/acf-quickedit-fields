@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACF QuickEdit Fields v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-25 09:08+0100\n"
-"PO-Revision-Date: 2016-03-25 09:09+0100\n"
+"POT-Creation-Date: 2016-03-25 12:09+0100\n"
+"PO-Revision-Date: 2016-03-25 12:11+0100\n"
 "Last-Translator: Jörn Lund <joern@podpirate.org>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -20,72 +20,81 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:102
+#: include/class-acftoquickedit.php:101
 msgid "Show Column"
 msgstr "Spalte anzeigen"
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:106
+#: include/class-acftoquickedit.php:105
 msgid "Show a column in the posts list table"
 msgstr "Spalte in der Beitragsliste anzeigen"
 
-#: include/class-acftoquickedit.php:111
-#: include/class-acftoquickedit.php:115
+#: include/class-acftoquickedit.php:110 include/class-acftoquickedit.php:114
 msgid "Column Weight"
 msgstr "Gewichtung"
 
-#: include/class-acftoquickedit.php:112
-msgid "Columns with a lower value will be shifted left"
-msgstr "Spalten mit niedrigerer Gewichtung werden nach links verschoben"
+#: include/class-acftoquickedit.php:111
+msgid ""
+"Columns with a higher weight will be pushed to the right. The leftmost "
+"WordPress column has a weight of <em>0</em>, the next one <em>100</em> and "
+"so on. Leave empty to place a column to the rightmost position."
+msgstr ""
+"Spalten mit höherer Gewichtung werden nach rechts verschoben. Die erste "
+"WordPress Spalte hat eine Gewichtung von <em>0</em>, die nächste <em>100</"
+"em> und so weiter. Eine leere Eingabe hängt die Spalte rechts an."
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:139
+#: include/class-acftoquickedit.php:138
 msgid "Allow QuickEdit"
 msgstr "QuickEdit zulassen"
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:143
+#: include/class-acftoquickedit.php:142
 msgid "Allow editing this field in QuickEdit mode"
 msgstr "Die Bearbeitung dieses Feldes in QuickEdit zulassen"
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:163
+#: include/class-acftoquickedit.php:162
 msgid "Allow Bulk Edit"
 msgstr "Massenbearbeitung zulassen"
 
 # @ acf-quick-edit-fields
-#: include/class-acftoquickedit.php:167
+#: include/class-acftoquickedit.php:166
 msgid "Allow editing this field in Bulk edit mode"
 msgstr "Dieses Feld bei der Massenbearbeitung anzeigen"
 
-#: include/class-acftoquickedit.php:302
+#: include/class-acftoquickedit.php:315
 #, php-format
 msgid "Edit: <a href=\"%s\">%s</a>"
 msgstr "Bearbeiten: <a href=\"%s\">%s</a>"
 
-#: include/class-acftoquickedit.php:330
+#: include/class-acftoquickedit.php:343
 msgid ", "
 msgstr ", "
 
-#: include/class-acftoquickedit.php:332
-#: include/class-acftoquickedit.php:343
-#: include/class-acftoquickedit.php:348
+#: include/class-acftoquickedit.php:345 include/class-acftoquickedit.php:356
+#: include/class-acftoquickedit.php:361
 msgid "(No value)"
 msgstr "(Kein Wert)"
 
-#: include/class-acftoquickedit.php:336
-#: include/class-acftoquickedit.php:457
+#: include/class-acftoquickedit.php:349 include/class-acftoquickedit.php:515
 msgid "Yes"
 msgstr "Ja"
 
-#: include/class-acftoquickedit.php:336
-#: include/class-acftoquickedit.php:461
+#: include/class-acftoquickedit.php:349 include/class-acftoquickedit.php:519
 msgid "No"
 msgstr "Nein"
 
-#: include/class-acftoquickedit.php:422
+#: include/class-acftoquickedit.php:419
+msgid "Private"
+msgstr ""
+
+#: include/class-acftoquickedit.php:482
 msgid "Select"
 msgstr "Auswählen"
+
+#~ msgid "Columns with a lower value will be shifted left"
+#~ msgstr "Spalten mit niedrigerer Gewichtung werden nach links verschoben"
 
 #~ msgid "(Default value)"
 #~ msgstr "(Standardwert)"
