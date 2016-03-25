@@ -14,7 +14,7 @@ class ACFToQuickEdit {
 	private $quickedit_fields = array();	
 	private $bulkedit_fields = array();	
 
-	private $_left_columns = array();	
+	private $_wp_column_weights = array();	
 
 	/**
 	 * Getting a singleton.
@@ -55,7 +55,6 @@ class ACFToQuickEdit {
 			add_action( 'admin_init' , array( &$this , 'init_columns' ) );
 			add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
-			$this->_left_columns = apply_filters( 'acf_quick_edit_left_columns', array( 'cb' ) );
 		}
 	}
 
@@ -109,7 +108,7 @@ class ACFToQuickEdit {
 
 				acf_render_field_setting( $field, array(
 					'label'			=> __('Column Weight','acf-quick-edit-fields'),
-					'instructions'	=> __('Columns with a lower value will be shifted left','acf-quick-edit-fields'),
+					'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
 					'type'			=> 'number',
 					'name'			=> 'show_column_weight',
 					'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
@@ -176,6 +175,7 @@ class ACFToQuickEdit {
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
 		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : ( ! empty( $typenow ) ? $typenow : 'post' );
+
 		if ( ! $post_type && $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
 			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'attachment' => 'all|image' ) ) );
@@ -186,9 +186,11 @@ class ACFToQuickEdit {
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
 			foreach ( $fields as $field ) {
-				if ( ! isset( $field['show_column_weight'] ) ) {
-					$field['show_column_weight'] = 0;
+/*
+				if ( ! isset( $field['show_column_weight'] ) || '' === empty( $field['show_column_weight'] ) ) {
+					$field['show_column_weight'] = 1000;
 				}
+*/
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
 				}
@@ -221,7 +223,7 @@ class ACFToQuickEdit {
 		if ( count( $this->quickedit_fields ) ) {
 			add_action( 'quick_edit_custom_box',  array(&$this,'display_quick_edit') , 10, 2);
 			add_action( 'save_post', array( &$this , 'quickedit_save_acf_meta' ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', __FILE__), array('jquery-ui-datepicker','inline-edit-post','wp-color-picker' ), null, true );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'jquery-ui-datepicker', 'inline-edit-post', 'wp-color-picker' ), null, true );
 			wp_enqueue_style('acf-datepicker');
 		}
 		
@@ -230,7 +232,7 @@ class ACFToQuickEdit {
 // 			add_action( 'post_updated', array( &$this , 'quickedit_save_acf_meta' ) );
 		}
 	}
-
+	
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
@@ -264,6 +266,9 @@ class ACFToQuickEdit {
 	 * @filter manage_{$post_type}_posts_columns
 	 */
 	function add_field_columns( $columns ) {
+
+		$this->_wp_column_weights = array_map( array( $this, '_mul_100' ) , array_flip( array_keys( $columns ) ) );
+
 		foreach ( $this->column_fields as $field_slug => $field ) {
 			$columns[ $field_slug ] = $field['label'];
 		}
@@ -271,22 +276,27 @@ class ACFToQuickEdit {
 		return $columns;
 	}
 
+	private function _mul_100( $val ) {
+		return intval( $val ) * 100;
+	}
+
 	/**
 	 * @private
 	 */
 	private function _sort_columns_by_weight( $a_slug, $b_slug ) {
 		$a = $b = 0;
-		if ( in_array( $a_slug ,  $this->_left_columns ) ) {
-			$a = -10001;
-		} else if ( isset( $this->column_fields[ $a_slug ] ) ) {
-			$a = $this->column_fields[ $a_slug ]['show_column_weight'];
-		}
-		if ( in_array( $b_slug ,  $this->_left_columns ) ) {
-			$b = -10001;
-		} else if ( isset( $this->column_fields[ $b_slug ] ) ) {
-			$b = $this->column_fields[ $b_slug ]['show_column_weight'];
-		}
+		$a = $this->_get_column_weight( $a_slug );
+		$b = $this->_get_column_weight( $b_slug );
 		return $a - $b;
+	}
+
+	private function _get_column_weight( $column_slug ) {
+		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
+			return intval( $this->_wp_column_weights[ $column_slug ] );
+		} else if ( isset( $this->column_fields[ $column_slug ]['show_column_weight'] ) && '' !==  $this->column_fields[ $column_slug ]['show_column_weight'] ) {
+			return intval( $this->column_fields[ $column_slug ]['show_column_weight'] );
+		}
+		return max( $this->_wp_column_weights ) + 1;
 	}
 
 	/**
