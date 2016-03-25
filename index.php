@@ -10,6 +10,11 @@ Author URI:
 License: GPL3
 */
 
+
+if ( ! defined( 'ABSPATH' ) )
+	die('Nope.');
+
+
 if ( is_admin() ) {
 	require_once __DIR__.'/include/class-acftoquickedit.php';
 }

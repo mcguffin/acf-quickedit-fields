@@ -112,7 +112,7 @@ class ACFToQuickEdit {
 					'instructions'	=> __('Columns with a lower value will be shifted left','acf-quick-edit-fields'),
 					'type'			=> 'number',
 					'name'			=> 'show_column_weight',
-					'message'		=> __("Column weight", 'acf-quick-edit-fields'),
+					'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
 					'default_value'	=> '0',
 					'min'			=> '-10000',
 					'max'			=> '10000',
