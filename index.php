@@ -276,6 +276,11 @@ class ACFToQuickEdit {
 		}
 	}
 	
+	/**
+	 * @filter manage_posts_columns
+	 * @filter manage_media_columns
+	 * @filter manage_{$post_type}_posts_columns
+	 */
 	function add_field_columns( $columns ) {
 		foreach ( $this->column_fields as $field_slug => $field ) {
 			$columns[ $field_slug ] = $field['label'];
@@ -283,6 +288,10 @@ class ACFToQuickEdit {
 		uksort($columns, array( $this, '_sort_columns_by_weight' ));
 		return $columns;
 	}
+
+	/**
+	 * @private
+	 */
 	private function _sort_columns_by_weight( $a_slug, $b_slug ) {
 		$a = $b = 0;
 		if ( in_array( $a_slug ,  $this->_left_columns ) ) {
@@ -298,6 +307,11 @@ class ACFToQuickEdit {
 		return $a - $b;
 	}
 	
+	/**
+	 * @filter manage_posts_custom_column
+	 * @filter manage_media_custom_column
+	 * @filter manage_{$post_type}_posts_custom_column
+	 */
 	function display_field_column( $column , $post_id ) {
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
