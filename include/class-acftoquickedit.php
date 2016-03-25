@@ -50,16 +50,40 @@ class ACFToQuickEdit {
 	 * @action plugins_loaded
 	 */
 	public function setup() {
-		if ( class_exists( 'acf' ) ) {
+
+		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 			add_action( 'admin_init' , array(&$this,'admin_init') );
 			add_action( 'admin_init' , array( &$this , 'init_columns' ) );
 			add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
+		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
+			add_action( 'admin_notices', array( &$this, 'print_acf_free_notice' ) );
 		}
+	}
+	
+	/**
+	 * @action admin_notices
+	 */
+	function print_acf_free_notice() {
+		?>
+		<div class="notice notice-error is-dismissible">
+			<p><?php 
+				printf( 
+					_x( 'The ACF QuickEdit Fields plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 
+						'1: ACF Pro URL, 2: plugins page url',
+						'acf-quick-edit-fields' 
+					),
+					'http://www.advancedcustomfields.com/pro/',
+					admin_url('plugins.php' )
+					
+				); 
+			?></p>
+		</div>
+		<?php
 	}
 
 	/**
-	 * @action 'admin_init'
+	 * @action admin_init
 	 */
 	function admin_init() {
 		// Suported ACF Fields
