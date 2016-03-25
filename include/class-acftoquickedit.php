@@ -26,6 +26,7 @@ class ACFToQuickEdit {
 			self::$_instance = new self();
 		return self::$_instance;
 	}
+
 	/**
 	 * Private constructor
 	 */
@@ -34,13 +35,11 @@ class ACFToQuickEdit {
 		add_action( 'after_setup_theme' , array( &$this , 'setup' ) );
 	}
 
-
-	
 	/**
 	 * Hooked on 'plugins_loaded' 
 	 * Load text domain
 	 *
-	 * @action 'plugins_loaded'
+	 * @action plugins_loaded
 	 */
 	public function load_textdomain() {
 		load_plugin_textdomain( 'acf-quick-edit-fields', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
@@ -48,7 +47,7 @@ class ACFToQuickEdit {
 	/**
 	 * Setup plugin
 	 *
-	 * @action 'plugins_loaded'
+	 * @action plugins_loaded
 	 */
 	public function setup() {
 		if ( class_exists( 'acf' ) ) {
@@ -59,7 +58,7 @@ class ACFToQuickEdit {
 			$this->_left_columns = apply_filters( 'acf_quick_edit_left_columns', array( 'cb' ) );
 		}
 	}
-	
+
 	/**
 	 * @action 'admin_init'
 	 */
@@ -78,7 +77,7 @@ class ACFToQuickEdit {
 			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_bulk_edit_settings' ) );
 		}
 	}
-	
+
 	/**
 	 * @filter 'acf/format_value/type=radio'
 	 */
@@ -87,7 +86,7 @@ class ACFToQuickEdit {
 			return $nice_value;
 		return $value;
 	}
-	
+
 	/**
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
@@ -123,7 +122,7 @@ class ACFToQuickEdit {
 			}
 		}
 	}
-	
+
 	/**
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
@@ -132,7 +131,7 @@ class ACFToQuickEdit {
 		if ( $post ) {
 			$parent = get_post( $post->post_parent );
 			$parent = get_post( $post->post_parent );
-		
+
 			if ( $parent->post_type == 'acf-field-group' ) {
 				// add to quick edit
 				acf_render_field_setting( $field, array(
@@ -146,7 +145,7 @@ class ACFToQuickEdit {
 			}
 		}
 	}
-	
+
 	/**
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
@@ -169,7 +168,7 @@ class ACFToQuickEdit {
 			}
 		}
 	}
-	
+
 	/**
 	 * @action 'admin_init'
 	 */
@@ -227,7 +226,7 @@ class ACFToQuickEdit {
 // 			add_action( 'post_updated', array( &$this , 'quickedit_save_acf_meta' ) );
 		}
 	}
-	
+
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
@@ -254,7 +253,7 @@ class ACFToQuickEdit {
 			exit();
 		}
 	}
-	
+
 	/**
 	 * @filter manage_posts_columns
 	 * @filter manage_media_columns
@@ -285,7 +284,7 @@ class ACFToQuickEdit {
 		}
 		return $a - $b;
 	}
-	
+
 	/**
 	 * @filter manage_posts_custom_column
 	 * @filter manage_media_custom_column
@@ -367,7 +366,7 @@ class ACFToQuickEdit {
 	    $defaults['date'] = $date;
 	    return $defaults; 
 	} 
-	
+
 	function display_quick_edit( $column, $post_type ) {
 		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
 			$this->display_quickedit_field( $column, $post_type , $field  );
@@ -428,8 +427,6 @@ class ACFToQuickEdit {
 								break;
 							case 'radio':
 								// + others
-								// 
-								
 								?><ul class="acf-radio-list<?php echo $field['other_choice'] ? ' other' : '' ?>" data-acf-field-key="<?php echo $field['key'] ?>"><?php
 								foreach($field['choices'] as $name => $value) {
 									?><li><label for="<?php echo $this->post_field_prefix . $column.'-'.$name; ?>"><?php
@@ -503,7 +500,10 @@ class ACFToQuickEdit {
 			?></div><?php 
 		?></fieldset><?php
 	}
-	
+
+	/**
+	 *	@action save_post
+	 */
 	function quickedit_save_acf_meta( $post_id ) {
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
@@ -514,8 +514,6 @@ class ACFToQuickEdit {
 			}
 		}
 	}
-	
-	
 }
 
 ACFToQuickEdit::instance();
