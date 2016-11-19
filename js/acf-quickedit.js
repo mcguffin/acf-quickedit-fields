@@ -106,7 +106,11 @@ var acfQuickedit = {};
 				},
 				date		= $.datepicker.parseDate( altFormat, $hidden.val()  );
 
-			$input.datepicker( args ).datepicker( 'setDate', date );
+			$input.datepicker( args ).datepicker( 'setDate', date ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
 		},
 	
 	};
@@ -127,8 +131,14 @@ var acfQuickedit = {};
 				},
 				time 			= $.datepicker.parseTime( altTimeFormat, $hidden.val() );
 
-			$input.timepicker( args );
-			$input.val( $.datepicker.formatTime( $wrap.data('time_format'), time ) )
+			$input.timepicker( args ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
+			if ( $hidden.val() ) {
+				$input.val( $.datepicker.formatTime( $wrap.data('time_format'), time ) )
+			}
 		},
 	
 	};
@@ -157,7 +167,11 @@ var acfQuickedit = {};
 				},
 				datetime 			= $.datepicker.parseDateTime( altFormat, altTimeFormat, $hidden.val() );
 
-			$input.datetimepicker( args ).datepicker( 'setDate', datetime );
+			$input.datetimepicker( args ).datepicker( 'setDate', datetime ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
 		},
 	
 	};
