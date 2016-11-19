@@ -209,6 +209,9 @@ class ACFToQuickEdit {
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
+			if ( ! $fields ) {
+				continue;
+			}
 			foreach ( $fields as $field ) {
 /*
 				if ( ! isset( $field['show_column_weight'] ) || '' === empty( $field['show_column_weight'] ) ) {
