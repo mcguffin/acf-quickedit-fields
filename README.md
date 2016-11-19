@@ -12,35 +12,46 @@ It will not work with ACF Free (version 4.x).
 
 **Supported fields:**
 
-| Field Type   | Column display | Quick Edit  | Bulk Edit   |
-|--------------|----------------|-------------|-------------|
-| Text         | Yes            | Yes         | Yes         |
-| Textarea     | Yes            | Yes         | Yes         |
-| Number       | Yes            | Yes         | Yes         |
-| Email        | Yes            | Yes         | Yes         |
-| URL          | Yes            | Yes         | Yes         |
-| WYSIWYG      | No             | No          | No          |
-| oEmbed       | No             | No          | No          |
-| Image        | Yes            | Maybe later | Maybe later |
-| File         | Yes            | Maybe later | Maybe later |
-| Gallery      | No             | No          | No          |
-| Select       | Yes            | Yes         | Yes         |
-| Checkbox     | Yes            | Yes         | Yes         |
-| Radio        | Yes            | Yes         | Yes         |
-| True/False   | Yes            | Yes         | Yes         |
-| Post Object  | Yes            | Maybe later | Maybe later |
-| Page Link    | Yes            | Maybe later | Maybe later |
-| Relationship | Yes            | Maybe later | Maybe later |
-| Taxonomy     | No             | No          | No          |
-| User         | No             | No          | No          |
-| Google Map   | No             | No          | No          |
-| Datepicker   | Yes            | Yes         | Yes         |
-| Colorpicker  | Yes            | Yes         | Yes         |
-| Message      | No             | No          | No          |
-| Tab          | No             | No          | No          |
-| Repeater     | No             | No          | No          |
-| Flexible     | No             | No          | No          |
+| Field Type       | Column display | Quick Edit  | Bulk Edit   |
+|------------------|----------------|-------------|-------------|
+| *Basic*          |                |             |             |
+| Text             | Yes            | Yes         | Yes         |
+| Textarea         | Yes            | Yes         | Yes         |
+| Number           | Yes            | Yes         | Yes         |
+| Email            | Yes            | Yes         | Yes         |
+| URL              | Yes            | Yes         | Yes         |
+| Password         | Yes (1)        | Yes         | No          |
+| *Content*        |                |             |             |
+| WYSIWYG          | No             | No          | No          |
+| oEmbed           | No             | No          | No          |
+| Image            | Yes            | Maybe later | Maybe later |
+| File             | Yes            | Maybe later | Maybe later |
+| Gallery          | No             | No          | No          |
+| *Choice*         |                |             |             |
+| Select           | Yes            | Yes         | Yes         |
+| Checkbox         | Yes            | Yes         | Yes         |
+| Radio            | Yes            | Yes         | Yes         |
+| True/False       | Yes            | Yes         | Yes         |
+| *Relational*     |                |             |             |
+| Post Object      | Yes            | Maybe later | Maybe later |
+| Page Link        | Yes            | Maybe later | Maybe later |
+| Relationship     | Yes            | Maybe later | Maybe later |
+| Taxonomy         | No             | No          | No          |
+| User             | No             | No          | No          |
+| *jQuery*         |                |             |             |
+| Google Map       | No             | No          | No          |
+| Date Picker      | Yes            | Yes         | Yes         |
+| Date Time Picker | ?              | ?           | ?           |
+| Time Picker      | ?              | ?           | ?           |
+| Color Picker     | Yes            | Yes         | Yes         |
+| *jQuery*         |                |             |             |
+| Message          | No             | No          | No          |
+| Tab              | No             | No          | No          |
+| Repeater         | No             | No          | No          |
+| Flexible Content | No             | No          | No          |
+| Clone            | ?              | ?           | ?           |
 
+(1) Password will show as placeholder.
 
 Contributing
 ------------

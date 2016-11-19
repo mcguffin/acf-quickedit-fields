@@ -325,25 +325,51 @@ class ACFToQuickEdit {
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
 	function ajax_get_acf_post_meta() {
+
 		header('Content-Type: application/json');
+
 		if ( isset( $_REQUEST['post_id'] , $_REQUEST['acf_field_keys'] ) ) {
+
 			$result = array();
 			 
 			$post_ids = (array) $_REQUEST['post_id'];
+
 			$post_ids = array_filter( $post_ids,'intval');
+
+			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
+
 			foreach ( $post_ids as $post_id ) {
+
 				if ( current_user_can( 'edit_post' , $post_id ) ) {
-					$field_keys = $_REQUEST['acf_field_keys'];
+
 					foreach ( $field_keys as $key ) {
+
 						$field_obj = get_field_object( $key , $post_id );
-						if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_obj['value'] ) 
-							$result[ $key ] = $field_obj['value'];
-						else 
+
+						switch ( $field_obj['type'] ) {
+							case 'date_picker':
+								$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
+								$field_val	= acf_format_date( $field_val, 'Ymd' );
+								break;
+							default:
+								$field_val	= $field_obj['value'];
+								break;
+						}
+						if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_val ) {
+
+							$result[ $key ]	= $field_val;
+
+						} else {
+
 							$result[ $key ] = '';
+
+						}
 					}
 				}
 			}
+
 			echo json_encode( $result );
+
 			exit();
 		}
 	}
@@ -531,17 +557,21 @@ class ACFToQuickEdit {
 			$this->display_quickedit_field( $column, $post_type , $field  );
 		}
 	}
+
 	function display_quickedit_field( $column, $post_type , $field ) {
-		?><fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>"><?php 
-			?><div class="inline-edit-col column-<?php echo $column; ?>"><?php 
-				?><label class="inline-edit-group"><?php 
-					?><span class="title"><?php echo $field['label']; ?></span><?php
-					?><span class="input-text-wrap"><?php
+		?>
+		<fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>">
+			<div class="inline-edit-col column-<?php echo $column; ?>">
+				<label class="inline-edit-group">
+					<span class="title"><?php echo $field['label']; ?></span>
+					<span class="input-text-wrap"><?php
 						$input_atts = array(
 							'data-acf-field-key' => $field['key'],
 							'name' => $this->post_field_prefix . $column,
 						);
+
 						switch ($field['type']) {
+
 							case 'checkbox':
 								$input_atts += array(
 									'class' => 'acf-quick-edit',
@@ -562,6 +592,7 @@ class ACFToQuickEdit {
 									echo '<label><input ' . acf_esc_attr( $atts ) . '/>' . $label . '</label>';
 								}
 								break;
+
 							case 'select':
 								$input_atts += array(
 									'class' => 'acf-quick-edit widefat',
@@ -579,6 +610,7 @@ class ACFToQuickEdit {
 									}
 								?></select><?php
 								break;
+
 							case 'radio':
 								// + others
 								?><ul class="acf-radio-list<?php echo $field['other_choice'] ? ' other' : '' ?>" data-acf-field-key="<?php echo $field['key'] ?>"><?php
@@ -601,6 +633,7 @@ class ACFToQuickEdit {
 								}
 								?></ul><?php
 								break;
+
 							case 'true_false':
 								?><ul class="acf-radio-list" data-acf-field-key="<?php echo $field['key'] ?>"><?php
 									?><li><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
@@ -613,53 +646,72 @@ class ACFToQuickEdit {
 									?></label></li><?php
 								?></ul><?php
 								break;
+
 							case 'number':
 								$input_atts += array(
-									'class' => 'acf-quick-edit',
-									'type' => 'number', 
-									'min' => $field['min'], 
-									'max' => $field['max'],
-									'step' => $field['step'], 
+									'class'	=> 'acf-quick-edit',
+									'type'	=> 'number', 
+									'min'	=> $field['min'], 
+									'max'	=> $field['max'],
+									'step'	=> $field['step'], 
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 
 							case 'date_picker':
-								$input_atts += array(
-									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type' => 'text', 
-									'data-display_format' => acf_convert_date_to_js($field['display_format']),
-									'data-first_day' => $field['first_day'],
-									
+								$div_atts = array(
+									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'data-date_format'	=> acf_convert_date_to_js($field['display_format']),
+									'data-first_day'	=> $field['first_day'],
 								);
+								$display_input_atts	= array(
+									'type'	=> 'text',
+								);
+								$input_atts += array(
+									'type'	=> 'hidden', 
+								);
+								
+								echo '<div '. acf_esc_attr( $div_atts ) .'>';
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
+								echo '</div>';
 								break;
+
+							case 'date_time_picker':
+								break;
+
+							case 'time_picker':
+								break;
+
 							case 'textarea':
 								$input_atts += array(
-									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type' => 'text', 
+									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type'	=> 'text', 
 								);
 								echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($field['value']).'</textarea>';
 								break;
+
 							case 'password':
 								$input_atts += array(
-									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type' => 'password', 
+									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type'	=> 'password', 
+									'autocomplete'	=> 'new-password',
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
+
 							default:
 								$input_atts += array(
-									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type' => 'text', 
+									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type'	=> 'text', 
 								);
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 						}
-					?></span><?php
-				?></label><?php 
-			?></div><?php 
-		?></fieldset><?php
+					?></span>
+				</label>
+			</div>
+		</fieldset><?php
 	}
 
 	/**
@@ -671,7 +723,7 @@ class ACFToQuickEdit {
 		}
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
 			if ( isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) ) {
-				update_field($field['name'], $_REQUEST[ $this->post_field_prefix . $field['name'] ], $post_id );
+				update_field( $field['name'], $_REQUEST[ $this->post_field_prefix . $field['name'] ], $post_id );
 			}
 		}
 	}
