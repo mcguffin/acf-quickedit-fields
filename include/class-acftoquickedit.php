@@ -94,7 +94,7 @@ class ACFToQuickEdit {
 			'number'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'email'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'url'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'password'			=> array( 'column' => false,		'quickedit' => false,	'bulkedit' => false ),
+			'password'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => false ),
 
 			// Content
 			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
@@ -158,7 +158,7 @@ class ACFToQuickEdit {
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
 	function render_column_settings( $field ) {
-		$post = get_post($field['ID']);
+		$post = get_post( $field['ID'] );
 		if ( $post ) {
 			$parent = get_post( $post->post_parent );
 		
@@ -194,7 +194,7 @@ class ACFToQuickEdit {
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
 	function render_quick_edit_settings( $field ) {
-		$post = get_post($field['ID']);
+		$post = get_post( $field['ID'] );
 		if ( $post ) {
 			$parent = get_post( $post->post_parent );
 			$parent = get_post( $post->post_parent );
@@ -466,6 +466,11 @@ class ACFToQuickEdit {
 						}
 					}
 					break;
+				case 'password':
+					if ( $field_value = get_field( $field['key'] ) ) {
+						echo '<code>********</code>';
+					}
+					break;
 				default:
 					the_field( $field['key'] );
 					break;
@@ -617,6 +622,13 @@ class ACFToQuickEdit {
 									'type' => 'text', 
 								);
 								echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($field['value']).'</textarea>';
+								break;
+							case 'password':
+								$input_atts += array(
+									'class' => 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type' => 'password', 
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 							default:
 								$input_atts += array(
