@@ -44,7 +44,7 @@ It will not work with ACF Free (version 4.x).
 | Date Time Picker | Yes            | Yes         | Yes         |
 | Time Picker      | Yes            | Yes         | Yes         |
 | Color Picker     | Yes            | Yes         | Yes         |
-| *jQuery*         |                |             |             |
+| *Layout*         |                |             |             |
 | Message          | No             | No          | No          |
 | Tab              | No             | No          | No          |
 | Repeater         | No             | No          | No          |
