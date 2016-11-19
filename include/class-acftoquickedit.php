@@ -31,8 +31,8 @@ class ACFToQuickEdit {
 	 * Private constructor
 	 */
 	private function __construct() {
-		add_action( 'plugins_loaded' , array( &$this , 'load_textdomain' ) );
-		add_action( 'after_setup_theme' , array( &$this , 'setup' ) );
+		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
+		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
 	}
 
 	/**
@@ -52,12 +52,12 @@ class ACFToQuickEdit {
 	public function setup() {
 
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
-			add_action( 'admin_init' , array(&$this,'admin_init') );
-			add_action( 'admin_init' , array( &$this , 'init_columns' ) );
-			add_action( 'load-admin-ajax.php' , array( &$this , 'init_columns' ) );
-			add_action( 'wp_ajax_get_acf_post_meta' , array( &$this , 'ajax_get_acf_post_meta' ) );
+			add_action( 'admin_init' , array( $this, 'admin_init' ) );
+			add_action( 'admin_init' , array( $this, 'init_columns' ) );
+			add_action( 'load-admin-ajax.php' , array( $this, 'init_columns' ) );
+			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
-			add_action( 'admin_notices', array( &$this, 'print_acf_free_notice' ) );
+			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
 		}
 	}
 	
@@ -86,6 +86,8 @@ class ACFToQuickEdit {
 	 * @action admin_init
 	 */
 	function admin_init() {
+		
+
 		// Suported ACF Fields
 		$types = array( 
 			// basic
@@ -130,17 +132,27 @@ class ACFToQuickEdit {
 			'flexible_content'	=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'clone'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 		);
+
+		/**
+		 * Filter field type support of ACF Quick Edit Fields
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param array $fields		An associative array of field type support having the ACF field name as keys 
+		 *							and an array of supported fetaures as values. 
+		 *							Features are 'column', 'quickedit' and 'bulkedit'.
+		 */
 		$types = apply_filters( 'acf_quick_edit_fields_types', $types );
 
 		foreach ( $types as $type => $supports ) {
 			if ( $supports['column'] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
+				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_column_settings' ) );
 			}
 			if ( $supports['quickedit'] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
+				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_quick_edit_settings' ) );
 			}
 			if ( $supports['bulkedit'] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_bulk_edit_settings' ) );
+				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_bulk_edit_settings' ) );
 			}
 		}
 	}
@@ -250,11 +262,13 @@ class ACFToQuickEdit {
 			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'post_type' => $post_type ) ) );
 		}
 
+		// register column display
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields($field_group);
 			if ( ! $fields ) {
 				continue;
 			}
+
 			foreach ( $fields as $field ) {
 /*
 				if ( ! isset( $field['show_column_weight'] ) || '' === empty( $field['show_column_weight'] ) ) {
@@ -287,20 +301,24 @@ class ACFToQuickEdit {
 				$cols_hook		= "manage_{$post_type}_posts_columns";
 				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
-			add_filter( $cols_hook ,    array( &$this , 'add_field_columns' ) );
-			add_filter( $cols_hook , 	array( &$this , 'move_date_to_end' ) );
-			add_filter( $display_hook , array( &$this , 'display_field_column' ) , 10 , 2 );
+			add_filter( $cols_hook ,    array( $this , 'add_field_columns' ) );
+			add_filter( $cols_hook , 	array( $this , 'move_date_to_end' ) );
+			add_filter( $display_hook , array( $this , 'display_field_column' ) , 10 , 2 );
 		}
+
+
+		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
-			add_action( 'quick_edit_custom_box',  array(&$this,'display_quick_edit') , 10, 2);
-			add_action( 'save_post', array( &$this , 'quickedit_save_acf_meta' ) );
+			add_action( 'quick_edit_custom_box',  array($this,'display_quick_edit') , 10, 2);
+			add_action( 'save_post', array( $this , 'quickedit_save_acf_meta' ) );
 			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'jquery-ui-datepicker', 'inline-edit-post', 'wp-color-picker' ), null, true );
 			wp_enqueue_style('acf-datepicker');
 		}
 		
+		// register bilkedit
 		if ( count( $this->bulkedit_fields ) ) {
-			add_action( 'bulk_edit_custom_box', array( &$this , 'display_bulk_edit' ), 10, 2 );
-// 			add_action( 'post_updated', array( &$this , 'quickedit_save_acf_meta' ) );
+			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
+// 			add_action( 'post_updated', array( $this , 'quickedit_save_acf_meta' ) );
 		}
 	}
 	
