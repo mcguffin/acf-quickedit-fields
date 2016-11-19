@@ -87,18 +87,61 @@ class ACFToQuickEdit {
 	 */
 	function admin_init() {
 		// Suported ACF Fields
-		$types_column = array( 'file', 'image', 'checkbox', 'color_picker', 'date_picker', 'email', 'number', 'radio', 'select', 'text', 'textarea', 'true_false', 'url', 'relationship', 'post_object', 'page_link' );
-		$types_can_qe = array( 'checkbox', 'color_picker', 'date_picker', 'email', 'number', 'radio', 'select', 'text', 'textarea', 'true_false', 'url' );
-		$types_can_be = array( 'checkbox', 'color_picker', 'date_picker', 'email', 'number', 'radio', 'select', 'text', 'textarea', 'true_false', 'url' );
+		$types = array( 
+			// basic
+			'text'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'textarea'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'number'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'email'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'url'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'password'			=> array( 'column' => false,		'quickedit' => false,	'bulkedit' => false ),
 
-		foreach ( $types_column as $type ) {
-			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
-		}
-		foreach ( $types_can_qe as $type ) {
-			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
-		}
-		foreach ( $types_can_be as $type ) {
-			add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_bulk_edit_settings' ) );
+			// Content
+			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'oembed'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'image'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'file'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'gallery'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+
+			// Choice
+			'select'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'checkbox'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'radio'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'true_false'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+
+			// relational
+			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
+			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'taxonomy'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+
+			// jQuery
+			'google_map'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'date_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'date_time_picker'	=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ), 
+			'time_picker'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ), 
+			'color_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			
+			// Layout
+			'message'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'tab'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'repeater'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'flexible_content'	=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'clone'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+		);
+		$types = apply_filters( 'acf_quick_edit_fields_types', $types );
+
+		foreach ( $types as $type => $supports ) {
+			if ( $supports['column'] ) {
+				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_column_settings' ) );
+			}
+			if ( $supports['quickedit'] ) {
+				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_quick_edit_settings' ) );
+			}
+			if ( $supports['bulkedit'] ) {
+				add_action( "acf/render_field_settings/type={$type}" , array( &$this , 'render_bulk_edit_settings' ) );
+			}
 		}
 	}
 
