@@ -270,11 +270,6 @@ class ACFToQuickEdit {
 			}
 
 			foreach ( $fields as $field ) {
-/*
-				if ( ! isset( $field['show_column_weight'] ) || '' === empty( $field['show_column_weight'] ) ) {
-					$field['show_column_weight'] = 1000;
-				}
-*/
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
 				}
@@ -301,18 +296,22 @@ class ACFToQuickEdit {
 				$cols_hook		= "manage_{$post_type}_posts_columns";
 				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
-			add_filter( $cols_hook ,    array( $this , 'add_field_columns' ) );
-			add_filter( $cols_hook , 	array( $this , 'move_date_to_end' ) );
-			add_filter( $display_hook , array( $this , 'display_field_column' ) , 10 , 2 );
+			add_filter( $cols_hook,		array( $this, 'add_field_columns' ) );
+			add_filter( $cols_hook,		array( $this, 'move_date_to_end' ) );
+			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, 2 );
 		}
 
 
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
-			add_action( 'quick_edit_custom_box',  array($this,'display_quick_edit') , 10, 2);
-			add_action( 'save_post', array( $this , 'quickedit_save_acf_meta' ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url('js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'jquery-ui-datepicker', 'inline-edit-post', 'wp-color-picker' ), null, true );
-			wp_enqueue_style('acf-datepicker');
+			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
+			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'jquery-ui-datepicker', 'inline-edit-post', 'wp-color-picker' ), null, true );
+			/*
+			wp_enqueue_style( 'acf-datepicker' );
+			/*/
+			wp_enqueue_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css'), '', '1.11.4' );
+			//*/
 		}
 		
 		// register bilkedit
