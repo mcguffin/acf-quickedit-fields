@@ -41,8 +41,8 @@ It will not work with ACF Free (version 4.x).
 | *jQuery*         |                |             |             |
 | Google Map       | No             | No          | No          |
 | Date Picker      | Yes            | Yes         | Yes         |
-| Date Time Picker | ?              | ?           | ?           |
-| Time Picker      | ?              | ?           | ?           |
+| Date Time Picker | Yes            | Yes         | Yes         |
+| Time Picker      | Yes            | Yes         | Yes         |
 | Color Picker     | Yes            | Yes         | Yes         |
 | *jQuery*         |                |             |             |
 | Message          | No             | No          | No          |
