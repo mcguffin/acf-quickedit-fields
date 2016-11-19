@@ -7,7 +7,7 @@ http://www.advancedcustomfields.com/pro/
 Show Advanced Custom Fields in post list table.
 Edit field values in Quick Edit and / or Bulk edit.
 
-Proofed to work with ACF Pro 5.x.
+Proofed to work with ACF Pro 5.x. 
 It will not work with ACF Free (version 4.x).
 
 **Supported fields:**
