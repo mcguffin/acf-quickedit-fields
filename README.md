@@ -24,8 +24,8 @@ It will not work with ACF Free (version 4.x).
 | *Content*        |                |             |             |
 | WYSIWYG          | No             | No          | No          |
 | oEmbed           | No             | No          | No          |
-| Image            | Yes            | Maybe later | Maybe later |
-| File             | Yes            | Maybe later | Maybe later |
+| Image            | Yes            | No          | No          |
+| File             | Yes            | No          | No          |
 | Gallery          | No             | No          | No          |
 | *Choice*         |                |             |             |
 | Select           | Yes            | Yes         | Yes         |
@@ -33,9 +33,9 @@ It will not work with ACF Free (version 4.x).
 | Radio            | Yes            | Yes         | Yes         |
 | True/False       | Yes            | Yes         | Yes         |
 | *Relational*     |                |             |             |
-| Post Object      | Yes            | Maybe later | Maybe later |
-| Page Link        | Yes            | Maybe later | Maybe later |
-| Relationship     | Yes            | Maybe later | Maybe later |
+| Post Object      | Yes            | No          | No          |
+| Page Link        | Yes            | No          | No          |
+| Relationship     | Yes            | No          | No          |
 | Taxonomy         | No             | No          | No          |
 | User             | No             | No          | No          |
 | *jQuery*         |                |             |             |
@@ -49,7 +49,7 @@ It will not work with ACF Free (version 4.x).
 | Tab              | No             | No          | No          |
 | Repeater         | No             | No          | No          |
 | Flexible Content | No             | No          | No          |
-| Clone            | ?              | ?           | ?           |
+| Clone            | No             | No          | No          |
 
 (1) Password will show as placeholder.
 
