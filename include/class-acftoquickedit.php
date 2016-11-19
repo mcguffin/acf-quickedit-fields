@@ -121,8 +121,8 @@ class ACFToQuickEdit {
 			// jQuery
 			'google_map'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'date_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'date_time_picker'	=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ), 
-			'time_picker'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ), 
+			'date_time_picker'	=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'time_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'color_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			
 			// Layout
