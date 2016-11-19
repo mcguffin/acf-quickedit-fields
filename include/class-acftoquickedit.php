@@ -340,7 +340,6 @@ class ACFToQuickEdit {
 		// register bulkedit
 		if ( count( $this->bulkedit_fields ) ) {
 			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
-// 			add_action( 'post_updated', array( $this , 'quickedit_save_acf_meta' ) );
 		}
 	}
 	
@@ -775,11 +774,15 @@ class ACFToQuickEdit {
 	 *	@action save_post
 	 */
 	function quickedit_save_acf_meta( $post_id ) {
+		$is_quickedit = is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX;
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
-			if ( isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) ) {
+			$do_update = $is_quickedit 
+				? isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] )
+				: isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) && ! empty( $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
+			if ( $do_update ) {
 				update_field( $field['name'], $_REQUEST[ $this->post_field_prefix . $field['name'] ], $post_id );
 			}
 		}
