@@ -57,14 +57,31 @@ var acfQuickedit = {};
 				
 				
 			}
-			$tr.find('input.acf-quick-edit-color_picker').wpColorPicker();
+			$tr.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
+				$(el).wpColorPicker();
+			})
 			
 			// init datepicker
 			$tr.find('.acf-quick-edit-date_picker').each( function( i, el ) {
-				
+
 				acfQuickedit.datepicker.init( $(el) );
 
 			});
+
+			// init timepicker
+			$tr.find('.acf-quick-edit-time_picker').each( function( i, el ) {
+
+				acfQuickedit.timepicker.init( $(el) );
+
+			});
+
+			// init datetimpicker
+			$tr.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
+
+				acfQuickedit.datetimepicker.init( $(el) );
+
+			});
+
 
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
@@ -74,11 +91,12 @@ var acfQuickedit = {};
 	
 	acfQuickedit.datepicker = {
 		init: function( $wrap ) {
-			var $hidden	= $wrap.find( '[type="hidden"]' ),
-				$input	= $wrap.find( '[type="text"]' ),
-				args	= {
+			var $hidden		= $wrap.find( '[type="hidden"]' ),
+				$input		= $wrap.find( '[type="text"]' ),
+				altFormat	= 'yymmdd'
+				args		= {
 					dateFormat		: $wrap.data('date_format'),
-					altFormat		: 'yymmdd',
+					altFormat		: altFormat,
 					altField		: $hidden,
 					changeYear		: true,
 					yearRange		: "-100:+100",
@@ -86,19 +104,64 @@ var acfQuickedit = {};
 					showButtonPanel	: true,
 					firstDay		: $wrap.data('first_day')
 				},
-				
-				date = (function( str ) {
-					var y	= str.slice(0,4),
-						m	= str.slice(4,6),
-						d	= str.slice(6,8);
-					return new Date( [y,m,d].join('-') );
-				})( $hidden.val() );
+				date		= $.datepicker.parseDate( altFormat, $hidden.val()  );
 
 			$input.datepicker( args ).datepicker( 'setDate', date );
-			
 		},
 	
 	};
+
+	acfQuickedit.timepicker = {
+		init: function( $wrap ) {
+			var $hidden			= $wrap.find( '[type="hidden"]' ),
+				$input			= $wrap.find( '[type="text"]' ),
+				altTimeFormat	= 'HH:mm:ss',
+				args			= {
+					timeFormat			: $wrap.data('time_format'),
+					altTimeFormat		: altTimeFormat,
+					altField			: $hidden,
+					altFieldTimeOnly	: false,
+					showButtonPanel		: true,
+					controlType			: 'select',
+					oneLine				: true
+				},
+				time 			= $.datepicker.parseTime( altTimeFormat, $hidden.val() );
+
+			$input.timepicker( args );
+			$input.val( $.datepicker.formatTime( $wrap.data('time_format'), time ) )
+		},
+	
+	};
+
+	
+	acfQuickedit.datetimepicker = {
+		init: function( $wrap ) {
+			var $hidden			= $wrap.find( '[type="hidden"]' ),
+				$input			= $wrap.find( '[type="text"]' ),
+				altFormat		= 'yy-mm-dd'
+				altTimeFormat	= 'HH:mm:ss',
+				args			= {
+					altField			: $hidden,
+					dateFormat			: $wrap.data('date_format'),
+					altFormat			: altFormat,
+					timeFormat			: $wrap.data('time_format'),
+					altTimeFormat		: altTimeFormat,
+					altFieldTimeOnly	: false,
+					changeYear			: true,
+					yearRange			: "-100:+100",
+					changeMonth			: true,
+					showButtonPanel		: true,
+					firstDay			: $wrap.data('first_day'),
+					controlType			: 'select',
+					oneLine				: true
+				},
+				datetime 			= $.datepicker.parseDateTime( altFormat, altTimeFormat, $hidden.val() );
+
+			$input.datetimepicker( args ).datepicker( 'setDate', datetime );
+		},
+	
+	};
+
 	
 	// we create a copy of the WP inline edit post function
 	var _wp_inline_edit = inlineEditPost.edit;

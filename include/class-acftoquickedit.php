@@ -300,21 +300,44 @@ class ACFToQuickEdit {
 			add_filter( $cols_hook,		array( $this, 'move_date_to_end' ) );
 			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, 2 );
 		}
-
-
+		
+		
+		
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
+			// enqueue scripts ...
+			$has_datepicker		= false;
+			$has_colorpicker	= false;
+			foreach ( $this->quickedit_fields as $field ) {
+				if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker'  ) {
+					$has_datepicker = true;
+				}
+				if ( $field['type'] == 'color_picker' ) {
+					$has_colorpicker = true;
+				}
+			}
 			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
 			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'jquery-ui-datepicker', 'inline-edit-post', 'wp-color-picker' ), null, true );
-			/*
-			wp_enqueue_style( 'acf-datepicker' );
-			/*/
-			wp_enqueue_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css'), '', '1.11.4' );
-			//*/
+
+			// ... if necessary
+			if ( $has_datepicker ) {
+				// datepicker
+				wp_enqueue_script( 'jquery-ui-datepicker' );
+				wp_enqueue_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css') );
+
+				// timepicker. Contains some usefull parsing mathods even for dates.
+				wp_enqueue_script('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
+				wp_enqueue_style('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
+			}
+
+			if ( $has_colorpicker ) {
+				wp_enqueue_script( 'wp-color-picker' );
+			}
+
+			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 		}
 		
-		// register bilkedit
+		// register bulkedit
 		if ( count( $this->bulkedit_fields ) ) {
 			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
 // 			add_action( 'post_updated', array( $this , 'quickedit_save_acf_meta' ) );
@@ -347,9 +370,10 @@ class ACFToQuickEdit {
 						$field_obj = get_field_object( $key , $post_id );
 
 						switch ( $field_obj['type'] ) {
+							case 'date_time_picker':
+							case 'time_picker':
 							case 'date_picker':
 								$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
-								$field_val	= acf_format_date( $field_val, 'Ymd' );
 								break;
 							default:
 								$field_val	= $field_obj['value'];
@@ -659,7 +683,7 @@ class ACFToQuickEdit {
 								break;
 
 							case 'date_picker':
-								$div_atts = array(
+								$wrap_atts = array(
 									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
 									'data-date_format'	=> acf_convert_date_to_js($field['display_format']),
 									'data-first_day'	=> $field['first_day'],
@@ -671,16 +695,49 @@ class ACFToQuickEdit {
 									'type'	=> 'hidden', 
 								);
 								
-								echo '<div '. acf_esc_attr( $div_atts ) .'>';
+								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
-								echo '</div>';
+								echo '</span>';
 								break;
 
 							case 'date_time_picker':
+								$formats = acf_split_date_time($field['display_format']);
+								$wrap_atts = array(
+									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'data-date_format'	=> acf_convert_date_to_js($formats['date']),
+									'data-time_format'	=> acf_convert_time_to_js($formats['time']),
+									'data-first_day'	=> $field['first_day'],
+								);
+								$display_input_atts	= array(
+									'type'	=> 'text',
+								);
+								$input_atts += array(
+									'type'	=> 'hidden', 
+								);
+								
+								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
+								echo '</span>';
 								break;
 
 							case 'time_picker':
+								$wrap_atts = array(
+									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
+									'data-time_format'	=> acf_convert_time_to_js($field['display_format']),
+								);
+								$display_input_atts	= array(
+									'type'	=> 'text',
+								);
+								$input_atts += array(
+									'type'	=> 'hidden', 
+								);
+								
+								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
+								echo '</span>';
 								break;
 
 							case 'textarea':
