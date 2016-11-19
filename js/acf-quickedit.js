@@ -1,3 +1,5 @@
+var acfQuickedit = {};
+
 (function($) {
 	
 	function get_acf_post_data( post_id , $parent ) {
@@ -10,19 +12,26 @@
 			req_data.acf_field_keys.push( $(this).data('acf-field-key') );
 			$(this).prop('readonly',true);
 		});
-		$.post(ajaxurl,req_data,function(result){
-			var i,key,value,$tr;
+		$.post( ajaxurl, req_data, function( result ) {
+
+			var i, key, value, $tr;
+
 			var keys = [];
+
 			$parent.find('[data-acf-field-key]').each(function() {
 				!$tr && ($tr = $(this).closest('tr.inline-edit-post'));
 				var key = $(this).data('acf-field-key');
 				keys.push(key);
 			});
-			for (i=0;i<keys.length;i++) {
-				key=keys[i],value=result[key];
+
+			for ( i=0; i<keys.length; i++) {
+
+				key = keys[i], value = result[ key ];
+
 				var $selected;
+
 				if (typeof(value) === 'boolean') {
-					value*=1;
+					value *= 1;
 				}
 
 				// remove readonly prop
@@ -33,11 +42,12 @@
 				// set text field values
 				$('input[type!="radio"][data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
 					.val(value);
-				
+
 				// set val for radio buttons
 				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"]')
 					.find('[value="'+value+'"]')
 					.prop( 'checked',true);
+
 				if ( ! $selected.length ) {
 					if ( !! value )
 						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[value="other"]').prop( 'checked', true );
@@ -47,27 +57,125 @@
 				
 				
 			}
-			$tr.find('input.acf-quick-edit-color_picker').wpColorPicker();
+			$tr.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
+				$(el).wpColorPicker();
+			})
 			
 			// init datepicker
-			$tr.find('input.acf-quick-edit-date_picker').each(function(i,el){
-				var args = {
-					dateFormat		:	'yymmdd',
-					altFormat		:	'yymmdd',
-					changeYear		:	true,
-					yearRange		:	"-100:+100",
-					changeMonth		:	true,
-					showButtonPanel	:	true,
-					firstDay		:	$(this).data('first_day')
-				};
-				console.log($(this).next('input'));
-				$(this).datepicker(args);
+			$tr.find('.acf-quick-edit-date_picker').each( function( i, el ) {
+
+				acfQuickedit.datepicker.init( $(el) );
+
 			});
+
+			// init timepicker
+			$tr.find('.acf-quick-edit-time_picker').each( function( i, el ) {
+
+				acfQuickedit.timepicker.init( $(el) );
+
+			});
+
+			// init datetimpicker
+			$tr.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
+
+				acfQuickedit.datetimepicker.init( $(el) );
+
+			});
+
+
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
 		});
 	}
+	
+	acfQuickedit.datepicker = {
+		init: function( $wrap ) {
+			var $hidden		= $wrap.find( '[type="hidden"]' ),
+				$input		= $wrap.find( '[type="text"]' ),
+				altFormat	= 'yymmdd'
+				args		= {
+					dateFormat		: $wrap.data('date_format'),
+					altFormat		: altFormat,
+					altField		: $hidden,
+					changeYear		: true,
+					yearRange		: "-100:+100",
+					changeMonth		: true,
+					showButtonPanel	: true,
+					firstDay		: $wrap.data('first_day')
+				},
+				date		= $.datepicker.parseDate( altFormat, $hidden.val()  );
+
+			$input.datepicker( args ).datepicker( 'setDate', date ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
+		},
+	
+	};
+
+	acfQuickedit.timepicker = {
+		init: function( $wrap ) {
+			var $hidden			= $wrap.find( '[type="hidden"]' ),
+				$input			= $wrap.find( '[type="text"]' ),
+				altTimeFormat	= 'HH:mm:ss',
+				args			= {
+					timeFormat			: $wrap.data('time_format'),
+					altTimeFormat		: altTimeFormat,
+					altField			: $hidden,
+					altFieldTimeOnly	: false,
+					showButtonPanel		: true,
+					controlType			: 'select',
+					oneLine				: true
+				},
+				time 			= $.datepicker.parseTime( altTimeFormat, $hidden.val() );
+
+			$input.timepicker( args ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
+			if ( $hidden.val() ) {
+				$input.val( $.datepicker.formatTime( $wrap.data('time_format'), time ) )
+			}
+		},
+	
+	};
+
+	
+	acfQuickedit.datetimepicker = {
+		init: function( $wrap ) {
+			var $hidden			= $wrap.find( '[type="hidden"]' ),
+				$input			= $wrap.find( '[type="text"]' ),
+				altFormat		= 'yy-mm-dd'
+				altTimeFormat	= 'HH:mm:ss',
+				args			= {
+					altField			: $hidden,
+					dateFormat			: $wrap.data('date_format'),
+					altFormat			: altFormat,
+					timeFormat			: $wrap.data('time_format'),
+					altTimeFormat		: altTimeFormat,
+					altFieldTimeOnly	: false,
+					changeYear			: true,
+					yearRange			: "-100:+100",
+					changeMonth			: true,
+					showButtonPanel		: true,
+					firstDay			: $wrap.data('first_day'),
+					controlType			: 'select',
+					oneLine				: true
+				},
+				datetime 			= $.datepicker.parseDateTime( altFormat, altTimeFormat, $hidden.val() );
+
+			$input.datetimepicker( args ).datepicker( 'setDate', datetime ).on('blur',function(){
+				if ( ! $(this).val() ) {
+					$hidden.val('');
+				}
+			});
+		},
+	
+	};
+
 	
 	// we create a copy of the WP inline edit post function
 	var _wp_inline_edit = inlineEditPost.edit;
