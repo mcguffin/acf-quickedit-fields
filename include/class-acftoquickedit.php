@@ -595,7 +595,7 @@ class ACFToQuickEdit {
 		}
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
 			if ( isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) ) {
-				update_post_meta( $post_id , $field['name'] , $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
+				update_field($field['name'], $_REQUEST[ $this->post_field_prefix . $field['name'] ], $post_id );
 			}
 		}
 	}
