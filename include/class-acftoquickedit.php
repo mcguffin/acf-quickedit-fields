@@ -136,8 +136,6 @@ class ACFToQuickEdit {
 		/**
 		 * Filter field type support of ACF Quick Edit Fields
 		 *
-		 * @since 2.5.0
-		 *
 		 * @param array $fields		An associative array of field type support having the ACF field name as keys 
 		 *							and an array of supported fetaures as values. 
 		 *							Features are 'column', 'quickedit' and 'bulkedit'.
@@ -257,10 +255,17 @@ class ACFToQuickEdit {
 
 		if ( $pagenow == 'upload.php' ) {
 			$post_type = 'attachment';
-			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'attachment' => 'all|image' ) ) );
+			$conditions = array( 'attachment' => 'all|image' );
 		} else {
-			$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', array( 'post_type' => $post_type ) ) );
+			$conditions = array( 'post_type' => $post_type );
 		}
+
+		/**
+		 * Getting the Field Groups to be displayed in posts list table
+		 *
+		 * @param array $conditions	Field group conditions passed to `acf_get_field_groups()`
+		 */
+		$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
 
 		// register column display
 		foreach ( $field_groups as $field_group ) {
