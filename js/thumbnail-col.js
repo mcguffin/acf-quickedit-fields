@@ -7,7 +7,7 @@
 			step	= $(this).width() / num;
 
 		$img.each( function(i,el) {
-			if (i <= Math.round(x/step)) {
+			if (x >= step*i) {
 				$(el).show();
 			} else {
 				$(el).hide();
