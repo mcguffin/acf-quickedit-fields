@@ -103,7 +103,7 @@ class ACFToQuickEdit {
 			'oembed'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'image'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
 			'file'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
-			'gallery'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'gallery'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 
 			// Choice
 			'select'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
@@ -159,8 +159,9 @@ class ACFToQuickEdit {
 	 * @filter 'acf/format_value/type=radio'
 	 */
 	function format_radio( $value, $post_id, $field ) {
-		if ( ( $nice_value = $field['choices'][$value]) )
+		if ( ( $nice_value = $field['choices'][$value]) ) {
 			return $nice_value;
+		}
 		return $value;
 	}
 
@@ -306,7 +307,20 @@ class ACFToQuickEdit {
 			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, 2 );
 		}
 		
-		
+		if ( count( $this->column_fields ) ) {
+			$has_thumbnail		= false;
+			foreach ( $this->column_fields as $field ) {
+				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
+					$has_thumbnail = true;
+					break;
+				}
+			}
+
+			if ( $has_thumbnail ) {
+				wp_enqueue_script( 'acf-qef-thumbnail-col', plugins_url( 'js/thumbnail-col.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
+				wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', dirname( __FILE__ ) ) );
+			}
+		}
 		
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
@@ -314,6 +328,9 @@ class ACFToQuickEdit {
 			$has_datepicker		= false;
 			$has_colorpicker	= false;
 			foreach ( $this->quickedit_fields as $field ) {
+				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
+					$has_thumbnail = true;
+				}
 				if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker'  ) {
 					$has_datepicker = true;
 				}
@@ -412,6 +429,9 @@ class ACFToQuickEdit {
 		$this->_wp_column_weights = array_map( array( $this, '_mul_100' ) , array_flip( array_keys( $columns ) ) );
 
 		foreach ( $this->column_fields as $field_slug => $field ) {
+			if ( in_array( $field['type'], array('image','gallery'))) {
+				$field_slug .= '-qef-thumbnail';
+			}
 			$columns[ $field_slug ] = $field['label'];
 		}
 		uksort($columns, array( $this, '_sort_columns_by_weight' ));
@@ -433,6 +453,7 @@ class ACFToQuickEdit {
 	}
 
 	private function _get_column_weight( $column_slug ) {
+		$column_slug = str_replace('-qef-thumbnail','',$column_slug);
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
 		} else if ( isset( $this->column_fields[ $column_slug ]['show_column_weight'] ) && '' !==  $this->column_fields[ $column_slug ]['show_column_weight'] ) {
@@ -446,7 +467,8 @@ class ACFToQuickEdit {
 	 * @filter manage_media_custom_column
 	 * @filter manage_{$post_type}_posts_custom_column
 	 */
-	function display_field_column( $column , $post_id ) {
+	function display_field_column( $wp_column_slug , $post_id ) {
+		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
 			switch ( $field['type'] ) {
@@ -470,6 +492,26 @@ class ACFToQuickEdit {
 							// Image field is a url
 							echo '<img src="' . $image_id . '" width="80" height="80" />';
 						};
+					}
+					break;
+				case 'gallery':
+					/**
+					 * Filter number of images to be displayed in Gallery Column
+					 *
+					 * @param int $max_images	Maximum Number of images
+					 */
+					if ( $max_images = apply_filters( 'acf_quick_edit_fields_gallery_col_max_images', 15 ) ) {
+						$images = get_field( $field['key'] );
+						if ( count( $images ) ) {
+							?><div class="acf-qef-gallery-col"><?php
+							foreach ( array_values( $images ) as $i => $image) {
+								if ( $i >= $max_images ) {
+									break;
+								}
+								echo wp_get_attachment_image( $image['id'] , array(80, 80) );
+							}
+							?></div><?php
+						}
 					}
 					break;
 				case 'select':
@@ -575,12 +617,14 @@ class ACFToQuickEdit {
 	    return $defaults; 
 	} 
 
-	function display_quick_edit( $column, $post_type ) {
+	function display_quick_edit( $wp_column_slug, $post_type ) {
+		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
 			$this->display_quickedit_field( $column, $post_type , $field  );
 		}
 	}
-	function display_bulk_edit( $column, $post_type ) {
+	function display_bulk_edit( $wp_column_slug, $post_type ) {
+		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 		if ( isset($this->bulkedit_fields[$column]) && $field = $this->bulkedit_fields[$column] ) {
 			$this->display_quickedit_field( $column, $post_type , $field  );
 		}
