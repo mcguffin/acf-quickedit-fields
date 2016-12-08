@@ -502,7 +502,7 @@ class ACFToQuickEdit {
 					 */
 					if ( $max_images = apply_filters( 'acf_quick_edit_fields_gallery_col_max_images', 15 ) ) {
 						$images = get_field( $field['key'] );
-						if ( count( $images ) ) {
+						if ( $images ) {
 							?><div class="acf-qef-gallery-col"><?php
 							foreach ( array_values( $images ) as $i => $image) {
 								if ( $i >= $max_images ) {
