@@ -496,9 +496,13 @@ class ACFToQuickEdit {
 					break;
 				case 'gallery':
 					$images = get_field( $field['key'] );
+					$max_images = apply_filters( 'acf_quick_edit_fields_gallery_col_max_images', 10 );
 					if ( count( $images ) ) {
 						?><div class="acf-qef-gallery-col"><?php
-						foreach ( $images as $image) {
+						foreach ( array_values( $images ) as $i => $image) {
+							if ( $i > $max_images ) {
+								break;
+							}
 							echo wp_get_attachment_image( $image['id'] , array(80, 80) );
 						}
 						?></div><?php
