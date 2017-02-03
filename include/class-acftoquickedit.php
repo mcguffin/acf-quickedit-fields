@@ -56,6 +56,7 @@ class ACFToQuickEdit {
 			add_action( 'admin_init' , array( $this, 'init_columns' ) );
 			add_action( 'load-admin-ajax.php' , array( $this, 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
+			add_action( 'load-edit.php' , array( $this, 'enqueue_assets' ) );
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
 		}
@@ -316,6 +317,36 @@ class ACFToQuickEdit {
 				}
 			}
 
+		}
+		
+		// register quickedit
+		if ( count( $this->quickedit_fields ) ) {
+			// enqueue scripts ...
+			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
+			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
+
+
+		}
+		
+		// register bulkedit
+		if ( count( $this->bulkedit_fields ) ) {
+			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * @action 'load-edit.php'
+	 */
+	function enqueue_assets() {
+		if ( count( $this->column_fields ) ) {
+			$has_thumbnail		= false;
+			foreach ( $this->column_fields as $field ) {
+				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
+					$has_thumbnail = true;
+					break;
+				}
+			}
+
 			if ( $has_thumbnail ) {
 				wp_enqueue_script( 'acf-qef-thumbnail-col', plugins_url( 'js/thumbnail-col.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 				wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', dirname( __FILE__ ) ) );
@@ -328,9 +359,6 @@ class ACFToQuickEdit {
 			$has_datepicker		= false;
 			$has_colorpicker	= false;
 			foreach ( $this->quickedit_fields as $field ) {
-				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
-					$has_thumbnail = true;
-				}
 				if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker'  ) {
 					$has_datepicker = true;
 				}
@@ -338,8 +366,6 @@ class ACFToQuickEdit {
 					$has_colorpicker = true;
 				}
 			}
-			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
-			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
 
 			// ... if necessary
 			if ( $has_datepicker ) {
@@ -359,12 +385,8 @@ class ACFToQuickEdit {
 			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 		}
 		
-		// register bulkedit
-		if ( count( $this->bulkedit_fields ) ) {
-			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
-		}
 	}
-	
+
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
