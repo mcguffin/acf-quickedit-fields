@@ -1,7 +1,6 @@
 var acfQuickedit = {};
 
 (function($) {
-	
 	function get_acf_post_data( post_id , $parent ) {
 		var req_data = {
 			'action' : 'get_acf_post_meta',
@@ -13,7 +12,6 @@ var acfQuickedit = {};
 			$(this).prop('readonly',true);
 		});
 		$.post( ajaxurl, req_data, function( result ) {
-
 			var i, key, value, $tr;
 
 			var keys = [];
@@ -21,7 +19,9 @@ var acfQuickedit = {};
 			$parent.find('[data-acf-field-key]').each(function() {
 				!$tr && ($tr = $(this).closest('tr.inline-edit-post'));
 				var key = $(this).data('acf-field-key');
-				keys.push(key);
+				if ( keys.indexOf( key ) === -1 ) {
+					keys.push(key);
+				}
 			});
 
 			for ( i=0; i<keys.length; i++) {
@@ -30,6 +30,7 @@ var acfQuickedit = {};
 
 				var $selected;
 
+				// convert bool to int
 				if (typeof(value) === 'boolean') {
 					value *= 1;
 				}
@@ -55,28 +56,29 @@ var acfQuickedit = {};
 						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[type="text"]').val('');
 				}
 				
-				
 			}
-			$tr.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
+
+			$parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
+//console.log($(el));
 				$(el).wpColorPicker();
 			})
 			
 			// init datepicker
-			$tr.find('.acf-quick-edit-date_picker').each( function( i, el ) {
+			$parent.find('.acf-quick-edit-date_picker').each( function( i, el ) {
 
 				acfQuickedit.datepicker.init( $(el) );
 
 			});
 
 			// init timepicker
-			$tr.find('.acf-quick-edit-time_picker').each( function( i, el ) {
+			$parent.find('.acf-quick-edit-time_picker').each( function( i, el ) {
 
 				acfQuickedit.timepicker.init( $(el) );
 
 			});
 
 			// init datetimpicker
-			$tr.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
+			$parent.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
 
 				acfQuickedit.datetimepicker.init( $(el) );
 
@@ -181,27 +183,27 @@ var acfQuickedit = {};
 	var _wp_inline_edit = inlineEditPost.edit;
 	// and then we overwrite the function with our own code
 	inlineEditPost.edit = function( id ) {
-		var post_id, req_data;
+		var post_id;
 		// "call" the original WP edit function
 		// we don't want to leave WordPress hanging
 		_wp_inline_edit.apply( this, arguments );
 
 		// get the post ID
 		post_id = 0;
-		if ( typeof( id ) == 'object' ) {
+		if ( typeof( id ) === 'object' ) {
 			post_id = parseInt( this.getId( id ) );
 		}
-		get_acf_post_data( post_id , $('.inline-edit-row')	 );
+		get_acf_post_data( post_id , $('#edit-' + post_id )	 );
 	};
 	
 	$(document).on( 'click' , '.bulkactions .button.action' , function( e ) {
 		var post_ids = [];
-		var req_data = {
-			'action' : 'get_acf_post_meta',
-			'post_id' : false,
-			'post_ids' : [],
-			'acf_field_keys' : []
-		}
+// 		var req_data = {
+// 			'action' : 'get_acf_post_meta',
+// 			'post_id' : false,
+// 			'post_ids' : [],
+// 			'acf_field_keys' : []
+// 		}
 		$( '#bulk-edit #bulk-titles' ).children().each( function() {
 			post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
 		});

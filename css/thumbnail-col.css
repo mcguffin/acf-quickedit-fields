@@ -35,3 +35,23 @@
 .acf-qef-gallery-col img:first-child {
 	display:block;
 }
+
+
+.inline-edit-row .input-text-wrap .wp-picker-input-wrap input[type="text"] {
+	width:65px;
+	vertical-align:top;
+	margin-right:5px;
+}
+
+.inline-edit-row .iris-picker {
+	position:absolute;
+}
+/* 
+.inline-edit-col a.wp-color-result {
+	display: inline-block;
+	width:30px;
+	height:30px;
+	border:1px solid #ccc;
+	border-radius:3px;
+}
+ */
