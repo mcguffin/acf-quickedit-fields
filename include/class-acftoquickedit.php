@@ -116,7 +116,7 @@ class ACFToQuickEdit {
 			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
-			'taxonomy'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'taxonomy'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 
 			// jQuery
@@ -574,6 +574,13 @@ class ACFToQuickEdit {
 					?><pre><?php
 						the_field($field['key']);
 					?></pre><?php
+					break;
+				case 'taxonomy':
+					$val = get_field($field['key']);
+					if( $val ) {
+						$tax = $field['return_format'] === 'object' ? $val : get_term($val, $field['taxonomy']);
+						echo $tax->name;
+					}
 					break;
 				case 'relationship':
 				case 'post_object':
