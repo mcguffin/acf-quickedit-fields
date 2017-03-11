@@ -576,10 +576,18 @@ class ACFToQuickEdit {
 					?></pre><?php
 					break;
 				case 'taxonomy':
-					$val = get_field($field['key']);
-					if( $val ) {
-						$tax = $field['return_format'] === 'object' ? $val : get_term($val, $field['taxonomy']);
-						echo $tax->name;
+					$value = get_field($field['key']);
+					if ( $value ) {
+						$term_names = array();
+						foreach ( (array) $value as $i => $term ) {
+							if ( $field['return_format'] === 'id' ) {
+								$term = get_term($term, $field['taxonomy']);
+							}
+							$term_names[] = $term->name;
+						}
+						echo implode( ', ', $term_names );
+					} else {
+						_e('(No value)', 'acf-quick-edit-fields');
 					}
 					break;
 				case 'relationship':
