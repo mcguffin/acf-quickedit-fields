@@ -346,11 +346,6 @@ class ACFToQuickEdit {
 					break;
 				}
 			}
-
-			if ( $has_thumbnail ) {
-				wp_enqueue_script( 'acf-qef-thumbnail-col', plugins_url( 'js/thumbnail-col.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
-				wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', dirname( __FILE__ ) ) );
-			}
 		}
 		
 		// register quickedit
@@ -383,7 +378,8 @@ class ACFToQuickEdit {
 				wp_enqueue_script( 'wp-color-picker' );
 			}
 
-			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
+			wp_enqueue_style( 'acf-quick-edit', plugins_url( 'css/acf-quickedit.css', dirname( __FILE__ ) ) );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 		}
 		
 	}

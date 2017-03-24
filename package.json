@@ -1,0 +1,27 @@
+{
+  "name": "acf-polylang-sync",
+  "version": "1.0.0",
+  "description": "Enter description here.",
+  "main": "js/wp-robocrop.combined.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcguffin/acf-polylang-sync.git"
+  },
+  "author": "Jörn Lund",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcguffin/acf-polylang-sync/issues"
+  },
+  "homepage": "https://github.com/mcguffin/acf-polylang-sync#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.0.0",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0"
+  }
+}

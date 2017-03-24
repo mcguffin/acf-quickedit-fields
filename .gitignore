@@ -1,8 +1,12 @@
 ## generic files to ignore
 *~
+~*
 *.lock
 *.DS_Store
 *.swp
 *.out
+*.psd
 .svn/
 .svnignore
+.sass-cache
+node_modules/
