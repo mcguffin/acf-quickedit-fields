@@ -45,6 +45,7 @@
 
 .inline-edit-row .iris-picker {
 	position:absolute;
+	z-index:1;
 }
 /* 
 .inline-edit-col a.wp-color-result {

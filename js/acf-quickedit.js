@@ -59,7 +59,6 @@ var acfQuickedit = {};
 			}
 
 			$parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
-//console.log($(el));
 				$(el).wpColorPicker();
 			})
 			
