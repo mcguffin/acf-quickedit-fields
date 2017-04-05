@@ -347,7 +347,7 @@ class ACFToQuickEdit {
 				}
 			}
 		}
-		
+
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
 			// enqueue scripts ...
@@ -668,7 +668,7 @@ class ACFToQuickEdit {
 	function display_quickedit_field( $column, $post_type , $field ) {
 		?>
 		<fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>">
-			<div class="inline-edit-col column-<?php echo $column; ?>">
+			<div class="acf-field inline-edit-col column-<?php echo $column; ?>" data-key="<?php echo $field['key'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $field['label']; ?></span>
 					<span class="input-text-wrap"><?php
@@ -840,7 +840,20 @@ class ACFToQuickEdit {
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 
+							case 'color_picker':
+								$input_atts += array(
+									'class'	=> 'wp-color-picker acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type'	=> 'text', 
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								break;
+
 							default:
+
+								do_action( 'acf_quick_edit_field_' . $field['type'], $field, $column, $post_type  );
+								if ( ! apply_filters( 'acf_quick_edit_render_' . $field['type'], true, $field, $column, $post_type ) ) {
+									break;
+								}
 								$input_atts += array(
 									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
 									'type'	=> 'text', 
@@ -863,13 +876,15 @@ class ACFToQuickEdit {
 			return;
 		}
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
-			$do_update = $is_quickedit 
+			$do_update = $is_quickedit || $field['type'] === 'true_false'
 				? isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] )
 				: isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) && ! empty( $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
+			
 			if ( $do_update ) {
 				update_field( $field['name'], $_REQUEST[ $this->post_field_prefix . $field['name'] ], $post_id );
 			}
 		}
+//		exit();
 	}
 }
 
