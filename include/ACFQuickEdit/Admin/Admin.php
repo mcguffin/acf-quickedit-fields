@@ -1,49 +1,32 @@
 <?php
 
+namespace ACFQuickEdit\Admin;
+
+use ACFQuickEdit\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
+class Admin extends Core\Singleton {
 
-if ( ! class_exists( 'ACFToQuickEdit' ) ) :
-class ACFToQuickEdit {
-	private static $_instance = null;
 	private $post_field_prefix = 'acf_qed_';
 
 	private $column_fields = array();	
+
 	private $quickedit_fields = array();	
+
 	private $bulkedit_fields = array();	
 
 	private $_wp_column_weights = array();	
 
-	/**
-	 * Getting a singleton.
-	 *
-	 * @return object single instance of SteinPostTypePerson
-	 */
-	public static function instance() {
-		if ( is_null( self::$_instance ) )
-			self::$_instance = new self();
-		return self::$_instance;
-	}
 
 	/**
 	 * Private constructor
 	 */
-	private function __construct() {
-		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
+	protected function __construct() {
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
 	}
 
-	/**
-	 * Hooked on 'plugins_loaded' 
-	 * Load text domain
-	 *
-	 * @action plugins_loaded
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain( 'acf-quick-edit-fields', false, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/' );
-	}
 	/**
 	 * Setup plugin
 	 *
@@ -413,14 +396,9 @@ class ACFToQuickEdit {
 					break;
 				}
 			}
-
-/*
-			if ( $has_thumbnail ) {
-				wp_enqueue_script( 'acf-qef-thumbnail-col', plugins_url( 'js/thumbnail-col.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
-			}
-*/
 		}
-		wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', dirname( __FILE__ ) ) );
+
+		wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', ACFQUICKEDIT_FILE ) );
 		
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
@@ -446,9 +424,7 @@ class ACFToQuickEdit {
 	 * @action 'load-edit.php'
 	 */
 	function enqueue_assets() {
-
 		global $typenow, $pagenow;
-
 		if ( count( $this->column_fields ) ) {
 			$has_thumbnail		= false;
 			foreach ( $this->column_fields as $field ) {
@@ -488,11 +464,12 @@ class ACFToQuickEdit {
 				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker' );
 			}
-			wp_enqueue_style( 'acf-quick-edit', plugins_url( 'css/acf-quickedit.css', dirname( ACFQUICKEDIT_FILE ) ) );
+
+			wp_enqueue_style( 'acf-quick-edit', plugins_url( 'css/acf-quickedit.css', ACFQUICKEDIT_FILE ) );
 			if ( $pagenow == 'edit-tags.php' ) {
-				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( ACFQUICKEDIT_FILE ) ), array( 'inline-edit-tax' ), null, true );
+				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax' ), null, true );
 			} else {
-				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( ACFQUICKEDIT_FILE ) ), array( 'inline-edit-post' ), null, true );
+				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post' ), null, true );
 			}
 		}
 		
@@ -1070,6 +1047,3 @@ class ACFToQuickEdit {
 		}
 	}
 }
-
-ACFToQuickEdit::instance();
-endif;
