@@ -15,3 +15,11 @@ See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a qui
 ToDo:
 -----
  - [ ] Bulk: Add no-change option to all fields
+ - [ ] Add columns to Terms
+ - [ ] Add quickedit to Terms
+ - [ ] Conditional:
+ 	- [ ] Current user role
+ 	- [x] Post Category / Term
+ 	- [x] Post Format
+ 	- [x] Post Status
+ 	

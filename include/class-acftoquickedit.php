@@ -57,6 +57,7 @@ class ACFToQuickEdit {
 			add_action( 'load-admin-ajax.php' , array( $this, 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
 			add_action( 'load-edit.php' , array( $this, 'enqueue_assets' ) );
+			add_action( 'load-edit-tags.php' , array( $this, 'enqueue_assets' ) );
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
 		}
@@ -249,18 +250,108 @@ class ACFToQuickEdit {
 	}
 
 	/**
+	 * @filter 'acf/location/rule_match/post_taxonomy'
+	 */
+	function match_post_taxonomy( $match, $rule, $options ) {
+
+		if ( isset( $_REQUEST['category_name'] ) ) {
+
+			// WP categories
+
+			return $rule['operator'] == '==' && $rule['value'] == sprintf('category:%s', $_REQUEST['category_name'] );
+
+		} else {
+
+			// Any other taxonomy
+
+			foreach ( $_REQUEST as $key => $value ) {
+
+				if ( taxonomy_exists( $key ) && strpos( $rule['value'], $key ) === 0 ) {
+					return $rule['operator'] == '==' && $rule['value'] == sprintf('%s:%s', $key, $value );
+				}
+
+			}
+
+		}
+		return $match;
+	}
+
+	/**
+	 * @filter 'acf/location/rule_match/post_format'
+	 */
+	function match_post_format( $match, $rule, $options ) {
+
+		if ( isset( $_REQUEST['post_format'] ) ) {
+
+			return $rule['operator'] == '==' && $rule['value'] == $_REQUEST['post_format'];
+
+		}
+		return $match;
+	}
+
+	/**
+	 * @filter 'acf/location/rule_match/post_status'
+	 */
+	function match_post_status( $match, $rule, $options ) {
+
+		if ( isset( $_REQUEST['post_status'] ) ) {
+
+			return $rule['operator'] == '==' && $rule['value'] == $_REQUEST['post_status'];
+
+		}
+		return $match;
+	}
+
+	/**
 	 * @action 'admin_init'
 	 */
 	function init_columns( $cols ) {
 		global $typenow, $pagenow;
-		$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : ( ! empty( $typenow ) ? $typenow : 'post' );
+		
+		$content_type = null;
+
+		// gather conditions for field parts
 
 		if ( $pagenow == 'upload.php' ) {
+
+			$content_type = 'post';
+
 			$post_type = 'attachment';
+
 			$conditions = array( 'attachment' => 'all|image' );
-		} else {
+
+		} else if ( $pagenow == 'edit.php' ) {
+
+			$content_type = 'post';
+
+			$post_type = isset($_REQUEST['post_type']) ? $_REQUEST['post_type'] : ( ! empty( $typenow ) ? $typenow : 'post' );
+
 			$conditions = array( 'post_type' => $post_type );
+
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
+				if ( $_REQUEST['action'] === 'inline-save' && isset( $_REQUEST['post_ID'] ) ) {
+					$conditions['post_id']	= intval( $_REQUEST['post_ID'] );
+				}
+			} else {
+				add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
+				add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
+				add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
+			}
+		} else if ( $pagenow == 'edit-tags.php' ) {
+
+			if ( taxonomy_exists( $_REQUEST['taxonomy'] ) ) {
+				$content_type = 'taxonomy';
+
+				$taxonomy = $_REQUEST['taxonomy'];
+
+				$conditions = array( 'taxonomy' => $_REQUEST['taxonomy'] );
+			}
 		}
+
+		if ( is_null( $content_type ) ) {
+			return;
+		}
+
 
 		/**
 		 * Getting the Field Groups to be displayed in posts list table
@@ -290,22 +381,29 @@ class ACFToQuickEdit {
 		}
 
 		if ( count( $this->column_fields ) ) {
-			if ( 'post' == $post_type ) {
-				$cols_hook		= 'manage_posts_columns';
-				$display_hook	= 'manage_posts_custom_column';
-			} else if ( 'page' == $post_type ) {
-				$cols_hook		= 'manage_pages_columns';
-				$display_hook	= 'manage_pages_custom_column';
-			} else if ( 'attachment' == $post_type ) {
-				$cols_hook		= 'manage_media_columns';
-				$display_hook	= 'manage_media_custom_column';
-			} else {
-				$cols_hook		= "manage_{$post_type}_posts_columns";
-				$display_hook	= "manage_{$post_type}_posts_custom_column";
+			if ( 'post' == $content_type ) {
+				$display_count_args = 2;
+				if ( 'post' == $post_type ) {
+					$cols_hook		= 'manage_posts_columns';
+					$display_hook	= 'manage_posts_custom_column';
+				} else if ( 'page' == $post_type ) {
+					$cols_hook		= 'manage_pages_columns';
+					$display_hook	= 'manage_pages_custom_column';
+				} else if ( 'attachment' == $post_type ) {
+					$cols_hook		= 'manage_media_columns';
+					$display_hook	= 'manage_media_custom_column';
+				} else {
+					$cols_hook		= "manage_{$post_type}_posts_columns";
+					$display_hook	= "manage_{$post_type}_posts_custom_column";
+				}
+				add_filter( $cols_hook,		array( $this, 'move_date_to_end' ), 11 );
+			} else if ( 'taxonomy' == $content_type ) {
+				$display_count_args = 3;
+				$cols_hook		= "manage_edit-{$taxonomy}_columns";
+				$display_hook	= "manage_{$taxonomy}_custom_column";
 			}
 			add_filter( $cols_hook,		array( $this, 'add_field_columns' ) );
-			add_filter( $cols_hook,		array( $this, 'move_date_to_end' ) );
-			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, 2 );
+			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, $display_count_args );
 		}
 		
 		if ( count( $this->column_fields ) ) {
@@ -488,17 +586,32 @@ class ACFToQuickEdit {
 	}
 
 	/**
-	 * @filter manage_posts_custom_column
-	 * @filter manage_media_custom_column
-	 * @filter manage_{$post_type}_posts_custom_column
+	 * @action manage_posts_custom_column
+	 * @action manage_media_custom_column
+	 * @action manage_{$post_type}_posts_custom_column
 	 */
-	function display_field_column( $wp_column_slug , $post_id ) {
+	function display_post_field_column( $wp_column_slug , $object_id ) {
+		return $this->display_field_column( $wp_column_slug , $object_id );
+	}
+	/**
+	 * @action manage_edit-{$taxonomy}_custom_column
+	 */
+	function display_term_field_column( $content, $wp_column_slug , $object_id ) {
+		$object = get_term( $object );
+		return $this->display_field_column( $wp_column_slug , $object );
+	}
+
+	function display_field_column( $wp_column_slug , $object_id ) {
+		
+		$args = func_get_args();
+		
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
+
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
 			switch ( $field['type'] ) {
 				case 'file':
-					$value = acf_get_value( $post_id, $field );
+					$value = acf_get_value( $object_id, $field );
 					if ( ! is_null($value) && ! empty($value) ) {
 						$file = get_post($value);
 						printf( __('Edit: <a href="%s">%s</a>','acf-quick-edit-fields') , get_edit_post_link( $value ) , $file->post_title );
@@ -629,7 +742,7 @@ class ACFToQuickEdit {
 				case 'date_picker':
 				case 'time_picker':
 				case 'date_time_picker':
-					$val = get_field( $field['key'], $post_id, false );
+					$val = get_field( $field['key'], $object_id, false );
 					echo acf_format_date( $val, $field['display_format'] );
 					break;
 				default:
