@@ -14,6 +14,4 @@ See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a qui
 
 ToDo:
 -----
- - [ ] Better Bulk & Quickedit layout. 
  - [ ] Bulk: Add no-change option to all fields
- - [ ] Fix checkboxes
