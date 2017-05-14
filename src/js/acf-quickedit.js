@@ -178,23 +178,47 @@ var acfQuickedit = {};
 	};
 
 	
-	// we create a copy of the WP inline edit post function
-	var _wp_inline_edit = inlineEditPost.edit;
-	// and then we overwrite the function with our own code
-	inlineEditPost.edit = function( id ) {
-		var post_id;
-		// "call" the original WP edit function
-		// we don't want to leave WordPress hanging
-		_wp_inline_edit.apply( this, arguments );
+	if ( 'undefined' !== typeof inlineEditPost ) {
+		// we create a copy of the WP inline edit post function
+		var _wp_inline_edit_post = inlineEditPost.edit;
+		// and then we overwrite the function with our own code
+		inlineEditPost.edit = function( id ) {
+			var post_id;
+			// "call" the original WP edit function
+			// we don't want to leave WordPress hanging
+			_wp_inline_edit_post.apply( this, arguments );
 
-		// get the post ID
-		post_id = 0;
-		if ( typeof( id ) === 'object' ) {
-			post_id = parseInt( this.getId( id ) );
-		}
-		get_acf_post_data( post_id , $('#edit-' + post_id )	 );
-	};
-	
+			// get the post ID
+			post_id = 0;
+			if ( typeof( id ) === 'object' ) {
+				post_id = parseInt( this.getId( id ) );
+			}
+			get_acf_post_data( post_id , $('#edit-' + post_id )	 );
+		};
+	}
+
+	if ( 'undefined' !== typeof inlineEditTax ) {
+		// we create a copy of the WP inline edit post function
+		var _wp_inline_edit_tax = inlineEditTax.edit;
+		// and then we overwrite the function with our own code
+		inlineEditTax.edit = function( id ) {
+			var object_id,
+				tax = $('input[name="taxonomy"]').val();
+			// "call" the original WP edit function
+			// we don't want to leave WordPress hanging
+			_wp_inline_edit_tax.apply( this, arguments );
+
+			// get the post ID
+			object_id = 0;
+			if ( typeof( id ) === 'object' ) {
+				object_id = parseInt( this.getId( id ) );
+			}
+			console.log(object_id );
+			
+			get_acf_post_data( tax + '_' + object_id , $('#edit-' + object_id )	 );
+		};
+	}
+
 	$(document).on( 'click' , '.bulkactions .button.action' , function( e ) {
 		var post_ids = [];
 // 		var req_data = {
@@ -203,13 +227,20 @@ var acfQuickedit = {};
 // 			'post_ids' : [],
 // 			'acf_field_keys' : []
 // 		}
+
 		$( '#bulk-edit #bulk-titles' ).children().each( function() {
+
 			post_ids.push( $( this ).attr( 'id' ).replace( /^(ttle)/i, '' ) );
+
 		});
+
 		get_acf_post_data( post_ids , $( '#bulk-edit' ) );
+
 	}).on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
+
 		var $this = $(this), $list = $this.closest('.acf-radio-list'), 
 			$other = $list.find('[type="text"]').prop('disabled',$this.val() != 'other');
+
 	});
 	
 

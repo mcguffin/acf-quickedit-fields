@@ -45,8 +45,8 @@ gulp.task('scripts-build', function() {
 
 
 gulp.task( 'watch', function() {
-	gulp.watch('scss/**/*.scss', ['styles'] );
-	gulp.watch('js/**/*.js', ['scripts-build'] );
+	gulp.watch('./src/scss/**/*.scss', ['styles'] );
+	gulp.watch('./src/js/**/*.js', ['scripts-build'] );
 } );
 
 gulp.task( 'build', ['styles-build','scripts-build'] );

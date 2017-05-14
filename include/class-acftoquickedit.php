@@ -382,7 +382,6 @@ class ACFToQuickEdit {
 
 		if ( count( $this->column_fields ) ) {
 			if ( 'post' == $content_type ) {
-				$display_count_args = 2;
 				if ( 'post' == $post_type ) {
 					$cols_hook		= 'manage_posts_columns';
 					$display_hook	= 'manage_posts_custom_column';
@@ -397,13 +396,13 @@ class ACFToQuickEdit {
 					$display_hook	= "manage_{$post_type}_posts_custom_column";
 				}
 				add_filter( $cols_hook,		array( $this, 'move_date_to_end' ), 11 );
+				add_filter( $display_hook,	array( $this, 'display_post_field_column' ), 10, 2 );
 			} else if ( 'taxonomy' == $content_type ) {
-				$display_count_args = 3;
 				$cols_hook		= "manage_edit-{$taxonomy}_columns";
 				$display_hook	= "manage_{$taxonomy}_custom_column";
+				add_filter( $display_hook,	array( $this, 'display_term_field_column' ), 10, 3 );
 			}
 			add_filter( $cols_hook,		array( $this, 'add_field_columns' ) );
-			add_filter( $display_hook,	array( $this, 'display_field_column' ), 10, $display_count_args );
 		}
 		
 		if ( count( $this->column_fields ) ) {
@@ -427,7 +426,12 @@ class ACFToQuickEdit {
 		if ( count( $this->quickedit_fields ) ) {
 			// enqueue scripts ...
 			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
-			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
+			if ( $content_type == 'post' ) {
+				add_action( 'save_post', array( $this, 'quickedit_save_acf_post_meta' ) );
+			} else if ( $content_type = 'taxonomy' ) {
+				add_action( 'edit_term', array( $this, 'quickedit_save_acf_term_meta' ), 10, 3 );
+			}
+
 
 
 		}
@@ -442,6 +446,7 @@ class ACFToQuickEdit {
 	 * @action 'load-edit.php'
 	 */
 	function enqueue_assets() {
+		global $typenow, $pagenow;
 		if ( count( $this->column_fields ) ) {
 			$has_thumbnail		= false;
 			foreach ( $this->column_fields as $field ) {
@@ -483,7 +488,11 @@ class ACFToQuickEdit {
 			}
 
 			wp_enqueue_style( 'acf-quick-edit', plugins_url( 'css/acf-quickedit.css', dirname( __FILE__ ) ) );
-			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
+			if ( $pagenow == 'edit-tags.php' ) {
+				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( __FILE__ ) ), array( 'inline-edit-tax' ), null, true );
+			} else {
+				wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
+			}
 		}
 		
 	}
@@ -501,37 +510,45 @@ class ACFToQuickEdit {
 			 
 			$post_ids = (array) $_REQUEST['post_id'];
 
-			$post_ids = array_filter( $post_ids,'intval');
+		//	$post_ids = array_filter( $post_ids,'intval');
 
 			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
 
 			foreach ( $post_ids as $post_id ) {
 
-				if ( current_user_can( 'edit_post' , $post_id ) ) {
+				if ( is_numeric( $post_id ) ) {
+					if ( ! current_user_can( 'edit_post', $post_id ) ) {
+						continue;
+					}
+				} else {
+					$term_id_num = preg_replace( '([^\d])', '', $post_id );
+					if ( ! current_user_can( 'edit_term', $term_id_num ) ) {
+						continue;
+					}
+				}
 
-					foreach ( $field_keys as $key ) {
+				foreach ( $field_keys as $key ) {
 
-						$field_obj = get_field_object( $key , $post_id );
+					$field_obj = get_field_object( $key , $post_id );
 
-						switch ( $field_obj['type'] ) {
-							case 'date_time_picker':
-							case 'time_picker':
-							case 'date_picker':
-								$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
-								break;
-							default:
-								$field_val	= $field_obj['value'];
-								break;
-						}
-						if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_val ) {
+					switch ( $field_obj['type'] ) {
+						case 'date_time_picker':
+						case 'time_picker':
+						case 'date_picker':
+							$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
+							break;
+						default:
+							$field_val	= $field_obj['value'];
+							break;
+					}
+					if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_val ) {
 
-							$result[ $key ]	= $field_val;
+						$result[ $key ]	= $field_val;
 
-						} else {
+					} else {
 
-							$result[ $key ] = '';
+						$result[ $key ] = '';
 
-						}
 					}
 				}
 			}
@@ -597,12 +614,18 @@ class ACFToQuickEdit {
 	 * @action manage_edit-{$taxonomy}_custom_column
 	 */
 	function display_term_field_column( $content, $wp_column_slug , $object_id ) {
-		$object = get_term( $object );
-		return $this->display_field_column( $wp_column_slug , $object );
+
+		$object = get_term( $object_id );
+
+		if ( $object ) {
+
+			return $this->display_field_column( $wp_column_slug , sprintf( '%s_%s', $object->taxonomy, $object_id ) );
+
+		}
 	}
 
 	function display_field_column( $wp_column_slug , $object_id ) {
-		
+
 		$args = func_get_args();
 		
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
@@ -656,7 +679,7 @@ class ACFToQuickEdit {
 				case 'select':
 				case 'radio':
 				case 'checkbox':
-					$field_value = get_field($field['key']);
+					$field_value = get_field( $field['key'], $object_id );
 					$values = array();
 					foreach ( (array) $field_value as $value )
 						$values[] = isset( $field['choices'][ $value ] ) 
@@ -669,17 +692,17 @@ class ACFToQuickEdit {
 					echo $output;
 					break;
 				case 'true_false':
-					echo get_field($field['key']) ? __('Yes') : __('No');
+					echo get_field( $field['key'], $object_id ) ? __('Yes') : __('No');
 					break;
 				case 'color_picker':
-					$value = get_field($field['key']);
+					$value = get_field( $field['key'], $object_id );
 					if ( $value )
 						echo '<div class="color-indicator" style="border-radius:2px;border:1px solid #d2d2d2;width:26px;height:20px;background-color:'.$value.'"></div>';
 					else
 						_e('(No value)', 'acf-quick-edit-fields');
 					break;
 				case 'number':
-					$value = get_field($field['key']);
+					$value = get_field( $field['key'], $object_id );
 					if ( $value === "" )
 						_e('(No value)', 'acf-quick-edit-fields');
 					else
@@ -687,11 +710,11 @@ class ACFToQuickEdit {
 					break;
 				case 'textarea':
 					?><pre><?php
-						the_field($field['key']);
+						the_field( $field['key'], $object_id );
 					?></pre><?php
 					break;
 				case 'taxonomy':
-					$value = get_field($field['key']);
+					$value = get_field( $field['key'], $object_id );
 					if ( $value ) {
 						$term_names = array();
 						foreach ( (array) $value as $i => $term ) {
@@ -707,7 +730,7 @@ class ACFToQuickEdit {
 					break;
 				case 'relationship':
 				case 'post_object':
-					$field_value = get_field( $field['key'] );
+					$field_value = get_field( $field['key'], $object_id );
 					if ( is_a( $field_value, 'WP_Post' ) ) {
 						echo $this->get_post_object_link( $field_value->ID );
 					} else if ( is_array( $field_value ) ) {
@@ -735,7 +758,7 @@ class ACFToQuickEdit {
 					}
 					break;
 				case 'password':
-					if ( $field_value = get_field( $field['key'] ) ) {
+					if ( $field_value = get_field( $field['key'], $object_id ) ) {
 						echo '<code>********</code>';
 					}
 					break;
@@ -746,7 +769,7 @@ class ACFToQuickEdit {
 					echo acf_format_date( $val, $field['display_format'] );
 					break;
 				default:
-					the_field( $field['key'] );
+					the_field( $field['key'], $object_id );
 					break;
 			}
 		}
@@ -997,15 +1020,33 @@ class ACFToQuickEdit {
 	}
 
 	/**
+	 *	@action save_term
+	 */
+	function quickedit_save_acf_term_meta( $term_id, $tt_id, $taxonomy ) {
+
+		$object_id = sprintf( '%s_%s', $taxonomy, $term_id );
+
+		if ( ! current_user_can( 'edit_term', $term_id ) ) {
+			return;
+		}
+
+		return $this->quickedit_save_acf_meta( $object_id, true );
+	}
+
+	/**
 	 *	@action save_post
 	 */
-	function quickedit_save_acf_meta( $post_id ) {
+	function quickedit_save_acf_post_meta( $post_id ) {
 
 		$is_quickedit = is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX;
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
+		return $this->quickedit_save_acf_meta( $post_id, $is_quickedit );
+	}
+
+	function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
 			switch ( $field['type'] ) {
@@ -1026,7 +1067,6 @@ class ACFToQuickEdit {
 				update_field( $field['name'], $value, $post_id );
 			}
 		}
-//		exit();
 	}
 }
 
