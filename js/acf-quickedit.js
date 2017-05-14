@@ -40,11 +40,11 @@ var acfQuickedit = {};
 
 
 				// set text field values
-				$('input[type!="radio"][data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
+				$('input[type!="radio"][type!="checkbox"][data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
 					.val(value);
 
 				// set val for radio buttons
-				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"]')
+				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"],.acf-checkbox-list[data-acf-field-key="'+key+'"]')
 					.find('[value="'+value+'"]')
 					.prop( 'checked',true);
 

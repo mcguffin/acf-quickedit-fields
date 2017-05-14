@@ -11,3 +11,9 @@ Proofed to work with ACF Pro 5.x.
 It will not work with ACF Free (version 4.x).
 
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
+
+ToDo:
+-----
+ - [ ] Better Bulk & Quickedit layout. 
+ - [ ] Bulk: Add no-change option to all fields
+ - [ ] Fix checkboxes

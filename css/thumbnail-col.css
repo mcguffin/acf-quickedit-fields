@@ -35,3 +35,17 @@
 .acf-qef-gallery-col img:first-child {
 	display:block;
 }
+
+
+#wpbody-content .inline-edit-row fieldset.inline-edit-col-acf {
+	width:33%;
+	padding:0.5em;
+	box-sizing:border-box;
+}
+.inline-edit-col-right + .inline-edit-col-acf {
+	clear:both;
+}
+#wpbody-content .inline-edit-row fieldset.inline-edit-col-acf .inline-edit-col {
+	border:1px solid #ddd;
+	padding:0.5em;
+}
