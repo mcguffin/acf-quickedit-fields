@@ -586,6 +586,12 @@ class ACFToQuickEdit {
 						echo '<code>********</code>';
 					}
 					break;
+				case 'date_picker':
+				case 'time_picker':
+				case 'date_time_picker':
+					$val = get_field( $field['key'], $post_id, false );
+					echo acf_format_date( $val, $field['display_format'] );
+					break;
 				default:
 					the_field( $field['key'] );
 					break;
