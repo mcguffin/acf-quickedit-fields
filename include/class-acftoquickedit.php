@@ -56,6 +56,7 @@ class ACFToQuickEdit {
 			add_action( 'admin_init' , array( $this, 'init_columns' ) );
 			add_action( 'load-admin-ajax.php' , array( $this, 'init_columns' ) );
 			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
+			add_action( 'load-edit.php' , array( $this, 'enqueue_assets' ) );
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
 			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
 		}
@@ -115,7 +116,7 @@ class ACFToQuickEdit {
 			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
-			'taxonomy'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'taxonomy'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 
 			// jQuery
@@ -316,21 +317,49 @@ class ACFToQuickEdit {
 				}
 			}
 
+/*
 			if ( $has_thumbnail ) {
 				wp_enqueue_script( 'acf-qef-thumbnail-col', plugins_url( 'js/thumbnail-col.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 			}
+*/
 		}
 		wp_enqueue_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', dirname( __FILE__ ) ) );
 		
 		// register quickedit
 		if ( count( $this->quickedit_fields ) ) {
 			// enqueue scripts ...
+			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
+			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
+
+
+		}
+		
+		// register bulkedit
+		if ( count( $this->bulkedit_fields ) ) {
+			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * @action 'load-edit.php'
+	 */
+	function enqueue_assets() {
+		if ( count( $this->column_fields ) ) {
+			$has_thumbnail		= false;
+			foreach ( $this->column_fields as $field ) {
+				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
+					$has_thumbnail = true;
+					break;
+				}
+			}
+		}
+
+		// register quickedit
+		if ( count( $this->quickedit_fields ) ) {
+			// enqueue scripts ...
 			$has_datepicker		= false;
 			$has_colorpicker	= false;
 			foreach ( $this->quickedit_fields as $field ) {
-				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
-					$has_thumbnail = true;
-				}
 				if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker'  ) {
 					$has_datepicker = true;
 				}
@@ -338,8 +367,6 @@ class ACFToQuickEdit {
 					$has_colorpicker = true;
 				}
 			}
-			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2);
-			add_action( 'save_post', array( $this, 'quickedit_save_acf_meta' ) );
 
 			// ... if necessary
 			if ( $has_datepicker ) {
@@ -353,18 +380,16 @@ class ACFToQuickEdit {
 			}
 
 			if ( $has_colorpicker ) {
+				wp_enqueue_style( 'wp-color-picker' );
 				wp_enqueue_script( 'wp-color-picker' );
 			}
 
-			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
+			wp_enqueue_style( 'acf-quick-edit', plugins_url( 'css/acf-quickedit.css', dirname( __FILE__ ) ) );
+			wp_enqueue_script( 'acf-quick-edit', plugins_url( 'js/acf-quickedit.min.js', dirname( __FILE__ ) ), array( 'inline-edit-post' ), null, true );
 		}
 		
-		// register bulkedit
-		if ( count( $this->bulkedit_fields ) ) {
-			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
-		}
 	}
-	
+
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
@@ -552,6 +577,21 @@ class ACFToQuickEdit {
 						the_field($field['key']);
 					?></pre><?php
 					break;
+				case 'taxonomy':
+					$value = get_field($field['key']);
+					if ( $value ) {
+						$term_names = array();
+						foreach ( (array) $value as $i => $term ) {
+							if ( $field['return_format'] === 'id' ) {
+								$term = get_term($term, $field['taxonomy']);
+							}
+							$term_names[] = $term->name;
+						}
+						echo implode( ', ', $term_names );
+					} else {
+						_e('(No value)', 'acf-quick-edit-fields');
+					}
+					break;
 				case 'relationship':
 				case 'post_object':
 					$field_value = get_field( $field['key'] );
@@ -640,8 +680,8 @@ class ACFToQuickEdit {
 	function display_quickedit_field( $column, $post_type , $field, $mode ) {
 
 		?>
-		<fieldset class="inline-edit-col-acf inline-edit-<?php echo $post_type ?>">
-			<div class="inline-edit-col column-<?php echo $column; ?>">
+		<fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>">
+			<div class="acf-field inline-edit-col column-<?php echo $column; ?>" data-key="<?php echo $field['key'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $field['label']; ?></span>
 					<span class="input-text-wrap"><?php
@@ -816,7 +856,20 @@ class ACFToQuickEdit {
 								echo '<input '. acf_esc_attr( $input_atts ) .' />';
 								break;
 
+							case 'color_picker':
+								$input_atts += array(
+									'class'	=> 'wp-color-picker acf-quick-edit acf-quick-edit-'.$field['type'],
+									'type'	=> 'text', 
+								);
+								echo '<input '. acf_esc_attr( $input_atts ) .' />';
+								break;
+
 							default:
+
+								do_action( 'acf_quick_edit_field_' . $field['type'], $field, $column, $post_type  );
+								if ( ! apply_filters( 'acf_quick_edit_render_' . $field['type'], true, $field, $column, $post_type ) ) {
+									break;
+								}
 								$input_atts += array(
 									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
 									'type'	=> 'text', 
@@ -860,6 +913,7 @@ class ACFToQuickEdit {
 				update_field( $field['name'], $value, $post_id );
 			}
 		}
+//		exit();
 	}
 }
 
