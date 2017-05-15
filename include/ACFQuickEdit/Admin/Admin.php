@@ -3,13 +3,12 @@
 namespace ACFQuickEdit\Admin;
 
 use ACFQuickEdit\Core;
+use ACFQuickEdit\Fields;
 
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 class Admin extends Core\Singleton {
-
-	private $post_field_prefix = 'acf_qed_';
 
 	private $column_fields = array();	
 
@@ -24,6 +23,7 @@ class Admin extends Core\Singleton {
 	 * Private constructor
 	 */
 	protected function __construct() {
+		$this->core = Core\Core::instance();
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
 	}
 
@@ -311,18 +311,43 @@ class Admin extends Core\Singleton {
 
 			$conditions = array( 'post_type' => $post_type );
 
-			if ( defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
-				if ( $_REQUEST['action'] === 'inline-save' && isset( $_REQUEST['post_ID'] ) ) {
-					$conditions['post_id']	= intval( $_REQUEST['post_ID'] );
-				}
-			} else {
-				add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
-				add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
-				add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
-			}
+			add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
+			add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
+			add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
+
 		} else if ( $pagenow == 'edit-tags.php' ) {
 
 			if ( taxonomy_exists( $_REQUEST['taxonomy'] ) ) {
+
+				$content_type = 'taxonomy';
+
+				$taxonomy = $_REQUEST['taxonomy'];
+
+				$conditions = array( 'taxonomy' => $_REQUEST['taxonomy'] );
+			}
+		} else if ( $pagenow == 'users.php' ) {
+
+			$content_type = 'user';
+
+			$role = isset( $_REQUEST['role'] ) ? $_REQUEST['role'] : 'all';
+
+			$conditions = array( 'user_role' => $role );
+
+		} else if ( defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
+
+			if ( $_REQUEST['action'] === 'inline-save' /* && isset( $_REQUEST['post_ID'] ) && isset($_REQUEST['post_type']) */ ) {
+
+				$content_type = 'post';
+
+				$post_type = $_REQUEST['post_type'];
+
+				$conditions = array( 
+					'post_type'	=> $post_type,
+					'post_id'	=> intval( $_REQUEST['post_ID'] ),
+				);
+
+			} else if ( $_REQUEST['action'] === 'inline-save-tax' ) {
+
 				$content_type = 'taxonomy';
 
 				$taxonomy = $_REQUEST['taxonomy'];
@@ -330,7 +355,6 @@ class Admin extends Core\Singleton {
 				$conditions = array( 'taxonomy' => $_REQUEST['taxonomy'] );
 			}
 		}
-
 		if ( is_null( $content_type ) ) {
 			return;
 		}
@@ -343,22 +367,25 @@ class Admin extends Core\Singleton {
 		 */
 		$field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
 
-		// register column display
 		foreach ( $field_groups as $field_group ) {
-			$fields = acf_get_fields($field_group);
+			$fields = acf_get_fields( $field_group );
 			if ( ! $fields ) {
 				continue;
 			}
 
 			foreach ( $fields as $field ) {
+				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
 					$this->column_fields[$field['name']] = $field;
 				}
-				if ( isset($field['allow_quickedit']) && $field['allow_quickedit'] ) {
-					$this->quickedit_fields[$field['name']] = $field;
-				}
-				if ( isset($field['allow_bulkedit']) && $field['allow_bulkedit'] ) {
-					$this->bulkedit_fields[$field['name']] = $field;
+				if ( 'user' != $content_type ) {
+					// register bulk and quick edit
+					if ( isset($field['allow_quickedit']) && $field['allow_quickedit'] ) {
+						$this->quickedit_fields[$field['name']] = $field;
+					}
+					if ( isset($field['allow_bulkedit']) && $field['allow_bulkedit'] ) {
+						$this->bulkedit_fields[$field['name']] = $field;
+					}
 				}
 			}
 		}
@@ -384,10 +411,14 @@ class Admin extends Core\Singleton {
 				$cols_hook		= "manage_edit-{$taxonomy}_columns";
 				$display_hook	= "manage_{$taxonomy}_custom_column";
 				add_filter( $display_hook,	array( $this, 'display_term_field_column' ), 10, 3 );
+			} else if ( 'user' == $content_type ) {
+				$cols_hook		= "manage_users_columns";
+				$display_hook	= "manage_users_custom_column";
+				add_filter( $display_hook,	array( $this, 'display_user_field_column' ), 10, 3 );
 			}
 			add_filter( $cols_hook,		array( $this, 'add_field_columns' ) );
 		}
-		
+
 		if ( count( $this->column_fields ) ) {
 			$has_thumbnail		= false;
 			foreach ( $this->column_fields as $field ) {
@@ -410,10 +441,8 @@ class Admin extends Core\Singleton {
 				add_action( 'edit_term', array( $this, 'quickedit_save_acf_term_meta' ), 10, 3 );
 			}
 
-
-
 		}
-		
+
 		// register bulkedit
 		if ( count( $this->bulkedit_fields ) ) {
 			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
@@ -586,8 +615,9 @@ class Admin extends Core\Singleton {
 	 * @action manage_{$post_type}_posts_custom_column
 	 */
 	function display_post_field_column( $wp_column_slug , $object_id ) {
-		return $this->display_field_column( $wp_column_slug , $object_id );
+		echo $this->display_field_column( $wp_column_slug , $object_id );
 	}
+
 	/**
 	 * @action manage_edit-{$taxonomy}_custom_column
 	 */
@@ -602,155 +632,29 @@ class Admin extends Core\Singleton {
 		}
 	}
 
+	/**
+	 * @action manage_user_custom_column
+	 */
+	function display_user_field_column( $content, $wp_column_slug , $object_id ) {
+		
+		return $this->display_field_column( $wp_column_slug , sprintf( 'user_%s', $object_id ) );
+
+	}
+
 	function display_field_column( $wp_column_slug , $object_id ) {
 
 		$args = func_get_args();
-		
+
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 
 		if ( isset( $this->column_fields[$column] ) ) {
 			$field = $this->column_fields[$column];
-			switch ( $field['type'] ) {
-				case 'file':
-					$value = acf_get_value( $object_id, $field );
-					if ( ! is_null($value) && ! empty($value) ) {
-						$file = get_post($value);
-						printf( __('Edit: <a href="%s">%s</a>','acf-quick-edit-fields') , get_edit_post_link( $value ) , $file->post_title );
-					}
-					break;
-				case 'image':
-					$image_id = get_field( $field['key'] );
-					if ( $image_id ) {
-						if ( is_array( $image_id ) ) {
-							// Image field is an object
-							echo wp_get_attachment_image( $image_id['id'] , array(80,80) );
-						} else if( is_numeric( $image_id ) ) {
-							// Image field is an ID
-							echo wp_get_attachment_image( $image_id , array(80,80) );
-						} else {
-							// Image field is a url
-							echo '<img src="' . $image_id . '" width="80" height="80" />';
-						};
-					}
-					break;
-				case 'gallery':
-					/**
-					 * Filter number of images to be displayed in Gallery Column
-					 *
-					 * @param int $max_images	Maximum Number of images
-					 */
-					if ( $max_images = apply_filters( 'acf_quick_edit_fields_gallery_col_max_images', 15 ) ) {
-						$images = get_field( $field['key'] );
-						if ( $images ) {
-							$class = count($images) > 1 ? 'acf-qef-gallery-col' : 'acf-qef-image-col';
-							?><div class="<?php echo $class ?>"><?php
-							foreach ( array_values( $images ) as $i => $image) {
-								if ( $i >= $max_images ) {
-									break;
-								}
-								echo wp_get_attachment_image( $image['id'] , array(80, 80) );
-							}
-							?></div><?php
-						}
-					}
-					break;
-				case 'select':
-				case 'radio':
-				case 'checkbox':
-					$field_value = get_field( $field['key'], $object_id );
-					$values = array();
-					foreach ( (array) $field_value as $value )
-						$values[] = isset( $field['choices'][ $value ] ) 
-										? $field['choices'][ $value ] 
-										: $value;
-					
-					$output = implode( __(', ', 'acf-quick-edit-fields' ) , $values );
-					if ( empty( $output ) )
-						$output = __('(No value)', 'acf-quick-edit-fields');
-					echo $output;
-					break;
-				case 'true_false':
-					echo get_field( $field['key'], $object_id ) ? __('Yes') : __('No');
-					break;
-				case 'color_picker':
-					$value = get_field( $field['key'], $object_id );
-					if ( $value )
-						echo '<div class="color-indicator" style="border-radius:2px;border:1px solid #d2d2d2;width:26px;height:20px;background-color:'.$value.'"></div>';
-					else
-						_e('(No value)', 'acf-quick-edit-fields');
-					break;
-				case 'number':
-					$value = get_field( $field['key'], $object_id );
-					if ( $value === "" )
-						_e('(No value)', 'acf-quick-edit-fields');
-					else
-						echo number_format_i18n($value, strlen(substr(strrchr($value, "."), 1)) );
-					break;
-				case 'textarea':
-					?><pre><?php
-						the_field( $field['key'], $object_id );
-					?></pre><?php
-					break;
-				case 'taxonomy':
-					$value = get_field( $field['key'], $object_id );
-					if ( $value ) {
-						$term_names = array();
-						foreach ( (array) $value as $i => $term ) {
-							if ( $field['return_format'] === 'id' ) {
-								$term = get_term($term, $field['taxonomy']);
-							}
-							$term_names[] = $term->name;
-						}
-						echo implode( ', ', $term_names );
-					} else {
-						_e('(No value)', 'acf-quick-edit-fields');
-					}
-					break;
-				case 'relationship':
-				case 'post_object':
-					$field_value = get_field( $field['key'], $object_id );
-					if ( is_a( $field_value, 'WP_Post' ) ) {
-						echo $this->get_post_object_link( $field_value->ID );
-					} else if ( is_array( $field_value ) ) {
-						$links = array();
-						foreach ( $field_value as $field_value_post ) {
-							$field_value_post_id = 0;
-							if ( is_a( $field_value_post, 'WP_Post' ) ) {
-								$field_value_post_id = $field_value_post->ID;
-							} else if ( is_int( $field_value_post ) ) {
-								$field_value_post_id = $field_value_post;
-							}
-							if ( $field_value_post_id && $link = $this->get_post_object_link( $field_value_post_id ) ) {
-								$links[] = $link;
-							}
-						}
-						if ( count( $links > 1 ) ) {
-							echo "<ol>";
-							foreach ( $links as $link ) {
-								printf( '<li>%s</li>', $link );
-							}
-							echo "</ol>";
-						} else {
-							echo implode( '<br />', $links );
-						}
-					}
-					break;
-				case 'password':
-					if ( $field_value = get_field( $field['key'], $object_id ) ) {
-						echo '<code>********</code>';
-					}
-					break;
-				case 'date_picker':
-				case 'time_picker':
-				case 'date_time_picker':
-					$val = get_field( $field['key'], $object_id, false );
-					echo acf_format_date( $val, $field['display_format'] );
-					break;
-				default:
-					the_field( $field['key'], $object_id );
-					break;
-			}
+			
+			$acf_field = Fields\Field::getField( $field );
+
+			return $acf_field->render_column( $object_id );
 		}
+		return '';
 	}
 
 	private function get_post_object_link( $post_id ) {
@@ -784,6 +688,7 @@ class Admin extends Core\Singleton {
 			$this->display_quickedit_field( $column, $post_type , $field, 'quick' );
 		}
 	}
+
 	function display_bulk_edit( $wp_column_slug, $post_type ) {
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 		if ( isset($this->bulkedit_fields[$column]) && $field = $this->bulkedit_fields[$column] ) {
@@ -792,209 +697,10 @@ class Admin extends Core\Singleton {
 	}
 
 	function display_quickedit_field( $column, $post_type , $field, $mode ) {
+		$field_object = Fields\Field::getField( $field );
+		$field_object->render_quickedit_field( $column, $post_type, $mode );
+		return;
 
-		?>
-		<fieldset class="inline-edit-col-left inline-edit-<?php echo $post_type ?>">
-			<div class="acf-field inline-edit-col column-<?php echo $column; ?>" data-key="<?php echo $field['key'] ?>">
-				<label class="inline-edit-group">
-					<span class="title"><?php echo $field['label']; ?></span>
-					<span class="input-text-wrap"><?php
-						$input_atts = array(
-							'data-acf-field-key' => $field['key'],
-							'name' => $this->post_field_prefix . $column,
-						);
-
-						switch ($field['type']) {
-
-							case 'checkbox':
-								?><ul class="acf-checkbox-list" data-acf-field-key="<?php echo $field['key'] ?>"><?php
-								$input_atts		+= array(
-									'class'	=> 'acf-quick-edit',
-									'id'	=> $this->post_field_prefix . $column,
-								);
-								$field['value']	= acf_get_array( $field['value'], false );
-								foreach ( $field['choices'] as $value => $label ) {
-									$atts = array(
-										'data-acf-field-key'	=> $field['key'],
-										'type'					=> 'checkbox',
-										'value'					=> $value,
-										'name'					=> $this->post_field_prefix . $column . '[]',
-										'id'					=> $this->post_field_prefix . $column . '-'.$value,
-									);
-
-									if ( in_array( $value, $field['value'] ) ) {
-										$atts['checked'] = 'checked';
-									}
-									echo '<li><label><input ' . acf_esc_attr( $atts ) . '/>' . $label . '</label></li>';
-								}
-								?></ul><?php
-								break;
-
-							case 'select':
-								$input_atts += array(
-									'class' => 'acf-quick-edit widefat',
-									'id' => $this->post_field_prefix . $column,
-								);
-								if ( $field['multiple'] )
-									$input_atts['multiple'] = 'multiple';
-
-								?><select <?php echo acf_esc_attr( $input_atts ) ?>><?php
-									if ( $field['allow_null'] ) {
-										echo '<option value="">' . '- ' . __( 'Select', 'acf' ) . ' -';
-									}
-									foreach($field['choices'] as $name => $label) {
-										echo '<option value="' . $name . '">' . $label;
-									}
-								?></select><?php
-								break;
-
-							case 'radio':
-								// + others
-								?><ul class="acf-radio-list<?php echo $field['other_choice'] ? ' other' : '' ?>" data-acf-field-key="<?php echo $field['key'] ?>"><?php
-								foreach($field['choices'] as $name => $value) {
-									?><li><label for="<?php echo $this->post_field_prefix . $column.'-'.$name; ?>"><?php
-										?><input id="<?php echo $this->post_field_prefix . $column.'-'.$name; ?>" type="radio" value="<?php echo $name; ?>" 
-										  class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>"
-										  name="<?php echo $this->post_field_prefix . $column; ?>" /><?php echo $value; ?><?php
-									?></label></li><?php
-								}
-								if ( $field['other_choice'] ) {
-									?><li><label for="<?php echo $this->post_field_prefix . $column.'-other'; ?>"><?php
-										?><input id="<?php echo $this->post_field_prefix . $column.'-other'; ?>" type="radio" value="other" 
-										  class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>"
-										  name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
-										?><input type="text" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" 
-											name="<?php echo $this->post_field_prefix . $column; ?>" style="width:initial" /><?php
-										?></li><?php
-									?></label><?php
-								}
-								?></ul><?php
-								break;
-
-							case 'true_false':
-								?><ul class="acf-radio-list" data-acf-field-key="<?php echo $field['key'] ?>"><?php
-									?><li><label for="<?php echo $this->post_field_prefix . $column; ?>-yes"><?php 
-										?><input id="<?php echo $this->post_field_prefix . $column; ?>-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
-										_e('Yes')
-									?></label></li><?php
-									?><li><label for="<?php echo $this->post_field_prefix . $column; ?>-no"><?php 
-										?><input id="<?php echo $this->post_field_prefix . $column; ?>-no"  type="radio" value="0" class="acf-quick-edit" data-acf-field-key="<?php echo $field['key'] ?>" name="<?php echo $this->post_field_prefix . $column; ?>" /><?php
-										_e('No')
-									?></label></li><?php
-								?></ul><?php
-								break;
-
-							case 'number':
-								$input_atts += array(
-									'class'	=> 'acf-quick-edit',
-									'type'	=> 'number', 
-									'min'	=> $field['min'], 
-									'max'	=> $field['max'],
-									'step'	=> $field['step'], 
-								);
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								break;
-
-							case 'date_picker':
-								$wrap_atts = array(
-									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'data-date_format'	=> acf_convert_date_to_js($field['display_format']),
-									'data-first_day'	=> $field['first_day'],
-								);
-								$display_input_atts	= array(
-									'type'	=> 'text',
-								);
-								$input_atts += array(
-									'type'	=> 'hidden', 
-								);
-								
-								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
-								echo '</span>';
-								break;
-
-							case 'date_time_picker':
-								$formats = acf_split_date_time($field['display_format']);
-								$wrap_atts = array(
-									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'data-date_format'	=> acf_convert_date_to_js($formats['date']),
-									'data-time_format'	=> acf_convert_time_to_js($formats['time']),
-									'data-first_day'	=> $field['first_day'],
-								);
-								$display_input_atts	= array(
-									'type'	=> 'text',
-								);
-								$input_atts += array(
-									'type'	=> 'hidden', 
-								);
-								
-								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
-								echo '</span>';
-								break;
-
-							case 'time_picker':
-								$wrap_atts = array(
-									'class'				=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'data-time_format'	=> acf_convert_time_to_js($field['display_format']),
-								);
-								$display_input_atts	= array(
-									'type'	=> 'text',
-								);
-								$input_atts += array(
-									'type'	=> 'hidden', 
-								);
-								
-								echo '<span '. acf_esc_attr( $wrap_atts ) .'>';
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								echo '<input '. acf_esc_attr( $display_input_atts ) .' />';
-								echo '</span>';
-								break;
-
-							case 'textarea':
-								$input_atts += array(
-									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type'	=> 'text', 
-								);
-								echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($field['value']).'</textarea>';
-								break;
-
-							case 'password':
-								$input_atts += array(
-									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type'	=> 'password', 
-									'autocomplete'	=> 'new-password',
-								);
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								break;
-
-							case 'color_picker':
-								$input_atts += array(
-									'class'	=> 'wp-color-picker acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type'	=> 'text', 
-								);
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								break;
-
-							default:
-
-								do_action( 'acf_quick_edit_field_' . $field['type'], $field, $column, $post_type  );
-								if ( ! apply_filters( 'acf_quick_edit_render_' . $field['type'], true, $field, $column, $post_type ) ) {
-									break;
-								}
-								$input_atts += array(
-									'class'	=> 'acf-quick-edit acf-quick-edit-'.$field['type'],
-									'type'	=> 'text', 
-								);
-								echo '<input '. acf_esc_attr( $input_atts ) .' />';
-								break;
-						}
-					?></span>
-				</label>
-			</div>
-		</fieldset><?php
 	}
 
 	/**
@@ -1027,18 +733,19 @@ class Admin extends Core\Singleton {
 	function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
 		foreach ( $this->quickedit_fields as $field_name => $field ) {
+			$param_name = $this->core->prefix( $field['name'] );
 			switch ( $field['type'] ) {
 				case 'checkbox':
 					$do_update	= true;
-					$value		= isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) 
-									? $_REQUEST[ $this->post_field_prefix . $field['name'] ] 
+					$value		= isset( $_REQUEST[ $param_name ] ) 
+									? $_REQUEST[ $param_name ] 
 									: null;
 					break;
 				default:
 					$do_update	= $is_quickedit 
-									? isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] )
-									: isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) && ! empty( $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
-					$value		= $_REQUEST[ $this->post_field_prefix . $field['name'] ];
+									? isset( $_REQUEST[ $param_name ] )
+									: isset( $_REQUEST[ $param_name ] ) && ! empty( $_REQUEST[ $param_name ] );
+					$value		= $_REQUEST[ $param_name ];
 					break;
 			}
 			if ( $do_update ) {

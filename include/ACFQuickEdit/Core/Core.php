@@ -9,6 +9,8 @@ if ( ! defined( 'ABSPATH' ) )
 
 class Core extends Singleton {
 
+	private $post_field_prefix = 'acf_qed_';
+
 	/**
 	 *	Private constructor
 	 */
@@ -43,6 +45,9 @@ class Core extends Singleton {
 	function init() {
 	}
 
+	public function prefix( $str ) {
+		return $this->post_field_prefix . $str;
 
+	}
 
 }
