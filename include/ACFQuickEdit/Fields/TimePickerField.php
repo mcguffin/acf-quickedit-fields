@@ -27,7 +27,7 @@ class TimePickerField extends DateTimePickerField {
 			'type'	=> 'hidden', 
 		);
 		$output = '';
-		
+
 		$output .= '<span '. acf_esc_attr( $wrap_atts ) .'>';
 		$output .= '<input '. acf_esc_attr( $input_atts ) .' />';
 		$output .= '<input '. acf_esc_attr( $display_input_atts ) .' />';

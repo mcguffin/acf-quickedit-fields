@@ -10,7 +10,7 @@ class ACFToQuickEdit {
 	private static $_instance = null;
 	private $post_field_prefix = 'acf_qed_';
 
-	private $column_fields = array();	
+	private $column_fields = array();
 	private $quickedit_fields = array();	
 	private $bulkedit_fields = array();	
 
