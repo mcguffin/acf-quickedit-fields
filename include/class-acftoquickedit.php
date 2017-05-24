@@ -898,22 +898,23 @@ class ACFToQuickEdit {
 			switch ( $field['type'] ) {
 				case 'checkbox':
 					$do_update	= true;
-					$value		= isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) 
-									? $_REQUEST[ $this->post_field_prefix . $field['name'] ] 
-									: null;
+					break;
+				case 'true_false':
+					$do_update	= isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
 					break;
 				default:
 					$do_update	= $is_quickedit 
 									? isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] )
 									: isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) && ! empty( $_REQUEST[ $this->post_field_prefix . $field['name'] ] );
-					$value		= $_REQUEST[ $this->post_field_prefix . $field['name'] ];
 					break;
 			}
 			if ( $do_update ) {
+				$value		= isset( $_REQUEST[ $this->post_field_prefix . $field['name'] ] ) 
+								? $_REQUEST[ $this->post_field_prefix . $field['name'] ] 
+								: null;
 				update_field( $field['name'], $value, $post_id );
 			}
 		}
-//		exit();
 	}
 }
 
