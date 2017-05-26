@@ -15,7 +15,7 @@ class TimePickerField extends DateTimePickerField {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column ) {
+	public function render_input( $input_atts, $column, $is_quickedit = true ) {
 		$wrap_atts = array(
 			'class'				=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'data-time_format'	=> acf_convert_time_to_js($this->acf_field['display_format']),

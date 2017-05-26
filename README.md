@@ -14,6 +14,7 @@ See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a qui
 
 ToDo:
 -----
+
  - [ ] Bulk: Add no-change option to all fields
  - [x] Add columns to Terms
  - [ ] Add quickedit to Terms

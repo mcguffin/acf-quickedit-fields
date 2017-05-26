@@ -22,7 +22,7 @@ class TrueFalseField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column ) {
+	public function render_input( $input_atts, $column, $is_quickedit = true ) {
 		$field_key = $this->acf_field['key'];
 		$prefix_column = $this->core->prefix( $column );
 		$output = '';
@@ -31,7 +31,7 @@ class TrueFalseField extends Field {
 		$output .= sprintf( '<input id="%s-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />', 
 								$prefix_column, 
 								$field_key, 
-								$prefix_column 
+								$input_atts['name'] 
 							);
 		$output .= __('Yes');
 		$output .= '</label></li>';
@@ -40,12 +40,13 @@ class TrueFalseField extends Field {
 		$output .= sprintf( '<input id="%s-no" type="radio" value="0" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />', 
 								$prefix_column, 
 								$field_key, 
-								$prefix_column 
+								$input_atts['name'] 
 							);
 		$output .= __('No');
 		$output .= '</label></li>';
 		$output .= '</ul>';
 
+		echo $output;
 		return $output;
 	}
 

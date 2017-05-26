@@ -35,7 +35,7 @@ class ImageField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column ) {
+	public function render_input( $input_atts, $column, $is_quickedit = true ) {
 		return false;
 	}
 

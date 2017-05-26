@@ -28,7 +28,7 @@ class NumberField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column ) {
+	public function render_input( $input_atts, $column, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'acf-quick-edit',
 			'type'	=> 'number', 

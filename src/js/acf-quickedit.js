@@ -8,17 +8,31 @@ var acfQuickedit = {};
 			'acf_field_keys' : []
 		};
 		$parent.find('[data-acf-field-key]').each(function(){
+
 			req_data.acf_field_keys.push( $(this).data('acf-field-key') );
-			$(this).prop('readonly',true);
+
+			$(this).prop( 'readonly', true );
+
+			if ( ! $(this).is('[data-is-do-not-change="true"]' ) ) {
+				if ( $(this).is('[type="radio"],[type="checkbox"]') ) {
+					$(this).prop('checked',false);
+				} else {
+					$(this).val('');
+				}
+			}
 		});
+
 		$.post( ajaxurl, req_data, function( result ) {
-			var i, key, value, $tr;
+			var i, key, value, $tr, $field,
+				selected;
 
 			var keys = [];
 
+			// only keep keys that have fields
 			$parent.find('[data-acf-field-key]').each(function() {
+				var key;
 				!$tr && ($tr = $(this).closest('tr.inline-edit-post'));
-				var key = $(this).data('acf-field-key');
+				key = $(this).data('acf-field-key');
 				if ( keys.indexOf( key ) === -1 ) {
 					keys.push(key);
 				}
@@ -28,36 +42,39 @@ var acfQuickedit = {};
 
 				key = keys[i], value = result[ key ];
 
-				var $selected;
+				$field = $('[data-acf-field-key="'+key+'"]');
 
 				// convert bool to int
 				if (typeof(value) === 'boolean') {
 					value *= 1;
 				}
 
-				// remove readonly prop
-				$('input[data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
-					.prop('readonly',false);
-
-
-				// set text field values
-				$('input[type!="radio"][type!="checkbox"][data-acf-field-key="'+key+'"],textarea[data-acf-field-key="'+key+'"]')
-					.val(value);
-
-				// set val for radio buttons
-				$selected = $('.acf-radio-list[data-acf-field-key="'+key+'"],.acf-checkbox-list[data-acf-field-key="'+key+'"]')
-					.find('[value="'+value+'"]')
-					.prop( 'checked',true);
-
-				if ( ! $selected.length ) {
-					if ( !! value )
-						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[value="other"]').prop( 'checked', true );
-					else 
-						$('.acf-radio-list.other[data-acf-field-key="'+key+'"]').find('[type="text"]').val('');
-				}
 				
+				if ( $field.is( '.acf-checkbox-list, .acf-radio-list' ) ) {
+					selected = 0;
+					if ( $.isArray( value ) ) {
+						$.each( value, function( idx, val ) {
+							selected += $field.find( '[value="'+val+'"]' ).prop( 'checked',true).length;
+						}); 
+					} else {
+						selected += $field.find( '[value="'+value+'"]' ).prop( 'checked',true).length;
+					}
+					if ( $field.is('.other') && ! selected ) {
+						if ( !! value ) {
+							$field.find('[value="other"]').prop( 'checked', true );
+						} else {
+							$field.find('[type="text"]').val('');
+						}
+					}
+				
+				} else if ( ! $field.is( '[type="radio"],[type="checkbox"]' ) ) {
+					$field.val( value );
+				}
+				$field.prop( 'readonly', false );
+
 			}
 
+			// init colorpicker
 			$parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
 				$(el).wpColorPicker();
 			})
@@ -82,7 +99,6 @@ var acfQuickedit = {};
 				acfQuickedit.datetimepicker.init( $(el) );
 
 			});
-
 
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
@@ -236,12 +252,22 @@ var acfQuickedit = {};
 
 		get_acf_post_data( post_ids , $( '#bulk-edit' ) );
 
-	}).on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
+	})
+	.on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
 
-		var $this = $(this), $list = $this.closest('.acf-radio-list'), 
-			$other = $list.find('[type="text"]').prop('disabled',$this.val() != 'other');
+		var $this = $(this), 
+			$list = $this.closest('.acf-radio-list'), 
+			is_other = $this.val() == 'other',
+			$other = $list.find('[type="text"]').prop('disabled', ! is_other );
 
+		!! is_other && $other.focus();
+
+	})
+	.on( 'change', '[data-is-do-not-change="true"]', function(){
+		var $self = $(this),
+			$list = $self.closest('.acf-checkbox-list'),
+			$items = $list.find('[type="checkbox"]:not([data-is-do-not-change])');
+		$items.prop( 'disabled', $self.prop('checked') );
 	});
-	
 
 })(jQuery);

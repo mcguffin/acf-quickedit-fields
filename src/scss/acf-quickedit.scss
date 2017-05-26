@@ -41,7 +41,6 @@
 	}
 }
 
-
 .inline-edit-row {
 	.input-text-wrap {
 		.wp-picker-input-wrap {
@@ -58,17 +57,33 @@
 		position:absolute;
 		z-index:1;
 	}
-/* 
-	a {
-		&.wp-color-result {
-			display: inline-block;
-			width:30px;
-			height:30px;
-			border:1px solid #ccc;
-			border-radius:3px;
+
+	#wpbody-content & {
+		fieldset.inline-edit-col-qed {
+			border:1px solid #ddd;
+			margin-bottom:10px;
+			label.inline-edit-group {
+				span.title {
+					width:100%;
+					float:none;
+				}
+				span.input-text-wrap {
+					margin-left:0;
+				}
+			}
+			
+			legend {
+				margin-left:20px;
+			}
+			& > .acf-field {
+				width:31%;
+				margin:1%;
+				padding:10px;
+				float:left;
+				box-sizing:border-box;
+				border:1px solid #ddd;
+			}
 		}
 	}
-*/
-}
 
- 
+}

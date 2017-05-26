@@ -14,7 +14,11 @@ class Admin extends Core\Singleton {
 
 	private $quickedit_fields = array();	
 
+	private $quickedit_field_groups = array();	
+
 	private $bulkedit_fields = array();	
+
+	private $bulkedit_field_groups = array();	
 
 	private $_wp_column_weights = array();	
 
@@ -110,7 +114,7 @@ class Admin extends Core\Singleton {
 			'time_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'color_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			
-			// Layout
+			// Layout (unsupported)
 			'message'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'tab'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'repeater'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
@@ -217,7 +221,7 @@ class Admin extends Core\Singleton {
 		if ( $post ) {
 			$parent = get_post( $post->post_parent );
 			$parent = get_post( $post->post_parent );
-		
+
 			if ( $parent->post_type == 'acf-field-group' ) {
 				// show column: todo: allow sortable
 				// add to bulk edit
@@ -369,22 +373,34 @@ class Admin extends Core\Singleton {
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields( $field_group );
+
 			if ( ! $fields ) {
 				continue;
 			}
 
 			foreach ( $fields as $field ) {
+				$field_object = Fields\Field::getField( $field );
 				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
-					$this->column_fields[$field['name']] = $field;
+					$this->column_fields[$field['name']] = $field_object;
 				}
 				if ( 'user' != $content_type ) {
 					// register bulk and quick edit
 					if ( isset($field['allow_quickedit']) && $field['allow_quickedit'] ) {
-						$this->quickedit_fields[$field['name']] = $field;
+						$this->quickedit_fields[ $field['name'] ] = $field_object;
+
+						if ( ! isset( $this->quickedit_field_groups[ $field_group['ID'] ] ) ) {
+							$this->quickedit_field_groups[ $field_group['ID'] ] = $field_group + array( 'rendered' => false );
+						}
+						$this->quickedit_field_groups[ $field_group['ID'] ]['fields'][ $field['name'] ] = $field_object;
 					}
 					if ( isset($field['allow_bulkedit']) && $field['allow_bulkedit'] ) {
-						$this->bulkedit_fields[$field['name']] = $field;
+						$this->bulkedit_fields[$field['name']] = $field_object;
+
+						if ( ! isset( $this->bulkedit_field_groups[ $field_group['ID'] ] ) ) {
+							$this->bulkedit_field_groups[ $field_group['ID'] ] = $field_group + array( 'rendered' => false );
+						}
+						$this->bulkedit_field_groups[ $field_group['ID'] ]['fields'][ $field['name'] ] = $field_object;
 					}
 				}
 			}
@@ -421,7 +437,8 @@ class Admin extends Core\Singleton {
 
 		if ( count( $this->column_fields ) ) {
 			$has_thumbnail		= false;
-			foreach ( $this->column_fields as $field ) {
+			foreach ( $this->column_fields as $field_object ) {
+				$field = $field_object->get_acf_field();
 				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
 					$has_thumbnail = true;
 					break;
@@ -456,7 +473,8 @@ class Admin extends Core\Singleton {
 		global $typenow, $pagenow;
 		if ( count( $this->column_fields ) ) {
 			$has_thumbnail		= false;
-			foreach ( $this->column_fields as $field ) {
+			foreach ( $this->column_fields as $field_object ) {
+				$field = $field_object->get_acf_field();
 				if ( $field['type'] == 'image' || $field['type'] == 'gallery' ) {
 					$has_thumbnail = true;
 					break;
@@ -469,7 +487,8 @@ class Admin extends Core\Singleton {
 			// enqueue scripts ...
 			$has_datepicker		= false;
 			$has_colorpicker	= false;
-			foreach ( $this->quickedit_fields as $field ) {
+			foreach ( $this->quickedit_fields as $field_object ) {
+				$field = $field_object->get_acf_field();
 				if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker'  ) {
 					$has_datepicker = true;
 				}
@@ -575,7 +594,8 @@ class Admin extends Core\Singleton {
 
 		$this->_wp_column_weights = array_map( array( $this, '_mul_100' ) , array_flip( array_keys( $columns ) ) );
 
-		foreach ( $this->column_fields as $field_slug => $field ) {
+		foreach ( $this->column_fields as $field_slug => $field_object ) {
+			$field = $field_object->get_acf_field();
 			if ( in_array( $field['type'], array('image','gallery'))) {
 				$field_slug .= '-qef-thumbnail';
 			}
@@ -600,12 +620,21 @@ class Admin extends Core\Singleton {
 	}
 
 	private function _get_column_weight( $column_slug ) {
+
 		$column_slug = str_replace('-qef-thumbnail','',$column_slug);
+
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
-		} else if ( isset( $this->column_fields[ $column_slug ]['show_column_weight'] ) && '' !==  $this->column_fields[ $column_slug ]['show_column_weight'] ) {
-			return intval( $this->column_fields[ $column_slug ]['show_column_weight'] );
 		}
+		
+		if ( isset( $this->column_fields[ $column_slug ] ) ) {
+			$field_object = $this->column_fields[ $column_slug ];
+			$field = $field_object->get_acf_field();
+			if ( isset( $field['show_column_weight'] ) ) {
+				return intval( $field['show_column_weight'] );
+			}
+		}
+
 		return max( $this->_wp_column_weights ) + 1;
 	}
 
@@ -648,11 +677,8 @@ class Admin extends Core\Singleton {
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 
 		if ( isset( $this->column_fields[$column] ) ) {
-			$field = $this->column_fields[$column];
-			
-			$acf_field = Fields\Field::getField( $field );
-
-			return $acf_field->render_column( $object_id );
+			$field_object = $this->column_fields[$column];
+			return $field_object->render_column( $object_id );
 		}
 		return '';
 	}
@@ -683,23 +709,40 @@ class Admin extends Core\Singleton {
 	} 
 
 	function display_quick_edit( $wp_column_slug, $post_type ) {
+
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
-		if ( isset($this->quickedit_fields[$column]) && $field = $this->quickedit_fields[$column] ) {
-			$this->display_quickedit_field( $column, $post_type , $field, 'quick' );
+
+		if ( isset( $this->quickedit_fields[$column] ) && $field_object = $this->quickedit_fields[ $column ] ) {
+			$field = $field_object->get_acf_field();
+
+			$field_group = $this->quickedit_field_groups[ $field['parent'] ];
+
+			if ( $field_group['rendered'] ) {
+				return;
+			}
+
+			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
+			printf( '<legend>%s</legend>', $field_group['title'] );
+				
+
+			foreach ( $field_group['fields'] as $sub_field_object ) {
+				$sub_field_object->render_quickedit_field( $column, $post_type, 'quick' );
+			}
+			echo '</fieldset>';
+			$this->quickedit_field_groups[ $field['parent'] ]['rendered'] = true;
 		}
+
 	}
 
 	function display_bulk_edit( $wp_column_slug, $post_type ) {
-		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
-		if ( isset($this->bulkedit_fields[$column]) && $field = $this->bulkedit_fields[$column] ) {
-			$this->display_quickedit_field( $column, $post_type , $field, 'bulk' );
-		}
-	}
 
-	function display_quickedit_field( $column, $post_type , $field, $mode ) {
-		$field_object = Fields\Field::getField( $field );
-		$field_object->render_quickedit_field( $column, $post_type, $mode );
-		return;
+		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
+
+		if ( isset($this->bulkedit_fields[ $column ]) && $field_object = $this->bulkedit_fields[$column] ) {
+
+			$field_object->render_quickedit_field( $column, $post_type, 'bulk' );
+
+		}
 
 	}
 
@@ -732,7 +775,8 @@ class Admin extends Core\Singleton {
 
 	function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
-		foreach ( $this->quickedit_fields as $field_name => $field ) {
+		foreach ( $this->quickedit_fields as $field_name => $field_object ) {
+			/*
 			$param_name = $this->core->prefix( $field['name'] );
 			switch ( $field['type'] ) {
 				case 'checkbox':
@@ -751,6 +795,9 @@ class Admin extends Core\Singleton {
 			if ( $do_update ) {
 				update_field( $field['name'], $value, $post_id );
 			}
+			/*/
+			$field_object->update( $post_id, $is_quickedit );
+			//*/
 		}
 	}
 }
