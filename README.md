@@ -15,14 +15,5 @@ See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a qui
 ToDo:
 -----
 
- - [ ] Bulk: Add no-change option to all fields
- - [x] Add columns to Terms
- - [ ] Add quickedit to Terms
- 	- Fix strange 403 ajax action = `inline-save`, post type = `post`
- 	- Fix data retrieval - must send post id = `{$taxonomy}_{$term_id}`
- - [ ] Conditional:
- 	- [ ] Current user role
- 	- [x] Post Category / Term
- 	- [x] Post Format
- 	- [x] Post Status
- 	
+ - [ ] Quick/Bulk: Field validation:
+ - [ ] QE/BE Checkboxes with Custom -> Add Choice!

@@ -89,6 +89,9 @@ class RadioField extends Field {
 		echo $output;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function update( $post_id, $is_quickedit = true ) {
 		$param_name = $this->acf_field['key'];
 

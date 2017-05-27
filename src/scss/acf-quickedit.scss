@@ -1,3 +1,4 @@
+
 /**
 */
 
@@ -38,6 +39,21 @@
 		&:first-child {
 			display:block;
 		}
+	}
+}
+.acf-qed-icon {
+	display:block;
+	img {
+		display:block;
+		margin: 0 auto;
+	}
+	&:after {
+		content:attr(title);
+		font-size:9px;
+		line-height:1.4em;
+		display:block;
+		margin-top:0.5em;
+		text-align:center;
 	}
 }
 
@@ -85,5 +101,6 @@
 			}
 		}
 	}
-
 }
+
+

@@ -15,9 +15,7 @@ class TextareaField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		?><pre><?php
-			the_field( $this->acf_field['key'], $object_id );
-		?></pre><?php
+		return sprintf( '<pre>%s</pre>', get_field( $this->acf_field['key'], $object_id, true ) );
 
 	}
 
@@ -29,7 +27,8 @@ class TextareaField extends Field {
 			'class'	=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'	=> 'text', 
 		);
-		return '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($this->acf_field['value']).'</textarea>';
+
+		echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($this->acf_field['value']).'</textarea>';
 
 	}
 

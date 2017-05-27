@@ -15,7 +15,7 @@ class ImageField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		$image_id = get_field( $this->acf_field['key'] );
+		$image_id = get_field( $this->acf_field['key'], $object_id );
 		$output = '';
 		if ( $image_id ) {
 			if ( is_array( $image_id ) ) {

@@ -52,5 +52,23 @@ class RelationshipField extends Field {
 		return false;
 	}
 
+	private function get_post_object_link( $post_id ) {
+		$result = '';
+		$title = get_the_title( $post_id );
+
+		if ( current_user_can( 'edit_post', $post_id ) ) {
+			$result .= sprintf( '<a href="%s">%s</a>', get_edit_post_link( $post_id ), $title );
+		} else if ( current_user_can( 'read_post', $post_id ) ) {
+			$result .= sprintf( '<a href="%s">%s</a>', get_permalink( $post_id ), $title );
+		} else {
+			$result .= $title;
+		}
+
+		if ( 'attachment' !== get_post_type( $post_id ) && 'private' === get_post_status( $post_id ) ) {	
+			$result .= ' &mdash; ' . __('Private', 'acf-quick-edit-fields' );
+		}
+		return $result;
+	}
+
 
 }

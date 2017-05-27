@@ -27,7 +27,6 @@ var acfQuickedit = {};
 				selected;
 
 			var keys = [];
-
 			// only keep keys that have fields
 			$parent.find('[data-acf-field-key]').each(function() {
 				var key;
@@ -55,7 +54,7 @@ var acfQuickedit = {};
 					if ( $.isArray( value ) ) {
 						$.each( value, function( idx, val ) {
 							selected += $field.find( '[value="'+val+'"]' ).prop( 'checked',true).length;
-						}); 
+						});
 					} else {
 						selected += $field.find( '[value="'+value+'"]' ).prop( 'checked',true).length;
 					}
@@ -129,7 +128,6 @@ var acfQuickedit = {};
 				}
 			});
 		},
-	
 	};
 
 	acfQuickedit.timepicker = {
@@ -214,14 +212,13 @@ var acfQuickedit = {};
 	}
 
 	if ( 'undefined' !== typeof inlineEditTax ) {
-		// we create a copy of the WP inline edit post function
+
 		var _wp_inline_edit_tax = inlineEditTax.edit;
-		// and then we overwrite the function with our own code
+
 		inlineEditTax.edit = function( id ) {
 			var object_id,
 				tax = $('input[name="taxonomy"]').val();
-			// "call" the original WP edit function
-			// we don't want to leave WordPress hanging
+
 			_wp_inline_edit_tax.apply( this, arguments );
 
 			// get the post ID
@@ -229,8 +226,6 @@ var acfQuickedit = {};
 			if ( typeof( id ) === 'object' ) {
 				object_id = parseInt( this.getId( id ) );
 			}
-			console.log(object_id );
-			
 			get_acf_post_data( tax + '_' + object_id , $('#edit-' + object_id )	 );
 		};
 	}
