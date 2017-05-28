@@ -12,10 +12,18 @@ Will not work with ACF Free (version 4.x).
 
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
 
+
+Developing
+----------
+
+This plugin uses gulp.
+
+To get started `cd` in the plugin directory,  
+run `npm install`  
+followed by `gulp`.
+
+
 ToDo:
 -----
 
- - [x] ACF Field Group editor: Show Col/BE options instantly
- - [x] Quick/Bulk: Implement Field validation (Client+Server)
  - [ ] QE+BE: Checkboxes with Custom -> Add Choice!
- - [ ] QE+BE: Add Image Field
