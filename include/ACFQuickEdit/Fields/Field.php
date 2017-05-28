@@ -25,7 +25,7 @@ abstract class Field {
 
 			// Content
 			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
-			'oembed'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'oembed'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'image'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'file'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'gallery'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
