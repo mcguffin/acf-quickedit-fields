@@ -7,15 +7,11 @@ if ( ! defined( 'ABSPATH' ) )
 
 class PostObjectField extends RelationshipField {
 
-	public static $quickedit = false;
-
-	public static $bulkedit = false;
-	
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
-		return false;
+	public function render_input( $input_atts, $is_quickedit = true ) {
+		return '';
 	}
 
 

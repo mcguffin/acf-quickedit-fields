@@ -7,10 +7,14 @@ if ( ! defined( 'ABSPATH' ) )
 
 class EmailField extends Field {
 
-	public static $quickedit = true;
+	/**
+	 *	@inheritdoc
+	 */
+	protected function render_input( $input_atts, $is_quickedit = true ) {
 
-	public static $bulkedit = true;
-	
+		return parent::render_input( array( 'type' => 'email', ), $is_quickedit );
+
+	}
 
 
 }

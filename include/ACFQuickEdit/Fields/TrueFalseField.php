@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TrueFalseField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -22,9 +18,9 @@ class TrueFalseField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$field_key = $this->acf_field['key'];
-		$prefix_column = $this->core->prefix( $column );
+		$prefix_column = $this->core->prefix( $field_key );
 		$output = '';
 		$output .= sprintf( '<ul class="acf-radio-list" data-acf-field-key="%s">', $field_key );
 		$output .= sprintf( '<li><label for="%s-yes">', $prefix_column );
@@ -46,7 +42,6 @@ class TrueFalseField extends Field {
 		$output .= '</label></li>';
 		$output .= '</ul>';
 
-		echo $output;
 		return $output;
 	}
 

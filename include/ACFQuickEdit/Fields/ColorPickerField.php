@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class ColorPickerField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -28,12 +24,13 @@ class ColorPickerField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'wp-color-picker acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'	=> 'text', 
 		);
-		echo '<input '. acf_esc_attr( $input_atts ) .' />';
+
+		return parent::render_input( $input_atts );// '<input '. acf_esc_attr( $input_atts ) .' />';
 
 	}
 

@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TaxonomyField extends Field {
 
-	public static $quickedit = false;
-
-	public static $bulkedit = false;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -35,8 +31,8 @@ class TaxonomyField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
-		return false;
+	public function render_input( $input_atts, $is_quickedit = true ) {
+		return '';
 	}
 
 

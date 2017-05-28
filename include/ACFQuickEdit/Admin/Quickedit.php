@@ -20,23 +20,14 @@ class Quickedit extends EditFeature {
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
 	public function render_acf_settings( $field ) {
-		$post = get_post( $field['ID'] );
-		if ( $post ) {
-			$parent = get_post( $post->post_parent );
-			$parent = get_post( $post->post_parent );
-
-			if ( $parent->post_type == 'acf-field-group' ) {
-				// add to quick edit
-				acf_render_field_setting( $field, array(
-					'label'			=> __('Allow QuickEdit','acf-quick-edit-fields'),
-					'instructions'	=> '',
-					'type'			=> 'true_false',
-					'name'			=> 'allow_quickedit',
-					'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
-				));
-		
-			}
-		}
+		// add to quick edit
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Allow QuickEdit','acf-quick-edit-fields'),
+			'instructions'	=> '',
+			'type'			=> 'true_false',
+			'name'			=> 'allow_quickedit',
+			'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
+		));
 	}
 
 	public function init_fields() {
@@ -60,6 +51,7 @@ class Quickedit extends EditFeature {
 	 *	@action quick_edit_custom_box
 	 */
 	function display_quick_edit( $wp_column_slug, $post_type ) {
+
 		if ( $this->did_render ) {
 			return;
 		}
@@ -68,9 +60,10 @@ class Quickedit extends EditFeature {
 		foreach ( $this->field_groups as $field_group ) {
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
+			printf( '<input type="hidden" name="nonce" value="%s" />', wp_create_nonce( 'acf_nonce' ) );
 
 			foreach ( $field_group['fields'] as $sub_field_object ) {
-				$sub_field_object->render_quickedit_field( $column, $post_type, 'quick' );
+				$sub_field_object->render_quickedit_field( $post_type, 'quick' );
 			}
 			echo '</fieldset>';
 		}

@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TextareaField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -22,13 +18,13 @@ class TextareaField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'	=> 'text', 
 		);
 
-		echo '<textarea '. acf_esc_attr( $input_atts ) .'>'.esc_textarea($this->acf_field['value']).'</textarea>';
+		return '<textarea '. acf_esc_attr( $input_atts ) .'></textarea>';
 
 	}
 

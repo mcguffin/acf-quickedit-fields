@@ -1,6 +1,4 @@
 
-/**
-*/
 
 .widefat {
 	thead {
@@ -11,6 +9,15 @@
 	}
 }
 
+.edit-php {
+	.acf-error-message {
+		clear:both;
+	}
+}
+
+/**
+ *	Columns
+ */
 .acf-qef-gallery-col {
 	position:relative;
 	width:80px;
@@ -41,6 +48,16 @@
 		}
 	}
 }
+
+.column-_acf_qed_ghost {
+	display:none;
+}
+.acf-qef-value-list {
+	margin-top:0;
+	margin-bottom:0;
+}
+
+
 .acf-qed-icon {
 	display:block;
 	img {
@@ -57,8 +74,17 @@
 	}
 }
 
+/**
+ *	Editor
+ */
 .inline-edit-row {
 	.input-text-wrap {
+		[type="url"],
+		[type="email"],
+		[type="number"],
+		[type="password"] {
+			width:100%;
+		}
 		.wp-picker-input-wrap {
 			input {
 				&[type="text"] {
@@ -73,11 +99,18 @@
 		position:absolute;
 		z-index:1;
 	}
+	.acf-quick-edit-file[value=""],
+	.acf-quick-edit-image[value=""] {
+		& ~ button.remove-media {
+			display:none;
+		}
+	}
 
 	#wpbody-content & {
 		fieldset.inline-edit-col-qed {
 			border:1px solid #ddd;
 			margin-bottom:10px;
+			
 			label.inline-edit-group {
 				span.title {
 					width:100%;
@@ -98,6 +131,9 @@
 				float:left;
 				box-sizing:border-box;
 				border:1px solid #ddd;
+				&:nth-of-type(3n+1) {
+					clear:left;
+				}
 			}
 		}
 	}

@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class EditFeature extends Feature {
 
+
 	public function init_fields() {
 
 		$field_groups = $this->get_available_field_groups();
@@ -35,9 +36,9 @@ abstract class EditFeature extends Feature {
 		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACFQUICKEDIT_FILE ) );
 
 		if ( $content_type == 'taxonomy' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax' ), null, true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), null, true );
 		} else if ( $content_type == 'post' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post' ), null, true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), null, true );
 		}
 
 		foreach ( $field_groups as $field_group ) {
@@ -66,16 +67,19 @@ abstract class EditFeature extends Feature {
 
 					$this->field_groups[ $field_group['ID'] ]['fields'][ $field['key'] ] = $field_object;
 
-					if ( $field['type'] == 'date_picker' || $field['type'] == 'time_picker' || $field['type'] == 'date_time_picker' ) {
+					if ( $field['type'] === 'date_picker' || $field['type'] === 'time_picker' || $field['type'] === 'date_time_picker' ) {
 						$this->scripts[]	=  'jquery-ui-datepicker';
 						$this->scripts[]	=  'acf-timepicker';
 
 						$this->styles[] 	=  'jquery-ui-datepicker';
 						$this->styles[]		=  'acf-timepicker';
 					}
-					if ( $field['type'] == 'color_picker' ) {
+					if ( $field['type'] === 'color_picker' ) {
 						$this->scripts[]	=  'wp-color-picker';
 						$this->styles[]		=  'wp-color-picker';
+					}
+					if ( $field['type'] === 'file' || $field['type'] === 'image' ) {
+						wp_enqueue_media();
 					}
 
 				}
@@ -127,6 +131,8 @@ abstract class EditFeature extends Feature {
 
 		return $this->quickedit_save_acf_meta( $object_id, true );
 	}
+
+
 
 	/**
 	 *	@action save_post

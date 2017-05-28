@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gulputil = require('gulp-util');
 var concat = require('gulp-concat');  
 var uglify = require('gulp-uglify');  
 var sass = require('gulp-sass');
@@ -35,12 +36,21 @@ gulp.task('styles-build',function(){
 });
 
 gulp.task('scripts-build', function() {
-    return gulp.src( scripts )
+    return [ gulp.src( scripts )
 		.pipe(sourcemaps.init())
-		.pipe( uglify() )
+		.pipe( uglify().on('error', gulputil.log ) )
 	    .pipe( concat('acf-quickedit.min.js') )
         .pipe( sourcemaps.write() )
-    	.pipe( gulp.dest( './js/' ) );
+    	.pipe( gulp.dest( './js/' ) ),
+
+    	gulp.src( './src/js/acf-qef-field-group.js' )
+		.pipe(sourcemaps.init())
+		.pipe( uglify().on('error', gulputil.log ) )
+	    .pipe( concat('acf-qef-field-group.min.js') )
+        .pipe( sourcemaps.write() )
+    	.pipe( gulp.dest( './js/' ) )
+    ];
+    	
 });
 
 

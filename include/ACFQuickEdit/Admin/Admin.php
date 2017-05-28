@@ -46,15 +46,24 @@ class Admin extends Core\Singleton {
 	public function setup() {
 
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
+
+			// init everything
 			add_action( 'admin_init' , array( $this, 'admin_init' ) );
-			add_action( 'admin_init' , array( $this, 'init_columns' ) );
-			add_action( 'load-admin-ajax.php' , array( $this, 'init_columns' ) );
+
+			// enqueue assets
+			add_action( 'load-edit.php' , array( $this, 'enqueue_edit_assets' ) );
+			add_action( 'load-edit-tags.php' , array( $this, 'enqueue_edit_assets' ) );
+			add_action( 'load-users.php' , array( $this, 'enqueue_edit_assets' ) );
+			add_action( 'load-post.php' , array( $this, 'enqueue_post_assets' ) );
+
+			// retrieving data
 			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
-			add_action( 'load-edit.php' , array( $this, 'enqueue_assets' ) );
-			add_action( 'load-edit-tags.php' , array( $this, 'enqueue_assets' ) );
-			add_action( 'load-users.php' , array( $this, 'enqueue_assets' ) );
+
 		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
+
+			// say something about incompatibility
 			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
+
 		}
 	}
 
@@ -88,37 +97,21 @@ class Admin extends Core\Singleton {
 		$this->quickedit->init_acf_settings();
 		$this->bulkedit->init_acf_settings();
 
-	}
-
-	/**
-	 * @filter 'acf/format_value/type=radio'
-	 */
-	function format_radio( $value, $post_id, $field ) {
-		if ( ( $nice_value = $field['choices'][$value]) ) {
-			return $nice_value;
-		}
-		return $value;
-	}
-
-
-
-	/**
-	 * @action 'admin_init'
-	 */
-	function init_columns( $cols ) {
-		global $typenow, $pagenow;
-		
 		$this->columns->init_fields();
 		$this->quickedit->init_fields();
 		$this->bulkedit->init_fields();
 
 	}
 
+
 	/**
 	 * @action 'load-edit.php'
 	 */
-	function enqueue_assets() {
-		
+	function enqueue_edit_assets() {
+
+		acf_enqueue_scripts();
+
+		// enqueue features assets
 		$styles = array_unique( array_merge(
 			$this->columns->get_styles(),
 			$this->quickedit->get_styles(),
@@ -138,8 +131,18 @@ class Admin extends Core\Singleton {
 			wp_enqueue_script( $script );
 		}
 
-	}
+		// enqueue features assets
 
+	}
+	/**
+	 * @action 'load-post.php'
+	 */
+	function enqueue_post_assets() {
+		global $typenow;
+		if ( 'acf-field-group' === $typenow ) {
+			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.min.js', ACFQUICKEDIT_FILE ), array( 'acf-field-group' ) );
+		}
+	}
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
@@ -172,8 +175,14 @@ class Admin extends Core\Singleton {
 
 				foreach ( $field_keys as $key ) {
 
-					$field_obj = get_field_object( $key , $post_id );
+					$field = get_field_object( $key , $post_id );
 
+					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
+						$result[ $key ] = $field_object->get_value( $post_id );
+					}
+
+
+/*
 					switch ( $field_obj['type'] ) {
 						case 'date_time_picker':
 						case 'time_picker':
@@ -181,18 +190,20 @@ class Admin extends Core\Singleton {
 							$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
 							break;
 						default:
-							$field_val	= $field_obj['value'];
+							$field_val	= get_field( $field_obj['key'], $post_id, false );
+//							$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
 							break;
 					}
 					if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_val ) {
 
-						$result[ $key ]	= $field_val;
+						$result[ $key ]	= $field_object;
 
 					} else {
 
 						$result[ $key ] = '';
 
 					}
+*/
 				}
 			}
 

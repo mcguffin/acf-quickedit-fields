@@ -7,9 +7,4 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TextField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
-
 }

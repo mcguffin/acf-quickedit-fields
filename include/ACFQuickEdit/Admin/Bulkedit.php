@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) )
 
 class Bulkedit extends EditFeature {
 
+	private $did_render = false;
+
 	public function get_type() {
 		return 'bulkedit';
 	}
@@ -18,22 +20,16 @@ class Bulkedit extends EditFeature {
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
 	function render_acf_settings( $field ) {
-		$post = get_post($field['ID']);
-		if ( $post ) {
-			$parent = get_post( $post->post_parent );
 
-			if ( $parent->post_type == 'acf-field-group' ) {
-				// show column: todo: allow sortable
-				// add to bulk edit
-				acf_render_field_setting( $field, array(
-					'label'			=> __('Allow Bulk Edit','acf-quick-edit-fields'),
-					'instructions'	=> '',
-					'type'			=> 'true_false',
-					'name'			=> 'allow_bulkedit',
-					'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit-fields')
-				));
-			}
-		}
+		// show column: todo: allow sortable
+		// add to bulk edit
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Allow Bulk Edit','acf-quick-edit-fields'),
+			'instructions'	=> '',
+			'type'			=> 'true_false',
+			'name'			=> 'allow_bulkedit',
+			'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit-fields')
+		));
 	}
 
 	public function is_enabled_for_field( $field ) {
@@ -66,9 +62,10 @@ class Bulkedit extends EditFeature {
 		foreach ( $this->field_groups as $field_group ) {
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
+			printf( '<input type="hidden" name="nonce" value="%s" />', wp_create_nonce( 'acf_nonce' ) );
 
 			foreach ( $field_group['fields'] as $sub_field_object ) {
-				$sub_field_object->render_quickedit_field( $column, $post_type, 'bulk' );
+				$sub_field_object->render_quickedit_field( $post_type, 'bulk' );
 			}
 			echo '</fieldset>';
 		}

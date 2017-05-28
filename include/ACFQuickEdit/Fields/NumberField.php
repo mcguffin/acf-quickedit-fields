@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class NumberField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -28,7 +24,7 @@ class NumberField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'acf-quick-edit',
 			'type'	=> 'number', 
@@ -36,7 +32,7 @@ class NumberField extends Field {
 			'max'	=> $this->acf_field['max'],
 			'step'	=> $this->acf_field['step'], 
 		);
-		echo '<input '. acf_esc_attr( $input_atts ) .' />';
+		return '<input '. acf_esc_attr( $input_atts ) .' />';
 
 	}
 

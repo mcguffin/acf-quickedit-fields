@@ -18,40 +18,34 @@ class Columns extends Feature {
 	 * @action 'acf/render_field_settings/type={$type}'
 	 */
 	function render_acf_settings( $field ) {
-		$post = get_post( $field['ID'] );
-		if ( $post ) {
-			$parent = get_post( $post->post_parent );
-		
-			if ( $parent->post_type == 'acf-field-group' ) {
-				// show column: todo: allow sortable
-				acf_render_field_setting( $field, array(
-					'label'			=> __('Show Column','acf-quick-edit-fields'),
-					'instructions'	=> '',
-					'type'			=> 'true_false',
-					'name'			=> 'show_column',
-					'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
-					'width'			=> 50,
-				));
+		// show column: todo: allow sortable
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Show Column','acf-quick-edit-fields'),
+			'instructions'	=> '',
+			'type'			=> 'true_false',
+			'name'			=> 'show_column',
+			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
+			'width'			=> 50,
+		));
 
-				acf_render_field_setting( $field, array(
-					'label'			=> __('Column Weight','acf-quick-edit-fields'),
-					'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
-					'type'			=> 'number',
-					'name'			=> 'show_column_weight',
-					'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
-					'default_value'	=> '0',
-					'min'			=> '-10000',
-					'max'			=> '10000',
-					'step'			=> '1',
-					'placeholder'	=> '',
-					'width'			=> '50',
-				));
-			}
-		}
+		acf_render_field_setting( $field, array(
+			'label'			=> __('Column Weight','acf-quick-edit-fields'),
+			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
+			'type'			=> 'number',
+			'name'			=> 'show_column_weight',
+			'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
+			'default_value'	=> '1000',
+			'min'			=> '-10000',
+			'max'			=> '10000',
+			'step'			=> '1',
+			'placeholder'	=> '',
+			'width'			=> '50',
+		));
 	}
 
 	public function init_fields() {
 		$field_groups = $this->get_available_field_groups();
+
 		if ( is_null( $field_groups ) ) {
 			return;
 		}
@@ -78,38 +72,103 @@ class Columns extends Feature {
 			}
 		}
 
-		if ( $this->is_active() ) {
-			$content_type = $this->get_current_content_type();
-			if ( 'post' == $content_type ) {
-				$post_type = $this->get_current_post_type();
-				if ( 'post' == $post_type ) {
-					$cols_hook		= 'manage_posts_columns';
-					$display_hook	= 'manage_posts_custom_column';
-				} else if ( 'page' == $post_type ) {
-					$cols_hook		= 'manage_pages_columns';
-					$display_hook	= 'manage_pages_custom_column';
-				} else if ( 'attachment' == $post_type ) {
-					$cols_hook		= 'manage_media_columns';
-					$display_hook	= 'manage_media_custom_column';
-				} else {
-					$cols_hook		= "manage_{$post_type}_posts_columns";
-					$display_hook	= "manage_{$post_type}_posts_custom_column";
-				}
-				add_filter( $cols_hook,		array( $this, 'move_date_to_end' ), 11 );
-				add_filter( $display_hook,	array( $this, 'display_post_field_column' ), 10, 2 );
-			} else if ( 'taxonomy' == $content_type ) {
+		$cols_filters = array();
+		$displays_filters = array();
+		$is_active = $this->is_active();
 
-				$taxonomy		= $_REQUEST['taxonomy'];
-				$cols_hook		= "manage_edit-{$taxonomy}_columns";
-				$display_hook	= "manage_{$taxonomy}_custom_column";
-				add_filter( $display_hook,	array( $this, 'display_term_field_column' ), 10, 3 );
-
-			} else if ( 'user' == $content_type ) {
-				$cols_hook		= "manage_users_columns";
-				$display_hook	= "manage_users_custom_column";
-				add_filter( $display_hook,	array( $this, 'display_user_field_column' ), 10, 3 );
+		$content_type = $this->get_current_content_type();
+		if ( 'post' == $content_type ) {
+			$post_type = $this->get_current_post_type();
+			if ( 'post' == $post_type ) {
+				$cols_hook		= 'manage_posts_columns';
+				$display_hook	= 'manage_posts_custom_column';
+			} else if ( 'page' == $post_type ) {
+				$cols_hook		= 'manage_pages_columns';
+				$display_hook	= 'manage_pages_custom_column';
+			} else if ( 'attachment' == $post_type ) {
+				$cols_hook		= 'manage_media_columns';
+				$display_hook	= 'manage_media_custom_column';
+			} else {
+				$cols_hook		= "manage_{$post_type}_posts_columns";
+				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
-			add_filter( $cols_hook,		array( $this, 'add_field_columns' ) );
+
+			if ( $is_active ) {
+				$cols_filters[] = array(
+					'cb'		=> array( $this, 'move_date_to_end' ),
+					'priority'	=> 11,
+					'args'		=> null,
+				);
+				$displays_filters[] = array(
+					'cb'		=> array( $this, 'display_post_field_column' ),
+					'priority'	=> 10,
+					'args'		=> 2,
+				);
+			}
+		} else if ( 'taxonomy' == $content_type ) {
+
+			$taxonomy		= $_REQUEST['taxonomy'];
+			$cols_hook		= "manage_edit-{$taxonomy}_columns";
+			$display_hook	= "manage_{$taxonomy}_custom_column";
+
+			if ( $is_active ) {
+				$displays_filters[] = array(
+					'cb'		=> array( $this, 'display_term_field_column' ),
+					'priority'	=> 10,
+					'args'		=> 3,
+				);
+			}
+
+		} else if ( 'user' == $content_type ) {
+			$cols_hook		= "manage_users_columns";
+			$display_hook	= "manage_users_custom_column";
+
+			if ( $is_active ) {
+				$displays_filters[] = array(
+					'cb'		=> array( $this, 'display_user_field_column' ),
+					'priority'	=> 10,
+					'args'		=> 3,
+				);
+			}
+		}
+
+		if ( $is_active ) {
+			$cols_filters[] = array(
+				'cb'		=> array( $this, 'add_field_columns' ),
+				'priority'	=> null,
+				'args'		=> null,
+			);
+		} else {
+			$cols_filters[] = array(
+				'cb'		=> array( $this, 'add_ghost_column' ),
+				'priority'	=> null,
+				'args'		=> null,
+			);
+			$displays_filters[] = array(
+				'cb'		=> '__return_empty_string',
+				'priority'	=> null,
+				'args'		=> null,
+			);
+		}
+
+		foreach ( $cols_filters as $filter ) {
+			if ( ! is_null( $filter['args'] ) ) {
+				add_filter( $cols_hook, $filter['cb'], $filter['priority'], $filter['args'] );
+			} else if ( ! is_null( $filter['priority'] ) ) {
+				add_filter( $cols_hook, $filter['cb'], $filter['priority'] );
+			} else {
+				add_filter( $cols_hook, $filter['cb'] );
+			}
+		}
+
+		foreach ( $displays_filters as $filter ) {
+			if ( ! is_null( $filter['args'] ) ) {
+				add_filter( $display_hook, $filter['cb'], $filter['priority'], $filter['args'] );
+			} else if ( ! is_null( $filter['priority'] ) ) {
+				add_filter( $display_hook, $filter['cb'], $filter['priority'] );
+			} else {
+				add_filter( $display_hook, $filter['cb'] );
+			}
 		}
 
 		wp_register_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', ACFQUICKEDIT_FILE ) );
@@ -124,7 +183,10 @@ class Columns extends Feature {
 
 	}
 
-
+	public function add_ghost_column( $columns ) {
+		$columns['_acf_qed_ghost'] = '';
+		return $columns;
+	}
 
 	/**
 	 *	@filter manage_posts_columns
@@ -151,7 +213,7 @@ class Columns extends Feature {
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
 			$field = $field_object->get_acf_field();
-			if ( in_array( $field['type'], array('image','gallery'))) {
+			if ( in_array( $field['type'], array('image','gallery','file'))) {
 				$field_slug .= '-qef-thumbnail';
 			}
 			$columns[ $field_slug ] = $field['label'];

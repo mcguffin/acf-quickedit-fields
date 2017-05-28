@@ -5,12 +5,8 @@ namespace ACFQuickEdit\Fields;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
-class ImageField extends Field {
+class ImageField extends FileField {
 
-	public static $quickedit = false;
-
-	public static $bulkedit = false;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -35,9 +31,11 @@ class ImageField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
-		return false;
+/*
+	public function render_input( $input_atts, $is_quickedit = true ) {
+		return '';
 	}
+*/
 
 
 }

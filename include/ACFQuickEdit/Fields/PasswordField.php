@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class PasswordField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = false;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -25,15 +21,16 @@ class PasswordField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
-			'class'	=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-			'type'	=> 'password', 
+			'class'			=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
+			'type'		=> 'password', 
 			'autocomplete'	=> 'false',
-			'readonly'	=> 'readonly',
-			'onfocus' => 'this.removeAttribute(\'readonly\');'
+			'readonly'		=> 'readonly',
+			'onfocus'		=> 'this.removeAttribute(\'readonly\');',
+			'onblur'		=> 'this.setAttribute(\'readonly\',\'readonly\');',
 		);
-		echo '<input '. acf_esc_attr( $input_atts ) .' />';
+		return '<input '. acf_esc_attr( $input_atts ) .' />';
 
 	}
 

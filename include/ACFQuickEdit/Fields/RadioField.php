@@ -5,34 +5,12 @@ namespace ACFQuickEdit\Fields;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
-class RadioField extends Field {
-
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
-	/**
-	 *	@inheritdoc
-	 */
-	public function render_column( $object_id ) {
-		$field_value = get_field( $this->acf_field['key'], $object_id );
-		$values = array();
-		foreach ( (array) $field_value as $value )
-			$values[] = isset( $this->acf_field['choices'][ $value ] ) 
-							? $this->acf_field['choices'][ $value ] 
-							: $value;
-		
-		$output = implode( __(', ', 'acf-quick-edit-fields' ) , $values );
-		if ( empty( $output ) )
-			$output = __('(No value)', 'acf-quick-edit-fields');
-		return $output;
-
-	}
+class RadioField extends ChoiceField {
 
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		
 		$output = '';
 		$output .= sprintf( '<ul class="acf-radio-list%s" data-acf-field-key="%s">', 
@@ -86,7 +64,7 @@ class RadioField extends Field {
 
 		$output .= '</ul>';
 
-		echo $output;
+		return $output;
 	}
 
 	/**

@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class DateTimePickerField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
 	/**
 	 *	@inheritdoc
 	 */
@@ -23,7 +19,7 @@ class DateTimePickerField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $column, $is_quickedit = true ) {
+	public function render_input( $input_atts, $is_quickedit = true ) {
 		$formats = acf_split_date_time($this->acf_field['display_format']);
 		$wrap_atts = array(
 			'class'				=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
@@ -43,9 +39,18 @@ class DateTimePickerField extends Field {
 		$output .= '<input '. acf_esc_attr( $input_atts ) .' />';
 		$output .= '<input '. acf_esc_attr( $display_input_atts ) .' />';
 		$output .= '</span>';
-		echo $output;
 
+		return $output;
 	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function get_value( $post_id ) {
+		return acf_get_metadata( $post_id, $this->acf_field['name'] );
+	}
+
+
 
 
 }

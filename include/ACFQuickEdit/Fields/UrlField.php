@@ -7,10 +7,17 @@ if ( ! defined( 'ABSPATH' ) )
 
 class UrlField extends Field {
 
-	public static $quickedit = true;
-
-	public static $bulkedit = true;
-	
+	/**
+	 *	@inheritdoc
+	 */
+	protected function render_input( $input_atts, $is_quickedit = true ) {
+		$output = '';
+		$output .= '<span class="acf-url">';
+		$output .= '<i class="acf-icon -globe small"></i>';
+		$output .= parent::render_input( array( 'type'	=> 'url', ), $is_quickedit );
+		$output .= '</span>';
+		return $output;
+	}
 
 
 }

@@ -26,8 +26,8 @@ abstract class Field {
 			// Content
 			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'oembed'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
-			'image'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
-			'file'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'image'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'file'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'gallery'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 
 			// Choice
@@ -69,11 +69,13 @@ abstract class Field {
 	}
 
 	public static function getFieldObject( $acf_field ) {
-
+		if ( is_null($acf_field) ) {
+			return;
+		}
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {
 			$field_class = explode( '_', $acf_field['type'] );
 			$field_class = array_map( 'ucfirst', $field_class );
-			$field_class = 'ACFQuickEdit\\Fields\\'.implode( '', $field_class ) . 'Field';
+			$field_class = 'ACFQuickEdit\\Fields\\' . implode( '', $field_class ) . 'Field';
 			self::$fields[ $acf_field['key'] ] = new $field_class( $acf_field );
 		}
 
@@ -114,28 +116,26 @@ abstract class Field {
 	 *
 	 *	@return null
 	 */
-	final public function render_quickedit_field( $column, $post_type, $mode ) {
+	final public function render_quickedit_field( $post_type, $mode ) {
 
 		$input_atts = array(
 			'data-acf-field-key' => $this->acf_field['key'],
 			'name' => sprintf( 'acf[%s]', $this->acf_field['key'] ),
 		);
 
-		do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $column, $post_type  );
+		do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
 
-		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $column, $post_type ) ) {
+		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $post_type ) ) {
 			return;
 		}
 
 		?>
-			<div class="acf-field inline-edit-col column-<?php echo $column; ?>" data-key="<?php echo $this->acf_field['key'] ?>">
+			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
-					<span class="input-text-wrap"><?php
-
-						$this->render_input( $input_atts, $column, $mode === 'quick' );
-
-					?></span>
+					<span class="input-text-wrap acf-input-wrap">
+						<?php echo $this->render_input( $input_atts, $mode === 'quick' ); ?>
+					</span>
 				</label>
 			</div>
 		<?php
@@ -149,16 +149,23 @@ abstract class Field {
 	 *	@param string $column
 	 *	@param bool $is_quickedit
 	 *
-	 *	@return null
+	 *	@return string
 	 */
-	protected function render_input( $input_atts, $column, $is_quickedit = true ) {
+	protected function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
-			'class'	=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-			'type'	=> 'text', 
+			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
+			'type'					=> 'text', 
+			'data-acf-field-key'	=> $this->acf_field['key'],
+			'name'					=> sprintf( 'acf[%s]', $this->acf_field['key'] ),
 		);
-		echo '<input '. acf_esc_attr( $input_atts ) .' />';
+
+		return '<input '. acf_esc_attr( $input_atts ) .' />';
 	}
 
+
+	public function get_value( $post_id ) {
+		return get_field( $this->acf_field['key'], $post_id, false );
+	}
 
 	/**
 	 *	Update field value
