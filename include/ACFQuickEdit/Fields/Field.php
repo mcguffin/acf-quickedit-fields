@@ -122,6 +122,9 @@ abstract class Field {
 			'data-acf-field-key' => $this->acf_field['key'],
 			'name' => sprintf( 'acf[%s]', $this->acf_field['key'] ),
 		);
+		if ( $mode === 'bulk' ) {
+			$input_atts['disabled'] = 'disabled';
+		}
 
 		do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
 
@@ -133,7 +136,19 @@ abstract class Field {
 			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
-					<span class="input-text-wrap acf-input-wrap">
+					<span class="input-text-wrap">
+						<?php if ( $mode === 'bulk' ) { ?>
+							<span>
+								<input <?php echo acf_esc_attr( array(
+									'name'		=> $input_atts['name'],
+									'value' 	=> $this->dont_change_value,
+									'type'		=> 'checkbox',
+									'checked'	=> 'checked',
+									'data-is-do-not-change' => 'true',
+								) ) ?> />
+								<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
+							</span>
+						<?php } ?>
 						<?php echo $this->render_input( $input_atts, $mode === 'quick' ); ?>
 					</span>
 				</label>

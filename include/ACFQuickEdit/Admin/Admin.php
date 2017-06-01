@@ -156,6 +156,8 @@ class Admin extends Core\Singleton {
 			 
 			$post_ids = (array) $_REQUEST['post_id'];
 
+			$is_multiple = count( $post_ids ) > 1;
+
 		//	$post_ids = array_filter( $post_ids,'intval');
 
 			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
@@ -178,7 +180,14 @@ class Admin extends Core\Singleton {
 					$field = get_field_object( $key , $post_id );
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
-						$result[ $key ] = $field_object->get_value( $post_id );
+						if ( $is_multiple ) {
+							if ( ! isset( $result[ $key ] ) ) {
+								$result[ $key ] = array();
+							}
+							$result[ $key ][] = $field_object->get_value( $post_id );
+						} else {
+							$result[ $key ] = $field_object->get_value( $post_id );
+						}
 					}
 
 
@@ -206,7 +215,16 @@ class Admin extends Core\Singleton {
 */
 				}
 			}
-
+			if ( $is_multiple ) {
+				foreach ( $result as $key => $values ) {
+					$values = array_unique( $values );
+					if ( 1 === count( $values ) ) {
+						$result[ $key ] = $values[0];
+					} else {
+						$result[ $key ] = null;
+					}
+				}
+			}
 			echo json_encode( $result );
 
 			exit();

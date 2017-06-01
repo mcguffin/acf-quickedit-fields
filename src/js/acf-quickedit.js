@@ -310,8 +310,16 @@ var acfQuickedit = {};
 	})
 	.on( 'change', '[data-is-do-not-change="true"]', function(){
 		var $self = $(this),
+			name = $self.attr('name'),
 			$list = $self.closest('.acf-checkbox-list'),
+			$items;
+		if ( $list.length ) {
 			$items = $list.find('[type="checkbox"]:not([data-is-do-not-change])');
+		} else {
+			$items = $self.closest('.acf-field').find('[name="'+name+'"]:not([data-is-do-not-change])')
+		}
+
+console.log($items);
 		$items.prop( 'disabled', $self.prop('checked') );
 	})
 	.on( 'click', '.inline-edit-col .select-media', function(e) {
