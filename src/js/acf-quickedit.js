@@ -18,7 +18,9 @@ var acfQuickedit = {};
 
 			if ( ! $(this).is('[data-is-do-not-change="true"]' ) ) {
 				if ( $(this).is('[type="radio"],[type="checkbox"]') ) {
-					$(this).prop('checked',false);
+					$(this).prop( 'checked', false );
+				} else if ( $(this).parent().is('.acf-quick-edit-date_picker, .acf-quick-edit-time_picker, .acf-quick-edit-date_time_picker' ) ) {
+					$(this).next('[type="text"]').prop( 'readonly', true );
 				} else {
 					$(this).val('');
 				}
@@ -83,6 +85,10 @@ var acfQuickedit = {};
 							event.stopPropagation();
 						}
 					});
+				}
+
+				if ( $field.parent().is('.acf-quick-edit-date_picker, .acf-quick-edit-time_picker, .acf-quick-edit-date_time_picker' ) ) {
+					$field.next('[type="text"]').prop( 'readonly', false );
 				}
 
 			}
