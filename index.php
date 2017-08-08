@@ -5,7 +5,7 @@ Plugin Name: ACF QuickEdit Fields
 Plugin URI: http://wordpress.org/
 Description: Show Advanced Custom Fields in post list table. Edit field values in Quick Edit and / or Bulk edit.
 Author: Jörn Lund
-Version: 2.0.1
+Version: 2.0.2
 Author URI: 
 License: GPL3
 */
