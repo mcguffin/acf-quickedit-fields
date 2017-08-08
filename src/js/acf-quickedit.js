@@ -77,6 +77,13 @@ var acfQuickedit = {};
 					$field.prop( 'readonly', false );
 				}
 
+				if ( $field.is("textarea") ) {
+					$field.on('keydown keyup', function(event) {
+						if ( event.which == 13 ) {
+							event.stopPropagation();
+						}
+					});
+				}
 
 			}
 
