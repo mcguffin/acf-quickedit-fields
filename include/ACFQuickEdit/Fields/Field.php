@@ -76,7 +76,11 @@ abstract class Field {
 			$field_class = explode( '_', $acf_field['type'] );
 			$field_class = array_map( 'ucfirst', $field_class );
 			$field_class = 'ACFQuickEdit\\Fields\\' . implode( '', $field_class ) . 'Field';
-			self::$fields[ $acf_field['key'] ] = new $field_class( $acf_field );
+			if ( class_exists( $field_class ) ) {
+				self::$fields[ $acf_field['key'] ] = new $field_class( $acf_field );
+			} else {
+				self::$fields[ $acf_field['key'] ] = new Generic( $acf_field );
+			}
 		}
 
 		return self::$fields[ $acf_field['key'] ];
