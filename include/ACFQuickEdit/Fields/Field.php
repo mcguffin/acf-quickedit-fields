@@ -130,7 +130,6 @@ abstract class Field {
 			$input_atts['disabled'] = 'disabled';
 		}
 
-		do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
 
 		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $post_type ) ) {
 			return;
@@ -153,7 +152,12 @@ abstract class Field {
 								<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
 							</span>
 						<?php } ?>
-						<?php echo $this->render_input( $input_atts, $mode === 'quick' ); ?>
+						<?php 
+						
+							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
+							echo $this->render_input( $input_atts, $mode === 'quick' ); 
+						
+						?>
 					</span>
 				</label>
 			</div>
