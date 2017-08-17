@@ -7,6 +7,15 @@
 			width:80px;
 		}
 	}
+	tbody {
+		[class*="-qef-thumbnail "],
+		[class$="-qef-thumbnail"] {
+			img {
+				max-width:100%;
+				height:auto;
+			}
+		}
+	}
 }
 
 .edit-php {
