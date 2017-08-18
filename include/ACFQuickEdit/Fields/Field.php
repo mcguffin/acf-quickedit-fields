@@ -139,7 +139,7 @@ abstract class Field {
 			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
-					<span class="input-text-wrap">
+					<span class="acf-input-wrap">
 						<?php if ( $mode === 'bulk' ) { ?>
 							<span>
 								<input <?php echo acf_esc_attr( array(

@@ -90,7 +90,7 @@
  *	Editor
  */
 .inline-edit-row {
-	.input-text-wrap {
+	.acf-input-wrap {
 		[type="url"],
 		[type="email"],
 		[type="number"],
@@ -128,7 +128,7 @@
 					width:100%;
 					float:none;
 				}
-				span.input-text-wrap {
+				span.acf-input-wrap {
 					margin-left:0;
 				}
 			}
