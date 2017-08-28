@@ -1,0 +1,11 @@
+.acf-field-object {
+	&[data-type="repeater"],
+	&[data-type="flexible_content"] {
+		.acf-field-setting-show_column,
+		.acf-field-setting-show_column_weight,
+		.acf-field-setting-allow_quickedit,
+		.acf-field-setting-allow_bulkedit {
+			display:none;
+		}
+	}
+}

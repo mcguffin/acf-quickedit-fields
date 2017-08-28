@@ -8,7 +8,8 @@ var rename = require('gulp-rename');
 
 
 var styles = [
-	'./src/scss/acf-quickedit.scss'
+	'./src/scss/acf-quickedit.scss',
+	'./src/scss/acf-qef-field-group.scss'
 ];
 var scripts = [
 	'./src/js/acf-quickedit.js',
@@ -20,7 +21,7 @@ gulp.task('styles',function(){
     return gulp.src( styles )
 		.pipe(sourcemaps.init())
         .pipe( sass( { 
-        	outputStyle: 'expanded' 
+        	outputStyle: 'compressed' 
         } ).on('error', sass.logError) )
         .pipe( sourcemaps.write() )
         .pipe( gulp.dest( './css/' ) );
@@ -31,7 +32,7 @@ gulp.task('styles-build',function(){
         .pipe( sass( { 
 			outputStyle: 'compressed', omitSourceMapUrl: true 
         } ).on('error', sass.logError) )
-		.pipe( rename( 'acf-quickedit.css') )
+//		.pipe( rename( 'acf-quickedit.css') )
 		.pipe( gulp.dest('./css/'));
 });
 
