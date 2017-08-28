@@ -2,7 +2,7 @@
 
 namespace ACFQuickEdit\Core;
 
-use ACFQuickEdit\Element;
+use ACFQuickEdit\Compat;
 
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
@@ -16,6 +16,7 @@ class Core extends Singleton {
 	 */
 	protected function __construct() {
 		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
+		add_action( 'plugins_loaded' , array( $this , 'init_compat' ), 0 );
 		add_action( 'init' , array( $this , 'init' ) );
 	}
 
@@ -27,6 +28,16 @@ class Core extends Singleton {
 	function wp_enqueue_style() {
 	}
 
+	/**
+	 *	Load text domain
+	 * 
+	 *  @action plugins_loaded
+	 */
+	public function init_compat() {
+		if ( class_exists( 'Polylang' ) ) {
+			Compat\Polylang::instance();
+		}
+	}
 
 	/**
 	 *	Load text domain

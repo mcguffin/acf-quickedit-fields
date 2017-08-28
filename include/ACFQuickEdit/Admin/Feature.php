@@ -88,9 +88,9 @@ abstract class Feature extends Core\Singleton {
 		} else if ( $pagenow == 'users.php' ) {
 			return 'user';
 		} else if ( defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
-			if ( $_REQUEST['action'] === 'inline-save' ) {
+			if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_post_ajax_actions', array( 'inline-save' ) ) ) ) {
 				return 'post';
-			} else if ( $_REQUEST['action'] === 'inline-save-tax' ) {
+			} else if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_term_ajax_actions', array( 'inline-save-tax' ) ) ) ) {
 				return 'taxonomy';
 			}
 		}
@@ -108,7 +108,7 @@ abstract class Feature extends Core\Singleton {
 
 		} else if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 
-			if ( $_REQUEST['action'] === 'inline-save' ) {
+			if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_post_ajax_actions', array( 'inline-save' ) ) ) ) {
 				return $_REQUEST['post_type'];
 			}
 
@@ -133,7 +133,12 @@ abstract class Feature extends Core\Singleton {
 				$conditions = array( 'post_type' => $this->get_current_post_type() );
 
 				if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-					$conditions['post_id'] = intval( $_REQUEST['post_ID'] );
+					foreach ( apply_filters( 'acf_quick_edit_post_id_request_param', array( 'post_ID' ) ) as $request_param ) {
+						if ( isset( $_REQUEST[$request_param] ) ) {
+							$conditions['post_id'] = absint( $_REQUEST[$request_param] );
+						}
+					}
+					
 				} else {
 					add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
@@ -151,7 +156,6 @@ abstract class Feature extends Core\Singleton {
 			} else {
 				return;
 			}
-
 
 			/**
 			 * Getting the Field Groups to be displayed in posts list table
