@@ -91,11 +91,17 @@
  */
 .inline-edit-row {
 	.acf-input-wrap {
-		[type="url"],
-		[type="email"],
-		[type="number"],
-		[type="password"] {
-			width:100%;
+		input {
+			&[type="url"],
+			&[type="email"],
+			&[type="number"],
+			&[type="password"] {
+				width:100%;
+			}
+			&[type="radio"],
+			&[type="checkbox"] {
+				height:16px;
+			}
 		}
 		.wp-picker-input-wrap {
 			input {
