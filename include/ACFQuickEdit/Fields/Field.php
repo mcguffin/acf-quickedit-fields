@@ -69,7 +69,7 @@ abstract class Field {
 	}
 
 	public static function getFieldObject( $acf_field ) {
-		if ( is_null($acf_field) ) {
+		if ( ! $acf_field || is_null($acf_field) ) {
 			return;
 		}
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {

@@ -27,3 +27,4 @@ ToDo:
 -----
 
  - [ ] QE+BE: Checkboxes with Custom -> Add Choice!
+ - [ ] Support sortable columns
