@@ -8,7 +8,8 @@ Show Advanced Custom Fields in post list table.
 Edit field values in Quick Edit and / or Bulk edit.
 
 Proofed to work with ACF Pro 5.x.  
-Will not work with ACF Free (version 4.x).
+Will not work with ACF Free (version 4.x).  
+Requires at least PHP 5.3.
 
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
 

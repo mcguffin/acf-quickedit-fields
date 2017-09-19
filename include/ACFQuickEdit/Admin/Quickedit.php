@@ -10,14 +10,20 @@ if ( ! defined( 'ABSPATH' ) )
 
 class Quickedit extends EditFeature {
 
+	/**
+	 *	@var bool
+	 */
 	private $did_render = false;
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function get_type() {
 		return 'quickedit';
 	}
 
 	/**
-	 * @action 'acf/render_field_settings/type={$type}'
+	 *	@inheritdoc
 	 */
 	public function render_acf_settings( $field ) {
 		// add to quick edit
@@ -30,6 +36,9 @@ class Quickedit extends EditFeature {
 		));
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		parent::init_fields();
@@ -41,6 +50,9 @@ class Quickedit extends EditFeature {
 		}
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function is_enabled_for_field( $field ) {
 
 		return isset( $field['allow_quickedit'] ) && $field['allow_quickedit'];

@@ -144,6 +144,7 @@ class Admin extends Core\Singleton {
 			wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACFQUICKEDIT_FILE ), array( 'acf-field-group' ) );
 		}
 	}
+
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
@@ -158,8 +159,6 @@ class Admin extends Core\Singleton {
 			$post_ids = (array) $_REQUEST['post_id'];
 
 			$is_multiple = count( $post_ids ) > 1;
-
-		//	$post_ids = array_filter( $post_ids,'intval');
 
 			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
 
@@ -190,30 +189,6 @@ class Admin extends Core\Singleton {
 							$result[ $key ] = $field_object->get_value( $post_id );
 						}
 					}
-
-
-/*
-					switch ( $field_obj['type'] ) {
-						case 'date_time_picker':
-						case 'time_picker':
-						case 'date_picker':
-							$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
-							break;
-						default:
-							$field_val	= get_field( $field_obj['key'], $post_id, false );
-//							$field_val	= acf_get_metadata( $post_id, $field_obj['name'] );
-							break;
-					}
-					if ( ! isset( $result[ $key ] ) || $result[ $key ] == $field_val ) {
-
-						$result[ $key ]	= $field_object;
-
-					} else {
-
-						$result[ $key ] = '';
-
-					}
-*/
 				}
 			}
 			if ( $is_multiple ) {

@@ -8,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) )
 class RangeField extends NumberField {
 
 	
+	/**
+	 *	@inheritdoc
+	 */
 	protected $wrapper_class = 'acf-range-wrap';
 
 	/**
@@ -33,7 +36,6 @@ class RangeField extends NumberField {
 		}
 
 		return $output;
-
 	}
 
 }

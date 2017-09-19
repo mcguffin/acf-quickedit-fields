@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) )
 abstract class EditFeature extends Feature {
 
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		$field_groups = $this->get_available_field_groups();
@@ -119,9 +122,12 @@ abstract class EditFeature extends Feature {
 
 
 	/**
+	 *	@param int $term_id
+	 *	@param int $tt_id
+	 *	@param string $taxonomy
 	 *	@action save_term
 	 */
-	function quickedit_save_acf_term_meta( $term_id, $tt_id, $taxonomy ) {
+	public function quickedit_save_acf_term_meta( $term_id, $tt_id, $taxonomy ) {
 
 		$object_id = sprintf( '%s_%s', $taxonomy, $term_id );
 
@@ -135,9 +141,10 @@ abstract class EditFeature extends Feature {
 
 
 	/**
+	 *	@param int $post_id
 	 *	@action save_post
 	 */
-	function quickedit_save_acf_post_meta( $post_id ) {
+	public function quickedit_save_acf_post_meta( $post_id ) {
 
 		$is_quickedit = is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX;
 
@@ -147,7 +154,11 @@ abstract class EditFeature extends Feature {
 		return $this->quickedit_save_acf_meta( $post_id, $is_quickedit );
 	}
 
-	function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
+	/**
+	 *	@param int $post_id
+	 *	@param bool $is_quickedit
+	 */
+	private function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
 		foreach ( $this->fields as $field_name => $field_object ) {
 

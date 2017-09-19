@@ -13,11 +13,9 @@ class PostObjectField extends RelationshipField {
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		return '';
 	}
+
 	/**
-	 *	Render Column content
-	 *
-	 *	@param int|string $object_id
-	 *	@return string
+	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
 		$value = get_field( $this->acf_field['key'], $object_id );

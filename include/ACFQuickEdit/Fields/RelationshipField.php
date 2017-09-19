@@ -48,6 +48,10 @@ class RelationshipField extends Field {
 		return '';
 	}
 
+	/**
+	 *	@param int $post_id
+	 *	@return string HTML
+	 */
 	private function get_post_object_link( $post_id ) {
 		$result = '';
 		$title = get_the_title( $post_id );

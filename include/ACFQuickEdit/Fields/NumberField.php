@@ -34,8 +34,6 @@ class NumberField extends Field {
 		);
 
 		return parent::render_input( $input_atts, $is_quickedit );
-//		return '<input '. acf_esc_attr( $input_atts ) .' />';
-
 	}
 
 

@@ -10,14 +10,21 @@ if ( ! defined( 'ABSPATH' ) )
 
 class Bulkedit extends EditFeature {
 
+	/**
+	 *	@var bool
+	 */
 	private $did_render = false;
 
+	
+	/**
+	 *	@inheritdoc
+	 */
 	public function get_type() {
 		return 'bulkedit';
 	}
 
 	/**
-	 * @action 'acf/render_field_settings/type={$type}'
+	 *	@inheritdoc
 	 */
 	function render_acf_settings( $field ) {
 
@@ -32,6 +39,9 @@ class Bulkedit extends EditFeature {
 		));
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function is_enabled_for_field( $field ) {
 
 		return isset($field['allow_quickedit']) && $field['allow_quickedit'];
@@ -39,7 +49,9 @@ class Bulkedit extends EditFeature {
 	}
 
 
-
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		parent::init_fields();

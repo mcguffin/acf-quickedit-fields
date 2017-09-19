@@ -10,15 +10,31 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class Feature extends Core\Singleton {
 
+	/**
+	 * @var array styles to enqueue
+	 */
 	protected $styles = array();
 
+	/**
+	 * @var array scripts to enqueue
+	 */
 	protected $scripts = array();
 
+	/**
+	 * @var ACFQuickEdit\Core\Core
+	 */
 	protected $core;
 
+	/**
+	 * @var ACFQuickEdit\Core\Core
+	 */
 	protected $fields = array();
 
+	/**
+	 * @var null|array
+	 */
 	private $available_field_groups = null;
+
 	/**
 	 *	Constructor
 	 */
@@ -27,29 +43,52 @@ abstract class Feature extends Core\Singleton {
 		parent::__construct();
 	}
 
+	/**
+	 *	@return string
+	 */
 	abstract function get_type();
 
+	/**
+	 *	@return array
+	 */
 	final public function get_styles() {
 		return $this->styles;
 	}
 
+	/**
+	 *	@return array
+	 */
 	final public function get_scripts() {
 		return $this->scripts;
 	}
 
+	/**
+	 *	@return bool
+	 */
 	public function is_active() {
 		return count( $this->fields ) > 0;
 	}
 
+	/**
+	 *	@param string $key field Key
+	 *	@param array $field_object ACF Field
+	 */
 	protected function add_field( $key, $field_object ){
 		$this->fields[ $key ] = $field_object;
 	}
 
+	/**
+	 *	@param string $type
+	 *	@return bool
+	 */
 	public function supports( $type ) {
 		$types = Fields\Field::get_types();
 		return isset( $types[ $type ] ) && $types[ $type ][ $this->get_type() ];
 	}
 
+	/**
+	 *	Initialize
+	 */
 	public function init_acf_settings() {
 		$types = Fields\Field::get_types();
 
@@ -97,6 +136,9 @@ abstract class Feature extends Core\Singleton {
 	}
 
 
+	/**
+	 * @return null|string	post type
+	 */
 	protected function get_current_post_type() {
 		global $typenow, $pagenow;
 
@@ -116,6 +158,9 @@ abstract class Feature extends Core\Singleton {
 	}
 
 
+	/**
+	 * @return array acf field gruops
+	 */
 	protected function get_available_field_groups() {
 		global $typenow, $pagenow;
 

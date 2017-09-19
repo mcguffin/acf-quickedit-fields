@@ -10,12 +10,15 @@ if ( ! defined( 'ABSPATH' ) )
 
 class Columns extends Feature {
 
+	/**
+	 *	@return string
+	 */
 	public function get_type() {
 		return 'column';
 	}
 
 	/**
-	 * @action 'acf/render_field_settings/type={$type}'
+	 *	@inheritdoc
 	 */
 	function render_acf_settings( $field ) {
 		// show column: todo: allow sortable
@@ -43,6 +46,9 @@ class Columns extends Feature {
 		));
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 		$field_groups = $this->get_available_field_groups();
 
@@ -173,12 +179,21 @@ class Columns extends Feature {
 
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	public function is_enabled_for_field( $field ) {
 
 		return isset($field['show_column']) && $field['show_column'];
 
 	}
 
+	/**
+	 *	@filter manage_posts_columns
+	 *	@filter manage_pages_columns
+	 *	@filter manage_media_columns
+	 *	@filter manage_{$post_type}_posts_columns
+	 */
 	public function add_ghost_column( $columns ) {
 		$columns['_acf_qed_ghost'] = '';
 		return $columns;
@@ -219,12 +234,18 @@ class Columns extends Feature {
 		return $columns;
 	}
 
+	/**
+	 *	@param number
+	 *	@return number
+	 */
 	private function _mul_100( $val ) {
 		return intval( $val ) * 100;
 	}
 
 	/**
-	 * @private
+	 *	Sort callback
+	 *
+	 *	@private
 	 */
 	private function _sort_columns_by_weight( $a_slug, $b_slug ) {
 		$a = $b = 0;
@@ -256,15 +277,20 @@ class Columns extends Feature {
 	}
 
 	/**
-	 * @action manage_posts_custom_column
-	 * @action manage_media_custom_column
-	 * @action manage_{$post_type}_posts_custom_column
+	 *	@param string $content
+	 *	@param string $wp_column_slug
+	 *	@action manage_posts_custom_column
+	 *	@action manage_media_custom_column
+	 *	@action manage_{$post_type}_posts_custom_column
 	 */
 	public function display_post_field_column( $wp_column_slug , $object_id ) {
 		echo $this->display_field_column( $wp_column_slug , $object_id );
 	}
 
 	/**
+	 *	@param string $content
+	 *	@param string $wp_column_slug
+	 *	@param string $object_id
 	 * @action manage_edit-{$taxonomy}_custom_column
 	 */
 	public function display_term_field_column( $content, $wp_column_slug , $object_id ) {
@@ -279,7 +305,10 @@ class Columns extends Feature {
 	}
 
 	/**
-	 * @action manage_user_custom_column
+	 *	@param string $content
+	 *	@param string $wp_column_slug
+	 *	@param string $object_id
+	 *	@action manage_user_custom_column
 	 */
 	public function display_user_field_column( $content, $wp_column_slug , $object_id ) {
 		
@@ -287,6 +316,12 @@ class Columns extends Feature {
 
 	}
 
+	/**
+	 *
+	 *	@param string $wp_column_slug
+	 *	@param string $object_id
+	 *	@return string
+	 */
 	public function display_field_column( $wp_column_slug , $object_id ) {
 
 		$args = func_get_args();

@@ -8,14 +8,29 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class Field {
 
+	/**
+	 *	@var array ACF fields
+	 */
 	private static $fields = [];
 
+	/**
+	 *	@var array ACF field
+	 */
 	protected $acf_field;
 	
+	/**
+	 *	@var string value for the do-not-change checkbox in bulk edit
+	 */
 	protected $dont_change_value = '___do_not_change';
 
+	/**
+	 *	@var string classname to be wrapped aroud input element
+	 */
 	protected $wrapper_class = 'acf-input-wrap';
 
+	/**
+	 *	@return array supported acf fields
+	 */
 	public static function get_types() {
 		$types = array( 
 			// basic
@@ -72,6 +87,11 @@ abstract class Field {
 		return apply_filters( 'acf_quick_edit_fields_types', $types );
 	}
 
+	/**
+	 *	Factory method
+	 *	@param array $acf_field
+	 *	@return ACFQuickEdit\Fields\Field
+	 */
 	public static function getFieldObject( $acf_field ) {
 		if ( ! $acf_field || is_null($acf_field) ) {
 			return;
@@ -91,6 +111,9 @@ abstract class Field {
 
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
 	protected function __construct( $acf_field ) {
 
 		$this->core = Core\Core::instance();
@@ -98,6 +121,9 @@ abstract class Field {
 		$this->acf_field = $acf_field;
 	}
 
+	/**
+	 *	@return array acf field
+	 */
 	public function get_acf_field() {
 		return $this->acf_field;
 	}
@@ -190,6 +216,9 @@ abstract class Field {
 	}
 
 
+	/**
+	 *	@return mixed value of acf field
+	 */
 	public function get_value( $post_id ) {
 		return get_field( $this->acf_field['key'], $post_id, false );
 	}

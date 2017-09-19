@@ -12,7 +12,7 @@ class Core extends Singleton {
 	private $post_field_prefix = 'acf_qed_';
 
 	/**
-	 *	Private constructor
+	 *	@inheritdoc
 	 */
 	protected function __construct() {
 		add_action( 'plugins_loaded' , array( $this , 'load_textdomain' ) );
