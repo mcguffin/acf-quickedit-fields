@@ -8,10 +8,13 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class Field {
 
+	private static $fields = [];
+
 	protected $acf_field;
 	
 	protected $dont_change_value = '___do_not_change';
-	private static $fields = [];
+
+	protected $wrapper_class = 'acf-input-wrap';
 
 	public static function get_types() {
 		$types = array( 
@@ -22,6 +25,7 @@ abstract class Field {
 			'email'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'url'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
 			'password'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => false ),
+			'range'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 
 			// Content
 			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
@@ -139,7 +143,7 @@ abstract class Field {
 			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
-					<span class="acf-input-wrap">
+					<span class="<?php echo $this->wrapper_class ?>">
 						<?php if ( $mode === 'bulk' ) { ?>
 							<span>
 								<input <?php echo acf_esc_attr( array(

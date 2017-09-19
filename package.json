@@ -1,21 +1,21 @@
 {
-  "name": "acf-polylang-sync",
+  "name": "acf-quick-edit-fields",
   "version": "1.0.0",
   "description": "Enter description here.",
-  "main": "js/wp-robocrop.combined.min.js",
+  "main": "js/acf-qef-field-group.min.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mcguffin/acf-polylang-sync.git"
+    "url": "git+https://github.com/mcguffin/acf-quick-edit-fields.git"
   },
   "author": "Jörn Lund",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mcguffin/acf-polylang-sync/issues"
+    "url": "https://github.com/mcguffin/acf-quick-edit-fields/issues"
   },
-  "homepage": "https://github.com/mcguffin/acf-polylang-sync#readme",
+  "homepage": "https://github.com/mcguffin/acf-quick-edit-fields#readme",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",

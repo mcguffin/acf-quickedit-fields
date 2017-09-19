@@ -5,11 +5,15 @@ var acfQuickedit = {};
 	var media_frame;
 
 	function get_acf_post_data( post_id , $parent ) {
+		//
+		// Load Field Values
+		//
 		var req_data = {
 			'action' : 'get_acf_post_meta',
 			'post_id' : post_id,
 			'acf_field_keys' : []
 		};
+		// ... gather fields ...
 		$parent.find('[data-acf-field-key]').each(function(){
 
 			req_data.acf_field_keys.push( $(this).attr('data-acf-field-key') );
@@ -27,6 +31,7 @@ var acfQuickedit = {};
 			}
 		});
 
+		// ... send a request ...
 		$.post( ajaxurl, req_data, function( result ) {
 			var i, key, value, $tr, $field,
 				selected;
@@ -319,6 +324,16 @@ var acfQuickedit = {};
 			$other = $list.find('[type="text"]').prop('disabled', ! is_other );
 
 		!! is_other && $other.focus();
+
+	})
+	.on('change mousemove', '.acf-range-wrap input[type="range"]', function(e) {
+
+		$(this).next('[type="number"]').val( $(this).val() );
+
+	})
+	.on('change keyup', '.acf-range-wrap input[type="number"]', function(e) {
+
+		$(this).prev('[type="range"]').val( $(this).val() );
 
 	})
 	.on( 'change', '[data-is-do-not-change="true"]', function(){

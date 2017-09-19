@@ -24,7 +24,7 @@ class NumberField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_input( $input_atts, $is_quickedit = true ) {
+	protected function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'acf-quick-edit',
 			'type'	=> 'number', 
@@ -32,7 +32,9 @@ class NumberField extends Field {
 			'max'	=> $this->acf_field['max'],
 			'step'	=> $this->acf_field['step'], 
 		);
-		return '<input '. acf_esc_attr( $input_atts ) .' />';
+
+		return parent::render_input( $input_atts, $is_quickedit );
+//		return '<input '. acf_esc_attr( $input_atts ) .' />';
 
 	}
 
