@@ -85,7 +85,27 @@
 		text-align:center;
 	}
 }
-
+.color-indicator {
+	border-radius:2px;
+	border:1px solid #d2d2d2;
+	width:24px;
+	height:24px;
+	&.no-value {
+		position:relative;
+		&:before {
+			content:'';
+			transform:rotate(45deg);
+			border-radius:2px;
+			background-color:rgba(255,40,40,0.9);
+			position:absolute;
+			left:0;
+			top:0;
+			width:140%;
+			height:2px;
+			transform-origin:1px 1px;
+		}
+	}
+}
 /**
  *	Editor
  */
