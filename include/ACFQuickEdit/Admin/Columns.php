@@ -171,10 +171,6 @@ class Columns extends Feature {
 			}
 		}
 
-		wp_register_style( 'acf-qef-thumbnail-col', plugins_url( 'css/thumbnail-col.css', ACFQUICKEDIT_FILE ) );
-
-		$this->styles[] = 'acf-qef-thumbnail-col';
-
 	}
 
 	public function is_enabled_for_field( $field ) {

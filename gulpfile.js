@@ -17,7 +17,7 @@ var scripts = [
 ];
 
 
-gulp.task('styles',function(){
+gulp.task('styles-build',function(){
     return gulp.src( styles )
 		.pipe(sourcemaps.init())
         .pipe( sass( { 
@@ -25,15 +25,6 @@ gulp.task('styles',function(){
         } ).on('error', sass.logError) )
         .pipe( sourcemaps.write() )
         .pipe( gulp.dest( './css/' ) );
-});
-
-gulp.task('styles-build',function(){
-    return gulp.src( styles )
-        .pipe( sass( { 
-			outputStyle: 'compressed', omitSourceMapUrl: true 
-        } ).on('error', sass.logError) )
-//		.pipe( rename( 'acf-quickedit.css') )
-		.pipe( gulp.dest('./css/'));
 });
 
 gulp.task('scripts-build', function() {
@@ -56,7 +47,7 @@ gulp.task('scripts-build', function() {
 
 
 gulp.task( 'watch', function() {
-	gulp.watch('./src/scss/**/*.scss', ['styles'] );
+	gulp.watch('./src/scss/**/*.scss', ['styles-build'] );
 	gulp.watch('./src/js/**/*.js', ['scripts-build'] );
 } );
 
