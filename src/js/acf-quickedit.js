@@ -137,6 +137,8 @@ var acfQuickedit = {};
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
+
+			$('[data-is-do-not-change="true"]').trigger('change');
 		});
 	}
 
@@ -354,10 +356,9 @@ var acfQuickedit = {};
 		if ( $list.length ) {
 			$items = $list.find('[type="checkbox"]:not([data-is-do-not-change])');
 		} else {
-			$items = $self.closest('.acf-field').find('[name="'+name+'"]:not([data-is-do-not-change])')
+			$items = $self.closest('.acf-field').find('input,select,[name="'+name+'"]').not(this)
 		}
 
-console.log($items);
 		$items.prop( 'disabled', $self.prop('checked') );
 	})
 	.on( 'click', '.inline-edit-col .select-media', function(e) {

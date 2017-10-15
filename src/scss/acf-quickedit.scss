@@ -110,8 +110,12 @@
  *	Editor
  */
 .inline-edit-row {
+	.acf-range-wrap,
 	.acf-input-wrap {
 		display:block;
+		position:relative;
+	}
+	.acf-input-wrap {
 		input {
 			&[type="url"],
 			&[type="email"],

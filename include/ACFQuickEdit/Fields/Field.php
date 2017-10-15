@@ -17,7 +17,7 @@ abstract class Field {
 	 *	@var array ACF field
 	 */
 	protected $acf_field;
-	
+
 	/**
 	 *	@var string value for the do-not-change checkbox in bulk edit
 	 */
@@ -32,43 +32,43 @@ abstract class Field {
 	 *	@return array supported acf fields
 	 */
 	public static function get_types() {
-		$types = array( 
+		$types = array(
 			// basic
-			'text'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'textarea'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'number'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'email'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'url'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'text'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'textarea'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'number'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'email'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'url'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'password'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => false ),
 			'range'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 
 			// Content
 			'wysiwyg'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'oembed'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
-			'image'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'file'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'image'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'file'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'gallery'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 
 			// Choice
-			'select'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'checkbox'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'radio'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'true_false'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
+			'select'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'checkbox'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'radio'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'true_false'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 
 			// relational
-			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
-			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ), 
+			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'taxonomy'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 
 			// jQuery
 			'google_map'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
-			'date_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'date_time_picker'	=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'time_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			'color_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ), 
-			
+			'date_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'date_time_picker'	=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'time_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'color_picker'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+
 			// Layout (unsupported)
 			'message'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'tab'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
@@ -80,8 +80,8 @@ abstract class Field {
 		/**
 		 * Filter field type support of ACF Quick Edit Fields
 		 *
-		 * @param array $fields		An associative array of field type support having the ACF field name as keys 
-		 *							and an array of supported fetaures as values. 
+		 * @param array $fields		An associative array of field type support having the ACF field name as keys
+		 *							and an array of supported fetaures as values.
 		 *							Features are 'column', 'quickedit' and 'bulkedit'.
 		 */
 		return apply_filters( 'acf_quick_edit_fields_types', $types );
@@ -169,24 +169,24 @@ abstract class Field {
 			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
+					<?php if ( $mode === 'bulk' ) { ?>
+						<span>
+							<input <?php echo acf_esc_attr( array(
+								'name'		=> $input_atts['name'],
+								'value' 	=> $this->dont_change_value,
+								'type'		=> 'checkbox',
+								'checked'	=> 'checked',
+								'data-is-do-not-change' => 'true',
+							) ) ?> />
+							<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
+						</span>
+					<?php } ?>
 					<span class="<?php echo $this->wrapper_class ?>">
-						<?php if ( $mode === 'bulk' ) { ?>
-							<span>
-								<input <?php echo acf_esc_attr( array(
-									'name'		=> $input_atts['name'],
-									'value' 	=> $this->dont_change_value,
-									'type'		=> 'checkbox',
-									'checked'	=> 'checked',
-									'data-is-do-not-change' => 'true',
-								) ) ?> />
-								<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
-							</span>
-						<?php } ?>
-						<?php 
-						
+						<?php
+
 							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
-							echo $this->render_input( $input_atts, $mode === 'quick' ); 
-						
+							echo $this->render_input( $input_atts, $mode === 'quick' );
+
 						?>
 					</span>
 				</label>
@@ -207,7 +207,7 @@ abstract class Field {
 	protected function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-			'type'					=> 'text', 
+			'type'					=> 'text',
 			'data-acf-field-key'	=> $this->acf_field['key'],
 			'name'					=> sprintf( 'acf[%s]', $this->acf_field['key'] ),
 		);
@@ -242,7 +242,7 @@ abstract class Field {
 			$value = $_REQUEST['acf'][ $param_name ];
 		} else {
 			$value = null;
-		} 
+		}
 
 		if ( in_array( $this->dont_change_value, (array) $value ) ) {
 			return;
@@ -252,4 +252,3 @@ abstract class Field {
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}
 }
-
