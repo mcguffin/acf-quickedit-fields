@@ -19,13 +19,17 @@ class SelectField extends ChoiceField {
 
 		if ( $this->acf_field['multiple'] ) {
 			$input_atts['multiple'] = 'multiple';
+			$input_atts['name']	.= '[]';
+			if ( $this->acf_field['ui'] ) {
+				$input_atts['class'] .= ' ui';
+			}
 		}
 
 		$output .= sprintf( '<select %s>', acf_esc_attr( $input_atts ) );
 
 		if ( ! $is_quickedit ) {
-			$output .= sprintf('<option value="%s" selected="selected">%s</option>', 
-				$this->dont_change_value, 
+			$output .= sprintf('<option value="%s" selected="selected">%s</option>',
+				$this->dont_change_value,
 				__( '— No Change —', 'acf-quick-edit-fields' )
 			);
 		}
@@ -42,6 +46,5 @@ class SelectField extends ChoiceField {
 
 		return $output;
 	}
-
 
 }

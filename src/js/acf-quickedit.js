@@ -51,14 +51,14 @@ var acfQuickedit = {};
 
 				key = keys[i], value = result[ key ];
 
-				$field = $('[data-acf-field-key="'+key+'"]');
+				$field = $('[data-acf-field-key="'+key+'"]:visible');
 
 				// convert bool to int
 				if (typeof(value) === 'boolean') {
 					value *= 1;
 				}
 
-				
+
 				if ( $field.is( '.acf-checkbox-list, .acf-radio-list' ) ) {
 					selected = 0;
 					if ( $.isArray( value ) ) {
@@ -75,7 +75,7 @@ var acfQuickedit = {};
 							$field.find('[type="text"]').val('');
 						}
 					}
-				
+
 				} else if ( ! $field.is( '[type="radio"],[type="checkbox"]' ) ) {
 					$field.val( value );
 				}
@@ -92,6 +92,16 @@ var acfQuickedit = {};
 					});
 				}
 
+				if ( $field.is("select[multiple].ui") ) {
+					var $opt = $field.children();
+
+					$opt.sort(function(a,b) {
+						return value.indexOf( $(a).attr('value') ) - value.indexOf( $(b).attr('value') );
+					})
+					$opt.detach().appendTo( $field );
+
+				}
+
 				if ( $field.parent().is('.acf-quick-edit-date_picker, .acf-quick-edit-time_picker, .acf-quick-edit-date_time_picker' ) ) {
 					$field.next('[type="text"]').prop( 'readonly', false );
 				}
@@ -102,7 +112,7 @@ var acfQuickedit = {};
 			$parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
 				$(el).wpColorPicker();
 			})
-			
+
 			// init datepicker
 			$parent.find('.acf-quick-edit-date_picker').each( function( i, el ) {
 
@@ -129,7 +139,7 @@ var acfQuickedit = {};
 			}
 		});
 	}
-	
+
 	acfQuickedit.datepicker = {
 		init: function( $wrap ) {
 			var $hidden		= $wrap.find( '[type="hidden"]' ),
@@ -180,10 +190,10 @@ var acfQuickedit = {};
 				$input.val( $.datepicker.formatTime( $wrap.data('time_format'), time ) )
 			}
 		},
-	
+
 	};
 
-	
+
 	acfQuickedit.datetimepicker = {
 		init: function( $wrap ) {
 			var $hidden			= $wrap.find( '[type="hidden"]' ),
@@ -213,10 +223,10 @@ var acfQuickedit = {};
 				}
 			});
 		},
-	
+
 	};
 
-	
+
 	if ( 'undefined' !== typeof inlineEditPost ) {
 		// we create a copy of the WP inline edit post function
 		var _wp_inline_edit_post = inlineEditPost.edit;
@@ -274,9 +284,9 @@ var acfQuickedit = {};
 
 			// bail early if not active
 			if( !acf.validation.active ) {
-		
+
 				return true;
-			
+
 			}
 
 			// ignore validation (only ignore once)
@@ -289,11 +299,11 @@ var acfQuickedit = {};
 			e.preventDefault();
 			e.stopPropagation();
 			e.stopImmediatePropagation();
-		
+
 
 			// store submit trigger so it will be clicked if validation is passed
 			acf.validation.$trigger = $(this);
-					
+
 			// run validation
 			acf.validation.fetch( $form );
 
@@ -318,8 +328,8 @@ var acfQuickedit = {};
 	})
 	.on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
 
-		var $this = $(this), 
-			$list = $this.closest('.acf-radio-list'), 
+		var $this = $(this),
+			$list = $this.closest('.acf-radio-list'),
 			is_other = $this.val() == 'other',
 			$other = $list.find('[type="text"]').prop('disabled', ! is_other );
 
@@ -376,8 +386,8 @@ console.log($items);
 
 
 		e.preventDefault();
-		
-		
+
+
 		if ( $hidden.data('mime_types') ) {
 			mediaFrameOpts.mime_types = $hidden.data('mime_types');
 		}
@@ -393,9 +403,9 @@ console.log($items);
 
 		// set post id, so new uploads are attached to edited post
 		if ( acf.isset(window,'wp','media','view','settings','post') && $.isNumeric(post_id) ) {
-			
+
 			wp.media.view.settings.post.id = post_id;
-				
+
 		}
 
 	})
