@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class RangeField extends NumberField {
 
-	
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -25,12 +25,14 @@ class RangeField extends NumberField {
 		}
 
 		$output .= parent::render_input( array( 'type' => 'range', ), $is_quickedit );
-		$output .= '<input '. acf_esc_attr( array( 
-				'type'					=> 'number', 
+		$len = strlen( (string) $this->acf_field['max'] );
+		$output .= '<input '. acf_esc_attr( array(
+				'type'					=> 'number',
 				'id'					=> $this->acf_field['key'] . '-alt',
 				'data-acf-field-key'	=> $this->acf_field['key'],
+				'step'					=> $this->acf_field['step'],
+				'style'					=> 'width: ' . (1.8 + $len*0.7) . 'em;'
 			) ) .' />';
-
 		if ( $this->acf_field['append'] ) {
 			$output .= sprintf( '<span class="append">%s</span>', $this->acf_field['append'] );
 		}
