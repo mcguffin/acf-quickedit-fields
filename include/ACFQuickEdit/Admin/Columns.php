@@ -205,12 +205,12 @@ class Columns extends Feature {
 	 *	@filter manage_media_columns
 	 *	@filter manage_{$post_type}_posts_columns
 	 */
-	public function move_date_to_end($defaults) {  
+	public function move_date_to_end($defaults) {
 	    $date = $defaults['date'];
 	    unset($defaults['date']);
 	    $defaults['date'] = $date;
-	    return $defaults; 
-	} 
+	    return $defaults;
+	}
 
 
 	/**
@@ -264,7 +264,7 @@ class Columns extends Feature {
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
 		}
-		
+
 		if ( isset( $this->fields[ $column_slug ] ) ) {
 			$field_object = $this->fields[ $column_slug ];
 			$field = $field_object->get_acf_field();
@@ -284,7 +284,7 @@ class Columns extends Feature {
 	 *	@action manage_{$post_type}_posts_custom_column
 	 */
 	public function display_post_field_column( $wp_column_slug , $object_id ) {
-		echo $this->display_field_column( $wp_column_slug , $object_id );
+		echo $this->filter_field_column( '', $wp_column_slug , $object_id );
 	}
 
 	/**
@@ -299,9 +299,10 @@ class Columns extends Feature {
 
 		if ( $object ) {
 
-			return $this->display_field_column( $wp_column_slug , sprintf( '%s_%s', $object->taxonomy, $object_id ) );
+			return $this->filter_field_column( $content, $wp_column_slug , sprintf( '%s_%s', $object->taxonomy, $object_id ) );
 
 		}
+		return $content;
 	}
 
 	/**
@@ -311,8 +312,8 @@ class Columns extends Feature {
 	 *	@action manage_user_custom_column
 	 */
 	public function display_user_field_column( $content, $wp_column_slug , $object_id ) {
-		
-		return $this->display_field_column( $wp_column_slug , sprintf( 'user_%s', $object_id ) );
+
+		return $this->filter_field_column( '', $wp_column_slug , sprintf( 'user_%s', $object_id ) );
 
 	}
 
@@ -322,7 +323,7 @@ class Columns extends Feature {
 	 *	@param string $object_id
 	 *	@return string
 	 */
-	public function display_field_column( $wp_column_slug , $object_id ) {
+	public function filter_field_column( $content, $wp_column_slug , $object_id ) {
 
 		$args = func_get_args();
 
@@ -332,7 +333,7 @@ class Columns extends Feature {
 			$field_object = $this->fields[$column];
 			return $field_object->render_column( $object_id );
 		}
-		return '';
+		return $content;
 	}
 
 }
