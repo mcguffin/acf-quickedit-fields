@@ -110,6 +110,12 @@ class Columns extends Feature {
 					'priority'	=> 10,
 					'args'		=> 2,
 				);
+			} else {
+				$cols_filters[] = array(
+					'cb'		=> array( $this, 'add_ghost_column' ),
+					'priority'	=> null,
+					'args'		=> null,
+				);
 			}
 		} else if ( 'taxonomy' == $content_type ) {
 
@@ -144,17 +150,6 @@ class Columns extends Feature {
 				'priority'	=> null,
 				'args'		=> null,
 			);
-		} else {
-			$cols_filters[] = array(
-				'cb'		=> array( $this, 'add_ghost_column' ),
-				'priority'	=> null,
-				'args'		=> null,
-			);
-			$displays_filters[] = array(
-				'cb'		=> '__return_empty_string',
-				'priority'	=> null,
-				'args'		=> null,
-			);
 		}
 
 		foreach ( $cols_filters as $filter ) {
@@ -176,7 +171,6 @@ class Columns extends Feature {
 				add_filter( $display_hook, $filter['cb'] );
 			}
 		}
-
 	}
 
 	/**
@@ -313,7 +307,7 @@ class Columns extends Feature {
 	 */
 	public function display_user_field_column( $content, $wp_column_slug , $object_id ) {
 
-		return $this->filter_field_column( '', $wp_column_slug , sprintf( 'user_%s', $object_id ) );
+		return $this->filter_field_column( $content, $wp_column_slug , sprintf( 'user_%s', $object_id ) );
 
 	}
 
