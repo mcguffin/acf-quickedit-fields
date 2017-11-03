@@ -10,3 +10,4 @@
 .svnignore
 .sass-cache
 node_modules/
+/vendor/
