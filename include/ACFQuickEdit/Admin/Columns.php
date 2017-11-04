@@ -267,7 +267,7 @@ class Columns extends Feature {
 		 *
 		 * @param bool|string	$sortable
 		 */
-		return apply_filters( "acf_quick_edit_sortable_column_{$field_name}", $field_object->is_sortable() )
+		return apply_filters( "acf_quick_edit_sortable_column_{$field_name}", $field_object->is_sortable() );
 	}
 
 	/**
