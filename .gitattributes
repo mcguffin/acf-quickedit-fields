@@ -4,4 +4,5 @@
 # gulp
 gulpfile.js export-ignore
 package*.json export-ignore
+composer.json export-ignore
 /src export-ignore
