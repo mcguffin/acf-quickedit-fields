@@ -257,7 +257,7 @@ class Columns extends Feature {
 	 */
 	private function get_field_sortable( $field_object ) {
 		$acf_field	= $field_object->get_acf_field();
-		$field_slug	= $acf_field['name'];
+		$field_name	= $acf_field['name'];
 
 		/**
 		 * Filters whether and how a column is sortable
@@ -267,7 +267,7 @@ class Columns extends Feature {
 		 *
 		 * @param bool|string	$sortable
 		 */
-		return apply_filters( "acf_quick_edit_sortable_column_{$field_slug}", $field_object->is_sortable() )
+		return apply_filters( "acf_quick_edit_sortable_column_{$field_name}", $field_object->is_sortable() )
 	}
 
 	/**

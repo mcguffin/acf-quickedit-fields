@@ -4,7 +4,7 @@ ACF QuickEdit Fields
 WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin (Pro, Version 5+).  
 http://www.advancedcustomfields.com/pro/
 
-Show Advanced Custom Fields in post list table.  
+Show Advanced Custom Fields in list tables. Some columns are sortable.  
 Edit field values in Quick Edit and / or Bulk edit.
 
 Proofed to work with ACF Pro 5.x.  
@@ -12,6 +12,11 @@ Will not work with ACF Free (version 4.x).
 Requires at least PHP 5.3.
 
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
+
+A note on sortable Columns: Sorting works over a meta query. As a result, items with an
+unset ACF-Value will disappear from the list. To suppress sortabliity for a specific field use
+`acf_quick_edit_sortable_column_{$field_name}` filter.
+
 
 Getting started
 ---------------
