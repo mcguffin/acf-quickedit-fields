@@ -11,7 +11,7 @@ class TrueFalseField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		echo get_field( $this->acf_field['key'], $object_id ) ? __('Yes') : __('No');
+		return get_field( $this->acf_field['key'], $object_id ) ? __('Yes') : __('No');
 
 	}
 
