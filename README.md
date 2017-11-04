@@ -16,7 +16,7 @@ See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a qui
 Getting started
 ---------------
 
- - Download the [latest release](./releases/latest) zip file.
+ - Download the [latest release](/releases/latest) zip file.
  - Rename the file to `acf-quick-edit-fields.zip` and install it like a regular WordPress plugin.
  - As long as the plugin is active it will check for Updates here on GitHub.
 
