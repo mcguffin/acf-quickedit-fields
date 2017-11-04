@@ -1,7 +1,7 @@
 ACF QuickEdit Fields
 ====================
 
-WordPress plugin which extends the funtionality of the Advanced Custom Fields Plugin (Pro, Version 5+).  
+WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin (Pro, Version 5+).  
 http://www.advancedcustomfields.com/pro/
 
 Show Advanced Custom Fields in post list table.  
