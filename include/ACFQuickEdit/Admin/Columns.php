@@ -73,7 +73,7 @@ class Columns extends Feature {
 				}
 
 				$field_object = Fields\Field::getFieldObject( $field );
-				$is_sortable |= $field_object->is_sortable() !== false;
+				$is_sortable |= $this->get_field_sortable( $field_object ) !== false;
 
 				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
@@ -252,6 +252,25 @@ class Columns extends Feature {
 	}
 
 	/**
+	 *	@param ACFQuickEditFields\Fields\Field	$field_object
+	 *	@return bool|string
+	 */
+	private function get_field_sortable( $field_object ) {
+		$acf_field	= $field_object->get_acf_field();
+		$field_slug	= $acf_field['name'];
+
+		/**
+		 * Filters whether and how a column is sortable
+		 * Return boolean or meta_type like `numeric`, `decimal(10,2)`, `datetime`, ...
+		 *
+		 * @since 2.1.1
+		 *
+		 * @param bool|string	$sortable
+		 */
+		return apply_filters( "acf_quick_edit_sortable_column_{$field_slug}", $field_object->is_sortable() )
+	}
+
+	/**
 	 * @filter manage_posts_sortable_columns
 	 * @filter manage_media_sortable_columns
 	 * @filter manage_{$post_type}_posts_sortable_columns
@@ -260,7 +279,8 @@ class Columns extends Feature {
 	public function add_sortable_columns( $columns ) {
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
-			if ( $sortable = $field_object->is_sortable() ) {
+
+			if ( $sortable = $this->get_field_sortable( $field_object ) ) {
 
 				$order = isset( $_GET['order'] ) ? strtolower($_GET['order']) === 'asc' : false;
 
