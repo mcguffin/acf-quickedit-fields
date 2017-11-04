@@ -31,9 +31,9 @@ class DateTimePickerField extends Field {
 			'type'	=> 'text',
 		);
 		$input_atts += array(
-			'type'	=> 'hidden', 
+			'type'	=> 'hidden',
 		);
-	
+
 		$output = '';
 		$output .= '<span '. acf_esc_attr( $wrap_atts ) .'>';
 		$output .= '<input '. acf_esc_attr( $input_atts ) .' />';
@@ -51,6 +51,12 @@ class DateTimePickerField extends Field {
 	}
 
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return 'datetime';
+	}
 
 
 }

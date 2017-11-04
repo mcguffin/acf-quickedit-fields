@@ -27,14 +27,20 @@ class NumberField extends Field {
 	protected function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'	=> 'acf-quick-edit',
-			'type'	=> 'number', 
-			'min'	=> $this->acf_field['min'], 
+			'type'	=> 'number',
+			'min'	=> $this->acf_field['min'],
 			'max'	=> $this->acf_field['max'],
-			'step'	=> $this->acf_field['step'], 
+			'step'	=> $this->acf_field['step'],
 		);
 
 		return parent::render_input( $input_atts, $is_quickedit );
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return 'numeric';
+	}
 
 }

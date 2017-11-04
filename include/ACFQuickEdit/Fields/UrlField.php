@@ -18,6 +18,12 @@ class UrlField extends Field {
 		$output .= '</span>';
 		return $output;
 	}
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return true;
+	}
 
 
 }

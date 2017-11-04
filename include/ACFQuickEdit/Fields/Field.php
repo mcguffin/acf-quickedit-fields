@@ -140,6 +140,13 @@ abstract class Field {
 
 	}
 
+	/**
+	 *	@return bool
+	 */
+	public function is_sortable() {
+		return false;
+	}
+
 
 	/**
 	 *	Render Field Input

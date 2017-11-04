@@ -7,4 +7,11 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TextField extends Field {
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return true;
+	}
+
 }

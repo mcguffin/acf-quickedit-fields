@@ -47,4 +47,11 @@ class SelectField extends ChoiceField {
 		return $output;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return ! $this->acf_field['multiple'];
+	}
+
 }

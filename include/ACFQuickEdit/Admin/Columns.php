@@ -50,6 +50,9 @@ class Columns extends Feature {
 	 *	@inheritdoc
 	 */
 	public function init_fields() {
+
+		$is_sortable = false;
+
 		$field_groups = $this->get_available_field_groups();
 
 		if ( is_null( $field_groups ) ) {
@@ -70,6 +73,7 @@ class Columns extends Feature {
 				}
 
 				$field_object = Fields\Field::getFieldObject( $field );
+				$is_sortable |= $field_object->is_sortable() !== false;
 
 				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
@@ -87,15 +91,19 @@ class Columns extends Feature {
 			$post_type = $this->get_current_post_type();
 			if ( 'post' == $post_type ) {
 				$cols_hook		= 'manage_posts_columns';
+				$sortable_hook	= 'manage_edit-post_sortable_columns';
 				$display_hook	= 'manage_posts_custom_column';
 			} else if ( 'page' == $post_type ) {
 				$cols_hook		= 'manage_pages_columns';
+				$sortable_hook	= 'manage_edit-page_sortable_columns';
 				$display_hook	= 'manage_pages_custom_column';
 			} else if ( 'attachment' == $post_type ) {
 				$cols_hook		= 'manage_media_columns';
+				$sortable_hook	= 'manage_upload_sortable_columns';
 				$display_hook	= 'manage_media_custom_column';
 			} else {
 				$cols_hook		= "manage_{$post_type}_posts_columns";
+				$sortable_hook	= "manage_edit-{$post_type}_sortable_columns";
 				$display_hook	= "manage_{$post_type}_posts_custom_column";
 			}
 
@@ -117,10 +125,15 @@ class Columns extends Feature {
 					'args'		=> null,
 				);
 			}
+			if ( $is_sortable ) {
+				// post query vars
+				add_filter( 'query_vars', array( $this, 'sortable_posts_query_vars' ) );
+			}
 		} else if ( 'taxonomy' == $content_type ) {
 
 			$taxonomy		= $_REQUEST['taxonomy'];
 			$cols_hook		= "manage_edit-{$taxonomy}_columns";
+			$sortable_hook	= "manage_edit-{$taxonomy}_sortable_columns";
 			$display_hook	= "manage_{$taxonomy}_custom_column";
 
 			if ( $is_active ) {
@@ -130,9 +143,13 @@ class Columns extends Feature {
 					'args'		=> 3,
 				);
 			}
+			if ( $is_sortable ) {
+				add_action( 'parse_term_query', array( $this, 'sortable_terms_query_vars' ) );
+			}
 
 		} else if ( 'user' == $content_type ) {
 			$cols_hook		= "manage_users_columns";
+			$sortable_hook	= "manage_users_sortable_columns";
 			$display_hook	= "manage_users_custom_column";
 
 			if ( $is_active ) {
@@ -142,6 +159,9 @@ class Columns extends Feature {
 					'args'		=> 3,
 				);
 			}
+			if ( $is_sortable ) {
+				add_filter( 'users_list_table_query_args', array( $this, 'sortable_users_query_vars' ) );
+			}
 		}
 
 		if ( $is_active ) {
@@ -150,6 +170,9 @@ class Columns extends Feature {
 				'priority'	=> null,
 				'args'		=> null,
 			);
+		}
+		if ( $is_sortable ) {
+			add_filter( $sortable_hook, array( $this, 'add_sortable_columns' ) );
 		}
 
 		foreach ( $cols_filters as $filter ) {
@@ -227,6 +250,70 @@ class Columns extends Feature {
 
 		return $columns;
 	}
+
+	/**
+	 * @filter manage_posts_sortable_columns
+	 * @filter manage_media_sortable_columns
+	 * @filter manage_{$post_type}_posts_sortable_columns
+	 * @filter
+	 */
+	public function add_sortable_columns( $columns ) {
+
+		foreach ( $this->fields as $field_slug => $field_object ) {
+			if ( $sortable = $field_object->is_sortable() ) {
+
+				$order = isset( $_GET['order'] ) ? strtolower($_GET['order']) === 'asc' : false;
+
+				// Wouldn't we all wish for a new filter filter...?
+				if ( isset( $_GET['meta_key'] ) ) {
+					$_SERVER['REQUEST_URI'] = remove_query_arg( array('meta_key','meta_type'), $_SERVER['REQUEST_URI'] );
+				}
+
+				if ( $sortable === true ) {
+					$columns[ $field_slug ] = array( $field_slug . '&meta_key=' . $field_slug, $order );
+				} else {
+					$columns[ $field_slug ] = array( $field_slug . '&meta_type=' . $sortable . '&meta_key=' . $field_slug, $order );
+				}
+			}
+		}
+		return $columns;
+	}
+
+	/**
+	 *	@filter query_vars
+	 */
+	public function sortable_posts_query_vars( $query_vars ) {
+		$query_vars[] = 'meta_key';
+		$query_vars[] = 'meta_type';
+		return $query_vars;
+	}
+
+	/**
+	 * @action users_list_table_query_args
+	 */
+	public function sortable_users_query_vars( $query_vars ) {
+		if ( isset( $_GET['meta_key'] ) ) {
+			$query_vars['meta_key'] = $_GET['meta_key'];
+		}
+		if ( isset( $_GET['meta_type'] ) ) {
+			$query_vars['meta_type'] = $_GET['meta_type'];
+		}
+		return $query_vars;
+	}
+
+	/**
+	 * @action parse_term_query
+	 */
+	public function sortable_terms_query_vars( $term_query ) {
+
+		if ( isset( $_GET['meta_key'] ) ) {
+			$term_query->query_vars['meta_key'] = $_GET['meta_key'];
+		}
+		if ( isset( $_GET['meta_type'] ) ) {
+			$term_query->query_vars['meta_type'] = $_GET['meta_type'];
+		}
+	}
+
 
 	/**
 	 *	@param number

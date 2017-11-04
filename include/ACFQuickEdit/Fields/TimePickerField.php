@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 class TimePickerField extends DateTimePickerField {
-	
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -19,7 +19,7 @@ class TimePickerField extends DateTimePickerField {
 			'type'	=> 'text',
 		);
 		$input_atts += array(
-			'type'	=> 'hidden', 
+			'type'	=> 'hidden',
 		);
 		$output = '';
 
@@ -30,5 +30,11 @@ class TimePickerField extends DateTimePickerField {
 		return $output;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return true;
+	}
 
 }

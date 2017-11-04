@@ -24,25 +24,31 @@ class TrueFalseField extends Field {
 		$output = '';
 		$output .= sprintf( '<ul class="acf-radio-list" data-acf-field-key="%s">', $field_key );
 		$output .= sprintf( '<li><label for="%s-yes">', $prefix_column );
-		$output .= sprintf( '<input id="%s-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />', 
-								$prefix_column, 
-								$field_key, 
-								$input_atts['name'] 
+		$output .= sprintf( '<input id="%s-yes" type="radio" value="1" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />',
+								$prefix_column,
+								$field_key,
+								$input_atts['name']
 							);
 		$output .= __('Yes');
 		$output .= '</label></li>';
 
 		$output .= sprintf( '<li><label for="%s-no">', $prefix_column );
-		$output .= sprintf( '<input id="%s-no" type="radio" value="0" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />', 
-								$prefix_column, 
-								$field_key, 
-								$input_atts['name'] 
+		$output .= sprintf( '<input id="%s-no" type="radio" value="0" class="acf-quick-edit" data-acf-field-key="%s" name="%s" />',
+								$prefix_column,
+								$field_key,
+								$input_atts['name']
 							);
 		$output .= __('No');
 		$output .= '</label></li>';
 		$output .= '</ul>';
 
 		return $output;
+	}
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return 'unsigned';
 	}
 
 

@@ -21,7 +21,7 @@ class DatePickerField extends DateTimePickerField {
 			'type'	=> 'text',
 		);
 		$input_atts += array(
-			'type'	=> 'hidden', 
+			'type'	=> 'hidden',
 		);
 
 		$output = '';
@@ -33,5 +33,11 @@ class DatePickerField extends DateTimePickerField {
 		return $output;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return true;
+	}
 
 }

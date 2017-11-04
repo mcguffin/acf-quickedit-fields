@@ -11,11 +11,11 @@ class RadioField extends ChoiceField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		
+
 		$output = '';
-		$output .= sprintf( '<ul class="acf-radio-list%s" data-acf-field-key="%s">', 
+		$output .= sprintf( '<ul class="acf-radio-list%s" data-acf-field-key="%s">',
 			$this->acf_field['other_choice'] ? ' other' : '',
-			$this->acf_field['key'] 
+			$this->acf_field['key']
 		);
 
 		foreach($this->acf_field['choices'] as $name => $value) {
@@ -77,7 +77,7 @@ class RadioField extends ChoiceField {
 			$value = $_REQUEST['acf'][ $param_name ];
 		} else {
 			$value = null;
-		} 
+		}
 
 		if ( in_array( $this->dont_change_value, (array) $value ) ) {
 			return;
@@ -86,6 +86,13 @@ class RadioField extends ChoiceField {
 
 		update_field( $this->acf_field['name'], $value, $post_id );
 
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return true;
 	}
 
 
