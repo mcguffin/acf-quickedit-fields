@@ -14,7 +14,7 @@ Requires at least PHP 5.3.
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
 
 A note on sortable Columns: Sorting works over a meta query. As a result, items with an
-unset ACF-Value will disappear from the list. To suppress sortabliity for a specific field use
+unset ACF-Value will disappear from the list. To adjust or suppress sortability for a specific field use
 `acf_quick_edit_sortable_column_{$field_name}` filter.
 
 
