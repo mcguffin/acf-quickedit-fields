@@ -22,7 +22,7 @@ abstract class AutoUpdate extends Core\Singleton {
 	 *	@filter upgrader_source_selection
 	 */
 	public function source_selection( $source, $remote_source, $wp_upgrader, $hook_extra ) {
-		if ( isset( $hook_extra['plugin'] ) && $hook_extra['plugin'] === plugin_basename( GITUPDATE_TEST_FILE ) ) {
+		if ( isset( $hook_extra['plugin'] ) && $hook_extra['plugin'] === plugin_basename( ACFQUICKEDIT_FILE ) ) {
 			// $source: filepath
 			// $remote_source download dir
 			$source_dirname = pathinfo( $source, PATHINFO_FILENAME);
@@ -37,6 +37,7 @@ abstract class AutoUpdate extends Core\Singleton {
 		}
 		return $source;
 	}
+
 	/**
 	 *	@action admin_init
 	 */
@@ -66,9 +67,9 @@ abstract class AutoUpdate extends Core\Singleton {
 
 		// get own version
 		if ( $release_info = $this->get_release_info() ) {
-			$plugin 		= plugin_basename( GITUPDATE_TEST_FILE );
-			$slug			= basename(GITUPDATE_TEST_DIRECTORY);
-			$plugin_info	= get_plugin_data( GITUPDATE_TEST_FILE );
+			$plugin 		= plugin_basename( ACFQUICKEDIT_FILE );
+			$slug			= basename( ACFQUICKEDIT_DIRECTORY );
+			$plugin_info	= get_plugin_data( ACFQUICKEDIT_FILE );
 
 			if ( version_compare( $release_info['version'], $plugin_info['Version'] , '>' ) ) {
 				$transient->response[ $plugin ] = (object) array(

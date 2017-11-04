@@ -33,7 +33,7 @@ class AutoUpdateGithub extends AutoUpdate {
 	private function get_github_repo() {
 		if ( is_null( $this->github_repo ) ) {
 			$this->github_repo = false;
-			$data = get_file_data( GITUPDATE_TEST_FILE, array('GithubRepo'=>'Github Repository') );
+			$data = get_file_data( ACFQUICKEDIT_FILE, array('GithubRepo'=>'Github Repository') );
 			if ( ! empty( $data['GithubRepo'] ) ) {
 				$this->github_repo = $data['GithubRepo'];
 			}
