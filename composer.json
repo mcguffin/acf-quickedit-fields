@@ -1,0 +1,13 @@
+{
+    "name": "mcguffin/acf-quick-edit-fields",
+    "description": "WordPress Plugin implementing Column Displaying, QuickEdit and BulkEdit for Advanced Custom Fields (ACF)",
+    "type": "wordpress-plugin",
+    "authors": [
+        {
+            "name": "Jörn Lund",
+            "email": "joern@flyingletters.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
