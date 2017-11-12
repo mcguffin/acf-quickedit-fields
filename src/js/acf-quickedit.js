@@ -163,30 +163,30 @@
 			}
 
 			// init colorpicker
-			$parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
-				$(el).wpColorPicker();
-			})
+			// $parent.find('input.acf-quick-edit-color_picker').each( function( i, el ) {
+			// 	$(el).wpColorPicker();
+			// })
 
 			// init datepicker
-			$parent.find('.acf-quick-edit-date_picker').each( function( i, el ) {
-
-				acf_quickedit.datepicker.init( $(el) );
-
-			});
+			// $parent.find('.acf-quick-edit-date_picker').each( function( i, el ) {
+            //
+			// 	acf_quickedit.datepicker.init( $(el) );
+            //
+			// });
 
 			// init timepicker
-			$parent.find('.acf-quick-edit-time_picker').each( function( i, el ) {
-
-				acf_quickedit.timepicker.init( $(el) );
-
-			});
+			// $parent.find('.acf-quick-edit-time_picker').each( function( i, el ) {
+            //
+			// 	acf_quickedit.timepicker.init( $(el) );
+            //
+			// });
 
 			// init datetimpicker
-			$parent.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
-
-				acf_quickedit.datetimepicker.init( $(el) );
-
-			});
+			// $parent.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
+            //
+			// 	acf_quickedit.datetimepicker.init( $(el) );
+            //
+			// });
 
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
