@@ -40,4 +40,15 @@ class DatePickerField extends DateTimePickerField {
 		return true;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function get_value( $post_id ) {
+		//*
+		return acf_get_metadata( $post_id, $this->acf_field['name'] );
+		/*/
+		return get_field( $this->acf_field['name'], $post_id );
+		//*/
+	}
+
 }
