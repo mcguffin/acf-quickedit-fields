@@ -279,20 +279,89 @@
  	 *	field type checkbox
  	 */
 	// Todo
+	qe.field.add_type( {
+		type:'checkbox',
+		initialize:function() {
+			qe.field.View.prototype.initialize.apply(this,arguments);
+
+			this.$input = this.$('[type="checkbox"]').prop( 'readonly', true );
+		},
+		setValue:function( value ) {
+			var self = this;
+			this.$input.prop( 'readonly', false ).val(value);
+			if ( $.isArray(value) ) {
+				$.each( value, function( idx, val ) {
+					self.$( '[type="checkbox"][value="'+val+'"]' )
+						.prop( 'checked',true);
+				});
+			} else {
+				this.$( '[type="checkbox"][value="'+value+'"]' )
+					.prop( 'checked',true);
+			}
+ 		}
+	});
 
 	/**
  	 *	field type radio
  	 */
-	// Todo
+	qe.field.add_type( {
+		type:'radio',
+		initialize:function() {
+			var $other, is_other;
+			qe.field.View.prototype.initialize.apply(this,arguments);
+
+			this.$('[type="radio"]').prop( 'readonly', true );
+			console.log(this.$('ul.acf-radio-list.other').length);
+			if ( this.$('ul.acf-radio-list.other').length ) {
+				$other = this.$('[type="text"]');
+				this.$('[type="radio"]').on('change',function(e){
+					//console.log(this,$(this).is(':checked'))
+					is_other = $(this).is('[value="other"]:checked');
+					$other
+						.prop('disabled', ! is_other )
+						.prop('readonly', ! is_other );
+
+				})
+			}
+		},
+		setValue:function( value ) {
+			this.$('[type="radio"]').prop( 'readonly', false );
+			this.$('[type="radio"][value="'+value+'"]' )
+				.prop( 'checked', true );
+ 		}
+	});
 
 	/**
  	 *	field type select
  	 */
-	// Todo
+	qe.field.add_type( {
+		type:'select',
+		initialize:function() {
+			qe.field.View.prototype.initialize.apply(this,arguments);
+
+			this.$input = this.$('select').prop( 'readonly', true );
+		},
+		setValue:function( value ) {
+ 			this.$input.prop( 'readonly', false ).val(value);
+ 		}
+	});
 
 	/**
  	 *	field type true_false
  	 */
+	 qe.field.add_type( {
+ 		type:'true_false',
+ 		initialize:function() {
+ 			qe.field.View.prototype.initialize.apply(this,arguments);
+
+ 			this.$('[type="radio"]').prop( 'readonly', true );
+ 		},
+ 		setValue:function( value ) {
+			this.$('[type="radio"]').prop( 'readonly', false );
+			this.$('[type="radio"][value="'+value+'"]' )
+				.prop( 'checked', true );
+  		}
+ 	});
 	// Todo
 
 })( jQuery, acf_quickedit );
