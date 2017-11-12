@@ -173,7 +173,7 @@ abstract class Feature extends Core\Singleton {
 			}
 
 			// gather conditions for field parts
-
+			
 			if ( $content_type === 'post' ) {
 				$conditions = array( 'post_type' => $this->get_current_post_type() );
 
@@ -183,7 +183,7 @@ abstract class Feature extends Core\Singleton {
 							$conditions['post_id'] = absint( $_REQUEST[$request_param] );
 						}
 					}
-
+					
 				} else {
 					add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
