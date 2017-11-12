@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gulputil = require('gulp-util');
-var concat = require('gulp-concat');  
-var uglify = require('gulp-uglify');  
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
@@ -12,6 +12,8 @@ var styles = [
 	'./src/scss/acf-qef-field-group.scss'
 ];
 var scripts = [
+	'./src/js/acf-quickedit-base.js',
+	'./src/js/acf-quickedit-fields.js',
 	'./src/js/acf-quickedit.js',
 	'./src/js/thumbnail-col.js'
 ];
@@ -20,8 +22,8 @@ var scripts = [
 gulp.task('styles-build',function(){
     return gulp.src( styles )
 		.pipe(sourcemaps.init())
-        .pipe( sass( { 
-        	outputStyle: 'compressed' 
+        .pipe( sass( {
+        	outputStyle: 'compressed'
         } ).on('error', sass.logError) )
         .pipe( sourcemaps.write() )
         .pipe( gulp.dest( './css/' ) );
@@ -42,7 +44,7 @@ gulp.task('scripts-build', function() {
         .pipe( sourcemaps.write() )
     	.pipe( gulp.dest( './js/' ) )
     ];
-    	
+
 });
 
 
@@ -54,4 +56,3 @@ gulp.task( 'watch', function() {
 gulp.task( 'build', ['styles-build','scripts-build'] );
 
 gulp.task( 'default', ['build','watch'] );
-
