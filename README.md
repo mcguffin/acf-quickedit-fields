@@ -39,6 +39,9 @@ followed by `gulp`.
 ToDo:
 -----
 
- - [ ] Bug: Yoast SEO Int/Ext Link Columns get lost after qe save
- - [ ] Bug: QE -> save -> relaod: Browser warning about unsaved changes.
- - [ ] QE+BE: Checkboxes with Custom -> Add Choice!
+ - [ ] QE+BE: Checkboxes with Custom -> Add Choice
+ - [ ] BE: new fields js
+ - [ ] JS bindValidation
+ - [ ] JS inlineEditTax
+ - [ ] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
+ - [ ] Radio with Other: load other value(s) not shown after save (need to reload)
