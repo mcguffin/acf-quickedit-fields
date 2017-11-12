@@ -386,16 +386,16 @@
 		get_acf_post_data( post_ids , $( '#bulk-edit' ) );
 
 	})
-	.on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
-
-		var $this = $(this),
-			$list = $this.closest('.acf-radio-list'),
-			is_other = $this.val() == 'other',
-			$other = $list.find('[type="text"]').prop('disabled', ! is_other );
-
-		!! is_other && $other.focus();
-
-	})
+	// .on('change', '.acf-radio-list.other input[type="radio"]', function(e) {
+    //
+	// 	var $this = $(this),
+	// 		$list = $this.closest('.acf-radio-list'),
+	// 		is_other = $this.val() == 'other',
+	// 		$other = $list.find('[type="text"]').prop('disabled', ! is_other );
+    //
+	// 	!! is_other && $other.focus();
+    //
+	// })
 	// .on('change mousemove', '.acf-range-wrap input[type="range"]', function(e) {
     //
 	// 	$(this).next('[type="number"]').val( $(this).val() );
