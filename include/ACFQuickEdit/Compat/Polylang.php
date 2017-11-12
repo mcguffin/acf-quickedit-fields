@@ -44,5 +44,3 @@ class Polylang extends Core\Singleton {
 	}
 
 }
-
-
