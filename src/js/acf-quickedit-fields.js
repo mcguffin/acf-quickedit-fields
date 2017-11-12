@@ -270,6 +270,30 @@
 		}
 	});
 
+	/**
+ 	 *	field type choice
+ 	 */
+	// Todo
+
+	/**
+ 	 *	field type checkbox
+ 	 */
+	// Todo
+
+	/**
+ 	 *	field type radio
+ 	 */
+	// Todo
+
+	/**
+ 	 *	field type select
+ 	 */
+	// Todo
+
+	/**
+ 	 *	field type true_false
+ 	 */
+	// Todo
 
 })( jQuery, acf_quickedit );
 
