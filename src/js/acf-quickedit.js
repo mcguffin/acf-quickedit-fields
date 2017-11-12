@@ -51,10 +51,9 @@
 			return _wp_inline_edit_save.apply( this, arguments );
 		}
 	}
-	// todo: inlineEditTax
+
 
 	return;
-
 	var media_frame;
 
 	function get_acf_post_data( post_id , $parent ) {

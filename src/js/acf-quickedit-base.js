@@ -53,7 +53,6 @@
 					});
 				}
 			});
-			// todo: bind validation
 			return this;
 		},
 		unload:function(e){
@@ -67,7 +66,7 @@
 	});
 
 	qe.form.BulkEdit = qe.form.View.extend({
-		// todo: do not change
+
 	});
 
 
@@ -86,6 +85,7 @@
 		},
 		unload:function(){}
 	});
+
 
 
 })(jQuery,window);
