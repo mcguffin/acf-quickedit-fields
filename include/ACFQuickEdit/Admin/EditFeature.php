@@ -109,7 +109,7 @@ abstract class EditFeature extends Feature {
 			$callback = array( $this, 'quickedit_save_acf_term_meta' );
 			$count_args = 3;
 		}
-		
+
 
 		// register quick/bulk save actions
 		if ( $this->is_active() && ! has_action( $action, $callback ) ) {
@@ -145,7 +145,9 @@ abstract class EditFeature extends Feature {
 	 *	@action save_post
 	 */
 	public function quickedit_save_acf_post_meta( $post_id ) {
-
+		if ( 'acf-field' === get_post_type( $post_id ) ) {
+			return;
+		}
 		$is_quickedit = is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX;
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
