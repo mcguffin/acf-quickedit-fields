@@ -1,7 +1,59 @@
-var acfQuickedit = {};
+//var acf_quickedit = {};
 
-(function($) {
 
+(function($,qe) {
+
+
+
+	if ( 'undefined' !== typeof inlineEditPost ) {
+		// we create a copy of the WP inline edit post function
+		var _wp_inline_edit_post = inlineEditPost.edit,
+			_wp_inline_edit_save = inlineEditPost.save,
+			_wp_inline_edit_revert = inlineEditPost.revert,
+			unload_cb;
+		// and then we overwrite the function with our own code
+		inlineEditPost.edit = function( id ) {
+			var object_id, $tr, form_class;
+
+
+			// "call" the original WP edit function
+			// we don't want to leave WordPress hanging
+			_wp_inline_edit_post.apply( this, arguments );
+
+			// get the post ID
+			object_id = 0;
+			if ( typeof( id ) === 'object' ) {
+				object_id = parseInt( this.getId( id ) );
+			}
+			$tr = $('#edit-' + object_id );
+//			get_acf_post_data( object_id , $('#edit-' + object_id ) );
+			if ( $tr.is('.quick-edit-row') ) {
+				form_class = qe.form.QuickEdit;
+			} else if ( $tr.is('.bulk-edit-row') ) {
+				form_class = qe.form.BulkEdit;
+			}
+			if ( ! form_class ) {
+				return;
+			}
+			this.acf_qed_form = new form_class({
+				el: $tr.get(0),
+				object_id: object_id
+			});
+
+//			bindValidation( $tr.find('button.save'), object_id );
+		};
+		inlineEditPost.revert = function() {
+			!! this.acf_qed_form && this.acf_qed_form.unload();
+			return _wp_inline_edit_revert.apply( this, arguments );
+		}
+		inlineEditPost.save = function() {
+			!! this.acf_qed_form && this.acf_qed_form.unload();
+			return _wp_inline_edit_save.apply( this, arguments );
+		}
+	}
+
+
+	return;
 	var media_frame;
 
 	function get_acf_post_data( post_id , $parent ) {
@@ -35,6 +87,8 @@ var acfQuickedit = {};
 		$.post( ajaxurl, req_data, function( result ) {
 			var i, key, value, $tr, $field,
 				selected;
+
+			$(window).off('beforeunload');
 
 			var keys = [];
 			// only keep keys that have fields
@@ -116,21 +170,21 @@ var acfQuickedit = {};
 			// init datepicker
 			$parent.find('.acf-quick-edit-date_picker').each( function( i, el ) {
 
-				acfQuickedit.datepicker.init( $(el) );
+				acf_quickedit.datepicker.init( $(el) );
 
 			});
 
 			// init timepicker
 			$parent.find('.acf-quick-edit-time_picker').each( function( i, el ) {
 
-				acfQuickedit.timepicker.init( $(el) );
+				acf_quickedit.timepicker.init( $(el) );
 
 			});
 
 			// init datetimpicker
 			$parent.find('.acf-quick-edit-date_time_picker').each( function( i, el ) {
 
-				acfQuickedit.datetimepicker.init( $(el) );
+				acf_quickedit.datetimepicker.init( $(el) );
 
 			});
 
@@ -142,7 +196,7 @@ var acfQuickedit = {};
 		});
 	}
 
-	acfQuickedit.datepicker = {
+	acf_quickedit.datepicker = {
 		init: function( $wrap ) {
 			var $hidden		= $wrap.find( '[type="hidden"]' ),
 				$input		= $wrap.find( '[type="text"]' ),
@@ -167,7 +221,7 @@ var acfQuickedit = {};
 		},
 	};
 
-	acfQuickedit.timepicker = {
+	acf_quickedit.timepicker = {
 		init: function( $wrap ) {
 			var $hidden			= $wrap.find( '[type="hidden"]' ),
 				$input			= $wrap.find( '[type="text"]' ),
@@ -196,7 +250,7 @@ var acfQuickedit = {};
 	};
 
 
-	acfQuickedit.datetimepicker = {
+	acf_quickedit.datetimepicker = {
 		init: function( $wrap ) {
 			var $hidden			= $wrap.find( '[type="hidden"]' ),
 				$input			= $wrap.find( '[type="text"]' ),
@@ -231,10 +285,13 @@ var acfQuickedit = {};
 
 	if ( 'undefined' !== typeof inlineEditPost ) {
 		// we create a copy of the WP inline edit post function
-		var _wp_inline_edit_post = inlineEditPost.edit;
+		var _wp_inline_edit_post = inlineEditPost.edit,
+			unload_cb;
 		// and then we overwrite the function with our own code
 		inlineEditPost.edit = function( id ) {
 			var object_id, $tr;
+
+
 			// "call" the original WP edit function
 			// we don't want to leave WordPress hanging
 			_wp_inline_edit_post.apply( this, arguments );
@@ -338,16 +395,16 @@ var acfQuickedit = {};
 		!! is_other && $other.focus();
 
 	})
-	.on('change mousemove', '.acf-range-wrap input[type="range"]', function(e) {
-
-		$(this).next('[type="number"]').val( $(this).val() );
-
-	})
-	.on('change keyup', '.acf-range-wrap input[type="number"]', function(e) {
-
-		$(this).prev('[type="range"]').val( $(this).val() );
-
-	})
+	// .on('change mousemove', '.acf-range-wrap input[type="range"]', function(e) {
+    //
+	// 	$(this).next('[type="number"]').val( $(this).val() );
+    //
+	// })
+	// .on('change keyup', '.acf-range-wrap input[type="number"]', function(e) {
+    //
+	// 	$(this).prev('[type="range"]').val( $(this).val() );
+    //
+	// })
 	.on( 'change', '[data-is-do-not-change="true"]', function(){
 		var $self = $(this),
 			name = $self.attr('name'),
@@ -361,59 +418,58 @@ var acfQuickedit = {};
 
 		$items.prop( 'disabled', $self.prop('checked') );
 	})
-	.on( 'click', '.inline-edit-col .select-media', function(e) {
-		var self = this,
-			$hidden = $(self).parent('.acf-input-wrap').find('[type="hidden"]'),
-			$field = $(this).closest('.acf-field'),
-			post_id = acf.get('post_id'),
-			mediaFrameOpts;
-
-		mediaFrameOpts = {
-			field		: $hidden.attr('data-acf-field-key'),
-			multiple	: false,
-			post_id		: post_id,
-			library		: $hidden.attr('data-library'),
-			mode		:'select',
-			select		: function ( attachment, i ) {
-				if ( ! attachment ) {
-					return;
-				}
-				var $hidden = $(self).parent('.acf-input-wrap').find('[type="hidden"]'),
-					media_id = attachment.get('id');
-
-				$hidden.val( media_id );
-			}
-		};
-
-
-		e.preventDefault();
-
-
-		if ( $hidden.data('mime_types') ) {
-			mediaFrameOpts.mime_types = $hidden.data('mime_types');
-		}
-		if ( $field.is('[data-field-type="image"]') ) {
-			mediaFrameOpts.type = 'image';
-		} else {
-			mediaFrameOpts.type = '';
-		}
-
-		// Create a new media frame
-		media_frame = acf.media.popup( mediaFrameOpts );
-
-
-		// set post id, so new uploads are attached to edited post
-		if ( acf.isset(window,'wp','media','view','settings','post') && $.isNumeric(post_id) ) {
-
-			wp.media.view.settings.post.id = post_id;
-
-		}
-
-	})
-	.on( 'click', '.inline-edit-col .remove-media', function(e) {
-		e.preventDefault();
-		var $hidden = $(this).parent().find('[type="hidden"]');
-		$hidden.val('');
-		console.log($hidden);
-	});
-})(jQuery);
+	// .on( 'click', '.inline-edit-col .select-media', function(e) {
+	// 	var self = this,
+	// 		$hidden = $(self).parent('.acf-input-wrap').find('[type="hidden"]'),
+	// 		$field = $(this).closest('.acf-field'),
+	// 		post_id = acf.get('post_id'),
+	// 		mediaFrameOpts;
+    //
+	// 	mediaFrameOpts = {
+	// 		field		: $hidden.attr('data-acf-field-key'),
+	// 		multiple	: false,
+	// 		post_id		: post_id,
+	// 		library		: $hidden.attr('data-library'),
+	// 		mode		:'select',
+	// 		select		: function ( attachment, i ) {
+	// 			if ( ! attachment ) {
+	// 				return;
+	// 			}
+	// 			var $hidden = $(self).parent('.acf-input-wrap').find('[type="hidden"]'),
+	// 				media_id = attachment.get('id');
+    //
+	// 			$hidden.val( media_id );
+	// 		}
+	// 	};
+    //
+    //
+	// 	e.preventDefault();
+    //
+    //
+	// 	if ( $hidden.data('mime_types') ) {
+	// 		mediaFrameOpts.mime_types = $hidden.data('mime_types');
+	// 	}
+	// 	if ( $field.is('[data-field-type="image"]') ) {
+	// 		mediaFrameOpts.type = 'image';
+	// 	} else {
+	// 		mediaFrameOpts.type = '';
+	// 	}
+    //
+	// 	// Create a new media frame
+	// 	media_frame = acf.media.popup( mediaFrameOpts );
+    //
+    //
+	// 	// set post id, so new uploads are attached to edited post
+	// 	if ( acf.isset(window,'wp','media','view','settings','post') && $.isNumeric(post_id) ) {
+    //
+	// 		wp.media.view.settings.post.id = post_id;
+    //
+	// 	}
+    //
+	// })
+	// .on( 'click', '.inline-edit-col .remove-media', function(e) {
+	// 	e.preventDefault();
+	// 	var $hidden = $(this).parent().find('[type="hidden"]');
+	// 	$hidden.val('');
+	// });
+})( jQuery, window.acf_quickedit );

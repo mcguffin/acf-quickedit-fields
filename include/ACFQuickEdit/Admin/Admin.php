@@ -14,17 +14,17 @@ class Admin extends Core\Singleton {
 
 	protected $columns;
 
-	private $column_fields = array();	
+	private $column_fields = array();
 
-	private $quickedit_fields = array();	
+	private $quickedit_fields = array();
 
-	private $quickedit_field_groups = array();	
+	private $quickedit_field_groups = array();
 
-	private $bulkedit_fields = array();	
+	private $bulkedit_fields = array();
 
-	private $bulkedit_field_groups = array();	
+	private $bulkedit_field_groups = array();
 
-	private $_wp_column_weights = array();	
+	private $_wp_column_weights = array();
 
 
 	/**
@@ -73,16 +73,16 @@ class Admin extends Core\Singleton {
 	function print_acf_free_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
-			<p><?php 
-				printf( 
-					_x( 'The ACF QuickEdit Fields plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.', 
+			<p><?php
+				printf(
+					_x( 'The ACF QuickEdit Fields plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
 						'1: ACF Pro URL, 2: plugins page url',
-						'acf-quick-edit-fields' 
+						'acf-quick-edit-fields'
 					),
 					'http://www.advancedcustomfields.com/pro/',
 					admin_url('plugins.php' )
-					
-				); 
+
+				);
 			?></p>
 		</div>
 		<?php
@@ -152,24 +152,24 @@ class Admin extends Core\Singleton {
 
 		header('Content-Type: application/json');
 
-		if ( isset( $_REQUEST['post_id'] , $_REQUEST['acf_field_keys'] ) ) {
+		if ( isset( $_REQUEST['object_id'] , $_REQUEST['acf_field_keys'] ) ) {
 
 			$result = array();
-			 
-			$post_ids = (array) $_REQUEST['post_id'];
 
-			$is_multiple = count( $post_ids ) > 1;
+			$object_ids = (array) $_REQUEST['object_id'];
+
+			$is_multiple = count( $object_ids ) > 1;
 
 			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
 
-			foreach ( $post_ids as $post_id ) {
+			foreach ( $object_ids as $object_id ) {
 
-				if ( is_numeric( $post_id ) ) {
-					if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				if ( is_numeric( $object_id ) ) {
+					if ( ! current_user_can( 'edit_post', $object_id ) ) {
 						continue;
 					}
 				} else {
-					$term_id_num = preg_replace( '([^\d])', '', $post_id );
+					$term_id_num = preg_replace( '([^\d])', '', $object_id );
 					if ( ! current_user_can( 'edit_term', $term_id_num ) ) {
 						continue;
 					}
@@ -177,16 +177,16 @@ class Admin extends Core\Singleton {
 
 				foreach ( $field_keys as $key ) {
 
-					$field = get_field_object( $key , $post_id );
+					$field = get_field_object( $key , $object_id );
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
 						if ( $is_multiple ) {
 							if ( ! isset( $result[ $key ] ) ) {
 								$result[ $key ] = array();
 							}
-							$result[ $key ][] = $field_object->get_value( $post_id );
+							$result[ $key ][] = $field_object->get_value( $object_id );
 						} else {
-							$result[ $key ] = $field_object->get_value( $post_id );
+							$result[ $key ] = $field_object->get_value( $object_id );
 						}
 					}
 				}
