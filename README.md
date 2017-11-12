@@ -39,6 +39,5 @@ followed by `gulp`.
 ToDo:
 -----
 
- - [ ] Bug: Yoast SEO Int/Ext Link Columns get lost after qe save
- - [ ] Bug: QE -> save -> relaod: Browser warning about unsaved changes.
  - [ ] QE+BE: Checkboxes with Custom -> Add Choice!
+ - [ ] Support sortable columns
