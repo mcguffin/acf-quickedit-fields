@@ -44,7 +44,6 @@ class Admin extends Core\Singleton {
 	 * @action plugins_loaded
 	 */
 	public function setup() {
-
 		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 
 			// init everything
@@ -191,9 +190,12 @@ class Admin extends Core\Singleton {
 					}
 				}
 			}
+
 			if ( $is_multiple ) {
 				foreach ( $result as $key => $values ) {
-					$values = array_unique( $values );
+
+					$values = $this->unique_values( $values );
+
 					if ( 1 === count( $values ) ) {
 						$result[ $key ] = $values[0];
 					} else {
@@ -207,6 +209,15 @@ class Admin extends Core\Singleton {
 		}
 	}
 
+	private function unique_values( $values ) {
+		$ret = array();
+		foreach ( $values as $i => $value ) {
+			if ( ! in_array( $value, $ret ) ) {
+				$ret[] = $value;
+			}
+		}
+		return $ret;
+	}
 
 
 }
