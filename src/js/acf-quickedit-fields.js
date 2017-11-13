@@ -281,6 +281,10 @@
 	// Todo
 	qe.field.add_type( {
 		type:'checkbox',
+		events:{
+			'click .add-choice': 'addChoice',
+			'change [type="checkbox"].custom' : 'removeChoice'
+		},
 		initialize:function() {
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
@@ -298,7 +302,16 @@
 				this.$( '[type="checkbox"][value="'+value+'"]' )
 					.prop( 'checked',true);
 			}
- 		}
+ 		},
+		addChoice:function(e){
+			e.preventDefault();
+			var tpl = wp.template('acf-qef-custom-choice-' + this.$el.attr('data-key'));
+			this.$('ul').append(tpl());
+		},
+		removeChoice:function(e) {
+			$(e.target).closest('li').remove();
+		}
+
 	});
 
 	/**

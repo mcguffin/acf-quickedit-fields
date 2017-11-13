@@ -52,12 +52,37 @@ class CheckboxField extends ChoiceField {
 			}
 			$output .= sprintf( '<li><label><input %s/>%s</label></li>', acf_esc_attr( $atts ), $label );
 		}
+
 		$output .= '</ul>';
+		if ( $this->acf_field['allow_custom'] ) {
+			$output .= '<button class="button button-seconday add-choice">' . __('Add Choice','acf-quick-edit-fields') . '</button>';
+			$output .= sprintf( '<script type="text/html" id="tmpl-acf-qef-custom-choice-%s">', $this->acf_field['key'] );
+
+			$id = $this->core->prefix( $this->acf_field['key'] . '-other' );
+
+			$output .= '<li><label>';
+			$output .= sprintf( '<input %s />', acf_esc_attr( array(
+				'type'					=> 'checkbox',
+				'class'					=> 'acf-quick-edit custom',
+				'checked'				=> 'checked',
+			) ) );
+			$output .= sprintf( '<input %s />', acf_esc_attr( array(
+				'type'					=> 'text',
+				'class'					=> 'acf-quick-edit',
+				'data-acf-field-key'	=> $this->acf_field['key'],
+				'name'					=> $field_name,
+				'style'					=> 'width:initial',
+			) ) );
+
+			$output .= '</label></li>';
+
+			$output .= '</script>';
+		}
 
 		return $output;
 	}
 
-	
+
 	/**
 	 *	@inheritdoc
 	 */
