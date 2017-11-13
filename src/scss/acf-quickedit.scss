@@ -110,6 +110,8 @@
  *	Editor
  */
 .inline-edit-row {
+	.acf-field {
+	}
 	.acf-range-wrap,
 	.acf-input-wrap {
 		display:block;
@@ -176,6 +178,17 @@
 				border:1px solid #ddd;
 				&:nth-of-type(3n+1) {
 					clear:left;
+				}
+				&[data-error-message] {
+					border-color:#dd4232;
+					&:before {
+						content:attr(data-error-message);
+						display:block;
+						background-color:#F55E4F;
+						color:#fff;
+						margin:-10px -10px 10px -10px;
+						padding:10px;
+					}
 				}
 			}
 		}

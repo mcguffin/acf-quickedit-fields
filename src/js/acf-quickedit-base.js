@@ -18,7 +18,12 @@
 				});
 			}
 		},
+
 	};
+
+
+
+
 	qe.form.View = Backbone.View.extend({
 		initialize:function(){
 
@@ -48,18 +53,79 @@
 					'acf_field_keys' : Object.keys(this.fields)
 				},
 				success:function(response){
-					_.each(response,function( val, key ){
-						self.fields[key].setValue( val );
-					});
+					self.loadedValues( response );
 				}
 			});
-			// todo: bind validation
+
 			return this;
+		},
+		loadedValues:function(values) {
+			var self = this;
+			_.each(values,function( val, key ){
+				self.fields[key].setValue( val );
+			});
+			this.initValidation();
 		},
 		unload:function(e){
 			_.each(this.fields,function(field){
 				field.unload();
 			});
+		},
+		validationComplete:function( json, $form ) {
+			console.log(json);
+			var self = this;
+
+			if ( ! json.valid ) {
+				_.each(json.errors,function(err){
+					// err.input is in format `acf[<FIELD_KEY>]`
+					var key = err.input.replace(/^acf\[([0-9a-z_]+)\]$/g,'$1');
+					if ( key in self.fields ) {
+						self.fields[key].setError( err.message );
+					}
+				});
+			}
+			return json;
+		},
+		initValidation:function() {
+			var $form = this.$el.closest('form'),
+				$button = $form.find('button.save');
+
+			acf.update('post_id', this.options.object_id );
+
+			acf.add_filter( 'validation_complete', this.validationComplete, 10, this );
+//			acf.add_action('validation_failure', this.validationFailure );
+
+			$button.click( function(e) {
+				// bail early if not active
+				if( !acf.validation.active ) {
+
+					return true;
+
+				}
+
+				// ignore validation (only ignore once)
+				if( acf.validation.ignore ) {
+					acf.validation.ignore = 0;
+					return true;
+				}
+
+				// stop WP JS validation
+				e.preventDefault();
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+
+
+				// store submit trigger so it will be clicked if validation is passed
+				acf.validation.$trigger = $(this);
+
+				// run validation
+				acf.validation.fetch( $form );
+
+				// stop all other click events on this input
+				return false;
+			});
+
+			$button.data('events').click.reverse();
 		}
 	});
 	qe.form.QuickEdit = qe.form.View.extend({
@@ -74,14 +140,23 @@
 
 	qe.field.View = wp.media.View.extend({
 		initialize:function(){
+			var self = this;
 			Backbone.View.prototype.initialize.apply( this, arguments );
 			this.key = this.$el.attr('data-key');
 			this.$('input').prop( 'readonly', true );
-
+			this.$('*').on('change',function(){self.resetError()})
 		},
 		setValue:function(value){
 			this.$('input').prop( 'readonly', false );
 			this.$('input').val(value);
+			return this;
+		},
+		setError:function(message) {
+			this.$el.attr('data-error-message',message);
+			return this;
+		},
+		resetError:function() {
+			this.$el.removeAttr( 'data-error-message' );
 			return this;
 		},
 		unload:function(){}

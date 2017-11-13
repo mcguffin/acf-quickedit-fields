@@ -39,9 +39,9 @@ followed by `gulp`.
 ToDo:
 -----
 
- - [ ] QE+BE: Checkboxes with Custom -> Add Choice
+ - [x] QE+BE: Checkboxes with Custom -> Add Choice
+ - [x] JS bindValidation
  - [ ] BE: new fields js
- - [ ] JS bindValidation
  - [ ] JS inlineEditTax
  - [ ] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
- - [ ] Radio with Other: load other value(s) not shown after save (need to reload)
+ - [ ] Radio/Checkbox with Other: load other value(s) not shown after save (need to reload)

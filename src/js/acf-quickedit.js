@@ -39,8 +39,6 @@
 				el: $tr.get(0),
 				object_id: object_id
 			});
-
-//			bindValidation( $tr.find('button.save'), object_id );
 		};
 		inlineEditPost.revert = function() {
 			!! this.acf_qed_form && this.acf_qed_form.unload();
