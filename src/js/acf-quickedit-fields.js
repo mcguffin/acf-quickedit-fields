@@ -5,20 +5,21 @@
 		events:{
 			'click .select-media' : 'selectFile',
 			'click .remove-media' : 'removeFile',
+			'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 		},
 		initialize:function() {
-
+			this.$input = this.$('button');
+			this.$hidden = this.$('[type="hidden"]');
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
 			var self = this,
-				$hidden = this.$('[type="hidden"]'),
 				post_id = acf.get('post_id');
 
 			this.mediaFrameOpts = {
 				field		: this.key,
 				multiple	: false,
 				post_id		: post_id,
-				library		: $hidden.attr('data-library'),
+				library		: this.$hidden.attr('data-library'),
 				mode		:'select',
 				type		: this.mediaFrameType,
 				select		: function ( attachment, i ) {
@@ -28,8 +29,8 @@
 					self.setValue( attachment.get('id') );
 				}
 			};
-			if ( $hidden.data('mime_types') ) {
-				this.mediaFrameOpts.mime_types = $hidden.data('mime_types');
+			if ( this.$hidden.data('mime_types') ) {
+				this.mediaFrameOpts.mime_types = this.$hidden.data('mime_types');
 			}
 
 			// this.$('.select-media').on('click',function(e){
@@ -42,7 +43,18 @@
 		selectFile:function(e){
 			e.preventDefault();
 			// Create a new media frame
-			var media_frame = acf.media.popup( this.mediaFrameOpts );
+			var media_frame = acf.media.popup( this.mediaFrameOpts ),
+				media_id = this.$hidden.val();
+
+			if ( !! media_id ) {
+				media_frame.on('open',function(){
+					var selection, attachment;
+					selection = media_frame.state().get('selection');
+					attachment = wp.media.attachment( media_id );
+					attachment.fetch();
+					selection.add( attachment ? [ attachment ] : [] );
+				});
+			}
 
 			// set post id, so new uploads are attached to edited post
 			if ( acf.isset(window,'wp','media','view','settings','post') && $.isNumeric( this.mediaFrameOpts.post_id ) ) {
@@ -57,7 +69,8 @@
 			this.setValue('');
 		},
 		setValue:function(value) {
-			this.$('[type="hidden"]').val(value);
+			this.dntChanged();
+			this.$hidden.val( value );
 			return this;
 		}
 	};
@@ -84,6 +97,7 @@
 			 'mousemove [type="range"]'		: 'adaptNumber',
 			 'change [type="number"]'		: 'adaptRange',
 			 'mousemove [type="number"]'	: 'adaptRange',
+			 'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 		 },
 		 adaptNumber:function(){
 			 this.$('[type="number"]').val( this.$('[type="range"]').val() );
@@ -127,7 +141,7 @@
 		setValue:function(value) {
 			var date;
 
-			this.$input.prop('readonly',false);
+			this.dntChanged();
 
 			try {
 				date = $.datepicker.parseDate( this.datePickerArgs.altFormat, value );
@@ -179,7 +193,7 @@
 		setValue:function(value) {
 			var date;
 
-			this.$input.prop('readonly',false);
+			this.dntChanged();
 
 			try {
 				date = $.datepicker.parseDateTime(
@@ -241,7 +255,7 @@
  		setValue:function(value) {
 			var time;
 
-			this.$input.prop('readonly',false);
+			this.dntChanged();
 			try {
 				time = $.datepicker.parseTime( this.datePickerArgs.altTimeFormat, value );
 			} catch(err){
@@ -266,7 +280,7 @@
 			qe.field.View.prototype.initialize.apply(this,arguments);
 		},
 		setValue:function( value ) {
-			this.$input.prop('readonly',false);
+			this.dntChanged();
 			this.$input.wpColorPicker( 'color', value );
 		},
 		unload:function() {
@@ -293,9 +307,6 @@
 //					e.preventDefault();
 				}
 			});
-		},
-		setValue:function( value ) {
-			this.$input.prop( 'readonly', false ).val(value);
 		}
 	});
 
@@ -312,24 +323,30 @@
 		type:'checkbox',
 		events:{
 			'click .add-choice': 'addChoice',
-			'change [type="checkbox"].custom' : 'removeChoice'
+			'change [type="checkbox"].custom' : 'removeChoice',
+			'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 		},
 		initialize:function() {
-			this.$input = this.$('[type="checkbox"]').prop( 'readonly', true );
+			this.$input = this.$('[type="checkbox"]:not([value="___do_not_change"])');
+			this.$button = this.$('button.add-choice').prop('disabled',true);
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
 		},
+		setEditable:function(editable){
+			this.$input.prop( 'readonly', !editable );
+			this.$button.prop( 'disabled', !editable );
+		},
 		setValue:function( value ) {
 			var self = this;
-			this.$input.prop( 'readonly', false ).val(value);
+			this.dntChanged();
 			if ( $.isArray(value) ) {
 				$.each( value, function( idx, val ) {
 					self.$( '[type="checkbox"][value="'+val+'"]' )
-						.prop( 'checked',true);
+						.prop( 'checked', true );
 				});
 			} else {
 				this.$( '[type="checkbox"][value="'+value+'"]' )
-					.prop( 'checked',true);
+					.prop( 'checked', true );
 			}
  		},
 		addChoice:function(e){
@@ -370,7 +387,7 @@
 			}
 		},
 		setValue:function( value ) {
-			this.$input.prop( 'readonly', false );
+			this.dntChanged();
 			this.$('[type="radio"][value="'+value+'"]' )
 				.prop( 'checked', true );
  		}
@@ -385,10 +402,7 @@
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
 			this.$input = this.$('select').prop( 'readonly', true );
-		},
-		setValue:function( value ) {
- 			this.$input.prop( 'readonly', false ).val(value);
- 		}
+		}
 	});
 
 	/**
@@ -402,7 +416,7 @@
  			this.$('[type="radio"]').prop( 'readonly', true );
  		},
  		setValue:function( value ) {
-			this.$('[type="radio"]').prop( 'readonly', false );
+			this.dntChanged();
 			this.$('[type="radio"][value="'+value+'"]' )
 				.prop( 'checked', true );
   		}

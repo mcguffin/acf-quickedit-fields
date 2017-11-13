@@ -27,13 +27,6 @@ class SelectField extends ChoiceField {
 
 		$output .= sprintf( '<select %s>', acf_esc_attr( $input_atts ) );
 
-		if ( ! $is_quickedit ) {
-			$output .= sprintf('<option value="%s" selected="selected">%s</option>',
-				$this->dont_change_value,
-				__( '— No Change —', 'acf-quick-edit-fields' )
-			);
-		}
-
 		if ( $this->acf_field['allow_null'] ) {
 			$output .= sprintf('<option value="">%s</option>', __( '— Select —', 'acf-quick-edit-fields' ) );
 		}

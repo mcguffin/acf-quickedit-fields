@@ -23,18 +23,6 @@ class CheckboxField extends ChoiceField {
 
 		$field_name = sprintf( 'acf[%s][]', $this->acf_field['key'] );
 
-		if ( ! $is_quickedit ) {
-			$output .= sprintf( '<li><label><input %s/>%s</label></li>', acf_esc_attr( array(
-				'data-acf-field-key'	=> $this->acf_field['key'],
-				'type'					=> 'checkbox',
-				'value'					=> $this->dont_change_value,
-				'name'					=> $field_name,
-				'id'					=> $this->core->prefix( $this->acf_field['key'] . '-'.$this->dont_change_value ),
-				'checked'				=> 'checked',
-				'data-is-do-not-change'	=> 'true',
-			) ), __( '— No Change —', 'acf-quick-edit-fields' ) );
-		}
-
 		foreach ( $this->acf_field['choices'] as $value => $label ) {
 			$atts = array(
 				'data-acf-field-key'	=> $this->acf_field['key'],

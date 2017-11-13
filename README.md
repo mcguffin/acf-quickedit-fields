@@ -41,7 +41,8 @@ ToDo:
 
  - [x] QE+BE: Checkboxes with Custom -> Add Choice
  - [x] JS bindValidation
- - [ ] BE: new fields js
- - [ ] JS inlineEditTax
+ - [x] BE: new fields js
+ - [x] JS inlineEditTax
+ - [x] Bug: validation: do not validate do-not-change
  - [ ] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
  - [ ] Radio/Checkbox with Other: load other value(s) not shown after save (need to reload)

@@ -43,22 +43,6 @@
 			this.loadValues();
 
 		},
-		loadValues: function() {
-			var self = this;
-			$.post({
-				url:ajaxurl,
-				data:{
-					'action' : 'get_acf_post_meta',
-					'object_id' : this.options.object_id,
-					'acf_field_keys' : Object.keys(this.fields)
-				},
-				success:function(response){
-					self.loadedValues( response );
-				}
-			});
-
-			return this;
-		},
 		loadedValues:function(values) {
 			var self = this;
 			_.each(values,function( val, key ){
@@ -88,7 +72,7 @@
 		},
 		initValidation:function() {
 			var $form = this.$el.closest('form'),
-				$button = $form.find('button.save');
+				$button = this.getSaveButton();
 
 			acf.update('post_id', this.options.object_id );
 
@@ -129,31 +113,103 @@
 		}
 	});
 	qe.form.QuickEdit = qe.form.View.extend({
+		loadValues: function() {
+			var self = this;
+			$.post({
+				url:ajaxurl,
+				data:{
+					'action' : 'get_acf_post_meta',
+					'object_id' : this.options.object_id,
+					'acf_field_keys' : Object.keys(this.fields)
+				},
+				success:function(response){
+					self.loadedValues( response );
+				}
+			});
 
+			return this;
+		},
+		getSaveButton:function(){
+			return this.$el.closest('form').find('button.save')
+		}
 	});
 
 	qe.form.BulkEdit = qe.form.View.extend({
 		// todo: do not change
+		initialize:function(){
+
+			var self = this;
+
+			qe.form.View.prototype.initialize.apply( this, arguments );
+
+			acf.add_filter( 'prepare_for_ajax', this.prepareForAjax, null, this );
+
+		},
+		prepareForAjax:function(data){
+			console.log(data);
+			var ret = {};
+			$.each(data,function(i,val){
+				if (val !== '___do_not_change') {
+					ret[i] = val;
+				}
+			});
+			console.log(ret);
+			return ret;
+		},
+		loadValues: function() {
+			var post_ids = [];
+			$('[type="checkbox"][name="post[]"]:checked').each(function(){
+				post_ids.push($(this).val())
+			});
+
+			var self = this;
+			$.post({
+				url:ajaxurl,
+				data:{
+					'action' : 'get_acf_post_meta',
+					'object_id' : post_ids,
+					'acf_field_keys' : Object.keys(this.fields)
+				},
+				success:function(response){
+					self.loadedValues( response );
+				}
+			});
+
+			return this;
+		},
+		getSaveButton:function(){
+			return this.$('[type="submit"]#bulk_edit');
+		}
 	});
 
 
 
 	qe.field.View = wp.media.View.extend({
+		events:{
+			'change [type="checkbox"][data-is-do-not-change="true"]' : 'dntChanged',
+		},
 		initialize:function(){
 			var self = this;
 			Backbone.View.prototype.initialize.apply( this, arguments );
 			this.key = this.$el.attr('data-key');
 
 			if ( ! this.$input ) {
-				this.$input = this.$('input')
+				this.$input = this.$('input:not([data-is-do-not-change="true"])')
 			}
-			this.$input.prop( 'readonly', true );
+			this.setEditable( false );
 			this.$('*').on('change',function(){self.resetError()})
 		},
 		setValue:function(value){
-			this.$input.prop( 'readonly', false );
+			this.dntChanged( );
 			this.$input.val(value);
 			return this;
+		},
+		dntChanged:function(){
+			console.log(this.$('[type="checkbox"][data-is-do-not-change="true"]').is(':checked'));
+			this.setEditable( ! this.$('[type="checkbox"][data-is-do-not-change="true"]').is(':checked') );
+		},
+		setEditable:function(editable){
+			this.$input.prop( 'readonly', ! editable ).prop( 'disabled', ! editable );
 		},
 		setError:function(message) {
 			this.$el.attr('data-error-message',message);

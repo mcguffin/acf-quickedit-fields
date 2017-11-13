@@ -6,18 +6,18 @@ if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 class FileField extends Field {
-	
+
 	/**
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
 		$output = '';
 		$value = acf_get_value( $object_id, $this->acf_field );
-		
+
 		if ( ! is_null($value) && ! empty($value) && ( $file = get_post($value) ) ) {
-			$output .= sprintf( __('<a href="%s" class="acf-qed-icon" title="%s">%s</a>','acf-quick-edit-fields'), 
-				get_edit_post_link( $value ) , 
-				$file->post_title, 
+			$output .= sprintf( __('<a href="%s" class="acf-qed-icon" title="%s">%s</a>','acf-quick-edit-fields'),
+				get_edit_post_link( $value ) ,
+				$file->post_title,
 				wp_get_attachment_image( $value, array(80,80), true ) );
 		}
 		return $output;
@@ -34,6 +34,7 @@ class FileField extends Field {
 
 		$input_atts['type']			= 'hidden';
 		$input_atts['data-library']	= $this->acf_field['library'];
+		unset($input_atts['disabled']);
 
 		$output = '';
 		$output .= parent::render_input( $input_atts, $is_quickedit );
