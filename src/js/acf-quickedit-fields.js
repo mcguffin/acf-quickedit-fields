@@ -101,12 +101,12 @@
  		type:'date_picker',
 		initialize:function() {
 			var self = this;
+			this.$input		= this.$( '[type="text"]' );
+			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
-			this.$input		= this.$( '[type="text"]' );
-			this.$hidden	= this.$( '[type="hidden"]' );
 			this.datePickerArgs = {
 					dateFormat		: this.$('[data-date_format]').data('date_format'),
 					altFormat		: 'yymmdd',
@@ -125,8 +125,17 @@
 			return this;
 		},
 		setValue:function(value) {
+			var date;
+
 			this.$input.prop('readonly',false);
-			this.$input.datepicker( 'setDate', $.datepicker.parseDate( this.datePickerArgs.altFormat, value ) );
+
+			try {
+				date = $.datepicker.parseDate( this.datePickerArgs.altFormat, value );
+			} catch(err) {
+				return this;
+			}
+//			console.log(value,this.datePickerArgs.altFormat,this.datePickerArgs.altTimeFormat,typeof value);
+			this.$input.datepicker( 'setDate', date );
 			return this;
 		}
  	});
@@ -138,12 +147,12 @@
 		type:'date_time_picker',
 		initialize:function() {
 			var self = this;
+			this.$input		= this.$( '[type="text"]' );
+			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
-			this.$input		= this.$( '[type="text"]' );
-			this.$hidden	= this.$( '[type="hidden"]' );
 			this.datePickerArgs = {
 					altField			: this.$hidden,
 					dateFormat			: this.$('[data-date_format]').data('date_format'),
@@ -168,16 +177,26 @@
 			return this;
 		},
 		setValue:function(value) {
-			console.log(value,this.datePickerArgs.altFormat,this.datePickerArgs.altTimeFormat,typeof value);
-			var date = $.datepicker.parseDateTime(
-				this.datePickerArgs.altFormat,
-				this.datePickerArgs.altTimeFormat,
-				value
-			);
+			var date;
+
 			this.$input.prop('readonly',false);
+
+			try {
+				date = $.datepicker.parseDateTime(
+					this.datePickerArgs.altFormat,
+					this.datePickerArgs.altTimeFormat,
+					value
+				);
+			} catch(err) {
+				return this;
+			}
+
+			if ( ! date ) {
+				return;
+			}
 			//*
 			this.$hidden.val(date);
-			this.$input.val( $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) +' ' + $.datepicker.formatTime(
+			this.$input.val( $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) + ' ' + $.datepicker.formatTime(
 				this.datePickerArgs.timeFormat,
 				date
 			));
@@ -196,12 +215,12 @@
 		type:'time_picker',
 		initialize:function() {
 			var self = this;
+			this.$input		= this.$( '[type="text"]' );
+			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
 			if( $('body > #ui-datepicker-div').length > 0 ) {
 				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
-			this.$input		= this.$( '[type="text"]' );
-			this.$hidden	= this.$( '[type="hidden"]' );
 			this.datePickerArgs = {
  					timeFormat			: this.$('[data-time_format]').data('time_format'),
  					altTimeFormat		: 'HH:mm:ss',
@@ -220,9 +239,18 @@
 			return this;
 		},
  		setValue:function(value) {
-			var time = $.datepicker.parseTime( this.datePickerArgs.altTimeFormat, value );
+			var time;
+
 			this.$input.prop('readonly',false);
-			this.$hidden.val(value);
+			try {
+				time = $.datepicker.parseTime( this.datePickerArgs.altTimeFormat, value );
+			} catch(err){
+				return this;
+			}
+			if ( ! time ) {
+				return;
+			}
+			this.$hidden.val( value );
 			this.$input.val( $.datepicker.formatTime( this.datePickerArgs.timeFormat, time ) )
 			return this;
  		}
@@ -234,8 +262,8 @@
  	qe.field.add_type( {
 		type:'color_picker',
 		initialize:function() {
-			qe.field.View.prototype.initialize.apply(this,arguments);
 			this.$input = this.$('[type="text"]').first().wpColorPicker();
+			qe.field.View.prototype.initialize.apply(this,arguments);
 		},
 		setValue:function( value ) {
 			this.$input.prop('readonly',false);
@@ -254,9 +282,10 @@
  	qe.field.add_type( {
 		type:'textarea',
 		initialize:function() {
+			this.$input = this.$('textarea').prop( 'readonly', true );
+
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
-			this.$input = this.$('textarea').prop( 'readonly', true );
 
 			this.$input.on('keydown keyup', function(e) {
 				if ( e.which == 13 || e.which == 27 ) {
@@ -286,9 +315,9 @@
 			'change [type="checkbox"].custom' : 'removeChoice'
 		},
 		initialize:function() {
+			this.$input = this.$('[type="checkbox"]').prop( 'readonly', true );
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
-			this.$input = this.$('[type="checkbox"]').prop( 'readonly', true );
 		},
 		setValue:function( value ) {
 			var self = this;
@@ -321,10 +350,13 @@
 		type:'radio',
 		initialize:function() {
 			var $other, is_other;
+
+			this.$input = this.$('[type="radio"]');
+
 			qe.field.View.prototype.initialize.apply(this,arguments);
 
 			this.$('[type="radio"]').prop( 'readonly', true );
-			console.log(this.$('ul.acf-radio-list.other').length);
+
 			if ( this.$('ul.acf-radio-list.other').length ) {
 				$other = this.$('[type="text"]');
 				this.$('[type="radio"]').on('change',function(e){
@@ -338,7 +370,7 @@
 			}
 		},
 		setValue:function( value ) {
-			this.$('[type="radio"]').prop( 'readonly', false );
+			this.$input.prop( 'readonly', false );
 			this.$('[type="radio"][value="'+value+'"]' )
 				.prop( 'checked', true );
  		}

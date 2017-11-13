@@ -124,8 +124,8 @@
 				// stop all other click events on this input
 				return false;
 			});
-
-			$button.data('events').click.reverse();
+			// move our events handler to front
+			$._data($button[0],'events').click.reverse()
 		}
 	});
 	qe.form.QuickEdit = qe.form.View.extend({
@@ -143,12 +143,16 @@
 			var self = this;
 			Backbone.View.prototype.initialize.apply( this, arguments );
 			this.key = this.$el.attr('data-key');
-			this.$('input').prop( 'readonly', true );
+
+			if ( ! this.$input ) {
+				this.$input = this.$('input')
+			}
+			this.$input.prop( 'readonly', true );
 			this.$('*').on('change',function(){self.resetError()})
 		},
 		setValue:function(value){
-			this.$('input').prop( 'readonly', false );
-			this.$('input').val(value);
+			this.$input.prop( 'readonly', false );
+			this.$input.val(value);
 			return this;
 		},
 		setError:function(message) {

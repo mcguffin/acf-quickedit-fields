@@ -119,6 +119,7 @@ class Columns extends Feature {
 					'args'		=> 2,
 				);
 			} else {
+				// we need at least one column for quick/bulk edit
 				$cols_filters[] = array(
 					'cb'		=> array( $this, 'add_ghost_column' ),
 					'priority'	=> null,
@@ -141,6 +142,13 @@ class Columns extends Feature {
 					'cb'		=> array( $this, 'display_term_field_column' ),
 					'priority'	=> 10,
 					'args'		=> 3,
+				);
+			} else {
+				// we need at least one column for quick/bulk edit
+				$cols_filters[] = array(
+					'cb'		=> array( $this, 'add_ghost_column' ),
+					'priority'	=> null,
+					'args'		=> null,
 				);
 			}
 			if ( $is_sortable ) {

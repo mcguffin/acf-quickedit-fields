@@ -9,8 +9,7 @@
 		// we create a copy of the WP inline edit post function
 		var _wp_inline_edit_post = inlineEditPost.edit,
 			_wp_inline_edit_save = inlineEditPost.save,
-			_wp_inline_edit_revert = inlineEditPost.revert,
-			unload_cb;
+			_wp_inline_edit_revert = inlineEditPost.revert;
 		// and then we overwrite the function with our own code
 		inlineEditPost.edit = function( id ) {
 			var object_id, $tr, form_class;
@@ -41,15 +40,53 @@
 			});
 		};
 		inlineEditPost.revert = function() {
+			// unload forms
 			!! this.acf_qed_form && this.acf_qed_form.unload();
 			return _wp_inline_edit_revert.apply( this, arguments );
 		}
 		inlineEditPost.save = function() {
+			// unload forms
 			!! this.acf_qed_form && this.acf_qed_form.unload();
 			return _wp_inline_edit_save.apply( this, arguments );
 		}
 	}
 	// todo: inlineEditTax
+	if ( 'undefined' !== typeof inlineEditTax ) {
+
+		var _wp_inline_edit_tax = inlineEditTax.edit,
+			_wp_inline_edit_save = inlineEditTax.save,
+			_wp_inline_edit_revert = inlineEditTax.revert;
+
+		inlineEditTax.edit = function( id ) {
+			var object_id, $tr,
+				tax = $('input[name="taxonomy"]').val();
+
+			_wp_inline_edit_tax.apply( this, arguments );
+
+			// get the post ID
+			object_id = 0;
+			if ( typeof( id ) === 'object' ) {
+				object_id = parseInt( this.getId( id ) );
+			}
+			$tr = $('#edit-' + object_id );
+
+			this.acf_qed_form = new qe.form.QuickEdit({
+				el: $tr.get(0),
+				object_id: tax + '_' + object_id
+			});
+
+		};
+		inlineEditTax.revert = function() {
+			// unload forms
+			!! this.acf_qed_form && this.acf_qed_form.unload();
+			return _wp_inline_edit_revert.apply( this, arguments );
+		}
+		inlineEditTax.save = function() {
+			// unload forms
+			!! this.acf_qed_form && this.acf_qed_form.unload();
+			return _wp_inline_edit_save.apply( this, arguments );
+		}
+	}
 
 	return;
 
@@ -282,52 +319,52 @@
 	// };
 
 
-	if ( 'undefined' !== typeof inlineEditPost ) {
-		// we create a copy of the WP inline edit post function
-		var _wp_inline_edit_post = inlineEditPost.edit,
-			unload_cb;
-		// and then we overwrite the function with our own code
-		inlineEditPost.edit = function( id ) {
-			var object_id, $tr;
-
-
-			// "call" the original WP edit function
-			// we don't want to leave WordPress hanging
-			_wp_inline_edit_post.apply( this, arguments );
-
-			// get the post ID
-			object_id = 0;
-			if ( typeof( id ) === 'object' ) {
-				object_id = parseInt( this.getId( id ) );
-			}
-			$tr = $('#edit-' + object_id );
-			get_acf_post_data( object_id , $('#edit-' + object_id ) );
-
-			bindValidation( $tr.find('button.save'), object_id );
-		};
-	}
-
-	if ( 'undefined' !== typeof inlineEditTax ) {
-
-		var _wp_inline_edit_tax = inlineEditTax.edit;
-
-		inlineEditTax.edit = function( id ) {
-			var object_id, $tr,
-				tax = $('input[name="taxonomy"]').val();
-
-			_wp_inline_edit_tax.apply( this, arguments );
-
-			// get the post ID
-			object_id = 0;
-			if ( typeof( id ) === 'object' ) {
-				object_id = parseInt( this.getId( id ) );
-			}
-			$tr = $('#edit-' + object_id );
-			get_acf_post_data( tax + '_' + object_id , $tr );
-
-			bindValidation( $tr.find('button.save'), object_id );
-		};
-	}
+	// if ( 'undefined' !== typeof inlineEditPost ) {
+	// 	// we create a copy of the WP inline edit post function
+	// 	var _wp_inline_edit_post = inlineEditPost.edit,
+	// 		unload_cb;
+	// 	// and then we overwrite the function with our own code
+	// 	inlineEditPost.edit = function( id ) {
+	// 		var object_id, $tr;
+    //
+    //
+	// 		// "call" the original WP edit function
+	// 		// we don't want to leave WordPress hanging
+	// 		_wp_inline_edit_post.apply( this, arguments );
+    //
+	// 		// get the post ID
+	// 		object_id = 0;
+	// 		if ( typeof( id ) === 'object' ) {
+	// 			object_id = parseInt( this.getId( id ) );
+	// 		}
+	// 		$tr = $('#edit-' + object_id );
+	// 		get_acf_post_data( object_id , $('#edit-' + object_id ) );
+    //
+	// 		bindValidation( $tr.find('button.save'), object_id );
+	// 	};
+	// }
+    //
+	// if ( 'undefined' !== typeof inlineEditTax ) {
+    //
+	// 	var _wp_inline_edit_tax = inlineEditTax.edit;
+    //
+	// 	inlineEditTax.edit = function( id ) {
+	// 		var object_id, $tr,
+	// 			tax = $('input[name="taxonomy"]').val();
+    //
+	// 		_wp_inline_edit_tax.apply( this, arguments );
+    //
+	// 		// get the post ID
+	// 		object_id = 0;
+	// 		if ( typeof( id ) === 'object' ) {
+	// 			object_id = parseInt( this.getId( id ) );
+	// 		}
+	// 		$tr = $('#edit-' + object_id );
+	// 		get_acf_post_data( tax + '_' + object_id , $tr );
+    //
+	// 		bindValidation( $tr.find('button.save'), object_id );
+	// 	};
+	// }
 
 	acf.validation.error_class = 'form-invalid';
 
