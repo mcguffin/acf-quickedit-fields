@@ -44,6 +44,8 @@ abstract class EditFeature extends Feature {
 			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), null, true );
 		}
 
+		wp_enqueue_media();
+
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields( $field_group );
 
@@ -81,13 +83,8 @@ abstract class EditFeature extends Feature {
 						$this->scripts[]	=  'wp-color-picker';
 						$this->styles[]		=  'wp-color-picker';
 					}
-					if ( $field['type'] === 'file' || $field['type'] === 'image' ) {
-						wp_enqueue_media();
-					}
-
 				}
 			}
-
 		}
 		$this->scripts[] = 'acf-quickedit';
 		$this->styles[] = 'acf-quickedit';
