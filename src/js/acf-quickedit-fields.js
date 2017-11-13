@@ -33,12 +33,6 @@
 				this.mediaFrameOpts.mime_types = this.$hidden.data('mime_types');
 			}
 
-			// this.$('.select-media').on('click',function(e){
-			// 	e.preventDefault();
-			// 	self.selectFile();
-			// 	console.log(this);
-			// });
-//			console.log(this.$('.select-media'))
 		},
 		selectFile:function(e){
 			e.preventDefault();
@@ -148,7 +142,6 @@
 			} catch(err) {
 				return this;
 			}
-//			console.log(value,this.datePickerArgs.altFormat,this.datePickerArgs.altTimeFormat,typeof value);
 			this.$input.datepicker( 'setDate', date );
 			return this;
 		}
@@ -377,7 +370,7 @@
 			if ( this.$('ul.acf-radio-list.other').length ) {
 				$other = this.$('[type="text"]');
 				this.$('[type="radio"]').on('change',function(e){
-					//console.log(this,$(this).is(':checked'))
+
 					is_other = $(this).is('[value="other"]:checked');
 					$other
 						.prop('disabled', ! is_other )
@@ -424,19 +417,3 @@
 	// Todo
 
 })( jQuery, acf_quickedit );
-
-
-/*
-range
-select
-checkbox
-radio
-true_false
-image
-file
-date_picker
-date_time_picker
-time_picker
-color_picker
-
-*/

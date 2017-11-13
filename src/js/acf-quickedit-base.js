@@ -56,7 +56,6 @@
 			});
 		},
 		validationComplete:function( json, $form ) {
-			console.log(json);
 			var self = this;
 
 			if ( ! json.valid ) {
@@ -146,14 +145,12 @@
 
 		},
 		prepareForAjax:function(data){
-			console.log(data);
 			var ret = {};
 			$.each(data,function(i,val){
 				if (val !== '___do_not_change') {
 					ret[i] = val;
 				}
 			});
-			console.log(ret);
 			return ret;
 		},
 		loadValues: function() {
@@ -205,7 +202,6 @@
 			return this;
 		},
 		dntChanged:function(){
-			console.log(this.$('[type="checkbox"][data-is-do-not-change="true"]').is(':checked'));
 			this.setEditable( ! this.$('[type="checkbox"][data-is-do-not-change="true"]').is(':checked') );
 		},
 		setEditable:function(editable){
