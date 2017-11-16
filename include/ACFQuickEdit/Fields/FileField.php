@@ -12,7 +12,11 @@ class FileField extends Field {
 	 */
 	public function render_column( $object_id ) {
 		$output = '';
-		$value = acf_get_value( $object_id, $this->acf_field );
+		/*
+		$value = get_field( $this->acf_field['key'], $object_id );
+		/*/
+		$value = $this->get_value( $object_id );
+		//*/
 
 		if ( ! is_null($value) && ! empty($value) && ( $file = get_post($value) ) ) {
 			$output .= sprintf( __('<a href="%s" class="acf-qed-icon" title="%s">%s</a>','acf-quick-edit-fields'),

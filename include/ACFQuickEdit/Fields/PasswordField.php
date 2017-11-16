@@ -12,7 +12,12 @@ class PasswordField extends Field {
 	 */
 	public function render_column( $object_id ) {
 		$output = '';
-		if ( $field_value = get_field( $this->acf_field['key'], $object_id ) ) {
+		/*
+		$value = get_field( $this->acf_field['key'], $object_id );
+		/*/
+		$value = $this->get_value( $object_id );
+		//*/
+		if ( $value ) {
 			$output .= '<code>********</code>';
 		}
 		return $output;
@@ -24,7 +29,7 @@ class PasswordField extends Field {
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		$input_atts += array(
 			'class'			=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-			'type'		=> 'password', 
+			'type'		=> 'password',
 			'autocomplete'	=> 'false',
 			'readonly'		=> 'readonly',
 			'onfocus'		=> 'this.removeAttribute(\'readonly\');',

@@ -12,10 +12,17 @@ abstract class ChoiceField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
+
+
 		$output				= '';
 		$is_multiple 		= ( isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'] ) || $this->acf_field['type'] === 'checkbox';
 		$is_return_array	= 'array' === $this->acf_field['return_format'];
-		$field_value		= get_field( $this->acf_field['key'], $object_id );
+
+		/*
+		$field_value = get_field( $this->acf_field['key'], $object_id );
+		/*/
+		$field_value = $this->get_value( $object_id );
+		//*/
 
 		if ( '' === $field_value ) {
 			$field_value = array();

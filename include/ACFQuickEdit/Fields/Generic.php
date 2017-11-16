@@ -17,5 +17,9 @@ class Generic extends Field {
 	 */
 	public function render_column( $object_id ) { }
 
-
+	/**
+	 *	@inheritdoc
+	 */
+	public function update( $post_id ) {
+	}
 }

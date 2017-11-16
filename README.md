@@ -10,6 +10,7 @@ Edit field values in Quick Edit and / or Bulk edit.
 Proofed to work with ACF Pro 5.x.  
 Will not work with ACF Free (version 4.x).  
 Requires at least PHP 5.3.
+Tested with WordPress up to 4.9
 
 See the [wiki](https://github.com/mcguffin/acf-quick-edit-fields/wiki) for a quick start and a list of [supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
 

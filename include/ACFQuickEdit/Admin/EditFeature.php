@@ -18,6 +18,7 @@ abstract class EditFeature extends Feature {
 
 		$core = Core\Core::instance();
 
+		add_filter( 'acf_quick_edit_render_group', '__return_false' );
 
 		$field_groups = $this->get_available_field_groups();
 
@@ -50,9 +51,8 @@ abstract class EditFeature extends Feature {
 		wp_enqueue_media();
 
 		foreach ( $field_groups as $field_group ) {
-			$fields = acf_get_fields( $field_group );
 
-			$fields = $this->add_grouped_fields( $fields );
+			$fields = $this->acf_get_fields( $field_group );
 
 			if ( ! $fields ) {
 				continue;
@@ -69,7 +69,7 @@ abstract class EditFeature extends Feature {
 				// register column display
 				if ( $this->is_enabled_for_field( $field ) ) {
 
-					$this->add_field( $field['name'], $field_object );
+					$this->add_field( $field['name'], $field_object, true );
 
 					if ( ! isset( $this->field_groups[ $field_group['ID'] ] ) ) {
 						$this->field_groups[ $field_group['ID'] ] = $field_group;
@@ -119,26 +119,8 @@ abstract class EditFeature extends Feature {
 			add_action( $action, $callback, 10, $count_args );
 
 		}
-
 	}
 
-	/**
-	 *	Resolve sub fields from group field.
-	 *
-	 *	@param	array	$fields;
-	 *	@return	array
-	 */
-	private function add_grouped_fields( $fields ) {
-		$return_fields = array();
-		foreach ( $fields as $field ) {
-			if ( $field['type'] === 'group' ) {
-				$return_fields = array_merge( $return_fields, $field['sub_fields'] );
-			} else {
-				$return_fields[] = $field;
-			}
-		}
-		return $return_fields;
-	}
 
 
 	/**
@@ -183,7 +165,7 @@ abstract class EditFeature extends Feature {
 	private function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
 		foreach ( $this->fields as $field_name => $field_object ) {
-
+error_log('save: '.$field_object->get_acf_field()['name']);
 			$field_object->update( $post_id, $is_quickedit );
 
 		}

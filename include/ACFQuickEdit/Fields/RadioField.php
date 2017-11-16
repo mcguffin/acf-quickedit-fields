@@ -70,7 +70,7 @@ class RadioField extends ChoiceField {
 	/**
 	 *	@inheritdoc
 	 */
-	public function update( $post_id, $is_quickedit = true ) {
+	public function update( $post_id ) {
 		$param_name = $this->acf_field['key'];
 
 		if ( isset ( $_REQUEST['acf'][ $param_name ] ) ) {

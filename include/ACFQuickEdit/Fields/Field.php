@@ -19,6 +19,16 @@ abstract class Field {
 	protected $acf_field;
 
 	/**
+	 *	@var array ACF field
+	 */
+	protected $acf_parent;
+
+	/**
+	 *	@var array ACFQuickEdit\Fields\Field
+	 */
+	protected $parent;
+
+	/**
 	 *	@var string value for the do-not-change checkbox in bulk edit
 	 */
 	protected $dont_change_value = '___do_not_change';
@@ -73,6 +83,7 @@ abstract class Field {
 			'message'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'tab'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'repeater'			=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'group'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'flexible_content'	=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 			'clone'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 		);
@@ -119,6 +130,14 @@ abstract class Field {
 		$this->core = Core\Core::instance();
 
 		$this->acf_field = $acf_field;
+
+		$parent_key	= '';
+
+		$parent_post = get_post( $this->acf_field['parent'] );
+
+		if ( 'acf-field' === $parent_post->post_type ) {
+			$this->parent = self::getFieldObject( get_field_object( $parent_post->post_name ) );
+		}
 	}
 
 	/**
@@ -129,14 +148,33 @@ abstract class Field {
 	}
 
 	/**
+	 *	@return array acf field
+	 */
+	public function get_parent() {
+		return $this->parent;
+	}
+
+	/**
 	 *	Render Column content
 	 *
 	 *	@param int|string $object_id
 	 *	@return string
 	 */
 	public function render_column( $object_id ) {
-
-		return get_field( $this->acf_field['key'], $object_id );
+		return $this->get_value( $object_id );
+// 		if ( isset( $this->parent ) ) {
+// 			$dummy_field = $this->acf_field + array();
+// 			$dummy_field['name'] = $this->parent->get_acf_field()['name'] . '_' . $dummy_field['name'];
+//
+// 			$value = acf_get_value( $object_id, $dummy_field );
+// 			$value = acf_format_value( $value, $object_id, $dummy_field );
+//
+// 			return $value;
+// //			return get_sub_field( $this->acf_field['key'] );
+// 		} else {
+// 			return get_field( $this->acf_field['key'], $object_id );
+//
+// 		}
 
 	}
 
@@ -151,29 +189,39 @@ abstract class Field {
 	/**
 	 *	Render Field Input
 	 *
-	 *	@param string $column
 	 *	@param string $post_type
 	 *	@param string $mode 'bulk' | 'quick'
+	 *	@param string $input_atts	array
 	 *
 	 *	@return null
 	 */
-	final public function render_quickedit_field( $post_type, $mode ) {
+	public function render_quickedit_field( $post_type, $mode, $input_atts = array() ) {
 
-		$input_atts = array(
+		if ( isset( $this->parent ) ) {
+			$input_name = sprintf( 'acf[%s][%s]', $this->parent->get_acf_field()['key'], $this->acf_field['key'] );
+		} else {
+			$input_name = sprintf( 'acf[%s]', $this->acf_field['key'] );
+		}
+
+		$input_atts = wp_parse_args( $input_atts, array(
 			'data-acf-field-key' => $this->acf_field['key'],
-			'name' => sprintf( 'acf[%s]', $this->acf_field['key'] ),
-		);
+			'name' => $input_name,
+		));
 		if ( $mode === 'bulk' ) {
 			$input_atts['disabled'] = 'disabled';
 		}
-
 
 		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $post_type ) ) {
 			return;
 		}
 
 		?>
-			<div class="acf-field inline-edit-col" data-key="<?php echo $this->acf_field['key'] ?>" data-field-type="<?php echo $this->acf_field['type'] ?>">
+			<div <?php echo acf_esc_attr( array(
+				'class'				=> 'acf-field inline-edit-col',
+				'data-key' 			=> $this->acf_field['key'],
+				'data-parent-key'	=> isset( $this->parent ) ? $this->parent->get_acf_field()['key'] : 'false',
+				'data-field-type'	=> $this->acf_field['type'],
+			) ) ?>>
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
 					<?php if ( $mode === 'bulk' ) { ?>
@@ -226,8 +274,27 @@ abstract class Field {
 	/**
 	 *	@return mixed value of acf field
 	 */
-	public function get_value( $post_id ) {
-		return get_field( $this->acf_field['key'], $post_id, false );
+	public function get_value( $object_id, $format_value = true ) {
+
+		$dummy_field = $this->acf_field + array();
+
+		if ( isset( $this->parent ) ) {
+
+			$dummy_field['name'] = $this->parent->get_acf_field()['name'] . '_' . $dummy_field['name'];
+
+		}
+
+		$value = acf_get_value( $object_id, $dummy_field );
+
+		if ( $format_value ) {
+
+			$value = acf_format_value( $value, $object_id, $dummy_field );
+
+		}
+
+		return $value;
+
+//		return get_field( $this->acf_field['key'], $post_id, false );
 	}
 
 	/**
@@ -238,12 +305,17 @@ abstract class Field {
 	 *
 	 *	@return null
 	 */
-	public function update( $post_id, $is_quickedit = true ) {
-		$param_name = $this->acf_field['key'];
+	public function update( $post_id ) {
+
+		if ( isset( $this->parent ) ) {
+			return;
+		}
 
 		if ( ! isset( $_REQUEST['acf'] ) ) {
 			return;
 		}
+
+		$param_name = $this->acf_field['key'];
 
 		if ( isset ( $_REQUEST['acf'][ $param_name ] ) ) {
 			$value = $_REQUEST['acf'][ $param_name ];
@@ -254,7 +326,6 @@ abstract class Field {
 		if ( in_array( $this->dont_change_value, (array) $value ) ) {
 			return;
 		}
-
 
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}

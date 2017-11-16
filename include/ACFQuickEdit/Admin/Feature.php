@@ -73,8 +73,19 @@ abstract class Feature extends Core\Singleton {
 	 *	@param string $key field Key
 	 *	@param array $field_object ACF Field
 	 */
-	protected function add_field( $key, $field_object ){
+	protected function add_field( $key, $field_object, $add_parent = false ){
 		$this->fields[ $key ] = $field_object;
+		// add parent
+		if ( ! $add_parent ) {
+			return;
+		}
+		if ( ! $field_parent = $field_object->get_parent() ) {
+			return;
+		}
+		$parent_key = $field_parent->get_acf_field()['key'];
+		if ( ! isset( $this->fields[$parent_key] ) ) {
+			$this->add_field( $parent_key, $field_parent );
+		}
 	}
 
 	/**
@@ -97,6 +108,25 @@ abstract class Feature extends Core\Singleton {
 				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_acf_settings' ) );
 			}
 		}
+	}
+	/**
+	 *	@param	array	$field_group	ACF Field Group
+	 *	@return	array
+	 */
+	protected function acf_get_fields( $field_group ) {
+		$acf_fields = acf_get_fields( $field_group );
+		$return_fields = array();
+
+		foreach ( $acf_fields as $field ) {
+//
+			if ( $field['type'] === 'group' ) {
+				$return_fields = array_merge( $return_fields, $field['sub_fields'] );
+			} else {
+				$return_fields[] = $field;
+			}
+		}
+		return $return_fields;
+
 	}
 
 	/**

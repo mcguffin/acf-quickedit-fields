@@ -1,4 +1,5 @@
 (function( $, exports ){
+
 	exports.acf_quickedit = qe = {
 		form:{},
 		field: {
@@ -18,7 +19,6 @@
 				});
 			}
 		},
-
 	};
 
 
@@ -43,12 +43,30 @@
 			this.loadValues();
 
 		},
-		loadedValues:function(values) {
-			var self = this;
-			_.each(values,function( val, key ){
-				self.fields[key].setValue( val );
+		getFieldsToLoad:function(){
+			var fields = [];
+			_.each( this.fields,function( field, key ) {
+				if ( field.parent_key ) {
+					fields.push( field.parent_key );
+				} else {
+					fields.push( field.key );
+				}
 			});
+			return fields;
+		},
+		loadedValues:function(values) {
+			this._setValues( values );
 			this.initValidation();
+		},
+		_setValues:function(values) {
+			var self = this;
+			_.each( values, function( val, key ){
+				if ( key in self.fields ) {
+					self.fields[key].setValue( val );
+				} else if( _.isObject( val ) ) {
+					self._setValues(val);
+				}
+			});
 		},
 		unload:function(e){
 			_.each(this.fields,function(field){
@@ -119,7 +137,7 @@
 				data:{
 					'action' : 'get_acf_post_meta',
 					'object_id' : this.options.object_id,
-					'acf_field_keys' : Object.keys(this.fields)
+					'acf_field_keys' : this.getFieldsToLoad(),
 				},
 				success:function(response){
 					self.loadedValues( response );
@@ -165,7 +183,7 @@
 				data:{
 					'action' : 'get_acf_post_meta',
 					'object_id' : post_ids,
-					'acf_field_keys' : Object.keys(this.fields)
+					'acf_field_keys' : this.getFieldsToLoad(),
 				},
 				success:function(response){
 					self.loadedValues( response );
@@ -189,6 +207,11 @@
 			var self = this;
 			Backbone.View.prototype.initialize.apply( this, arguments );
 			this.key = this.$el.attr('data-key');
+			this.parent_key = this.$el.attr('data-parent-key');
+
+			if( 'false' === this.parent_key ) {
+				this.parent_key = false;
+			}
 
 			if ( ! this.$input ) {
 				this.$input = this.$('input:not([data-is-do-not-change="true"])')

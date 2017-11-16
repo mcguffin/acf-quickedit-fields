@@ -11,7 +11,12 @@ class RelationshipField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+		/*
 		$field_value = get_field( $this->acf_field['key'], $object_id );
+		/*/
+		$field_value = $this->get_value( $object_id );
+		//*/
+
 		$output = '';
 		if ( is_a( $field_value, 'WP_Post' ) ) {
 			$output .= $this->get_post_object_link( $field_value->ID );
@@ -64,7 +69,7 @@ class RelationshipField extends Field {
 			$result .= $title;
 		}
 
-		if ( 'attachment' !== get_post_type( $post_id ) && 'private' === get_post_status( $post_id ) ) {	
+		if ( 'attachment' !== get_post_type( $post_id ) && 'private' === get_post_status( $post_id ) ) {
 			$result .= ' &mdash; ' . __('Private', 'acf-quick-edit-fields' );
 		}
 		return $result;

@@ -11,7 +11,11 @@ class ColorPickerField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+		/*
 		$value = get_field( $this->acf_field['key'], $object_id );
+		/*/
+		$value = $this->get_value( $object_id );
+		//*/
 		$indicator_class = 'color-indicator';
 		if ( ! $value ) {
 			$indicator_class .= ' no-value';

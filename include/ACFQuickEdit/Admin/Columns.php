@@ -60,7 +60,8 @@ class Columns extends Feature {
 		}
 
 		foreach ( $field_groups as $field_group ) {
-			$fields = acf_get_fields( $field_group );
+
+			$fields = $this->acf_get_fields( $field_group );
 
 			if ( ! $fields ) {
 				continue;
@@ -77,7 +78,7 @@ class Columns extends Feature {
 
 				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
-					$this->add_field( $field['name'], $field_object );
+					$this->add_field( $field['name'], $field_object, false );
 				}
 			}
 		}

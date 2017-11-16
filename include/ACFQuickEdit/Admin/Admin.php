@@ -183,9 +183,9 @@ class Admin extends Core\Singleton {
 							if ( ! isset( $result[ $key ] ) ) {
 								$result[ $key ] = array();
 							}
-							$result[ $key ][] = $field_object->get_value( $object_id );
+							$result[ $key ][] = $field_object->get_value( $object_id, false );
 						} else {
-							$result[ $key ] = $field_object->get_value( $object_id );
+							$result[ $key ] = $field_object->get_value( $object_id, false );
 						}
 					}
 				}
