@@ -15,6 +15,29 @@ abstract class AutoUpdate extends Core\Singleton {
 
 		add_filter( 'upgrader_source_selection', array( $this, 'source_selection' ), 10, 4 );
 
+		add_action( 'upgrader_process_complete', array( $this, 'upgrade_completed' ), 10, 2 );
+
+	}
+
+	/**
+	 *	@action upgrader_process_complete
+	 */
+	public function upgrade_completed( $wp_upgrader, $hook_extra ) {
+
+		$plugin = plugin_basename( ACFQUICKEDIT_FILE );
+
+		if ( $hook_extra['action'] === 'update' && $hook_extra['type'] === 'plugin' && in_array( $plugin, $hook_extra['plugins'] ) ) {
+
+			$plugin_info = get_plugin_data( ACFQUICKEDIT_FILE );
+
+			$old_version = get_option( 'acf_quick_edit_version' );
+			$new_version = $plugin_info['Version'];
+
+			do_action( 'acf_quick_edit_upgraded', $new_version, $old_version );
+
+			update_option('acf_quick_edit_version', $plugin_info['Version'] );
+
+		}
 	}
 
 	/**
@@ -71,7 +94,7 @@ abstract class AutoUpdate extends Core\Singleton {
 			$slug			= basename( ACFQUICKEDIT_DIRECTORY );
 			$plugin_info	= get_plugin_data( ACFQUICKEDIT_FILE );
 
-			if ( version_compare( $release_info['version'], $plugin_info['Version'] , '>' ) ) {
+			if ( version_compare( $release_info['version'], $plugin_info['Version'], '>' ) ) {
 				$transient->response[ $plugin ] = (object) array(
 					'id'			=> $release_info['id'],
 					'slug'			=> $slug,
