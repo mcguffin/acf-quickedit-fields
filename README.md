@@ -48,5 +48,6 @@ ToDo:
  - [x] Add plugin version number to enqueue script
  - [x] Allow QuickEdit for grouped fields
  - [?] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
+ - [ ] Bug: Password field always saves empty value
  - [ ] Radio/Checkbox with Other: load other value(s) not shown after save (need to reload)
  - [ ] Support Taxonomy QE / BE
