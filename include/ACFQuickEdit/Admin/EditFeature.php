@@ -16,6 +16,9 @@ abstract class EditFeature extends Feature {
 	 */
 	public function init_fields() {
 
+		$core = Core\Core::instance();
+
+
 		$field_groups = $this->get_available_field_groups();
 
 		if ( is_null( $field_groups ) ) {
@@ -39,15 +42,17 @@ abstract class EditFeature extends Feature {
 		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACFQUICKEDIT_FILE ) );
 
 		if ( $content_type == 'taxonomy' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), null, true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
 		} else if ( $content_type == 'post' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), null, true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
 		}
 
 		wp_enqueue_media();
 
 		foreach ( $field_groups as $field_group ) {
 			$fields = acf_get_fields( $field_group );
+
+			$fields = $this->add_grouped_fields( $fields );
 
 			if ( ! $fields ) {
 				continue;
@@ -115,6 +120,24 @@ abstract class EditFeature extends Feature {
 
 		}
 
+	}
+
+	/**
+	 *	Resolve sub fields from group field.
+	 *
+	 *	@param	array	$fields;
+	 *	@return	array
+	 */
+	private function add_grouped_fields( $fields ) {
+		$return_fields = array();
+		foreach ( $fields as $field ) {
+			if ( $field['type'] === 'group' ) {
+				$return_fields = array_merge( $return_fields, $field['sub_fields'] );
+			} else {
+				$return_fields[] = $field;
+			}
+		}
+		return $return_fields;
 	}
 
 

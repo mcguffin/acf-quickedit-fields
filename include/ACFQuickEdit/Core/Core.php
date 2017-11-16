@@ -21,6 +21,20 @@ class Core extends Singleton {
 	}
 
 	/**
+	 *	@return string
+	 */
+	public function get_version() {
+		$version = null;
+		if ( ! $version = get_option('acf_quickedit_version') ) {
+			if ( function_exists('get_plugin_data') ) {
+				$plugin_data = get_plugin_data( ACFQUICKEDIT_FILE );
+				$version = $plugin_data['Version'];
+			}
+		}
+		return $version;
+	}
+
+	/**
 	 *	Load frontend styles and scripts
 	 *
 	 *	@action wp_enqueue_scripts
@@ -30,7 +44,7 @@ class Core extends Singleton {
 
 	/**
 	 *	Load text domain
-	 * 
+	 *
 	 *  @action plugins_loaded
 	 */
 	public function init_compat() {
@@ -41,7 +55,7 @@ class Core extends Singleton {
 
 	/**
 	 *	Load text domain
-	 * 
+	 *
 	 *  @action plugins_loaded
 	 */
 	public function load_textdomain() {
@@ -50,7 +64,7 @@ class Core extends Singleton {
 
 	/**
 	 *	Init hook.
-	 * 
+	 *
 	 *  @action init
 	 */
 	function init() {

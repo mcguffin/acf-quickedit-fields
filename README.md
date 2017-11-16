@@ -44,6 +44,8 @@ ToDo:
  - [x] BE: new fields js
  - [x] JS inlineEditTax
  - [x] Bug: validation: do not validate do-not-change
- - [ ] Allow QuickEdit for grouped fields
- - [ ] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
+ - [x] Add plugin version number to enqueue script
+ - [x] Allow QuickEdit for grouped fields
+ - [?] Bug: QE -> save -> reload|navigate: Browser warning about unsaved changes.
  - [ ] Radio/Checkbox with Other: load other value(s) not shown after save (need to reload)
+ - [ ] Support Taxonomy QE / BE
