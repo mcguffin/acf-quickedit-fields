@@ -133,10 +133,8 @@ abstract class Field {
 
 		$parent_key	= '';
 
-		$parent_post = get_post( $this->acf_field['parent'] );
-
-		if ( 'acf-field' === $parent_post->post_type ) {
-			$this->parent = self::getFieldObject( get_field_object( $parent_post->post_name ) );
+		if ( 'field_' === substr( $this->acf_field['parent'], 0, 6 ) ) {
+			$this->parent = self::getFieldObject( get_field_object( $this->acf_field['parent'] ) );
 		}
 	}
 
@@ -161,20 +159,8 @@ abstract class Field {
 	 *	@return string
 	 */
 	public function render_column( $object_id ) {
+
 		return $this->get_value( $object_id );
-// 		if ( isset( $this->parent ) ) {
-// 			$dummy_field = $this->acf_field + array();
-// 			$dummy_field['name'] = $this->parent->get_acf_field()['name'] . '_' . $dummy_field['name'];
-//
-// 			$value = acf_get_value( $object_id, $dummy_field );
-// 			$value = acf_format_value( $value, $object_id, $dummy_field );
-//
-// 			return $value;
-// //			return get_sub_field( $this->acf_field['key'] );
-// 		} else {
-// 			return get_field( $this->acf_field['key'], $object_id );
-//
-// 		}
 
 	}
 
@@ -197,16 +183,11 @@ abstract class Field {
 	 */
 	public function render_quickedit_field( $post_type, $mode, $input_atts = array() ) {
 
-		if ( isset( $this->parent ) ) {
-			$input_name = sprintf( 'acf[%s][%s]', $this->parent->get_acf_field()['key'], $this->acf_field['key'] );
-		} else {
-			$input_name = sprintf( 'acf[%s]', $this->acf_field['key'] );
-		}
-
 		$input_atts = wp_parse_args( $input_atts, array(
-			'data-acf-field-key' => $this->acf_field['key'],
-			'name' => $input_name,
+			'data-acf-field-key'	=> $this->acf_field['key'],
+			'name' 					=> $this->get_input_name(),
 		));
+
 		if ( $mode === 'bulk' ) {
 			$input_atts['disabled'] = 'disabled';
 		}
@@ -264,10 +245,22 @@ abstract class Field {
 			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'					=> 'text',
 			'data-acf-field-key'	=> $this->acf_field['key'],
-			'name'					=> sprintf( 'acf[%s]', $this->acf_field['key'] ),
+			'name'					=> $this->get_input_name(),
 		);
 
 		return '<input '. acf_esc_attr( $input_atts ) .' />';
+	}
+
+	/**
+	 *	@return	string
+	 */
+	protected function get_input_name() {
+		if ( isset( $this->parent ) ) {
+			$input_name = sprintf( 'acf[%s][%s]', $this->parent->get_acf_field()['key'], $this->acf_field['key'] );
+		} else {
+			$input_name = sprintf( 'acf[%s]', $this->acf_field['key'] );
+		}
+		return $input_name;
 	}
 
 

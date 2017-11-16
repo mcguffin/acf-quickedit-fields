@@ -165,7 +165,7 @@ abstract class EditFeature extends Feature {
 	private function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
 
 		foreach ( $this->fields as $field_name => $field_object ) {
-error_log('save: '.$field_object->get_acf_field()['name']);
+
 			$field_object->update( $post_id, $is_quickedit );
 
 		}
