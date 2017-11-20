@@ -50,7 +50,7 @@ class DateTimePickerField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function get_value( $post_id ) {
+	public function get_value( $post_id, $format_value = true ) {
 		/*
 		return acf_get_metadata( $post_id, $this->acf_field['name'] );
 		/*/
