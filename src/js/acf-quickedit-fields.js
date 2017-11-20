@@ -112,9 +112,6 @@
 			this.$input		= this.$( '[type="text"]' );
 			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
-			if( $('body > #ui-datepicker-div').length > 0 ) {
-				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
-			}
 			this.datePickerArgs = {
 					dateFormat		: this.$('[data-date_format]').data('date_format'),
 					altFormat		: 'yymmdd',
@@ -130,6 +127,9 @@
 					self.$hidden.val('');
 				}
 			});
+			if( $('body > #ui-datepicker-div').length > 0 ) {
+				$('#ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
+			}
 			return this;
 		},
 		setValue:function(value) {
@@ -157,9 +157,6 @@
 			this.$input		= this.$( '[type="text"]' );
 			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
-			if( $('body > #ui-datepicker-div').length > 0 ) {
-				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
-			}
 			this.datePickerArgs = {
 					altField			: this.$hidden,
 					dateFormat			: this.$('[data-date_format]').data('date_format'),
@@ -181,6 +178,9 @@
 					self.$hidden.val('');
 				}
 			});
+			if( $('body > #ui-datepicker-div').length > 0 ) {
+				$('#ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
+			}
 			return this;
 		},
 		setValue:function(value) {
@@ -225,9 +225,6 @@
 			this.$input		= this.$( '[type="text"]' );
 			this.$hidden	= this.$( '[type="hidden"]' );
 			qe.field.View.prototype.initialize.apply(this,arguments);
-			if( $('body > #ui-datepicker-div').length > 0 ) {
-				$('body > #ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
-			}
 			this.datePickerArgs = {
  					timeFormat			: this.$('[data-time_format]').data('time_format'),
  					altTimeFormat		: 'HH:mm:ss',
@@ -243,6 +240,9 @@
  					self.$hidden.val('');
  				}
  			});
+			if( $('body > #ui-datepicker-div').length > 0 ) {
+				$('#ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
+			}
 			return this;
 		},
  		setValue:function(value) {

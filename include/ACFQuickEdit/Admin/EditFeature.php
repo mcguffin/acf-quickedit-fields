@@ -81,7 +81,7 @@ abstract class EditFeature extends Feature {
 						$this->scripts[]	=  'jquery-ui-datepicker';
 						$this->scripts[]	=  'acf-timepicker';
 
-						$this->styles[] 	=  'jquery-ui-datepicker';
+						$this->styles[] 	=  'acf-datepicker';
 						$this->styles[]		=  'acf-timepicker';
 					}
 					if ( $field['type'] === 'color_picker' ) {
