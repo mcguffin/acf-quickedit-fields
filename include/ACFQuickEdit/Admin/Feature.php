@@ -114,16 +114,16 @@ abstract class Feature extends Core\Singleton {
 	 *	@return	array
 	 */
 	protected function acf_get_fields( $field_group ) {
-		$acf_fields = acf_get_fields( $field_group );
 		$return_fields = array();
-
-		foreach ( $acf_fields as $field ) {
-//
-			if ( $field['type'] === 'group' ) {
-				$return_fields = array_merge( $return_fields, $field['sub_fields'] );
-			} else {
-				$return_fields[] = $field;
+		if ( $acf_fields = acf_get_fields( $field_group ) ) {
+			foreach ( $acf_fields as $field ) {
+				if ( $field['type'] === 'group' ) {
+					$return_fields = array_merge( $return_fields, $field['sub_fields'] );
+				} else {
+					$return_fields[] = $field;
+				}
 			}
+
 		}
 		return $return_fields;
 

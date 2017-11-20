@@ -1,0 +1,17 @@
+{
+  "modules": {
+    "admin": {},
+    "ajax": {},
+    "autoupdate": {},
+    "compat": {},
+    "git": {},
+    "gulp": {}
+  },
+  "plugin_author": "J\u00f6rn Lund",
+  "plugin_author_uri": "https://github.com/mcguffin/",
+  "plugin_name": "ACF QuickEdit Fields",
+  "plugin_namespace": "ACFQuickEdit",
+  "plugin_slug": "acf_quick_edit",
+  "this_year": 2017,
+  "wp_plugin_slug": "acf-quick-edit-fields"
+}

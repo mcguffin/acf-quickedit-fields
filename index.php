@@ -18,15 +18,15 @@ namespace ACFQuickEdit;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
-define( 'ACFQUICKEDIT_FILE', __FILE__ );
-define( 'ACFQUICKEDIT_DIRECTORY', plugin_dir_path(__FILE__) );
+define( 'ACF_QUICK_EDIT_FILE', __FILE__ );
+define( 'ACF_QUICK_EDIT_DIRECTORY', plugin_dir_path(__FILE__) );
 
-require_once ACFQUICKEDIT_DIRECTORY . 'include/vendor/autoload.php';
+require_once ACF_QUICK_EDIT_DIRECTORY . 'include/autoload.php';
 
 if ( is_admin() ) {
 
 	// don't WP-Update actual repos!
-	if ( ! file_exists( ACFQUICKEDIT_DIRECTORY . '/.git/' ) ) {
+	if ( ! file_exists( ACF_QUICK_EDIT_DIRECTORY . '/.git/' ) ) {
 		AutoUpdate\AutoUpdateGithub::instance();
 	}
 

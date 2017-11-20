@@ -139,8 +139,8 @@ class Admin extends Core\Singleton {
 	function enqueue_post_assets() {
 		global $typenow;
 		if ( 'acf-field-group' === $typenow ) {
-			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.min.js', ACFQUICKEDIT_FILE ), array( 'acf-field-group' ) );
-			wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACFQUICKEDIT_FILE ), array( 'acf-field-group' ) );
+			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.min.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
+			wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
 		}
 	}
 

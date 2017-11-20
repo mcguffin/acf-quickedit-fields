@@ -40,12 +40,12 @@ abstract class EditFeature extends Feature {
 		wp_register_style('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
 
 
-		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACFQUICKEDIT_FILE ) );
+		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
 
 		if ( $content_type == 'taxonomy' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACF_QUICK_EDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
 		} else if ( $content_type == 'post' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACFQUICKEDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
+			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACF_QUICK_EDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
 		}
 
 		wp_enqueue_media();

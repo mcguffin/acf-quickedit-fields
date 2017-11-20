@@ -7,7 +7,7 @@ use ACFQuickEdit\Compat;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
-class Core extends Singleton {
+class Core extends Plugin {
 
 	private $post_field_prefix = 'acf_qed_';
 
@@ -27,7 +27,7 @@ class Core extends Singleton {
 		$version = null;
 		if ( ! $version = get_option('acf_quickedit_version') ) {
 			if ( function_exists('get_plugin_data') ) {
-				$plugin_data = get_plugin_data( ACFQUICKEDIT_FILE );
+				$plugin_data = get_plugin_data( ACF_QUICK_EDIT_FILE );
 				$version = $plugin_data['Version'];
 			}
 		}
@@ -59,7 +59,7 @@ class Core extends Singleton {
 	 *  @action plugins_loaded
 	 */
 	public function load_textdomain() {
-		load_plugin_textdomain( 'acf-quick-edit-fields' , false, ACFQUICKEDIT_DIRECTORY . '/languages/' );
+		load_plugin_textdomain( 'acf-quick-edit-fields' , false, ACF_QUICK_EDIT_DIRECTORY . '/languages/' );
 	}
 
 	/**
