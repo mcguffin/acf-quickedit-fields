@@ -11,7 +11,18 @@ if ( ! defined( 'ABSPATH' ) )
 class Columns extends Feature {
 
 	/**
-	 *	@return string
+	 *	@inheritdoc
+	 */
+	protected function __construct() {
+
+		add_action('acf/render_field/type=column_setting', array( $this, 'render_column_setting' ) );
+
+		parent::__construct();
+
+	}
+
+	/**
+	 *	@inheritdoc
 	 */
 	public function get_type() {
 		return 'column';
@@ -23,15 +34,72 @@ class Columns extends Feature {
 	function render_acf_settings( $field ) {
 		// show column: todo: allow sortable
 		acf_render_field_setting( $field, array(
+			'label'			=> __('Column View','acf-quick-edit-fields'),
+			'instructions'	=> '',
+			'type'			=> 'column_setting',
+			'name'			=> 'column',
+			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
+			'width'			=> 50,
+			'_valid'		=> true,
+			'field'			=> $field,
+		));
+		// acf_render_field_setting( $field, array(
+		// 	'label'			=> __('Show Column','acf-quick-edit-fields'),
+		// 	'instructions'	=> '',
+		// 	'type'			=> 'true_false',
+		// 	'name'			=> 'show_column',
+		// 	'message'		=> __("Show column in list table", 'acf-quick-edit-fields'),
+		// ));
+        //
+		// acf_render_field_setting( $field, array(
+		// 	'label'			=> __('Column Weight','acf-quick-edit-fields'),
+		// 	'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
+		// 	'type'			=> 'number',
+		// 	'name'			=> 'show_column_weight',
+		// 	'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
+		// 	'default_value'	=> '1000',
+		// 	'min'			=> '-10000',
+		// 	'max'			=> '10000',
+		// 	'step'			=> '1',
+		// 	'placeholder'	=> '',
+		// ));
+	}
+	/**
+	 *	@action acf/render_field/type=column_setting
+	 */
+	public function render_column_setting( $field ) {
+
+		$field_object = Fields\Field::getFieldObject( $field['field'] );
+
+		echo '<div style="width:50%;float:left;">';
+
+		acf_render_field_wrap( array(
 			'label'			=> __('Show Column','acf-quick-edit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'true_false',
 			'name'			=> 'show_column',
-			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
-			'width'			=> 50,
-		));
+			'message'		=> __("Show column in list tables", 'acf-quick-edit-fields'),
+			'prefix'		=> $field['prefix'],
+			'value'			=> $field['field']['show_column'],
+		), 'div', 'label' );
 
-		acf_render_field_setting( $field, array(
+		if ( $field_object->is_sortable() ) {
+
+			acf_render_field_wrap( array(
+				'label'			=> __('Sortable Column','acf-quick-edit-fields'),
+				'instructions'	=> '',
+				'type'			=> 'true_false',
+				'name'			=> 'show_column_sortable',
+				'message'		=> __("Make this column sortable", 'acf-quick-edit-fields'),
+				'prefix'		=> $field['prefix'],
+				'value'			=> $field['field']['show_column_sortable'],
+			), 'div', 'label' );
+
+		}
+
+		echo '</div>';
+
+		acf_render_field_wrap( array(
 			'label'			=> __('Column Weight','acf-quick-edit-fields'),
 			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
 			'type'			=> 'number',
@@ -42,10 +110,19 @@ class Columns extends Feature {
 			'max'			=> '10000',
 			'step'			=> '1',
 			'placeholder'	=> '',
-			'width'			=> '50',
-		));
+			'wrapper'		=> array(
+				'width'			=> 50,
+			),
+			'prefix'		=> $field['prefix'],
+			'value'			=> $field['field']['show_column_weight'],
+		), 'div', 'label' );
 	}
 
+/*
+error_log(var_export($field,true));
+error_log(var_export($el,true));
+error_log(var_export($el2,true));
+*/
 	/**
 	 *	@inheritdoc
 	 */
@@ -74,7 +151,7 @@ class Columns extends Feature {
 				}
 
 				$field_object = Fields\Field::getFieldObject( $field );
-				$is_sortable |= $this->get_field_sortable( $field_object ) !== false;
+				$is_sortable |= $this->get_field_sorted( $field_object ) !== false;
 
 				// register column display
 				if ( isset($field['show_column']) && $field['show_column'] ) {
@@ -261,12 +338,14 @@ class Columns extends Feature {
 	}
 
 	/**
+	 *	Whether a field supports sorting
+	 *
 	 *	@param ACFQuickEditFields\Fields\Field	$field_object
 	 *	@return bool|string
 	 */
 	private function get_field_sortable( $field_object ) {
-		$acf_field	= $field_object->get_acf_field();
-		$field_name	= $acf_field['name'];
+
+		return $field_object->is_sortable();
 
 		/**
 		 * Filters whether and how a column is sortable
@@ -280,6 +359,28 @@ class Columns extends Feature {
 	}
 
 	/**
+	 *	Whether a field is configured to be sorted
+	 *
+	 *	@param ACFQuickEditFields\Fields\Field	$field_object
+	 *	@return bool|string
+	 */
+	 private function get_field_sorted( $field_object ) {
+ 		$acf_field	= $field_object->get_acf_field();
+ 		$field_name	= $acf_field['name'];
+		$sorted = $field_object->is_sortable() && boolval( $acf_field['show_column_sortable'] );
+
+ 		/**
+ 		 * Filters whether and how a column is sortable
+ 		 * Return boolean or meta_type like `numeric`, `decimal(10,2)`, `datetime`, ...
+ 		 *
+ 		 * @since 2.1.1
+ 		 *
+ 		 * @param bool|string	$sortable
+ 		 */
+ 		return apply_filters( "acf_quick_edit_sortable_column_{$field_name}", $sorted );
+ 	}
+
+	/**
 	 * @filter manage_posts_sortable_columns
 	 * @filter manage_media_sortable_columns
 	 * @filter manage_{$post_type}_posts_sortable_columns
@@ -289,7 +390,7 @@ class Columns extends Feature {
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
 
-			if ( $sortable = $this->get_field_sortable( $field_object ) ) {
+			if ( $sortable = $this->get_field_sorted( $field_object ) ) {
 
 				$order = isset( $_GET['order'] ) ? strtolower($_GET['order']) === 'asc' : false;
 
