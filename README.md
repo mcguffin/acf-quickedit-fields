@@ -52,9 +52,7 @@ Install npm and run gulp
 
 ToDo / Known Issues:
 -----
- - [ ] Bug in Sortable Columns: Rows are not shown if the ACF value is not set (meta not present).
+ - [ ] Bug in Sortable Columns: Rows are not shown if the ACF value is not set (aka. postmeta not present).
  - [ ] Bug: Password field always saves empty value
  - [ ] Radio/Checkbox with Other: other value(s) not shown after save (need to reload)
  - [ ] Support Taxonomy QE / BE
- - [ ] Make sortability optional
- - [x] UI Bug: WP's tags are displayed inside group fieldset on Bulk edit
