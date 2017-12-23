@@ -69,7 +69,7 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action admin_notices
 	 */
-	function print_acf_free_notice() {
+	public function print_acf_free_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php
@@ -90,7 +90,7 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action admin_init
 	 */
-	function admin_init() {
+	public function admin_init() {
 
 		$this->columns->init_acf_settings();
 		$this->quickedit->init_acf_settings();
@@ -106,7 +106,7 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action 'load-edit.php'
 	 */
-	function enqueue_edit_assets() {
+	public function enqueue_edit_assets() {
 
 		acf_enqueue_scripts();
 
@@ -136,7 +136,7 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action 'load-post.php'
 	 */
-	function enqueue_post_assets() {
+	public function enqueue_post_assets() {
 		global $typenow;
 		if ( 'acf-field-group' === $typenow ) {
 			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.min.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
@@ -147,13 +147,14 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
-	function ajax_get_acf_post_meta() {
+	public function ajax_get_acf_post_meta() {
 
 		header('Content-Type: application/json');
 
 		if ( isset( $_REQUEST['object_id'] , $_REQUEST['acf_field_keys'] ) ) {
 
 			$result = array();
+			$result_denied = array( 'success' => false, 'message' => __( 'Insufficient Permission', 'acf-quick-edit-fields') );
 
 			$object_ids = (array) $_REQUEST['object_id'];
 
@@ -162,6 +163,21 @@ class Admin extends Core\Singleton {
 			$field_keys = array_unique( $_REQUEST['acf_field_keys'] );
 
 			foreach ( $object_ids as $object_id ) {
+
+				// permission check
+				if ( is_numeric( $object_id ) && ! current_user_can( 'edit_post', $object_id ) ) {
+					// posts
+					$result = $result_denied;
+					break;
+
+				} else if ( ! is_numeric( $object_id ) && preg_match('/^([\w\d-_]+)_(\d+)$/', $object_id, $matches ) ) {
+					// terms
+					list( $obj_id, $taxonomy, $term_id ) = $matches;
+					if ( $taxonomy === 'user' || ! taxonomy_exists( $taxonomy ) || ! current_user_can( 'edit_term', $term_id ) ) {
+						$result = $result_denied;
+						break;
+					}
+				}
 
 				if ( is_numeric( $object_id ) ) {
 					if ( ! current_user_can( 'edit_post', $object_id ) ) {
