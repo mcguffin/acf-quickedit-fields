@@ -2,7 +2,7 @@
 
 	acf.add_action('add_field',function( $el ) {
 
-		// remove quickedit options on repeater/flexible_contetn sub fields
+		// remove quickedit options on repeater/flexible_content sub fields
 
 		if ( $el.closest('[data-type="repeater"],[data-type="flexible_content"]').length ) {
 

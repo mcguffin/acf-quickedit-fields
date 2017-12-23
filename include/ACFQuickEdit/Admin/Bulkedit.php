@@ -15,7 +15,7 @@ class Bulkedit extends EditFeature {
 	 */
 	private $did_render = false;
 
-	
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -57,7 +57,7 @@ class Bulkedit extends EditFeature {
 		parent::init_fields();
 
 		if ( $this->is_active() ) {
-			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 10, 2 );
+			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 200, 2 );
 		}
 	}
 
@@ -72,6 +72,7 @@ class Bulkedit extends EditFeature {
 
 		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
 		foreach ( $this->field_groups as $field_group ) {
+			echo '<div><!-- BEGIN ACF Quick Edit Fields - Bulk -->';
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
 			printf( '<input type="hidden" name="nonce" value="%s" />', wp_create_nonce( 'acf_nonce' ) );
@@ -80,6 +81,7 @@ class Bulkedit extends EditFeature {
 				$sub_field_object->render_quickedit_field( $post_type, 'bulk' );
 			}
 			echo '</fieldset>';
+			echo '<!-- END ACF Quick Edit Fields - Bulk --></div>';
 		}
 
 		$this->did_render = true;
