@@ -84,6 +84,8 @@
 						self.fields[key].setError( err.message );
 					}
 				});
+			} else {
+				acf.unload.off();
 			}
 			return json;
 		},
@@ -125,6 +127,7 @@
 				// stop all other click events on this input
 				return false;
 			});
+
 			// move our events handler to front
 			$._data($button[0],'events').click.reverse()
 		}
