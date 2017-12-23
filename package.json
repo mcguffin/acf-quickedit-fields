@@ -21,7 +21,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.2.2",
     "gulp-requirejs": "^1.0.0",
-    "gulp-sass": "^3.0.0",
+    "gulp-sass": "*",
     "gulp-sourcemaps": "^1.9.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.8"
