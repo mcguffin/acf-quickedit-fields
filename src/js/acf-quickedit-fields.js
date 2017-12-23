@@ -132,6 +132,10 @@
 			}
 			return this;
 		},
+		setEditable:function(editable){
+			qe.field.View.prototype.setEditable.apply(this,arguments);
+			this.$hidden.prop( 'disabled', ! editable );
+		},
 		setValue:function(value) {
 			var date;
 
@@ -182,6 +186,10 @@
 				$('#ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
 			return this;
+		},
+		setEditable:function(editable){
+			qe.field.View.prototype.setEditable.apply(this,arguments);
+			this.$hidden.prop( 'disabled', ! editable );
 		},
 		setValue:function(value) {
 			var date;
@@ -244,6 +252,10 @@
 				$('#ui-datepicker-div').wrap('<div class="acf-ui-datepicker" />');
 			}
 			return this;
+		},
+		setEditable:function(editable){
+			qe.field.View.prototype.setEditable.apply(this,arguments);
+			this.$hidden.prop( 'disabled', ! editable );
 		},
  		setValue:function(value) {
 			var time;
