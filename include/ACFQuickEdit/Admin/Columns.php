@@ -40,30 +40,11 @@ class Columns extends Feature {
 			'name'			=> 'column',
 			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
 			'width'			=> 50,
-			'_valid'		=> true,
 			'field'			=> $field,
+			'_valid'		=> true, // skip acf field validation
 		));
-		// acf_render_field_setting( $field, array(
-		// 	'label'			=> __('Show Column','acf-quick-edit-fields'),
-		// 	'instructions'	=> '',
-		// 	'type'			=> 'true_false',
-		// 	'name'			=> 'show_column',
-		// 	'message'		=> __("Show column in list table", 'acf-quick-edit-fields'),
-		// ));
-        //
-		// acf_render_field_setting( $field, array(
-		// 	'label'			=> __('Column Weight','acf-quick-edit-fields'),
-		// 	'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
-		// 	'type'			=> 'number',
-		// 	'name'			=> 'show_column_weight',
-		// 	'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
-		// 	'default_value'	=> '1000',
-		// 	'min'			=> '-10000',
-		// 	'max'			=> '10000',
-		// 	'step'			=> '1',
-		// 	'placeholder'	=> '',
-		// ));
 	}
+
 	/**
 	 *	@action acf/render_field/type=column_setting
 	 */
@@ -99,7 +80,7 @@ class Columns extends Feature {
 
 		echo '</div>';
 
-		acf_render_field_wrap( array(
+		$weight_field = array(
 			'label'			=> __('Column Weight','acf-quick-edit-fields'),
 			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
 			'type'			=> 'number',
@@ -114,8 +95,19 @@ class Columns extends Feature {
 				'width'			=> 50,
 			),
 			'prefix'		=> $field['prefix'],
-			'value'			=> $field['field']['show_column_weight'],
-		), 'div', 'label' );
+		);
+
+		if ( isset( $field['field']['show_column_weight'] ) ) {
+
+			$weight_field['value'] = $field['field']['show_column_weight'];
+
+		} else {
+
+			$weight_field['value'] = $weight_field['default_value'];
+
+		}
+
+		acf_render_field_wrap( $weight_field, 'div', 'label' );
 	}
 
 /*
