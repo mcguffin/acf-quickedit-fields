@@ -2,7 +2,7 @@
 Contributors: ACF Quick Edit Fields
 Donate link:
 Tags: image, crop, focus point
-Requires at least: 3.8
+Requires at least: 4.7
 Tested up to: 4.9.1
 Requires PHP: 5.6
 Stable tag: trunk
