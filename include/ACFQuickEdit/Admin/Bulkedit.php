@@ -44,7 +44,7 @@ class Bulkedit extends EditFeature {
 	 */
 	public function is_enabled_for_field( $field ) {
 
-		return isset($field['allow_quickedit']) && $field['allow_quickedit'];
+		return isset($field['allow_bulkedit']) && $field['allow_bulkedit'];
 
 	}
 
