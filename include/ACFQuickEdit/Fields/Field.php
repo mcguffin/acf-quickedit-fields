@@ -107,6 +107,13 @@ abstract class Field {
 		if ( ! $acf_field || is_null($acf_field) ) {
 			return;
 		}
+		$acf_field = wp_parse_args( $acf_field, array(
+			'allow_bulkedit'		=> false,
+			'allow_quickedit'		=> false,
+			'show_column'			=> false,
+			'show_column_weight'	=> 1000,
+			'show_column_sortable'	=> false,
+		));
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {
 			$field_class = explode( '_', $acf_field['type'] );
 			$field_class = array_map( 'ucfirst', $field_class );
