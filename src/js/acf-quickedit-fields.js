@@ -281,7 +281,12 @@
  	qe.field.add_type( {
 		type:'color_picker',
 		initialize:function() {
-			this.$input = this.$('[type="text"]').first().wpColorPicker();
+			var args = acf.apply_filters('color_picker_args', {
+				defaultColor: false,
+				palettes: true,
+				hide: true,
+			}, this.$el );
+			this.$input = this.$('[type="text"]').first().wpColorPicker( args );
 			qe.field.View.prototype.initialize.apply(this,arguments);
 		},
 		setValue:function( value ) {
