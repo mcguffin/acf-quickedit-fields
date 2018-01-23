@@ -27,12 +27,27 @@ class PostObjectField extends RelationshipField {
 		if ( ! $value ) {
 			return '';
 		}
-		$post = get_post( $value );
-		if ( current_user_can( 'edit_post', $value ) ) {
-			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $value ), $post->post_title );
+
+		$output	= '';
+		$output .= '<ol>';
+		foreach ( (array) $value as $post_id ) {
+			$post = get_post( $post_id );
+			$output .= sprintf( '<li>%s</li>', $this->get_post_link( $post ) );
 		}
-		return sprintf('<a href="%s">%s</a>', get_permalink( $value ), $post->post_title );
+		$output .= '</ol>';
+		return $output;
+	}
+	/**
+	 *
+	 */
+	private function get_post_link( $post ) {
+		if ( current_user_can( 'edit_post', $post->ID ) ) {
+			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), $post->post_title );
+		} else if ( ( $pto = get_post_type_object( $post->post_type ) ) && $pto->public ) {
+			return sprintf('<a href="%s">%s</a>', get_permalink( $post->ID ), $post->post_title );
+		} else {
+			return $post->post_title;
+		}
 
 	}
-
 }
