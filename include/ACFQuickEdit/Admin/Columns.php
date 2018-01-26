@@ -31,7 +31,7 @@ class Columns extends Feature {
 	/**
 	 *	@inheritdoc
 	 */
-	function render_acf_settings( $field ) {
+	public function render_acf_settings( $field ) {
 		// show column: todo: allow sortable
 		acf_render_field_setting( $field, array(
 			'label'			=> __('Column View','acf-quick-edit-fields'),
@@ -41,7 +41,7 @@ class Columns extends Feature {
 			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
 			'width'			=> 50,
 			'field'			=> $field,
-			'_valid'		=> true, // skip acf field validation
+//			'_valid'		=> true, // skip acf field validation
 		));
 	}
 
@@ -51,6 +51,12 @@ class Columns extends Feature {
 	public function render_column_setting( $field ) {
 
 		$field_object = Fields\Field::getFieldObject( $field['field'] );
+
+		// parse default values
+		$field['field'] = wp_parse_args( $field['field'], array(
+			'show_column'	=> false,
+			'show_column_sortable'	=> false,
+		) );
 
 		echo '<div style="width:50%;float:left;">';
 

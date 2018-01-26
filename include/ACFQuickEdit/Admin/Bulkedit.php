@@ -26,7 +26,7 @@ class Bulkedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
-	function render_acf_settings( $field ) {
+	public function render_acf_settings( $field ) {
 
 		// show column: todo: allow sortable
 		// add to bulk edit
