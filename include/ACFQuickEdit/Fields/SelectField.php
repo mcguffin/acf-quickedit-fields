@@ -32,7 +32,7 @@ class SelectField extends ChoiceField {
 		}
 
 		foreach($this->acf_field['choices'] as $name => $label) {
-			$output .= sprintf('<option value="%s">%s</option>', esc_attr( $name ), $label );
+			$output .= sprintf('<option value="%s">%s</option>', esc_attr( $name ), acf_esc_html( $label ) );
 		}
 
 		$output .= '</select>';

@@ -14,7 +14,7 @@ class RadioField extends ChoiceField {
 
 		$output = '';
 		$output .= sprintf( '<ul class="acf-radio-list%s" data-acf-field-key="%s">',
-			$this->acf_field['other_choice'] ? ' other' : '',
+			isset( $this->acf_field['other_choice'] ) && $this->acf_field['other_choice'] ? ' other' : '',
 			$this->acf_field['key']
 		);
 
@@ -30,14 +30,14 @@ class RadioField extends ChoiceField {
 				'class'					=> 'acf-quick-edit',
 				'data-acf-field-key'	=> $this->acf_field['key'],
 				'name'					=> $input_atts['name'],
-			) ), $value );
+			) ), acf_esc_html( $value ) );
 
 
 			$output .= '</label></li>';
 
 		}
 
-		if ( $this->acf_field['other_choice'] ) {
+		if ( isset( $this->acf_field['other_choice'] ) && $this->acf_field['other_choice'] ) {
 
 			$id = $this->core->prefix( $this->acf_field['key'] . '-other' );
 

@@ -38,7 +38,7 @@ class CheckboxField extends ChoiceField {
 			if ( in_array( $value, $this->acf_field['value'] ) ) {
 				$atts['checked'] = 'checked';
 			}
-			$output .= sprintf( '<li><label><input %s/>%s</label></li>', acf_esc_attr( $atts ), $label );
+			$output .= sprintf( '<li><label><input %s/>%s</label></li>', acf_esc_attr( $atts ), acf_esc_html( $label ) );
 		}
 
 		$output .= '</ul>';
