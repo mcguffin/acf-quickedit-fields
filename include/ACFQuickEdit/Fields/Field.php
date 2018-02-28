@@ -64,6 +64,7 @@ abstract class Field {
 			'checkbox'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'radio'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'true_false'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
+			'button_group'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 
 			// relational
 			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
@@ -209,6 +210,7 @@ abstract class Field {
 				'data-key' 			=> $this->acf_field['key'],
 				'data-parent-key'	=> isset( $this->parent ) ? $this->parent->get_acf_field()['key'] : 'false',
 				'data-field-type'	=> $this->acf_field['type'],
+				'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
 			) ) ?>>
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
