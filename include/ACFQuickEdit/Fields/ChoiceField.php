@@ -52,7 +52,7 @@ abstract class ChoiceField extends Field {
 		} else {
 			$output .= '<ol class="acf-qef-value-list">';
 			foreach ( $values as $val ) {
-				$output .= sprintf( '<li>%s</li>', $val ); //implode( __(', ', 'acf-quick-edit-fields' ) , $values );
+				$output .= sprintf( '<li>%s</li>', acf_esc_html( $val ) ); //implode( __(', ', 'acf-quick-edit-fields' ) , $values );
 			}
 			$output .= '</ol>';
 		}
