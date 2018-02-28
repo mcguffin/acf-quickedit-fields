@@ -13,6 +13,12 @@ class CheckboxField extends ChoiceField {
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		$output = '';
+
+		$output .= sprintf( '<input %s />', acf_esc_attr( array(
+			'type'					=> 'hidden',
+			'name'					=> $input_atts['name'],
+		) ) );
+
 		$output .= sprintf( '<ul class="acf-checkbox-list" data-acf-field-key="%s">', $this->acf_field['key'] );
 
 		$input_atts		+= array(
