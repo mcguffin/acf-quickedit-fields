@@ -37,7 +37,7 @@ class TrueFalseField extends Field {
 							);
 
 		$output .= $ui && isset( $this->acf_field['ui_on_text'] ) && $this->acf_field['ui_on_text']
-			? $this->acf_field['ui_on_text']
+			? acf_esc_html( $this->acf_field['ui_on_text'] )
 			: __('Yes');
 
 		$output .= '</label></li>';
@@ -50,7 +50,7 @@ class TrueFalseField extends Field {
 							);
 
 		$output .= $ui && isset( $this->acf_field['ui_off_text'] ) && $this->acf_field['ui_off_text']
-			? $this->acf_field['ui_off_text']
+			? acf_esc_html( $this->acf_field['ui_off_text'] )
 			: __('No');
 
 		$output .= '</label></li>';
