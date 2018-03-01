@@ -23,6 +23,9 @@ class TrueFalseField extends Field {
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		$field_key = $this->acf_field['key'];
+
+		$ui = isset( $this->acf_field['ui'] ) && $this->acf_field['ui'];
+
 		$prefix_column = $this->core->prefix( $field_key );
 		$output = '';
 		$output .= sprintf( '<ul class="acf-radio-list" data-acf-field-key="%s">', $field_key );
@@ -32,7 +35,11 @@ class TrueFalseField extends Field {
 								$field_key,
 								$input_atts['name']
 							);
-		$output .= __('Yes');
+
+		$output .= $ui && isset( $this->acf_field['ui_on_text'] ) && $this->acf_field['ui_on_text']
+			? $this->acf_field['ui_on_text']
+			: __('Yes');
+
 		$output .= '</label></li>';
 
 		$output .= sprintf( '<li><label for="%s-no">', $prefix_column );
@@ -41,7 +48,11 @@ class TrueFalseField extends Field {
 								$field_key,
 								$input_atts['name']
 							);
-		$output .= __('No');
+
+		$output .= $ui && isset( $this->acf_field['ui_off_text'] ) && $this->acf_field['ui_off_text']
+			? $this->acf_field['ui_off_text']
+			: __('No');
+
 		$output .= '</label></li>';
 		$output .= '</ul>';
 
