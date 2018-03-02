@@ -9,16 +9,15 @@ Features
  - Show ACF field values in List views  
    [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
  - Supports Post, Term and User list tables
- - Scalar Columns (Like Text, Number, ...) are sortable  
-   (See [Note](#known-issues))
+ - Scalar Columns (Like Text, Number, ...) are sortable ()  
  - Edit ACF Field values in Quick edit and Bulk edit
 
 Compatibility
 -------------
- - Requeres ACF Pro 5.x (ACF Free 4.x won’t work)
- - Requires at least PHP 5.3+
- - Tested with WordPress up to 4.9.1
- - Requires at least WP 4.7
+ - Requeres ACF Free or Pro 5.6+ (ACF Free 4.x won’t work). ACF Free 5.6+ is available via early access. Follow [this guide](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)
+ - Requires at PHP 5.3+
+ - Requires at WP 4.7+
+ - Tested with WordPress up to 4.9.4
 
 Docs
 ----
