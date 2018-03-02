@@ -31,10 +31,12 @@ class Admin extends Core\Singleton {
 	 *	Constructor
 	 */
 	protected function __construct() {
+
 		$this->core			= Core\Core::instance();
 		$this->columns		= Columns::instance();
 		$this->quickedit	= Quickedit::instance();
 		$this->bulkedit		= Bulkedit::instance();
+
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
 	}
 
@@ -44,26 +46,27 @@ class Admin extends Core\Singleton {
 	 * @action plugins_loaded
 	 */
 	public function setup() {
-		if ( class_exists( 'acf' ) && function_exists( 'acf_get_field_groups' ) ) {
 
-			// init everything
-			add_action( 'admin_init' , array( $this, 'admin_init' ) );
-
-			// enqueue assets
-			add_action( 'load-edit.php' , array( $this, 'enqueue_edit_assets' ) );
-			add_action( 'load-edit-tags.php' , array( $this, 'enqueue_edit_assets' ) );
-			add_action( 'load-users.php' , array( $this, 'enqueue_edit_assets' ) );
-			add_action( 'load-post.php' , array( $this, 'enqueue_post_assets' ) );
-
-			// retrieving data
-			add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
-
-		} else if ( class_exists( 'acf' ) && current_user_can( 'activate_plugins' ) ) {
-
-			// say something about incompatibility
-			add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
-
+		// early return if conditions not met
+		if ( ! function_exists('acf') || ! class_exists('acf') || version_compare( acf()->version, '5.6', '<' ) ) {
+			if ( current_user_can( 'activate_plugins' ) ) {
+				add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
+			}
+			return;
 		}
+
+		// init everything
+		add_action( 'admin_init' , array( $this, 'admin_init' ) );
+
+		// enqueue assets
+		add_action( 'load-edit.php' , array( $this, 'enqueue_edit_assets' ) );
+		add_action( 'load-edit-tags.php' , array( $this, 'enqueue_edit_assets' ) );
+		add_action( 'load-users.php' , array( $this, 'enqueue_edit_assets' ) );
+		add_action( 'load-post.php' , array( $this, 'enqueue_post_assets' ) );
+
+		// retrieving data
+		add_action( 'wp_ajax_get_acf_post_meta' , array( $this, 'ajax_get_acf_post_meta' ) );
+
 	}
 
 	/**
@@ -74,11 +77,11 @@ class Admin extends Core\Singleton {
 		<div class="notice notice-error is-dismissible">
 			<p><?php
 				printf(
-					_x( 'The ACF QuickEdit Fields plugin only provies support for <a href="%1$s">ACF Pro</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
+					_x( 'The <strong>ACF QuickEdit Fields</strong> plugin requires <a href="%1$s">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
 						'1: ACF Pro URL, 2: plugins page url',
 						'acf-quick-edit-fields'
 					),
-					'http://www.advancedcustomfields.com/pro/',
+					'http://www.advancedcustomfields.com/',
 					admin_url('plugins.php' )
 
 				);
