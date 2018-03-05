@@ -50,7 +50,7 @@ class Admin extends Core\Singleton {
 		// early return if conditions not met
 		if ( ! function_exists('acf') || ! class_exists('acf') || version_compare( acf()->version, '5.6', '<' ) ) {
 			if ( current_user_can( 'activate_plugins' ) ) {
-				add_action( 'admin_notices', array( $this, 'print_acf_free_notice' ) );
+				add_action( 'admin_notices', array( $this, 'print_no_acf_notice' ) );
 			}
 			return;
 		}
@@ -72,7 +72,7 @@ class Admin extends Core\Singleton {
 	/**
 	 * @action admin_notices
 	 */
-	public function print_acf_free_notice() {
+	public function print_no_acf_notice() {
 		?>
 		<div class="notice notice-error is-dismissible">
 			<p><?php
