@@ -14,9 +14,9 @@ Features
 
 Compatibility
 -------------
- - Requeres ACF Free or Pro 5.6+ (ACF Free 4.x won’t work). ACF Free 5.6+ is available via early access. Follow [this guide](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)
- - Requires at PHP 5.3+
- - Requires at WP 4.7+
+ - Requires ACF Free or Pro 5.6+ (ACF Free 4.x won’t work). ACF Free 5.6+ is available via early access. Follow [this guide](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)
+ - Requires at least PHP 5.3+
+ - Requires at least WP 4.7+
  - Tested with WordPress up to 4.9.4
 
 Docs
