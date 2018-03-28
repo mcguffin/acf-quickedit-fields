@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ACF QuickEdit Fields v1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-24 13:23+0100\n"
-"PO-Revision-Date: 2017-12-24 13:24+0100\n"
+"POT-Creation-Date: 2018-03-28 15:42+0200\n"
+"PO-Revision-Date: 2018-03-28 15:43+0200\n"
 "Last-Translator: Jörn Lund <joern@podpirate.org>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
 "_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
@@ -20,20 +20,21 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 
-#: include/ACFQuickEdit/Admin/Admin.php:77
+#: include/ACFQuickEdit/Admin/Admin.php:80
 #, php-format
 msgctxt "1: ACF Pro URL, 2: plugins page url"
 msgid ""
-"The ACF QuickEdit Fields plugin only provies support for <a href=\"%1$s"
-"\">ACF Pro</a>. You can disable and uninstall it on the <a href=\"%2$s"
-"\">plugins page</a>."
+"The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s"
+"\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a "
+"href=\"%2$s\">plugins page</a>."
 msgstr ""
-"Das ACF QuickEdit Fields unterstützt nur <a href=\"%1$s\">ACF Pro</a>. Du "
-"kannst es auf der <a href=\"%2$s\">Plugin-Seite</a> deaktivieren und löschen."
+"ACF QuickEdit Fields unterstützt nur <a href=\"%1$s\">ACF Version 5.6 oder "
+"neuer</a>. Du kannst es auf der <a href=\"%2$s\">Plugin-Seite</a> "
+"deaktivieren und löschen."
 
-#: include/ACFQuickEdit/Admin/Admin.php:157
+#: include/ACFQuickEdit/Admin/Admin.php:160
 msgid "Insufficient Permission"
-msgstr ""
+msgstr "Keine Berechtigung"
 
 # @ acf-quick-edit-fields
 #: include/ACFQuickEdit/Admin/Bulkedit.php:34
@@ -55,30 +56,30 @@ msgid "Show a column in the posts list table"
 msgstr "Spalte in der Beitragsliste anzeigen"
 
 # @ acf-quick-edit-fields
-#: include/ACFQuickEdit/Admin/Columns.php:58
+#: include/ACFQuickEdit/Admin/Columns.php:64
 msgid "Show Column"
 msgstr "Spalte anzeigen"
 
 # @ acf-quick-edit-fields
-#: include/ACFQuickEdit/Admin/Columns.php:62
+#: include/ACFQuickEdit/Admin/Columns.php:68
 msgid "Show column in list tables"
 msgstr "Spalte anzeigen"
 
 # @ acf-quick-edit-fields
-#: include/ACFQuickEdit/Admin/Columns.php:70
+#: include/ACFQuickEdit/Admin/Columns.php:76
 msgid "Sortable Column"
 msgstr "Sortierbare Spalte"
 
-#: include/ACFQuickEdit/Admin/Columns.php:74
+#: include/ACFQuickEdit/Admin/Columns.php:80
 msgid "Make this column sortable"
-msgstr ""
+msgstr "Spalte sortierbar machen"
 
-#: include/ACFQuickEdit/Admin/Columns.php:84
-#: include/ACFQuickEdit/Admin/Columns.php:88
+#: include/ACFQuickEdit/Admin/Columns.php:90
+#: include/ACFQuickEdit/Admin/Columns.php:94
 msgid "Column Weight"
 msgstr "Gewichtung"
 
-#: include/ACFQuickEdit/Admin/Columns.php:85
+#: include/ACFQuickEdit/Admin/Columns.php:91
 msgid ""
 "Columns with a higher weight will be pushed to the right. The leftmost "
 "WordPress column has a weight of <em>0</em>, the next one <em>100</em> and "
@@ -98,7 +99,7 @@ msgstr "QuickEdit zulassen"
 msgid "Allow editing this field in QuickEdit mode"
 msgstr "Die Bearbeitung dieses Feldes in QuickEdit zulassen"
 
-#: include/ACFQuickEdit/Fields/CheckboxField.php:46
+#: include/ACFQuickEdit/Fields/CheckboxField.php:52
 msgid "Add Choice"
 msgstr "Auswahl hinzuf."
 
@@ -109,7 +110,7 @@ msgstr "Auswahl hinzuf."
 msgid "(No value)"
 msgstr "(Kein Wert)"
 
-#: include/ACFQuickEdit/Fields/Field.php:217
+#: include/ACFQuickEdit/Fields/Field.php:226
 msgid "Do not change"
 msgstr "Keine Änderung"
 
@@ -124,7 +125,11 @@ msgstr "Datei Auswählen"
 
 #: include/ACFQuickEdit/Fields/FileField.php:46
 msgid "Remove File"
-msgstr ""
+msgstr "Datei entfernen"
+
+#: include/ACFQuickEdit/Fields/PostObjectField.php:46
+msgid "(no title)"
+msgstr "(Ohne Titel)"
 
 #: include/ACFQuickEdit/Fields/RelationshipField.php:73
 msgid "Private"
@@ -135,12 +140,12 @@ msgid "— Select —"
 msgstr "– Auswählen –"
 
 #: include/ACFQuickEdit/Fields/TrueFalseField.php:17
-#: include/ACFQuickEdit/Fields/TrueFalseField.php:35
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:41
 msgid "Yes"
 msgstr "Ja"
 
 #: include/ACFQuickEdit/Fields/TrueFalseField.php:17
-#: include/ACFQuickEdit/Fields/TrueFalseField.php:44
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:54
 msgid "No"
 msgstr "Nein"
 

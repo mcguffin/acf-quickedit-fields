@@ -21,16 +21,25 @@ class PostObjectField extends RelationshipField {
 		/*
 		$value = get_field( $this->acf_field['key'], $object_id );
 		/*/
-		$value = $this->get_value( $object_id );
+		$value = $this->get_value( $object_id, false );
 		//*/
 
 		if ( ! $value ) {
 			return '';
 		}
 
+		// return single value
+		$value = (array) $value;
+
+		if ( count( $value ) === 1 ) {
+			$post = get_post( $value[0] );
+			return $this->get_post_link( $post );
+		}
+
+		// display multiple posts as list
 		$output	= '';
 		$output .= '<ol>';
-		foreach ( (array) $value as $post_id ) {
+		foreach ( $value as $post_id ) {
 			$post = get_post( $post_id );
 			$output .= sprintf( '<li>%s</li>', $this->get_post_link( $post ) );
 		}
@@ -41,13 +50,16 @@ class PostObjectField extends RelationshipField {
 	 *
 	 */
 	private function get_post_link( $post ) {
-		if ( current_user_can( 'edit_post', $post->ID ) ) {
-			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), $post->post_title );
-		} else if ( ( $pto = get_post_type_object( $post->post_type ) ) && $pto->public ) {
-			return sprintf('<a href="%s">%s</a>', get_permalink( $post->ID ), $post->post_title );
-		} else {
-			return $post->post_title;
+		$post_title = $post->post_title;
+		if ( empty( trim( $post_title ) ) ) {
+			$post_title = __( '(no title)', 'acf-quick-edit-fields' );
 		}
+		if ( current_user_can( 'edit_post', $post->ID ) ) {
+			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), $post_title );
+		} else if ( ( $pto = get_post_type_object( $post->post_type ) ) && $pto->public ) {
+			return sprintf('<a href="%s">%s</a>', get_permalink( $post->ID ), $post_title );
+		}
+		return $post_title;
 
 	}
 }
