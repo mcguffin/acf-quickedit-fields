@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 class Columns extends Feature {
+	private $_prev_request_uri = false;
 
 	/**
 	 *	@inheritdoc
@@ -365,7 +366,7 @@ error_log(var_export($el2,true));
 	 private function get_field_sorted( $field_object ) {
  		$acf_field	= $field_object->get_acf_field();
  		$field_name	= $acf_field['name'];
-		$sorted = $field_object->is_sortable() && boolval( $acf_field['show_column_sortable'] );
+		$sorted = boolval( $acf_field['show_column_sortable'] ) ? $field_object->is_sortable() : false;
 
  		/**
  		 * Filters whether and how a column is sortable
@@ -389,14 +390,21 @@ error_log(var_export($el2,true));
 		foreach ( $this->fields as $field_slug => $field_object ) {
 
 			if ( $sortable = $this->get_field_sorted( $field_object ) ) {
+				// $sortable: true | false | 'numeric' | ...
+				$order = isset( $_GET['order'] ) ? strtolower( $_GET['order'] ) === 'asc' : false;
 
-				$order = isset( $_GET['order'] ) ? strtolower($_GET['order']) === 'asc' : false;
-
-				// Wouldn't we all wish for a new filter filter...?
-				if ( isset( $_GET['meta_key'] ) ) {
+				// WP uses $_SERVER['REQUEST_URI'] when building table header.
+				// We need to reset it first.
+				if ( isset( $_GET['meta_key'] ) && ! $this->_prev_request_uri ) {
+					$this->_prev_request_uri = $_SERVER['REQUEST_URI'];
 					$_SERVER['REQUEST_URI'] = remove_query_arg( array('meta_key','meta_type'), $_SERVER['REQUEST_URI'] );
+
+					// restore $_SERVER['REQUEST_URI'] before pagination links are rendered
+					add_action( 'manage_posts_extra_tablenav', array( $this, 'restore_request_uri' ) );
 				}
 
+				// $columns[ $field_slug ][0]: order by, $columns[ $field_slug ][1]: asc | desc
+				// we add aditional query args to what becomes the "orderby" param when WP renders the column header
 				if ( $sortable === true ) {
 					$columns[ $field_slug ] = array( $field_slug . '&meta_key=' . $field_slug, $order );
 				} else {
@@ -405,6 +413,15 @@ error_log(var_export($el2,true));
 			}
 		}
 		return $columns;
+	}
+
+	/**
+	 *	@filter manage_posts_extra_tablenav
+	 */
+	public function restore_request_uri( $which ) {
+		if ( $which === 'bottom' && $this->_prev_request_uri ) {
+			$_SERVER['REQUEST_URI'] = $this->_prev_request_uri;
+		}
 	}
 
 	/**
