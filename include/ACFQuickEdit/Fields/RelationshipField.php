@@ -33,7 +33,7 @@ class RelationshipField extends Field {
 					$links[] = $link;
 				}
 			}
-			if ( count( $links > 1 ) ) {
+			if ( count( $links ) > 1 ) {
 				$output .= '<ol>';
 				foreach ( $links as $link ) {
 					$output .= sprintf( '<li>%s</li>', $link );
