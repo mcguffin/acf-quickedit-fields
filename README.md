@@ -9,7 +9,7 @@ Features
  - Show ACF field values in List views  
    [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
  - Supports Post, Term and User list tables
- - Scalar Columns (Like Text, Number, ...) are sortable ()  
+ - Scalar Columns (Like Text, Number, ...) can be made sortable
  - Edit ACF Field values in Quick edit and Bulk edit
 
 Compatibility
