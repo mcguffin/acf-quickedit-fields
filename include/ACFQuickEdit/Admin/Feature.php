@@ -203,6 +203,7 @@ abstract class Feature extends Core\Singleton {
 			}
 
 			// gather conditions for field parts
+			$multiple_conditions = array();
 
 			if ( $content_type === 'post' ) {
 				$conditions = array( 'post_type' => $this->get_current_post_type() );
@@ -220,14 +221,30 @@ abstract class Feature extends Core\Singleton {
 					add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
 				}
 
+				$multiple_conditions = array( $conditions );
 
 			} else if ( $content_type === 'taxonomy' ) {
 
 				$conditions = array( 'taxonomy' => $_REQUEST['taxonomy'] );
 
+				$multiple_conditions = array( $conditions );
+
 			} else if ( $content_type === 'user' ) {
-				$role = isset( $_REQUEST['role'] ) ? $_REQUEST['role'] : 'all';
-				$conditions = array( 'user_role' => $role );
+				$multiple_conditions = array(
+					array(
+						'user_role' => isset( $_REQUEST['role'] ) ? $_REQUEST['role'] : 'all',
+					),
+					array(
+						'user_form' => 'register',
+					),
+					array(
+						'user_form' => 'edit',
+					),
+					array(
+						'user_form' => 'all',
+					),
+				);
+
 			} else {
 				return;
 			}
@@ -237,8 +254,16 @@ abstract class Feature extends Core\Singleton {
 			 *
 			 * @param array $conditions	Field group conditions being passed to `acf_get_field_groups()`
 			 */
+			$field_groups = array();
+			foreach ( $multiple_conditions as $conditions ) {
+				$add_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
+				$field_groups = array_merge( $field_groups, $add_groups );
+			}
+			/*
 			$this->available_field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
-
+			/*/
+			$this->available_field_groups = array_unique( $field_groups, SORT_REGULAR );//array_unique( $field_groups );
+			//*/
 		}
 
 		return $this->available_field_groups;
