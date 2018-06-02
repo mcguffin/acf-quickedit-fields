@@ -203,15 +203,18 @@ abstract class Field {
 		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $post_type ) ) {
 			return;
 		}
-
+		$wrapper_attr = array(
+			'class'				=> 'acf-field inline-edit-col',
+			'data-key' 			=> $this->acf_field['key'],
+			'data-parent-key'	=> isset( $this->parent ) ? $this->parent->get_acf_field()['key'] : 'false',
+			'data-field-type'	=> $this->acf_field['type'],
+			'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
+		);
+		if ( isset( $this->acf_field['field_type'] ) ) {
+			$wrapper_attr['data-field-sub-type'] = $this->acf_field['field_type'];
+		}
 		?>
-			<div <?php echo acf_esc_attr( array(
-				'class'				=> 'acf-field inline-edit-col',
-				'data-key' 			=> $this->acf_field['key'],
-				'data-parent-key'	=> isset( $this->parent ) ? $this->parent->get_acf_field()['key'] : 'false',
-				'data-field-type'	=> $this->acf_field['type'],
-				'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
-			) ) ?>>
+			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
 					<?php if ( $mode === 'bulk' ) { ?>

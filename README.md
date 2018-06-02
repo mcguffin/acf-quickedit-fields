@@ -17,7 +17,7 @@ Compatibility
  - Requires ACF Free or Pro 5.6+ (ACF Free 4.x won’t work). ACF Free 5.6+ is available via early access. Follow [this guide](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)
  - Requires at least PHP 5.3+
  - Requires at least WP 4.7+
- - Tested with WordPress up to 4.9.4
+ - Tested with WordPress up to 4.9.6
 
 Docs
 ----
@@ -55,3 +55,7 @@ ToDo / Known Issues:
  - [ ] Bug: Password field always saves empty value
  - [ ] Radio/Checkbox with Other: other value(s) not shown after save (need to reload)
  - [ ] Support Taxonomy QE / BE
+	 - [x] Display Taxonomy input
+	 - [x] Ajax-Load values
+	 - [x] Save values
+	 - [ ] Test with all option combinations (Allow null, save values, load values)

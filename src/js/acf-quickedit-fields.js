@@ -457,6 +457,35 @@
 	});
 
 	/**
+ 	 *	field type taxonomy
+ 	 */
+	qe.field.add_type( {
+		type:'taxonomy',
+		initialize:function() {
+			qe.field.View.prototype.initialize.apply(this,arguments);
+
+			this.$input = this.$('select,input[value!="___do_not_change"]').prop( 'readonly', true );
+		},
+		setValue:function( value ) {
+			var self = this;
+			this.dntChanged();
+			if ( 'number' === typeof value ) {
+				value = [ value ];
+			}
+			$.each(value,function(i,val){
+				self.$('[value="'+val+'"]' ).each(function(i,el){
+					if ( $(this).is('[type="radio"],[type="checkbox"]') ) {
+						$(this).prop( 'checked', true );
+					} else if ( $(this).is('option') ) {
+						$(this).prop( 'selected', true );
+					}
+				});
+			});
+ 		}
+	});
+
+
+	/**
  	 *	field type true_false
  	 */
 	 qe.field.add_type( {

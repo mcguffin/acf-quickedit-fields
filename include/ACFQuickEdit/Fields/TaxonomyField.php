@@ -39,15 +39,19 @@ class TaxonomyField extends Field {
 		$output = '';
 
 		acf_include('includes/walkers/class-acf-walker-taxonomy-field.php');
+
 		$field_clone = $this->acf_field + array();
+
 		$field_clone['value'] = array();
+
 		if ( in_array( $field_clone['field_type'], array( 'radio', 'select' ) ) ) {
-			// single
-			$field_clone['field_type'] = 'radio';
+
 			$field_clone['name'] = sprintf( 'acf[%s]', $field_clone['key'] );
+
 		} else {
-			$field_clone['field_type'] = 'checkbox';
+
 			$field_clone['name'] = sprintf( 'acf[%s][]', $field_clone['key'] );
+
 		}
 
 		$taxonomy_obj = get_taxonomy( $field_clone['taxonomy'] );
@@ -60,18 +64,68 @@ class TaxonomyField extends Field {
 			'walker'       		=> new \ACF_Taxonomy_Field_Walker( $field_clone ),
 			'echo'				=> false,
 		);
-		$output .= '<ul class="acf-checkbox-list acf-bl">';
-		// if allow null and radio add –No Value– option
-		$output .= wp_list_categories($args);
-		$output .= '</ul>';
+
+		if ( 'radio' === $field_clone['field_type'] || 'checkbox' === $field_clone['field_type'] ) {
+
+			$output .= '<ul ' . acf_esc_attr( array(
+				'class'	=> 'acf-checkbox-list acf-bl',
+			) ) . '>';
+
+			if ( 'radio' === $field_clone['field_type'] && $field_clone['allow_null'] ) {
+				// add – No Value – option ...
+				$output .= '<li>';
+				$output .= '<label>';
+				$output .= '<input ' . acf_esc_attr(array(
+					'name'	=> $field_clone['name'],
+					'value'	=> '',
+					'type'	=> $field_clone['field_type']
+				)) . ' />';
+				$output .= sprintf('<span>%s</span>',__('– No Selection –','acf-quick-edit-fields'));
+				$output .= '</label>';
+				$output .= '</li>';
+			}
+			$output .= wp_list_categories($args);
+
+			$output .= '</ul>';
+		} else {
+
+			$field_clone['type']		= 'select';
+			$field_clone['multiple']	= 'multi_select' === $field_clone['field_type'];
+			$field_clone['choices']		= array();
+			$field_clone['ui']			= false;
+			$field_clone['ajax']		= false;
+
+			if ( $field_clone['allow_null'] ) {
+				$field_clone['choices'][''] = __('– No Selection –','acf-quick-edit-fields');
+			}
+
+			$terms = acf_get_terms( array(
+				'taxonomy'		=> $field_clone['taxonomy'],
+				'hide_empty'	=> false
+			) );
+
+			foreach( $terms as $term ) {
+				$term_title = '';
+
+				// ancestors
+				$ancestors = get_ancestors( $term->term_id, $field_clone['taxonomy'] );
+
+				if( ! empty( $ancestors ) ) {
+
+					$term_title .= str_repeat('- ', count($ancestors));
+
+				}
+
+				$term_title .= $term->name;
+
+				$field_clone['choices'][ $term->term_id ] = $term_title;
+			}
+			ob_start();
+			acf_render_field($field_clone);
+			$output .= ob_get_clean();
+
+		}
 		return $output;
-
-		$input_atts += array(
-			'class' => 'acf-quick-edit widefat',
-			'id' => $this->core->prefix( $this->acf_field['key'] ),
-		);
-
-		return '';
 	}
 
 

@@ -252,7 +252,8 @@
 
 			& > .acf-field {
 				width:31%;
-				&[data-field-type="taxonomy"] {
+				&[data-field-type="taxonomy"][data-field-sub-type="checkbox"],
+				&[data-field-type="taxonomy"][data-field-sub-type="radio"] {
 					width:98%;
 				}
 				margin:1%;
@@ -262,7 +263,7 @@
 				border:1px solid #ddd;
 				clear:none;
 				&:nth-of-type(3n+1) {
-					clear:left;
+					//clear:left;
 				}
 				&[data-error-message] {
 					border-color:#dd4232;
