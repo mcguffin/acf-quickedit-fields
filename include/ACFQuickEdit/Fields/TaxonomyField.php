@@ -36,6 +36,41 @@ class TaxonomyField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
+		$output = '';
+
+		acf_include('includes/walkers/class-acf-walker-taxonomy-field.php');
+		$field_clone = $this->acf_field + array();
+		$field_clone['value'] = array();
+		if ( in_array( $field_clone['field_type'], array( 'radio', 'select' ) ) ) {
+			// single
+			$field_clone['field_type'] = 'radio';
+			$field_clone['name'] = sprintf( 'acf[%s]', $field_clone['key'] );
+		} else {
+			$field_clone['field_type'] = 'checkbox';
+			$field_clone['name'] = sprintf( 'acf[%s][]', $field_clone['key'] );
+		}
+
+		$taxonomy_obj = get_taxonomy( $field_clone['taxonomy'] );
+
+		$args = array(
+			'taxonomy'     		=> $field_clone['taxonomy'],
+			'show_option_none'	=> sprintf( _x('No %s', 'No terms', 'acf'), strtolower($taxonomy_obj->labels->name) ),
+			'hide_empty'   		=> false,
+			'style'        		=> 'none',
+			'walker'       		=> new \ACF_Taxonomy_Field_Walker( $field_clone ),
+			'echo'				=> false,
+		);
+		$output .= '<ul class="acf-checkbox-list acf-bl">';
+		// if allow null and radio add –No Value– option
+		$output .= wp_list_categories($args);
+		$output .= '</ul>';
+		return $output;
+
+		$input_atts += array(
+			'class' => 'acf-quick-edit widefat',
+			'id' => $this->core->prefix( $this->acf_field['key'] ),
+		);
+
 		return '';
 	}
 

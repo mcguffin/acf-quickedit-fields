@@ -70,7 +70,7 @@ abstract class Field {
 			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
-			'taxonomy'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
+			'taxonomy'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
 
 			// jQuery

@@ -213,8 +213,48 @@
 			legend {
 				margin-left:20px;
 			}
+
+			.acf-checkbox-list {
+				column-count:1;
+				@media screen and (min-width:600px) {
+					column-count:2;
+				}
+				@media screen and (min-width:1250px) {
+					column-count:4;
+				}
+				li {
+					position: relative;
+				}
+				.children {
+					padding-left:1.0em;
+					margin-left: 0.6em;
+					position: relative;
+					&:before {
+						content:'';
+						position: absolute;
+						left: 0;
+						top: -0.5em;
+						bottom:1.2em;
+						border-left: 1px solid #ccc;
+					}
+					&>li {
+						&:before {
+							content:'';
+							position: absolute;
+							left: -1em;
+							top: 1.2em;
+							width: 0.8em;
+							border-top: 1px solid #ccc;
+						}
+					}
+				}
+			}
+
 			& > .acf-field {
 				width:31%;
+				&[data-field-type="taxonomy"] {
+					width:98%;
+				}
 				margin:1%;
 				padding:10px;
 				float:left;
