@@ -54,8 +54,3 @@ ToDo / Known Issues:
  - [ ] Bug in Sortable Columns: Rows are not shown if the ACF value is not set (aka. postmeta not present).
  - [ ] Bug: Password field always saves empty value
  - [ ] Radio/Checkbox with Other: other value(s) not shown after save (need to reload)
- - [ ] Support Taxonomy QE / BE
-	 - [x] Display Taxonomy input
-	 - [x] Ajax-Load values
-	 - [x] Save values
-	 - [ ] Test with all option combinations (Allow null, save values, load values)
