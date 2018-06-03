@@ -44,13 +44,16 @@ class TaxonomyField extends Field {
 
 		$field_clone['value'] = array();
 
-		if ( in_array( $field_clone['field_type'], array( 'radio', 'select' ) ) ) {
+		$field_clone['name'] = 'acf';
 
-			$field_clone['name'] = sprintf( 'acf[%s]', $field_clone['key'] );
+		if ( $field_clone['parent'] ) {
+			$field_clone['name'] .= sprintf('[%s]', $field_clone['parent'] );
+		}
+		$field_clone['name'] .= sprintf('[%s]', $field_clone['key'] );
 
-		} else {
+		if ( ! in_array( $field_clone['field_type'], array( 'checkbox', 'multi_select' ) ) ) {
 
-			$field_clone['name'] = sprintf( 'acf[%s][]', $field_clone['key'] );
+			$field_clone['name'] .= '[]';
 
 		}
 
