@@ -16,7 +16,7 @@ class ColorPickerField extends Field {
 		/*/
 		$value = $this->get_value( $object_id );
 		//*/
-		$indicator_class = 'color-indicator';
+		$indicator_class = 'acf-qef-color-indicator';
 		if ( ! $value ) {
 			$indicator_class .= ' no-value';
 			$value = 'rgba(255,255,255,0)';
