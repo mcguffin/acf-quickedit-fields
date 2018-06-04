@@ -159,7 +159,7 @@ abstract class Feature extends Core\Singleton {
 		} else if ( defined( 'DOING_AJAX' ) && DOING_AJAX  ) {
 			if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_post_ajax_actions', array( 'inline-save' ) ) ) ) {
 				return 'post';
-			} else if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_term_ajax_actions', array( 'inline-save-tax' ) ) ) ) {
+			} else if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_term_ajax_actions', array( 'inline-save-tax', 'add-tag' ) ) ) ) {
 				return 'taxonomy';
 			}
 		}
