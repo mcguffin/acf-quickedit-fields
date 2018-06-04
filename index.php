@@ -23,6 +23,10 @@ define( 'ACF_QUICK_EDIT_DIRECTORY', plugin_dir_path(__FILE__) );
 
 require_once ACF_QUICK_EDIT_DIRECTORY . 'include/autoload.php';
 
+if ( version_compare( phpversion(), '5.6', '<' ) ) {
+	require_once ACF_QUICK_EDIT_DIRECTORY . 'include/legacy-php.php';
+}
+
 if ( is_admin() ) {
 
 	// don't WP-Update actual repos!
