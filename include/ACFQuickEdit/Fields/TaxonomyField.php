@@ -46,12 +46,12 @@ class TaxonomyField extends Field {
 
 		$field_clone['name'] = 'acf';
 
-		if ( $field_clone['parent'] ) {
+		if ( isset( $this->parent ) ) {
 			$field_clone['name'] .= sprintf('[%s]', $field_clone['parent'] );
 		}
 		$field_clone['name'] .= sprintf('[%s]', $field_clone['key'] );
 
-		if ( ! in_array( $field_clone['field_type'], array( 'checkbox', 'multi_select' ) ) ) {
+		if ( in_array( $field_clone['field_type'], array( 'checkbox', 'multi_select' ) ) ) {
 
 			$field_clone['name'] .= '[]';
 
