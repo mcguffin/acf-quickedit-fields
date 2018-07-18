@@ -17,7 +17,12 @@ var scripts = [
 	'./src/js/acf-quickedit.js',
 	'./src/js/thumbnail-col.js'
 ];
-
+var scripts_legacy_56 = [
+	'./src/js/legacy/5.6/acf-quickedit-base.js',
+	'./src/js/acf-quickedit-fields.js',
+	'./src/js/legacy/5.6/acf-quickedit.js',
+	'./src/js/thumbnail-col.js'
+];
 
 gulp.task('styles-build',function(){
     return gulp.src( styles )
@@ -30,12 +35,20 @@ gulp.task('styles-build',function(){
 });
 
 gulp.task('scripts-build', function() {
-    return [ gulp.src( scripts )
-		.pipe(sourcemaps.init())
-		.pipe( uglify().on('error', gulputil.log ) )
-	    .pipe( concat('acf-quickedit.min.js') )
-        .pipe( sourcemaps.write() )
-    	.pipe( gulp.dest( './js/' ) ),
+    return [
+		gulp.src( scripts )
+			.pipe(sourcemaps.init())
+			.pipe( uglify().on('error', gulputil.log ) )
+		    .pipe( concat('acf-quickedit.min.js') )
+	        .pipe( sourcemaps.write() )
+	    	.pipe( gulp.dest( './js/' ) ),
+
+		gulp.src( scripts_legacy_56 )
+			.pipe(sourcemaps.init())
+			.pipe( uglify().on('error', gulputil.log ) )
+		    .pipe( concat('acf-quickedit.min.js') )
+	        .pipe( sourcemaps.write() )
+	    	.pipe( gulp.dest( './js/legacy/5.6/' ) ),
 
     	gulp.src( './src/js/acf-qef-field-group.js' )
 		.pipe(sourcemaps.init())
