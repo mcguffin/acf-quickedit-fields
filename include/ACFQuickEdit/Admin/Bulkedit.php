@@ -77,7 +77,6 @@ class Bulkedit extends EditFeature {
 			echo '<div>' . "\n";
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
-			printf( '<input type="hidden" name="nonce" value="%s" />', wp_create_nonce( 'acf_nonce' ) );
 
 			foreach ( $field_group['fields'] as $sub_field_object ) {
 				$sub_field_object->render_quickedit_field( $post_type, 'bulk' );
