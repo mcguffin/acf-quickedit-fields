@@ -59,7 +59,6 @@
 		_setValues:function(values) {
 			var self = this;
 			_.each( values, function( val, key ){
-				console.log(key, key in self.fields )
 				if ( key in self.fields ) {
 					self.fields[key].setValue( val );
 				} else if( _.isObject( val ) ) {
@@ -126,7 +125,6 @@
 					form: $form,
 					success:function($form) {
 						// allow for submit
-						console.log($form)
 						acf.validation.ignore = 1;
 						$button.trigger('click');
 					},
