@@ -1,4 +1,4 @@
-(function( $, exports, options ){
+(function( $, exports ){
 
 	exports.acf_quickedit = qe = {
 		form:{},
@@ -254,4 +254,4 @@
 	});
 
 
-})(jQuery,window, acf_quickedit );
+})( jQuery, window );
