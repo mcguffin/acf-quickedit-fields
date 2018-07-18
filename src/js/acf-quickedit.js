@@ -13,12 +13,13 @@
 			_wp_inline_edit_bulk =  inlineEditPost.setBulk;
 		// and then we overwrite the function with our own code
 		inlineEditPost.edit = function( id ) {
-			var object_id, $tr;
+			var object_id, $tr, ret;
 
+			acf.validation.active = 1;
 
 			// "call" the original WP edit function
 			// we don't want to leave WordPress hanging
-			_wp_inline_edit_post.apply( this, arguments );
+			ret = _wp_inline_edit_post.apply( this, arguments );
 
 			// get the post ID
 			object_id = 0;
@@ -32,6 +33,7 @@
 				el: $tr.get(0),
 				object_id: object_id
 			});
+			return ret;
 		};
 		inlineEditPost.revert = function() {
 			// unload forms
@@ -62,10 +64,10 @@
 			_wp_inline_edit_revert = inlineEditTax.revert;
 
 		inlineEditTax.edit = function( id ) {
-			var object_id, $tr,
+			var object_id, $tr, ret,
 				tax = $('input[name="taxonomy"]').val();
 
-			_wp_inline_edit_tax.apply( this, arguments );
+			ret = _wp_inline_edit_tax.apply( this, arguments );
 
 			// get the post ID
 			object_id = 0;
@@ -78,7 +80,7 @@
 				el: $tr.get(0),
 				object_id: tax + '_' + object_id
 			});
-
+			return ret;
 		};
 		inlineEditTax.revert = function() {
 			// unload forms

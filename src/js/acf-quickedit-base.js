@@ -1,4 +1,4 @@
-(function( $, exports ){
+(function( $, exports, options ){
 
 	exports.acf_quickedit = qe = {
 		form:{},
@@ -99,6 +99,7 @@
 
 			$button.click( function(e) {
 				// bail early if not active
+
 				if( !acf.validation.active ) {
 
 					return true;
@@ -121,7 +122,16 @@
 				acf.validation.$trigger = $(this);
 
 				// run validation
-				acf.validation.fetch( $form );
+				acf.validation.fetch( {
+					form: $form,
+					success:function($form) {
+						// allow for submit
+						console.log($form)
+						acf.validation.ignore = 1;
+						$button.trigger('click');
+					},
+
+				} );
 
 				// stop all other click events on this input
 				return false;
@@ -244,4 +254,4 @@
 	});
 
 
-})(jQuery,window);
+})(jQuery,window, acf_quickedit );

@@ -41,11 +41,16 @@ abstract class EditFeature extends Feature {
 
 
 		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
+		if ( version_compare( acf()->version,'5.7','lt' ) ) {
+			$script_src = 'js/legacy/5.6/acf-quickedit.min.js';
+		} else {
+			$script_src = 'js/acf-quickedit.min.js';
+		}
 
 		if ( $content_type == 'taxonomy' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACF_QUICK_EDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
+			wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
 		} else if ( $content_type == 'post' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.min.js', ACF_QUICK_EDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
+			wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
 		}
 
 		wp_enqueue_media();
