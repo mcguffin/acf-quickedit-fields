@@ -26,6 +26,7 @@
 			if ( typeof( id ) === 'object' ) {
 				object_id = parseInt( this.getId( id ) );
 			}
+
 			$tr = $('#edit-' + object_id );
 //			get_acf_post_data( object_id , $('#edit-' + object_id ) );
 
@@ -37,17 +38,19 @@
 		};
 		inlineEditPost.revert = function() {
 			// unload forms
+console.log('revert')
 			!! this.acf_qed_form && this.acf_qed_form.unload();
 			return _wp_inline_edit_revert.apply( this, arguments );
 		}
 		inlineEditPost.save = function() {
 			// unload forms
+console.log('save')
 			!! this.acf_qed_form && this.acf_qed_form.unload();
 			return _wp_inline_edit_save.apply( this, arguments );
 		}
 		inlineEditPost.setBulk = function() {
 			var ret = _wp_inline_edit_bulk.apply( this, arguments );
-
+console.log('setBulk')
 			this.acf_qed_form = new qe.form.BulkEdit({
 				el: $('#bulk-edit').get(0),
 //				object_id: object_id

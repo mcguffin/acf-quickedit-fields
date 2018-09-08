@@ -67,6 +67,7 @@
 			});
 		},
 		unload:function(e){
+			this.deinitValidation();
 			_.each(this.fields,function(field){
 				field.unload();
 			});
@@ -87,56 +88,49 @@
 			}
 			return json;
 		},
+		deinitValidation:function(){
+			var $button = this.getSaveButton();
+			$button.off( 'click', this._saveBtnClickHandler );
+		},
 		initValidation:function() {
 			var $form = this.$el.closest('form'),
 				$button = this.getSaveButton();
 
 			acf.update('post_id', this.options.object_id );
 
-			acf.add_filter( 'validation_complete', this.validationComplete, 10, this );
+			acf.addFilter( 'validation_complete', this.validationComplete, 10, this );
 //			acf.add_action('validation_failure', this.validationFailure );
 
-			$button.click( function(e) {
-				// bail early if not active
+			$button.on( 'click', this._saveBtnClickHandler );
+			$form.data('acf',null)
+			// move our events handler to front
 
-				if( !acf.validation.active ) {
+			$._data($button[0],'events').click.reverse();
 
-					return true;
+		},
+		_saveBtnClickHandler:function(e) {
+			// scope: quick/bulk edit save button
+			var $button = $(this),
+				$form = $(this).closest('form'),
+				valid;
 
+			valid = acf.validateForm({
+				form: $form,
+				event: false,
+				reset: false,
+				success: function( $form ) {
+					$button.trigger('click');
 				}
+			});
 
-				// ignore validation (only ignore once)
-				if( acf.validation.ignore ) {
-					acf.validation.ignore = 0;
-					return true;
-				}
-
+			if ( ! valid ) {
 				// stop WP JS validation
 				e.preventDefault();
 				e.stopPropagation();
 				e.stopImmediatePropagation();
-
-
-				// store submit trigger so it will be clicked if validation is passed
-				acf.validation.$trigger = $(this);
-
-				// run validation
-				acf.validation.fetch( {
-					form: $form,
-					success:function($form) {
-						// allow for submit
-						acf.validation.ignore = 1;
-						$button.trigger('click');
-					},
-
-				} );
-
-				// stop all other click events on this input
 				return false;
-			});
-
-			// move our events handler to front
-			$._data($button[0],'events').click.reverse()
+			}
+			return true;
 		}
 	});
 	qe.form.QuickEdit = qe.form.View.extend({
