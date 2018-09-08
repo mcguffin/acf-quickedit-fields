@@ -43,7 +43,7 @@ Installation
 Documentation
 -------------
 
- - [Quick Start](https://github.com/mcguffin/acf-quick-edit-fields/wiki/wiki)
- - [Filters and Actions](wiki/Plugin-Filters)
- - [Known Issues](https://github.com/mcguffin/acf-quick-edit-fields/wiki/wiki/Known-Issues) that can't be fixed
- - [How to Support more Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/wiki/Tutorial:-Custom-Field-Integration)
+ - [Quick Start](https://github.com/mcguffin/acf-quick-edit-fields/wiki)
+ - [Filters and Actions](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Plugin-Filters)
+ - [Known Issues](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Known-Issues) that can't be fixed
+ - [How to Support more Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration)
