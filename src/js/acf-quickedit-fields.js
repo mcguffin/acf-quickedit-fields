@@ -343,7 +343,7 @@
 
 		},
 		setEditable:function(editable){
-			this.$input.prop( 'readonly', !editable );
+			this.$input.prop( 'disabled', !editable );
 			this.$button.prop( 'disabled', !editable );
 		},
 		setValue:function( value ) {
