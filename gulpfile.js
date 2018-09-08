@@ -34,38 +34,39 @@ gulp.task('styles-build',function(){
         .pipe( gulp.dest( './css/' ) );
 });
 
-gulp.task('scripts-build', function() {
-    return [
-		gulp.src( scripts )
-			.pipe(sourcemaps.init())
-			.pipe( uglify().on('error', gulputil.log ) )
-		    .pipe( concat('acf-quickedit.min.js') )
-	        .pipe( sourcemaps.write() )
-	    	.pipe( gulp.dest( './js/' ) ),
-
-		gulp.src( scripts_legacy_56 )
-			.pipe(sourcemaps.init())
-			.pipe( uglify().on('error', gulputil.log ) )
-		    .pipe( concat('acf-quickedit.min.js') )
-	        .pipe( sourcemaps.write() )
-	    	.pipe( gulp.dest( './js/legacy/5.6/' ) ),
-
-    	gulp.src( './src/js/acf-qef-field-group.js' )
+gulp.task('scripts-build-field', function() {
+	return gulp.src( scripts )
 		.pipe(sourcemaps.init())
 		.pipe( uglify().on('error', gulputil.log ) )
-	    .pipe( concat('acf-qef-field-group.min.js') )
-        .pipe( sourcemaps.write() )
-    	.pipe( gulp.dest( './js/' ) )
-    ];
-
+		.pipe( concat('acf-quickedit.min.js') )
+		.pipe( sourcemaps.write() )
+		.pipe( gulp.dest( './js/' ) );
 });
+gulp.task('scripts-build-fieldgroup', function() {
+	return gulp.src( './src/js/acf-qef-field-group.js' )
+		.pipe(sourcemaps.init())
+		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( concat('acf-qef-field-group.min.js') )
+		.pipe( sourcemaps.write() )
+		.pipe( gulp.dest( './js/' ) );
+});
+gulp.task('scripts-build-legacy', function() {
+	return gulp.src( scripts_legacy_56 )
+		.pipe(sourcemaps.init())
+		.pipe( uglify().on('error', gulputil.log ) )
+		.pipe( concat('acf-quickedit.min.js') )
+		.pipe( sourcemaps.write() )
+		.pipe( gulp.dest( './js/legacy/5.6/' ) )
+});
+
+gulp.task('scripts-build', gulp.parallel( 'scripts-build-field', 'scripts-build-fieldgroup', 'scripts-build-legacy' ) );
 
 
 gulp.task( 'watch', function() {
-	gulp.watch('./src/scss/**/*.scss', ['styles-build'] );
-	gulp.watch('./src/js/**/*.js', ['scripts-build'] );
+	gulp.watch('./src/scss/**/*.scss', gulp.parallel('styles-build') );
+	gulp.watch('./src/js/**/*.js', gulp.parallel('scripts-build') );
 } );
 
-gulp.task( 'build', ['styles-build','scripts-build'] );
+gulp.task( 'build', gulp.parallel('styles-build','scripts-build') );
 
-gulp.task( 'default', ['build','watch'] );
+gulp.task( 'default', gulp.series('build','watch') );
