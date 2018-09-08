@@ -303,14 +303,13 @@ abstract class Field {
 	}
 
 	/**
-	 *	Update field value
+	 *	Update field value if all conditions are met
 	 *
 	 *	@param int $post_id
-	 *	@param bool $is_quickedit
 	 *
 	 *	@return null
 	 */
-	public function update( $post_id ) {
+	public function maybe_update( $post_id ) {
 
 		if ( isset( $this->parent ) ) {
 			return;
@@ -331,7 +330,18 @@ abstract class Field {
 		if ( in_array( $this->dont_change_value, (array) $value ) ) {
 			return;
 		}
+		$this->update( $value, $post_id );
+	}
 
+	/**
+	 *	Update field value
+	 *
+	 *	@param mixed $value
+	 *	@param int/string $post_id
+	 *
+	 *	@return null
+	 */
+	public function update( $value, $post_id ) {
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}
 }
