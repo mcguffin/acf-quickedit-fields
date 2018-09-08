@@ -1,8 +1,7 @@
 ACF QuickEdit Fields
 ====================
 
-WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin (Pro, Version 5+).  
-http://www.advancedcustomfields.com/pro/
+WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin ([Pro](http://www.advancedcustomfields.com/pro/) and [Free 5+](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)).
 
 Features
 --------
@@ -19,38 +18,31 @@ Compatibility
  - Requires at least WP 4.7+
  - Tested with WordPress up to 4.9.6
 
-Docs
-----
-
-A note on sortable Columns: Sorting works over a meta query. As a result, items
-with no ACF-Value will disappear from the list. To adjust or suppress sortability
-for a specific field use `acf_quick_edit_sortable_column_{$field_name}` filter.
-
 
 Installation
 ------------
 
- - Download `acf-quick-edit-fields.zip` from the [releases](../../releases/latest) tab.
- - Install it like a regular WordPress plugin.
- - As long as the plugin is active it will check for Updates here on GitHub.
+### Production (Stand-Alone)
+ - Head over to [releases](../../releases)
+ - Download 'acf-quick-edit-fields.zip'
+ - Upload and activate it like any other WordPress plugin
+ - AutoUpdate will run as long as the plugin is active
+
+### Production (using Github Updater – recommended for Multisite)
+ - Install [Andy Fragen's GitHub Updater](https://github.com/afragen/github-updater) first.
+ - In WP Admin go to Settings / GitHub Updater / Install Plugin. Enter `mcguffin/acf-quick-edit-fields` as a Plugin-URI.
+
+### Development
+ - cd into your plugin directory
+ - $ `git clone git@github.com:mcguffin/acf-quick-edit-fields.git`
+ - $ `cd acf-quick-edit-fields`
+ - $ `npm install`
+ - $ `gulp`
 
 
-Developing
-----------
+Documentation
+-------------
 
-Clone this repository into the `wp-content/plugins` directory.
-
-    git clone git@github.com:mcguffin/acf-quick-edit-fields.git
-
-Install npm and run gulp
-
-    cd acf-quick-edit-fields
-    npm install
-    gulp
-
-
-ToDo / Known Issues:
------
- - [ ] Bug in Sortable Columns: Rows are not shown if the ACF value is not set (aka. postmeta not present).
- - [ ] Bug: Password field always saves empty value
- - [ ] Radio/Checkbox with Other: other value(s) not shown after save (need to reload)
+ - [Quick Start](wiki)
+ - [Filters and Actions](wiki/Plugin-Filters)
+ - [Known Issues](wiki/Known-Issues) that can't be fixed

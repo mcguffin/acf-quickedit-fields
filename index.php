@@ -7,6 +7,8 @@ Description: Show Advanced Custom Fields in post list table. Edit field values i
 Author: Jörn Lund
 Version: 2.4.0
 Github Repository: mcguffin/acf-quick-edit-fields
+GitHub Plugin URI: mcguffin/acf-quick-edit-fields
+Release Asset: true
 Author URI: https://github.com/mcguffin/
 License: GPL3
 Text Domain: acf-quick-edit-fields
@@ -31,7 +33,17 @@ if ( is_admin() ) {
 
 	// don't WP-Update actual repos!
 	if ( ! file_exists( ACF_QUICK_EDIT_DIRECTORY . '/.git/' ) ) {
-		AutoUpdate\AutoUpdateGithub::instance();
+
+		// Not a git. Check if https://github.com/afragen/github-updater is active
+		$active_plugins = get_option('active_plugins');
+		if ( $sitewide_plugins = get_site_option('active_sitewide_plugins') ) {
+			$active_plugins = array_merge( $active_plugins, array_keys( $sitewide_plugins ) );
+		}
+
+		if ( ! in_array( 'github-updater/github-updater.php', $active_plugins ) ) {
+			// not github updater. Init our own...
+			AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
+		}
 	}
 
 	Core\Core::instance();
