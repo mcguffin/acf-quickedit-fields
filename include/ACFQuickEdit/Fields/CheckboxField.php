@@ -77,26 +77,5 @@ class CheckboxField extends ChoiceField {
 	}
 
 
-	/**
-	 *	@inheritdoc
-	 */
-	public function update( $post_id ) {
-
-		$param_name = $this->acf_field['key'];
-
-		if ( isset( $_REQUEST['acf'][ $param_name ] ) ) {
-			$value = $_REQUEST['acf'][ $param_name ];
-		} else {
-			$value = null;
-		}
-
-		if ( in_array( $this->dont_change_value, (array) $value ) ) {
-			return;
-		}
-
-		update_field( $this->acf_field['key'], $value, $post_id );
-
-	}
-
 
 }
