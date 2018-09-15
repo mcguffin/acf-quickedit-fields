@@ -8,7 +8,7 @@ Author: Jörn Lund
 Version: 2.4.1
 Github Repository: mcguffin/acf-quick-edit-fields
 GitHub Plugin URI: mcguffin/acf-quick-edit-fields
-Release Asset: true
+Release Asset: false
 Author URI: https://github.com/mcguffin/
 License: GPL3
 Text Domain: acf-quick-edit-fields
