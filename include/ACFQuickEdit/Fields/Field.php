@@ -116,7 +116,7 @@ abstract class Field {
 			'show_column_sortable'	=> false,
 		));
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {
-			$field_class = explode( '_', $acf_field['type'] );
+			$field_class = preg_split( '/[-_]/', $acf_field['type'] );
 			$field_class = array_map( 'ucfirst', $field_class );
 			$field_class = 'ACFQuickEdit\\Fields\\' . implode( '', $field_class ) . 'Field';
 			try {

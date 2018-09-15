@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.2
+-----
+ - Github Updater: Release asset false
+
 2.4.1
 -----
  - Introduce filters for custom field type Integration
