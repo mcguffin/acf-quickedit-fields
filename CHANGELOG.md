@@ -4,6 +4,7 @@ ACF QuickEdit Fields
 2.4.2
 -----
  - Github Updater: Release asset false
+ - Field Class: fix field class detection
 
 2.4.1
 -----
