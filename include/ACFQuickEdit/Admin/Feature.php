@@ -130,17 +130,18 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 * @action 'acf/render_field_settings/type={$type}'
+	 *	@action 'acf/render_field_settings/type={$type}'
 	 */
 	abstract function render_acf_settings( $field );
 
 	/**
-	 * @return null
+	 *	@return null
+	 *	@action admin_init
 	 */
 	abstract function init_fields();
 
 	/**
-	 * @return boolean
+	 *	@return boolean
 	 */
 	abstract function is_enabled_for_field( $field );
 

@@ -117,11 +117,6 @@ class Columns extends Feature {
 		acf_render_field_wrap( $weight_field, 'div', 'label' );
 	}
 
-/*
-error_log(var_export($field,true));
-error_log(var_export($el,true));
-error_log(var_export($el2,true));
-*/
 	/**
 	 *	@inheritdoc
 	 */
@@ -206,6 +201,9 @@ error_log(var_export($el2,true));
 			if ( $is_sortable ) {
 				// post query vars
 				add_filter( 'query_vars', array( $this, 'sortable_posts_query_vars' ) );
+
+				// posts
+				add_action( 'pre_get_posts', array( $this, 'parse_query') );
 			}
 		} else if ( 'taxonomy' == $content_type ) {
 
@@ -229,7 +227,9 @@ error_log(var_export($el2,true));
 				);
 			}
 			if ( $is_sortable ) {
+				// terms
 				add_action( 'parse_term_query', array( $this, 'sortable_terms_query_vars' ) );
+
 			}
 
 		} else if ( 'user' == $content_type ) {
@@ -280,6 +280,7 @@ error_log(var_export($el2,true));
 			}
 		}
 	}
+
 
 	/**
 	 *	@inheritdoc
@@ -432,6 +433,28 @@ error_log(var_export($el2,true));
 		$query_vars[] = 'meta_type';
 		return $query_vars;
 	}
+
+	/**
+	 *	@action pre_get_posts
+	 */
+	public function parse_query( $query ) {
+		if ( ( $by = $query->get('orderby') ) && isset( $this->fields[ $by ] ) ) {
+			// modify meta query. Presence of "meta_key" results in posts without meta key not being selected.
+			$query->set( 'meta_key', false );
+			$query->set( 'meta_query', array(
+				'relation'	=> 'OR',
+				array(
+					'key'		=> $by,
+					'compare'	=> 'EXISTS',
+				),
+				array(
+					'key'		=> $by,
+					'compare'	=> 'NOT EXISTS',
+				),
+			));
+		}
+	}
+
 
 	/**
 	 * @action users_list_table_query_args

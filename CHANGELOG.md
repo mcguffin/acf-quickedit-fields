@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.3
+-----
+ - Fix: Sortables – Posts not having a mea value were omitted
+
 2.4.2
 -----
  - Github Updater: Release asset false
