@@ -167,7 +167,7 @@
 				    height: 2px;
 				    transform-origin: 1px 1px;
 				}
-				&[style^="background"] {
+				&[style*="background-color:"] {
 
 					&:before {
 						content:none;
