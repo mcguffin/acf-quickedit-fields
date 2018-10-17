@@ -1,9 +1,13 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.4
+-----
+ - Fix style issue in color picker.
+
 2.4.3
 -----
- - Fix: Sortables – Posts not having a mea value were omitted
+ - Fix: Sortables – Posts not having a meta value were omitted
 
 2.4.2
 -----
