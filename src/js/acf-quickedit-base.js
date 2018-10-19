@@ -71,6 +71,7 @@
 			_.each(this.fields,function(field){
 				field.unload();
 			});
+			acf.unload.reset();
 		},
 		validationComplete:function( json, $form ) {
 			var self = this;
