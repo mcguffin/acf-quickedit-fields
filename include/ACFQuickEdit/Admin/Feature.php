@@ -33,7 +33,7 @@ abstract class Feature extends Core\Singleton {
 	/**
 	 * @var null|array
 	 */
-	private $available_field_groups = null;
+	private static $available_field_groups = null;
 
 	/**
 	 *	Constructor
@@ -193,9 +193,10 @@ abstract class Feature extends Core\Singleton {
 	 * @return array acf field gruops
 	 */
 	protected function get_available_field_groups() {
+
 		global $typenow, $pagenow;
 
-		if ( is_null( $this->available_field_groups ) ) {
+		if ( is_null( self::$available_field_groups ) ) {
 
 			$content_type = $this->get_current_content_type();
 
@@ -256,18 +257,19 @@ abstract class Feature extends Core\Singleton {
 			 * @param array $conditions	Field group conditions being passed to `acf_get_field_groups()`
 			 */
 			$field_groups = array();
+
 			foreach ( $multiple_conditions as $conditions ) {
 				$add_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
 				$field_groups = array_merge( $field_groups, $add_groups );
 			}
 			/*
-			$this->available_field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
+			self::$available_field_groups = acf_get_field_groups( apply_filters( 'acf_quick_edit_fields_group_filter', $conditions ) );
 			/*/
-			$this->available_field_groups = array_unique( $field_groups, SORT_REGULAR );//array_unique( $field_groups );
+			self::$available_field_groups = array_unique( $field_groups, SORT_REGULAR );//array_unique( $field_groups );
 			//*/
 		}
 
-		return $this->available_field_groups;
+		return self::$available_field_groups;
 	}
 
 	/**
