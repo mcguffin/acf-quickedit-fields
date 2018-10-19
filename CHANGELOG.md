@@ -1,6 +1,11 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.5
+-----
+ - Silent ACF unload message
+ - Improve code efficiency
+
 2.4.4
 -----
  - Fix style issue in color picker.
