@@ -32,6 +32,7 @@ class Quickedit extends EditFeature {
 			'instructions'	=> '',
 			'type'			=> 'true_false',
 			'name'			=> 'allow_quickedit',
+			'ui'			=> 1,
 			'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
 		));
 	}

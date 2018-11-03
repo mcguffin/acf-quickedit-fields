@@ -35,6 +35,7 @@ class Bulkedit extends EditFeature {
 			'instructions'	=> '',
 			'type'			=> 'true_false',
 			'name'			=> 'allow_bulkedit',
+			'ui'			=> 1,
 			'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit-fields')
 		));
 	}
