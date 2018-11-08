@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.6
+-----
+ - Fix uninstall fatal
+
 2.4.5
 -----
  - Silent ACF unload message
