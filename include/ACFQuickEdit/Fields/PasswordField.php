@@ -11,14 +11,15 @@ class PasswordField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+
 		$output = '';
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
+
 		$value = $this->get_value( $object_id );
-		//*/
+
 		if ( $value ) {
 			$output .= '<code>********</code>';
+		} else {
+			$output .= __('(No value)', 'acf-quick-edit-fields');
 		}
 		return $output;
 	}

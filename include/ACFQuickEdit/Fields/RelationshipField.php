@@ -14,22 +14,22 @@ class RelationshipField extends Field {
 		/*
 		$field_value = get_field( $this->acf_field['key'], $object_id );
 		/*/
-		$field_value = $this->get_value( $object_id );
+		$value = $this->get_value( $object_id );
 		//*/
 
 		$output = '';
-		if ( is_a( $field_value, 'WP_Post' ) ) {
-			$output .= $this->get_post_object_link( $field_value->ID );
-		} else if ( is_array( $field_value ) ) {
+		if ( is_a( $value, 'WP_Post' ) ) {
+			$output .= $this->get_post_object_link( $value->ID );
+		} else if ( is_array( $value ) ) {
 			$links = array();
-			foreach ( $field_value as $field_value_post ) {
-				$field_value_post_id = 0;
-				if ( is_a( $field_value_post, 'WP_Post' ) ) {
-					$field_value_post_id = $field_value_post->ID;
-				} else if ( is_int( $field_value_post ) ) {
-					$field_value_post_id = $field_value_post;
+			foreach ( $value as $post ) {
+				$post_id = 0;
+				if ( is_a( $post, 'WP_Post' ) ) {
+					$post_id = $post->ID;
+				} else if ( is_int( $post ) ) {
+					$post_id = $post;
 				}
-				if ( $field_value_post_id && $link = $this->get_post_object_link( $field_value_post_id ) ) {
+				if ( $post_id && $link = $this->get_post_object_link( $post_id ) ) {
 					$links[] = $link;
 				}
 			}

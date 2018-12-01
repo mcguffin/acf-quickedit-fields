@@ -11,11 +11,11 @@ class OembedField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id, false );
-		/*/
-		$value = $this->get_value( $object_id, false );
-		//*/
+
+		if ( ! $value = $this->get_value( $object_id, false ) ) {
+			return;
+		}
+
 		return sprintf( '<a href="%s">%s</a>', $value, parse_url( $value, PHP_URL_HOST ) );
 	}
 

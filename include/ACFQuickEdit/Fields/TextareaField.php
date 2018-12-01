@@ -11,11 +11,13 @@ class TextareaField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		return sprintf( '<pre>%s</pre>', get_field( $this->acf_field['key'], $object_id, true ) );
-		/*/
-		return sprintf( '<pre>%s</pre>', $this->get_value( $object_id ) );
-		//*/
+
+		if ( $value = $this->get_value( $object_id ) ) {
+			return sprintf( '<pre>%s</pre>', $value );
+		}
+
+		return '';
+
 	}
 
 	/**

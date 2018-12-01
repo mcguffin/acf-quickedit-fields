@@ -11,11 +11,13 @@ class DateTimePickerField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id, false );
-		/*/
+
 		$value = $this->get_value( $object_id, false );
-		//*/
+
+		if ( is_null( $value ) ) {
+			return __('(No value)', 'acf-quick-edit-fields');
+		}
+
 		return acf_format_date( $value, $this->acf_field['display_format'] );
 
 	}
