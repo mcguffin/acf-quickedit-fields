@@ -442,16 +442,22 @@ class Columns extends Feature {
 	public function parse_query( $query ) {
 		if ( ( $by = $query->get('orderby') ) && isset( $this->fields[ $by ] ) ) {
 			// modify meta query. Presence of "meta_key" results in posts without meta key not being selected.
+
+			if ( $meta_type = $query->get('meta_type') ) {
+				$type_query = array( 'type' => $meta_type );
+			} else {
+				$type_query = array();
+			}
 			$query->set( 'meta_key', false );
 			$query->set( 'meta_query', array(
 				'relation'	=> 'OR',
 				array(
 					'key'		=> $by,
-					'compare'	=> 'EXISTS',
-				),
+					'compare'	=> 'NOT EXISTS',
+				) + $type_query,
 				array(
 					'key'		=> $by,
-					'compare'	=> 'NOT EXISTS',
+					'compare'	=> 'EXISTS',
 				),
 			));
 		}

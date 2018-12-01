@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+2.4.7
+-----
+ - Fix numeric sorting
+
 2.4.6
 -----
  - Fix uninstall fatal
