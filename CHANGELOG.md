@@ -4,6 +4,7 @@ ACF QuickEdit Fields
 2.4.7
 -----
  - Fix numeric sorting
+ - Cleanup column value display
 
 2.4.6
 -----

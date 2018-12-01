@@ -441,7 +441,9 @@ class Columns extends Feature {
 	 */
 	public function parse_query( $query ) {
 		if ( ( $by = $query->get('orderby') ) && isset( $this->fields[ $by ] ) ) {
-			// modify meta query. Presence of "meta_key" results in posts without meta key not being selected.
+
+			// Modify meta query to also select NULL values.
+			// The first meta condition will also be used as ORDER BY
 
 			if ( $meta_type = $query->get('meta_type') ) {
 				$type_query = array( 'type' => $meta_type );
