@@ -2,7 +2,7 @@
   "name": "acf-quick-edit-fields",
   "version": "1.0.0",
   "description": "Enter description here.",
-  "main": "js/acf-qef-field-group.min.min.js",
+  "main": "js/acf-qef-field-group.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,5 +25,8 @@
     "gulp-sourcemaps": "^1.9.1",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.8"
+  },
+  "dependencies": {
+    "event-stream": "^3.3.4"
   }
 }
