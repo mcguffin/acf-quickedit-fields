@@ -14,10 +14,14 @@ class CheckboxField extends ChoiceField {
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		$output = '';
 
-		$output .= sprintf( '<input %s />', acf_esc_attr( array(
-			'type'					=> 'hidden',
-			'name'					=> $input_atts['name'],
-		) ) );
+		// populate $_POST if nothing is selected
+		// in bulk this breaks the 'do-not-change' checkbox
+		if ( $is_quickedit ) {
+			$output .= sprintf( '<input %s />', acf_esc_attr( array(
+				'type'					=> 'hidden',
+				'name'					=> $input_atts['name'],
+			) ) );
+		}
 
 		$output .= sprintf( '<ul class="acf-checkbox-list" data-acf-field-key="%s">', $this->acf_field['key'] );
 
@@ -48,6 +52,7 @@ class CheckboxField extends ChoiceField {
 		}
 
 		$output .= '</ul>';
+
 		if ( $this->acf_field['allow_custom'] ) {
 			$output .= '<button class="button button-seconday add-choice">' . __('Add Choice','acf-quick-edit-fields') . '</button>';
 			$output .= sprintf( '<script type="text/html" id="tmpl-acf-qef-custom-choice-%s">', $this->acf_field['key'] );
@@ -76,6 +81,23 @@ class CheckboxField extends ChoiceField {
 		return $output;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	protected function render_bulk_do_not_change( $input_atts ) {
+
+		// populate $_POST if nothing is selected ...
+		// ... BEFORE the do not change checkbox!
+		printf( '<input %s />', acf_esc_attr( array(
+			'type'					=> 'hidden',
+			'name'					=> $input_atts['name'],
+		) ) );
+
+		$input_atts['name'] .= '[]';
+
+		parent::render_bulk_do_not_change( $input_atts );
+
+	}
 
 
 }

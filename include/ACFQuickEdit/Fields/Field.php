@@ -217,18 +217,9 @@ abstract class Field {
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<label class="inline-edit-group">
 					<span class="title"><?php echo $this->acf_field['label']; ?></span>
-					<?php if ( $mode === 'bulk' ) { ?>
-						<span>
-							<input <?php echo acf_esc_attr( array(
-								'name'		=> $input_atts['name'],
-								'value' 	=> $this->dont_change_value,
-								'type'		=> 'checkbox',
-								'checked'	=> 'checked',
-								'data-is-do-not-change' => 'true',
-							) ) ?> />
-							<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
-						</span>
-					<?php } ?>
+					<?php if ( $mode === 'bulk' ) {
+						$this->render_bulk_do_not_change( $input_atts );
+					} ?>
 					<span class="<?php echo $this->wrapper_class ?>">
 						<?php
 
@@ -241,6 +232,26 @@ abstract class Field {
 			</div>
 		<?php
 
+	}
+
+	/**
+	 *	Render the Do-Not-Chwnage Chackbox
+	 *
+	 *	@param array $input_atts Field input attributes
+	 */
+	protected function render_bulk_do_not_change( $input_atts ) {
+		?>
+		<span>
+			<input <?php echo acf_esc_attr( array(
+				'name'		=> $input_atts['name'],
+				'value' 	=> $this->dont_change_value,
+				'type'		=> 'checkbox',
+				'checked'	=> 'checked',
+				'data-is-do-not-change' => 'true',
+			) ) ?> />
+			<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
+		</span>
+		<?php
 	}
 
 	/**
@@ -342,6 +353,7 @@ abstract class Field {
 	 *	@return null
 	 */
 	public function update( $value, $post_id ) {
+		error_log("update {$this->acf_field['key']} {$post_id} ".var_export( $value ) );
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}
 }
