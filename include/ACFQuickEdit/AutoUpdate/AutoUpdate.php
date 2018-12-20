@@ -201,10 +201,10 @@ abstract class AutoUpdate extends Core\Singleton {
 	protected function get_release_info() {
 
 		if ( is_null( $this->release_info ) ) {
-			$this->release_info = $this->get_remote_release_info();
+			$this->release_info = (object) $this->get_remote_release_info();
 		}
 
-		return (object) $this->release_info;
+		return $this->release_info;
 	}
 
 	/**
