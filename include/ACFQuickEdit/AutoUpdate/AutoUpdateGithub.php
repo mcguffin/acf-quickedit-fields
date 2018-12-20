@@ -21,6 +21,10 @@ class AutoUpdateGithub extends AutoUpdate {
 			if ( ! is_wp_error( $response ) ) {
 				$release_info = json_decode( wp_remote_retrieve_body( $response ) );
 
+				if ( ! isset( $release_info->body ) ) {
+					return false;
+				}
+
 				return $this->extract_info( $release_info->body, array(
 						'tested'		=> 'Tested up to',
 						'requires_php'	=> 'Requires PHP',
