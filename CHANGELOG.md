@@ -3,6 +3,10 @@ ACF QuickEdit Fields
 
 2.4.8
 -----
+ - Fix AutoUpdate PHP warning when github response is missing
+
+2.4.8
+-----
  - Fix Checkbox value override in bulk edit
  - Don't show NULL-Option in multiple select fields
 
