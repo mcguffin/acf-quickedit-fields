@@ -32,25 +32,14 @@ abstract class EditFeature extends Feature {
 			return;
 		}
 
-		// register assets
-		wp_register_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css') );
-
-		// timepicker. Contains some usefull parsing mathods even for dates.
-		wp_register_script('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
-		wp_register_style('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
 
 
-		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
-		if ( version_compare( acf()->version,'5.7','lt' ) ) {
-			$script_src = 'js/legacy/5.6/acf-quickedit.min.js';
-		} else {
-			$script_src = 'js/acf-quickedit.min.js';
-		}
+
 
 		if ( $content_type == 'taxonomy' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'inline-edit-tax', 'acf-input' ), $core->get_version(), true );
+			$this->scripts[] = 'inline-edit-tax';
 		} else if ( $content_type == 'post' ) {
-			wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'inline-edit-post', 'acf-input' ), $core->get_version(), true );
+			$this->scripts[] = 'inline-edit-post';
 		}
 
 		wp_enqueue_media();

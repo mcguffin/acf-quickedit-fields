@@ -38,6 +38,7 @@ class Admin extends Core\Singleton {
 		$this->bulkedit		= Bulkedit::instance();
 
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 5 );
 	}
 
 	/**
@@ -136,6 +137,43 @@ class Admin extends Core\Singleton {
 		// enqueue features assets
 
 	}
+
+	/**
+	 *	@action admin_enqueue_scripts
+	 */
+	public function admin_enqueue_scripts() {
+
+		$core = Core\Core::instance();
+
+		// register assets
+		wp_register_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css') );
+
+		// timepicker. Contains some usefull parsing mathods even for dates.
+		wp_register_script('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
+		wp_register_style('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
+
+
+		if ( version_compare( acf()->version,'5.7','lt' ) ) {
+			$script_src = 'js/legacy/5.6/acf-quickedit.min.js';
+		} else {
+			$script_src = 'js/acf-quickedit.min.js';
+		}
+		wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'acf-input' ), $core->get_version(), true );
+
+		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
+
+		$thumb_h = round( 80 * (get_option('thumbnail_size_h') / get_option('thumbnail_size_w') ));
+		$inline_css = sprintf('.acf-qef-gallery-col,
+		.acf-qef-gallery-col:before,
+		.acf-qef-gallery-col:after {
+			height:%dpx;
+		}', $thumb_h );
+
+		wp_add_inline_style('acf-quickedit', $inline_css, 'after' );
+
+		$this->enqueue_edit_assets();
+	}
+
 	/**
 	 * @action 'load-post.php'
 	 */
@@ -227,7 +265,10 @@ class Admin extends Core\Singleton {
 			exit();
 		}
 	}
-
+	/**
+	 *	@param array $values
+	 *	@return array
+	 */
 	private function unique_values( $values ) {
 		$ret = array();
 		foreach ( $values as $i => $value ) {
