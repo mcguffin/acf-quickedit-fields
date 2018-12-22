@@ -13,6 +13,9 @@
 			img {
 				max-width:100%;
 				height:auto;
+				width: 80px;
+				height: 80px;
+				object-fit: cover;
 			}
 		}
 	}
@@ -52,9 +55,6 @@
 		position:absolute;
 		left:0;
 		top:0;
-		width: 80px;
-		height: 80px;
-		object-fit: cover;
 		&:first-child {
 			display:block;
 		}

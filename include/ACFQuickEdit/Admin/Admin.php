@@ -162,15 +162,6 @@ class Admin extends Core\Singleton {
 
 		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
 
-		$thumb_h = round( 80 * (get_option('thumbnail_size_h') / get_option('thumbnail_size_w') ));
-		$inline_css = sprintf('.acf-qef-gallery-col,
-		.acf-qef-gallery-col:before,
-		.acf-qef-gallery-col:after {
-			height:%dpx;
-		}', $thumb_h );
-
-		wp_add_inline_style('acf-quickedit', $inline_css, 'after' );
-
 		$this->enqueue_edit_assets();
 	}
 
