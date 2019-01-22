@@ -1,9 +1,14 @@
 ACF QuickEdit Fields
 ====================
 
-2.4.8
+2.4.11
 -----
- - Fix AutoUpdate PHP warning when github response is missing
+ - Fix ajax field validation in bulk (#58)
+ - use `acf_validate_value()`
+ - add suport for text field maxlength
+ - Fix missing validation errors in group fields
+ - Fix PHP fatal when ACF is not active
+ - Fix grouped field not being recognized after ajax-validation
 
 2.4.8
 -----
