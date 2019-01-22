@@ -38,7 +38,6 @@ class Admin extends Core\Singleton {
 		$this->bulkedit		= Bulkedit::instance();
 
 		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 5 );
 	}
 
 	/**
@@ -55,6 +54,8 @@ class Admin extends Core\Singleton {
 			}
 			return;
 		}
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 5 );
 
 		// init everything
 		add_action( 'admin_init' , array( $this, 'admin_init' ) );
