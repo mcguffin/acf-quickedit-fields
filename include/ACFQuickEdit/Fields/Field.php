@@ -341,6 +341,12 @@ abstract class Field {
 		if ( in_array( $this->dont_change_value, (array) $value ) ) {
 			return;
 		}
+
+		// validate field value
+		if ( ! acf_validate_value( $value, $this->acf_field, sprintf( 'acf[%s]', $param_name ) ) ) {
+			return;
+		}
+
 		$this->update( $value, $post_id );
 	}
 

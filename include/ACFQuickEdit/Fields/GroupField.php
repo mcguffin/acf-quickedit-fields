@@ -45,12 +45,18 @@ class GroupField extends Field {
 		} else {
 			$value = null;
 		}
+
 		if ( ! is_array( $value ) ) {
 			return;
 		}
 
 		// remove unchanged from input
 		$value = array_filter( $value, array( $this, 'filter_do_not_change') );
+
+		// validate field values
+		if ( ! acf_validate_value( $value, $this->acf_field, sprintf( 'acf[%s]', $param_name ) ) ) {
+			return;
+		}
 
 
 		$this->update( $value, $post_id );
