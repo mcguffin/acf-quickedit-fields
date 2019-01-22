@@ -23,7 +23,7 @@ class NumberField extends Field {
 		if ( $value === "" ) {
 			$output .= __('(No value)', 'acf-quick-edit-fields');
 		} else {
-			$output .= number_format_i18n($value, strlen(substr(strrchr($value, "."), 1)) );
+			$output .= number_format_i18n( floatval($value), strlen( substr( strrchr( $value, "." ), 1 ) ) ); // 
 		}
 		return $output;
 	}
