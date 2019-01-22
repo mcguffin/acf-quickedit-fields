@@ -79,7 +79,9 @@
 			if ( ! json.valid ) {
 				_.each(json.errors,function(err){
 					// err.input is in format `acf[<FIELD_KEY>]`
-					var key = err.input.replace(/^acf\[([0-9a-z_]+)\]$/g,'$1');
+					var match = err.input.match(/\[([0-9a-z_]+)\]$/g), // match last field key
+						key = !! match ? match[0].substring( 1, match[0].length -1 ) : false; // rm braces
+
 					if ( key in self.fields ) {
 						self.fields[key].setError( err.message );
 					}
