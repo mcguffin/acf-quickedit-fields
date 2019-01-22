@@ -168,13 +168,15 @@
 
 		},
 		prepareForAjax:function(data){
-			var ret = {};
-			$.each(data,function(i,val){
-				if (val !== '___do_not_change') {
-					ret[i] = val;
-				}
-			});
-			return ret;
+			// remove unchanged values in bulk
+			if ( !! data.acf ) {
+				$.each(data.acf,function(i,val){
+	   				if ( val == '___do_not_change') {
+						delete( data.acf[i] );
+	   				}
+	   			});
+			}
+			return data;
 		},
 		loadValues: function() {
 			var post_ids = [];
