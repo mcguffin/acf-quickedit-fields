@@ -362,7 +362,6 @@ abstract class Field {
 	 *	@return null
 	 */
 	public function update( $value, $post_id ) {
-		error_log("update {$this->acf_field['key']} {$post_id} ".var_export( $value ) );
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}
 }
