@@ -14,6 +14,12 @@ abstract class Field {
 	private static $fields = [];
 
 	/**
+	 *	@var bool whether the field was already updated
+	 */
+	private $did_update = false;
+
+
+	/**
 	 *	@var array ACF field
 	 */
 	protected $acf_field;
@@ -325,6 +331,10 @@ abstract class Field {
 	 */
 	public function maybe_update( $post_id ) {
 
+		if ( $this->did_update === true ) {
+			return;
+		}
+
 		if ( isset( $this->parent ) ) {
 			return;
 		}
@@ -362,6 +372,7 @@ abstract class Field {
 	 *	@return null
 	 */
 	public function update( $value, $post_id ) {
+		$this->did_update = true;
 		update_field( $this->acf_field['key'], $value, $post_id );
 	}
 }
