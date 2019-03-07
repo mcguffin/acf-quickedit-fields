@@ -161,7 +161,7 @@ abstract class EditFeature extends Feature {
 		foreach ( $this->fields as $field_name => $field_object ) {
 
 			if ( ( $this instanceof Quickedit && $is_quickedit ) || ($this instanceof Bulkedit && ! $is_quickedit ) ) {
-
+error_log('Update '.$post_id.' '.$field_name);
 				$field_object->maybe_update( $post_id, $is_quickedit );
 
 			}

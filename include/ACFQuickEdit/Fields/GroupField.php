@@ -28,7 +28,7 @@ class GroupField extends Field {
 	 *
 	 *	@return null
 	 */
-	public function maybe_update( $post_id ) {
+	public function maybe_update( $post_id, $is_quickedit ) {
 
 		if ( isset( $this->parent ) ) {
 			return;

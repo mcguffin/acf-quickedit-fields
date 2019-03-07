@@ -329,9 +329,9 @@ abstract class Field {
 	 *
 	 *	@return null
 	 */
-	public function maybe_update( $post_id ) {
+	public function maybe_update( $post_id , $is_quickedit) {
 
-		if ( $this->did_update === true ) {
+		if ( $is_quickedit && $this->did_update === true ) {
 			return;
 		}
 
