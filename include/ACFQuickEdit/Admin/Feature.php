@@ -218,6 +218,7 @@ abstract class Feature extends Core\Singleton {
 					}
 
 				} else {
+					add_filter( 'acf/location/rule_match/post_category', array( $this, 'match_post_taxonomy' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
