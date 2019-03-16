@@ -5,7 +5,7 @@ Plugin Name: ACF QuickEdit Fields
 Plugin URI: https://github.com/mcguffin/acf-quick-edit-fields
 Description: Show Advanced Custom Fields in post list table. Edit field values in Quick Edit and / or Bulk edit.
 Author: Jörn Lund
-Version: 2.4.14
+Version: 2.4.15
 Github Repository: mcguffin/acf-quick-edit-fields
 GitHub Plugin URI: mcguffin/acf-quick-edit-fields
 Release Asset: false
