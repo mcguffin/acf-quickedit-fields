@@ -36,6 +36,9 @@ abstract class ChoiceField extends Field {
 		if ( empty( $field_value ) ) {
 			$field_value = array();
 		}
+		if ( ! is_array( $field_value ) ) {
+			$field_value = array( $field_value );
+		}
 
 		foreach ( $field_value as $value ) {
 
