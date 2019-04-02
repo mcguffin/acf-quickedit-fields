@@ -192,7 +192,7 @@
 			this.$hidden.prop( 'disabled', ! editable );
 		},
 		setValue:function(value) {
-			var date, formattedDate;
+			var date, formattedDate, timeObject;
 
 			this.dntChanged();
 
@@ -210,9 +210,17 @@
 				return;
 			}
 			//*
+			timeObject = {
+				hour: date.getHours(),
+				minute: date.getMinutes(),
+				second: date.getSeconds(),
+				millisec: date.getMilliseconds(),
+				microsec: date.getMicroseconds(),
+				timezone: date.getTimezoneOffset(),
+			};
 			formattedDate = $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) + ' ' + $.datepicker.formatTime(
 				this.datePickerArgs.timeFormat,
-				date
+				timeObject
 			);
 			this.$hidden.val(formattedDate);
 			this.$input.val(formattedDate);
