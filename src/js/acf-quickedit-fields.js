@@ -215,7 +215,7 @@
 				minute: date.getMinutes(),
 				second: date.getSeconds(),
 				millisec: date.getMilliseconds(),
-				microsec: date.getMicroseconds(),
+				microsec: 0,
 				timezone: date.getTimezoneOffset(),
 			};
 			formattedDate = $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) + ' ' + $.datepicker.formatTime(
