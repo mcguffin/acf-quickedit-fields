@@ -192,7 +192,7 @@
 			this.$hidden.prop( 'disabled', ! editable );
 		},
 		setValue:function(value) {
-			var date;
+			var date, formattedDate, timeObject;
 
 			this.dntChanged();
 
@@ -210,11 +210,20 @@
 				return;
 			}
 			//*
-			this.$hidden.val(date);
-			this.$input.val( $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) + ' ' + $.datepicker.formatTime(
+			timeObject = {
+				hour: date.getHours(),
+				minute: date.getMinutes(),
+				second: date.getSeconds(),
+				millisec: date.getMilliseconds(),
+				microsec: 0,
+				timezone: date.getTimezoneOffset(),
+			};
+			formattedDate = $.datepicker.formatDate(this.datePickerArgs.dateFormat, date) + ' ' + $.datepicker.formatTime(
 				this.datePickerArgs.timeFormat,
-				date
-			));
+				timeObject
+			);
+			this.$hidden.val(formattedDate);
+			this.$input.val(formattedDate);
 			/*/
 			// will set form dirty if done like this
 			this.$input.datepicker( 'setDate', date );
