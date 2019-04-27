@@ -208,7 +208,8 @@ abstract class Feature extends Core\Singleton {
 			$multiple_conditions = array();
 
 			if ( $content_type === 'post' ) {
-				$conditions = array( 'post_type' => $this->get_current_post_type() );
+				$current_post_type = $this->get_current_post_type();
+				$conditions = array( 'post_type' => $current_post_type );
 
 				if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 					foreach ( apply_filters( 'acf_quick_edit_post_id_request_param', array( 'post_ID' ) ) as $request_param ) {
@@ -222,6 +223,9 @@ abstract class Feature extends Core\Singleton {
 					add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
 					add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
+					if ( 'attachment' === $current_post_type ) {
+						add_filter( 'acf/location/rule_match/attachment', array( $this, 'match_attachment' ), 11, 3 );
+					}
 				}
 
 				$multiple_conditions = array( $conditions );
@@ -274,7 +278,7 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 * @filter 'acf/location/rule_match/post_taxonomy'
+	 *	@filter 'acf/location/rule_match/post_taxonomy'
 	 */
 	function match_post_taxonomy( $match, $rule, $options ) {
 
@@ -304,7 +308,7 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 * @filter 'acf/location/rule_match/post_format'
+	 *	@filter 'acf/location/rule_match/post_format'
 	 */
 	function match_post_format( $match, $rule, $options ) {
 
@@ -317,13 +321,27 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 * @filter 'acf/location/rule_match/post_status'
+	 *	@filter 'acf/location/rule_match/post_status'
 	 */
 	function match_post_status( $match, $rule, $options ) {
 
 		if ( isset( $_REQUEST['post_status'] ) ) {
 
 			return $rule['operator'] == '==' && $rule['value'] == $_REQUEST['post_status'];
+
+		}
+		return $match;
+	}
+
+	/**
+	 *	@filter 'acf/location/rule_match/attachment'
+	 */
+	function match_attachment( $match, $rule, $options ) {
+		if ( isset( $_REQUEST['attachment-filter'] ) ) {
+			$filtered_type = urldecode($_REQUEST['attachment-filter']);
+			$filtered_type = substr( $filtered_type, strpos($filtered_type,':' ) + 1 );
+			//vaR_dump($filtered_type);exit();
+			return $rule['operator'] == '==' && $rule['value'] == $filtered_type;
 
 		}
 		return $match;
