@@ -23,7 +23,14 @@ class TaxonomyField extends Field {
 				if ( $this->acf_field['return_format'] === 'id' ) {
 					$term = get_term($term, $this->acf_field['taxonomy']);
 				}
-				$term_names[] = $term->name;
+				// fix #63 ?
+				if ( trim( $term->name ) !== '' ) {
+					$term_names[] = $term->name;
+				} else if ( trim( $term->slug ) !== '' ) {
+					$term_names[] = $term->slug;
+				} else {
+					$term_names[] = $term->id;
+				}
 			}
 			$output .= implode( ', ', $term_names );
 		} else {
