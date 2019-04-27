@@ -291,6 +291,9 @@ abstract class Feature extends Core\Singleton {
 			foreach ( $_REQUEST as $key => $value ) {
 
 				if ( taxonomy_exists( $key ) && strpos( $rule['value'], $key ) === 0 ) {
+					if ( $key === 'tag' ) {
+						$key = 'post_tag';
+					}
 					return $rule['operator'] == '==' && $rule['value'] == sprintf('%s:%s', $key, $value );
 				}
 
