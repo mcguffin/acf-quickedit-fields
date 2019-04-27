@@ -13,7 +13,7 @@ class TextareaField extends Field {
 	public function render_column( $object_id ) {
 
 		if ( $value = $this->get_value( $object_id ) ) {
-			return sprintf( '<pre>%s</pre>', $value );
+			return sprintf( '<pre>%s</pre>', esc_html( $value ) );
 		}
 
 		return '';
