@@ -122,6 +122,7 @@
 		position:relative;
 	}
 	.acf-input-wrap {
+		height:inherit;
 		input {
 			&[type="url"],
 			&[type="email"],
