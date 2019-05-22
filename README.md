@@ -6,7 +6,7 @@ WordPress plugin which extends the functionality of the Advanced Custom Fields P
 Features
 --------
  - Show ACF field values in List views  
-   [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Supported-ACF-Fields).
+   [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
  - Supports Post, Term and User list tables
  - Scalar Columns (Like Text, Number, ...) can be made sortable
  - Edit ACF Field values in Quick edit and Bulk edit
