@@ -17,9 +17,13 @@ class TaxonomyField extends Field {
 		$value = $this->get_value( $object_id );
 		//*/
 		$output = '';
+
 		if ( $value ) {
 			$term_names = array();
-			foreach ( (array) $value as $i => $term ) {
+			if ( ! is_array( $value ) ) {
+				$value = array( $value );
+			}
+			foreach ( $value as $i => $term ) {
 				if ( $this->acf_field['return_format'] === 'id' ) {
 					$term = get_term($term, $this->acf_field['taxonomy']);
 				}
