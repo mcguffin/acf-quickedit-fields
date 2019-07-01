@@ -550,7 +550,7 @@ class Columns extends Feature {
 	 *	@param string $content
 	 *	@param string $wp_column_slug
 	 *	@param string $object_id
-	 * @action manage_edit-{$taxonomy}_custom_column
+	 *	@filter manage_edit-{$taxonomy}_custom_column
 	 */
 	public function display_term_field_column( $content, $wp_column_slug , $object_id ) {
 
@@ -568,7 +568,7 @@ class Columns extends Feature {
 	 *	@param string $content
 	 *	@param string $wp_column_slug
 	 *	@param string $object_id
-	 *	@action manage_user_custom_column
+	 *	@action manage_users_custom_column
 	 */
 	public function display_user_field_column( $content, $wp_column_slug , $object_id ) {
 
