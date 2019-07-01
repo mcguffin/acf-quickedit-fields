@@ -440,7 +440,7 @@ class Columns extends Feature {
 	 *	@action pre_get_posts
 	 */
 	public function parse_query( $query ) {
-		if ( ( $by = $query->get('orderby') ) && isset( $this->fields[ $by ] ) ) {
+		if ( ( $by = $query->get('orderby') ) && isset( $this->fields,  $this->fields[ $by ] ) ) {
 
 			// Modify meta query to also select NULL values.
 			// The first meta condition will also be used as ORDER BY
