@@ -28,5 +28,28 @@
   },
   "dependencies": {
     "event-stream": "^3.3.4"
+  },
+  "wporg": {
+    "steps": [
+      "build",
+      "git",
+      "github"
+    ],
+    "type": "plugin",
+    "build": {
+      "prebuild": [
+        "wp i18n make-pot . languages/acf-quick-edit-fields.pot --domain=acf-quick-edit-fields --exclude=tmp"
+      ],
+      "build": [
+        "gulp build"
+      ]
+    },
+    "git": {
+      "host": "github.com",
+      "user": "mcguffin"
+    },
+    "wporg": {
+      "assets": ".wporg"
+    }
   }
 }
