@@ -3,6 +3,10 @@ ACF QuickEdit Fields
 
 2.4.11
 -----
+ - Fix ACF deprecation warning
+
+2.4.11
+-----
  - Fix ajax field validation in bulk (#58)
  - use `acf_validate_value()`
  - add suport for text field maxlength
