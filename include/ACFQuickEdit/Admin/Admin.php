@@ -147,11 +147,11 @@ class Admin extends Core\Singleton {
 		$core = Core\Core::instance();
 
 		// register assets
-		wp_register_style('acf-datepicker', acf_get_dir('assets/inc/datepicker/jquery-ui.min.css') );
+		wp_register_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css') );
 
 		// timepicker. Contains some usefull parsing mathods even for dates.
-		wp_register_script('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
-		wp_register_style('acf-timepicker', acf_get_dir('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
+		wp_register_script('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
+		wp_register_style('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
 
 
 		if ( version_compare( acf()->version,'5.7','lt' ) ) {
