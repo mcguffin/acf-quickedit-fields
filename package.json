@@ -4,30 +4,55 @@
   "description": "Enter description here.",
   "main": "js/acf-qef-field-group.min.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run dashicons && gulp dev",
+    "dashicons": "node ./src/run/dashicons.js",
+    "test": "node ./src/run/test.js",
+    "dev-test": "./src/run/dev-test.sh",
+    "i18n": "wp i18n make-pot . languages/acf-dropzone.pot --domain=acf-dropzone --exclude=tmp/*",
+    "rollback": "git reset --hard HEAD~ && git push origin +master"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mcguffin/acf-quick-edit-fields.git"
   },
   "author": "Jörn Lund",
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/mcguffin/acf-quick-edit-fields/issues"
   },
   "homepage": "https://github.com/mcguffin/acf-quick-edit-fields#readme",
+  "browserslist": [
+    "last 3 versions",
+    "> 0.25%",
+    "IE 10"
+  ],
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
   "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-requirejs": "^1.0.0",
-    "gulp-sass": "*",
-    "gulp-sourcemaps": "^1.9.1",
-    "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.8"
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.5.4",
+    "babelify": "^10.0.0",
+    "browserify": "^16.3.0",
+    "browserify-shim": "^3.8.14",
+    "event-stream": "^4.0.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
-    "event-stream": "^3.3.4"
+    "jquery": "^1.12.4"
+  },
+  "engines": {
+    "node": "12.4.0",
+    "npm": "^6.9.0"
   },
   "wporg": {
     "steps": [

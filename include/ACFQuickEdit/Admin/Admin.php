@@ -154,12 +154,7 @@ class Admin extends Core\Singleton {
 		wp_register_style('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
 
 
-		if ( version_compare( acf()->version,'5.7','lt' ) ) {
-			$script_src = 'js/legacy/5.6/acf-quickedit.min.js';
-		} else {
-			$script_src = 'js/acf-quickedit.min.js';
-		}
-		wp_register_script( 'acf-quickedit', plugins_url( $script_src, ACF_QUICK_EDIT_FILE ), array( 'acf-input' ), $core->get_version(), true );
+		wp_register_script( 'acf-quickedit', plugins_url( 'js/acf-quickedit.js', ACF_QUICK_EDIT_FILE ), array( 'acf-input' ), $core->get_version(), true );
 
 		wp_register_style( 'acf-quickedit', plugins_url( 'css/acf-quickedit.css', ACF_QUICK_EDIT_FILE ) );
 
@@ -172,7 +167,7 @@ class Admin extends Core\Singleton {
 	public function enqueue_post_assets() {
 		global $typenow;
 		if ( 'acf-field-group' === $typenow ) {
-			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.min.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
+			wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
 			wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
 		}
 	}

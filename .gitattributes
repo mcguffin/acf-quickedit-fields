@@ -6,3 +6,4 @@ gulpfile.js export-ignore
 package*.json export-ignore
 composer.json export-ignore
 /src export-ignore
+/test export-ignore
