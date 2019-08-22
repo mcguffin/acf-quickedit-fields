@@ -3,24 +3,6 @@
     "title": "QuickEdit Fields jQuery",
     "fields": [
         {
-            "key": "field_5004e4dd14023",
-            "label": "Google Map",
-            "name": "google_map",
-            "type": "google_map",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "center_lat": "",
-            "center_lng": "",
-            "zoom": "",
-            "height": ""
-        },
-        {
             "key": "field_5004e4ec14024",
             "label": "Date Picker",
             "name": "date_picker",
@@ -36,11 +18,11 @@
             "display_format": "d\/m\/Y",
             "return_format": "d\/m\/Y",
             "first_day": 1,
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1410,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5004e4f514025",
@@ -58,9 +40,9 @@
             "display_format": "d\/m\/Y g:i a",
             "return_format": "d\/m\/Y g:i a",
             "first_day": 1,
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1420,
             "allow_quickedit": 0,
             "allow_bulkedit": 0
         },
@@ -79,11 +61,11 @@
             },
             "display_format": "g:i a",
             "return_format": "g:i a",
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1430,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5004e50c14027",
@@ -99,11 +81,11 @@
                 "id": ""
             },
             "default_value": "",
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1440,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         }
     ],
     "location": [
@@ -111,7 +93,21 @@
             {
                 "param": "post_type",
                 "operator": "==",
-				"value": "acf-quef-test"
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
             }
         ]
     ],
@@ -123,5 +119,5 @@
     "hide_on_screen": "",
     "active": 0,
     "description": "",
-    "modified": 1564927260
+    "modified": 1566488661
 }

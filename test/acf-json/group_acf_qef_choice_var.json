@@ -27,11 +27,11 @@
             "ui": 1,
             "ajax": 1,
             "return_format": "value",
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1210,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
             "placeholder": ""
         },
         {
@@ -59,10 +59,10 @@
             "layout": "vertical",
             "toggle": 0,
             "return_format": "value",
-            "show_column": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_weight": 1220,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5001e65ecb56a",
@@ -89,11 +89,11 @@
             "default_value": "",
             "layout": "vertical",
             "return_format": "value",
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1230,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5001e65ecb579",
@@ -113,11 +113,11 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": "",
-            "show_column": 0,
-            "show_column_sortable": 0,
-            "show_column_weight": 1000,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1240,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         }
     ],
     "location": [
@@ -125,7 +125,21 @@
             {
                 "param": "post_type",
                 "operator": "==",
-				"value": "acf-quef-test"
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
             }
         ]
     ],
@@ -137,5 +151,5 @@
     "hide_on_screen": "",
     "active": 0,
     "description": "",
-    "modified": 1564927683
+    "modified": 1566488524
 }

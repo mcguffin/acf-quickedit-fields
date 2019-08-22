@@ -29,6 +29,10 @@ class PluginTest {
 			'public'	=> true,
 			'supports'	=> ['title'],
 		]);
+		register_taxonomy('acf-quef-test','acf-quef-test',[
+			'label'		=> 'Quick Edit Test terms',
+			'public'	=> true,
+		]);
 
 	}
 
@@ -58,7 +62,7 @@ class PluginTest {
 	public function mutate_field_group( $field_group ) {
 		// default
 
-		if ( strpos( $field_group['key'], 'group_acf_duplicate_repeater_' ) === false ) {
+		if ( strpos( $field_group['key'], 'group_acf_qef_' ) === false ) {
 			$this->current_json_save_path = null;
 			return;
 		}
