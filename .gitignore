@@ -6,6 +6,7 @@
 *.swp
 *.out
 *.psd
+!src/wporg/*.psd
 .svn/
 .svnignore
 .sass-cache

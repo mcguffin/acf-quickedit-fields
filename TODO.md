@@ -11,5 +11,5 @@ ACF QuickEdit Fields TODO
  - [ ] Refactor Fields & Features
  - [ ] Remove AutoUpdate
  - [ ] Remove GithubUpdater Meta
- - [ ] Design wporg assets
+ - [x] Design wporg assets
  - [ ] Submit to wporg
