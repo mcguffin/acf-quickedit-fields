@@ -4,11 +4,11 @@
   "description": "Enter description here.",
   "main": "js/acf-qef-field-group.min.js",
   "scripts": {
-    "dev": "npm run dashicons && gulp dev",
+    "dev": "gulp dev",
     "dashicons": "node ./src/run/dashicons.js",
     "test": "node ./src/run/test.js",
     "dev-test": "./src/run/dev-test.sh",
-    "i18n": "wp i18n make-pot . languages/acf-dropzone.pot --domain=acf-dropzone --exclude=tmp/*",
+    "i18n": "wp i18n make-pot . languages/acf-quick-edit-fields.pot --domain=acf-quick-edit-fields --exclude=tmp/*",
     "rollback": "git reset --hard HEAD~ && git push origin +master"
   },
   "repository": {
@@ -53,6 +53,45 @@
   "engines": {
     "node": "12.4.0",
     "npm": "^6.9.0"
+  },
+  "wpPlugin": {
+    "components": {
+      "core": {
+        "components": [],
+        "flags": []
+      },
+      "git": {
+        "user": "mcguffin",
+        "remote": "git@github.com:mcguffin/acf-quick-edit-fields.git"
+      },
+      "admin": {
+        "components": {},
+        "flags": [
+          "css",
+          "js"
+        ]
+      },
+      "compat": {
+        "components": {
+          "polylang": {
+            "flags": []
+          }
+        },
+        "flags": []
+      },
+      "ajax": {
+        "components": {},
+        "flags": []
+      }
+    },
+    "name": "ACF QuickEdit Fields",
+    "slug": "acf-quick-edit-fields",
+    "prefix": "acf_duplicate_repeater",
+    "textdomain": "acf-quick-edit-fields",
+    "namespace": "ACFQuickEdit",
+    "author": "mcguffin",
+    "author_uri": "https://github.com/mcguffin",
+    "year": 2019
   },
   "wporg": {
     "steps": [

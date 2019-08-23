@@ -1,14 +1,21 @@
 <?php
+/**
+ *	@package ACFQuickEdit\Compat
+ *	@version 1.0.0
+ *	2018-09-22
+ */
 
 namespace ACFQuickEdit\Compat;
+
+if ( ! defined('ABSPATH') ) {
+	die('FU!');
+}
+
 
 use ACFQuickEdit\Core;
 
 
-/**
- *	Maintain compatibility with polylang
- */
-class Polylang extends Core\Singleton {
+class Polylang extends Core\Singleton implements Core\ComponentInterface {
 
 	/**
 	 *	@inheritdoc
@@ -18,6 +25,7 @@ class Polylang extends Core\Singleton {
 		add_filter( 'acf_quick_edit_term_ajax_actions', array( $this, 'term_ajax_action' ) );
 		add_filter( 'acf_quick_edit_post_id_request_param', array( $this, 'post_id_request_params' ) );
 	}
+
 
 	/**
 	 *	@filter acf_quick_edit_post_ajax_actions
@@ -41,6 +49,33 @@ class Polylang extends Core\Singleton {
 	public function post_id_request_params( $params ) {
 		$params[] = 'post_id';
 		return $params;
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	 public function activate(){
+
+	 }
+
+	 /**
+	  *	@inheritdoc
+	  */
+	 public function deactivate(){
+
+	 }
+
+	 /**
+	  *	@inheritdoc
+	  */
+	 public static function uninstall() {
+		 // remove content and settings
+	 }
+
+	/**
+ 	 *	@inheritdoc
+	 */
+	public function upgrade( $new_version, $old_version ) {
 	}
 
 }

@@ -4,13 +4,13 @@ import 'qef-thumbnail-col.js';
 
 //var acf_quickedit = {};
 
-
 if ( 'undefined' !== typeof inlineEditPost ) {
 	// we create a copy of the WP inline edit post function
 	var _wp_inline_edit_post = inlineEditPost.edit,
 		_wp_inline_edit_save = inlineEditPost.save,
 		_wp_inline_edit_revert = inlineEditPost.revert,
 		_wp_inline_edit_bulk =  inlineEditPost.setBulk;
+
 	// and then we overwrite the function with our own code
 	inlineEditPost.edit = function( id ) {
 		var object_id, $tr, ret;
@@ -34,6 +34,7 @@ if ( 'undefined' !== typeof inlineEditPost ) {
 			el: $tr.get(0),
 			object_id: object_id
 		});
+
 		return ret;
 	};
 	inlineEditPost.revert = function() {

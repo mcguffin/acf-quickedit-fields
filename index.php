@@ -4,50 +4,55 @@
 Plugin Name: ACF QuickEdit Fields
 Plugin URI: https://github.com/mcguffin/acf-quick-edit-fields
 Description: Show Advanced Custom Fields in post list table. Edit field values in Quick Edit and / or Bulk edit.
-Author: Jörn Lund
+Author: mcguffin
 Version: 2.4.19
-Github Repository: mcguffin/acf-quick-edit-fields
-GitHub Plugin URI: mcguffin/acf-quick-edit-fields
-Release Asset: false
-Author URI: https://github.com/mcguffin/
+Author URI: https://github.com/mcguffin
 License: GPL3
+Requires WP: 4.8
+Requires PHP: 5.6
 Text Domain: acf-quick-edit-fields
 Domain Path: /languages/
 */
 
+/*  Copyright 2019 Jörn Lund
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+/*
+Plugin was generated with Jörn Lund's WP Skelton
+https://github.com/mcguffin/wp-skeleton
+*/
+
+
 namespace ACFQuickEdit;
 
-if ( ! defined( 'ABSPATH' ) )
-	die('Nope.');
+if ( ! defined('ABSPATH') ) {
+	die('FU!');
+}
 
-define( 'ACF_QUICK_EDIT_FILE', __FILE__ );
-define( 'ACF_QUICK_EDIT_DIRECTORY', plugin_dir_path(__FILE__) );
 
-require_once ACF_QUICK_EDIT_DIRECTORY . 'include/autoload.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
 
 if ( version_compare( phpversion(), '5.6', '<' ) ) {
-	require_once ACF_QUICK_EDIT_DIRECTORY . 'include/legacy-php.php';
+	require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/legacy-php.php';
 }
 
-if ( is_admin() ) {
-
-	// don't WP-Update actual repos!
-	if ( ! file_exists( ACF_QUICK_EDIT_DIRECTORY . '/.git/' ) ) {
-
-		// Not a git. Check if https://github.com/afragen/github-updater is active
-		$active_plugins = get_option('active_plugins');
-		if ( $sitewide_plugins = get_site_option('active_sitewide_plugins') ) {
-			$active_plugins = array_merge( $active_plugins, array_keys( $sitewide_plugins ) );
-		}
-
-		if ( ! in_array( 'github-updater/github-updater.php', $active_plugins ) ) {
-			// not github updater. Init our own...
-			AutoUpdate\AutoUpdateGithub::instance()->init( __FILE__ );
-		}
-	}
-
-	Core\Core::instance();
+if ( is_admin() || defined( 'DOING_AJAX' ) ) {
+	Core\Core::instance( __FILE__ );
 
 	Admin\Admin::instance();
-
 }
+
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'test/test.php';

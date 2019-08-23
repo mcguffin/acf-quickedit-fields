@@ -10,10 +10,10 @@ const qe = {
 			return qe.field._types[a.type];
 		},
 		factory:function(el,controller){
-			var type = $(el).attr('data-field-type'),
-				types = qe.field._types;
+			const type = $(el).attr('data-field-type'),
+				types = qe.field._types,
+				field_class = type in types ? types[type] : qe.field.View;
 
-			field_class = type in types ? types[type] : qe.field.View;
 			return new field_class({
 				el:			el,
 				controller:	controller,
@@ -138,6 +138,7 @@ qe.form.View = Backbone.View.extend({
 qe.form.QuickEdit = qe.form.View.extend({
 	loadValues: function() {
 		var self = this;
+
 		$.post({
 			url:ajaxurl,
 			data:{

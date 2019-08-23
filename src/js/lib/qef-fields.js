@@ -81,7 +81,7 @@ qe.field.add_type( file_type );
 /**
  *	field type image
  */
-qe.field.add_type( _.extend(file_type,{type:'image',mediaFrameType:'image'}) );
+qe.field.add_type( _.extend( file_type, { type: 'image', mediaFrameType: 'image' } ) );
 
 qe.field.add_type( file_type );
 
@@ -89,21 +89,21 @@ qe.field.add_type( file_type );
  *	field type range
  */
 qe.field.add_type( {
-	 type:'range',
-	 events:{
-		 'change [type="range"]'		: 'adaptNumber',
-		 'mousemove [type="range"]'		: 'adaptNumber',
-		 'change [type="number"]'		: 'adaptRange',
-		 'mousemove [type="number"]'	: 'adaptRange',
-		 'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
-	 },
-	 adaptNumber:function(){
-		 this.$('[type="number"]').val( this.$('[type="range"]').val() );
-	 },
-	 adaptRange:function(){
-		 this.$('[type="range"]').val( this.$('[type="number"]').val() );
-	 }
- } );
+	type:'range',
+	events:{
+		'change [type="range"]'		: 'adaptNumber',
+		'mousemove [type="range"]'		: 'adaptNumber',
+		'change [type="number"]'		: 'adaptRange',
+		'mousemove [type="number"]'	: 'adaptRange',
+		'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
+	},
+	adaptNumber:function(){
+		this.$('[type="number"]').val( this.$('[type="range"]').val() );
+	},
+	adaptRange:function(){
+		this.$('[type="range"]').val( this.$('[type="number"]').val() );
+	}
+} );
 
 
 /**
@@ -117,15 +117,15 @@ qe.field.add_type( {
 		this.$hidden	= this.$( '[type="hidden"]' );
 		qe.field.View.prototype.initialize.apply(this,arguments);
 		this.datePickerArgs = {
-				dateFormat		: this.$('[data-date_format]').data('date_format'),
-				altFormat		: 'yymmdd',
-				altField		: this.$hidden,
-				changeYear		: true,
-				yearRange		: "-100:+100",
-				changeMonth		: true,
-				showButtonPanel	: true,
-				firstDay		: this.$('[data-first_day]').data('first_day')
-			};
+			dateFormat		: this.$('[data-date_format]').data('date_format'),
+			altFormat		: 'yymmdd',
+			altField		: this.$hidden,
+			changeYear		: true,
+			yearRange		: "-100:+100",
+			changeMonth		: true,
+			showButtonPanel	: true,
+			firstDay		: this.$('[data-first_day]').data('first_day')
+		};
 		this.$input.datepicker( this.datePickerArgs ).on('blur',function(){
 			if ( ! $(this).val() ) {
 				self.$hidden.val('');
@@ -153,7 +153,7 @@ qe.field.add_type( {
 		this.$input.datepicker( 'setDate', date );
 		return this;
 	}
-	});
+});
 
 /**
  *	field type date_time_picker
@@ -166,20 +166,20 @@ qe.field.add_type( {
 		this.$hidden	= this.$( '[type="hidden"]' );
 		qe.field.View.prototype.initialize.apply(this,arguments);
 		this.datePickerArgs = {
-				altField			: this.$hidden,
-				dateFormat			: this.$('[data-date_format]').data('date_format'),
-				altFormat			: 'yy-mm-dd',
-				timeFormat			: this.$('[data-time_format]').data('time_format'),
-				altTimeFormat		: 'HH:mm:ss',
-				altFieldTimeOnly	: false,
-				changeYear			: true,
-				yearRange			: "-100:+100",
-				changeMonth			: true,
-				showButtonPanel		: true,
-				firstDay			: this.$('[data-first_day]').data('first_day'),
-				controlType			: 'select',
-				oneLine				: true
-			};
+			altField			: this.$hidden,
+			dateFormat			: this.$('[data-date_format]').data('date_format'),
+			altFormat			: 'yy-mm-dd',
+			timeFormat			: this.$('[data-time_format]').data('time_format'),
+			altTimeFormat		: 'HH:mm:ss',
+			altFieldTimeOnly	: false,
+			changeYear			: true,
+			yearRange			: "-100:+100",
+			changeMonth			: true,
+			showButtonPanel		: true,
+			firstDay			: this.$('[data-first_day]').data('first_day'),
+			controlType			: 'select',
+			oneLine				: true
+		};
 
 		this.$input.datetimepicker( this.datePickerArgs ).on('blur',function(){
 			if ( ! $(this).val() ) {
@@ -270,7 +270,7 @@ qe.field.add_type( {
 		qe.field.View.prototype.setEditable.apply(this,arguments);
 		this.$hidden.prop( 'disabled', ! editable );
 	},
-		setValue:function(value) {
+	setValue:function(value) {
 		var time;
 
 		this.dntChanged();
@@ -285,7 +285,7 @@ qe.field.add_type( {
 		this.$hidden.val( value );
 		this.$input.val( $.datepicker.formatTime( this.datePickerArgs.timeFormat, time ) )
 		return this;
-		}
+	}
 });
 
 /**
@@ -327,7 +327,6 @@ qe.field.add_type( {
 		this.$input.on('keydown keyup', function(e) {
 			if ( e.which == 13 || e.which == 27 ) {
 				e.stopPropagation();
-//					e.preventDefault();
 			}
 		});
 	}
@@ -371,7 +370,7 @@ qe.field.add_type( {
 			this.$( '[type="checkbox"][value="'+value+'"]' )
 				.prop( 'checked', true );
 		}
-		},
+	},
 	addChoice:function(e){
 		e.preventDefault();
 		var tpl = wp.template('acf-qef-custom-choice-' + this.$el.attr('data-key'));
@@ -413,7 +412,7 @@ qe.field.add_type( {
 		this.dntChanged();
 		this.$('[type="radio"][value="'+value+'"]' )
 			.prop( 'checked', true );
-		}
+	}
 });
 
 
@@ -455,7 +454,7 @@ qe.field.add_type( {
 		this.$('[type="radio"][value="'+value+'"]' )
 			.prop( 'checked', true )
 			.closest('li').addClass('selected');
-		}
+	}
 });
 
 /**
@@ -486,7 +485,7 @@ qe.field.add_type( {
 		if ( 'number' === typeof value ) {
 			value = [ value ];
 		}
-		$.each(value,function(i,val){
+		$.each( value, function( i, val ) {
 			self.$('[value="'+val+'"]' ).each(function(i,el){
 				if ( $(this).is('[type="radio"],[type="checkbox"]') ) {
 					$(this).prop( 'checked', true );
