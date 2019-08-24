@@ -51,7 +51,7 @@ class Admin extends Core\Singleton {
 		$this->bulkedit		= Bulkedit::instance();
 		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', array(
 			'public'		=> false,
-			'use_nonce'		=> false, // hmmm ... I would love a nonce...
+			'use_nonce'		=> true,
 			'capability'	=> 'edit_posts',
 			'callback'		=> array( $this, 'ajax_get_acf_post_meta' ),
 		));
@@ -74,18 +74,21 @@ class Admin extends Core\Singleton {
 	 */
 	public function ajax_get_acf_post_meta( $params ) {
 
-		header('Content-Type: application/json');
+//		header('Content-Type: application/json');
 
 		if ( isset( $params['object_id'] , $params['acf_field_keys'] ) ) {
 
 			$result = array();
-			$result_denied = array( 'success' => false, 'message' => __( 'Insufficient Permission', 'acf-quick-edit-fields') );
+			$result_denied = array(
+				'success' => false,
+				'message' => __( 'Insufficient Permission', 'acf-quick-edit-fields' )
+			);
 
 			$object_ids = (array) $params['object_id'];
 
 			$is_multiple = count( $object_ids ) > 1;
 
-			$field_keys = array_unique( $params['acf_field_keys'] );
+			$field_keys = array_unique( (array) $params['acf_field_keys'] );
 
 			foreach ( $object_ids as $object_id ) {
 
@@ -206,15 +209,34 @@ class Admin extends Core\Singleton {
 		Asset\Asset::get('js/acf-quickedit.js')
 			->footer()
 			->deps( array( 'acf-input' ) )
-			// ->localize( array(
-			// 	/* Script Localization */
-			// ) )
+			->localize( array(
+				/* Script Localization */
+				'options'	=> array(
+					'request'	=> $this->ajax_handler->request
+				),
+			), 'acf_qef' )
 			->enqueue();
 
 		$this->enqueue_edit_assets();
 
 	}
 
+	/**
+	 * @action 'load-post.php'
+	 */
+	public function enqueue_post_assets() {
+		global $typenow;
+		if ( 'acf-field-group' === $typenow ) {
+			Asset\Asset::get( 'js/acf-qef-field-group.js' )
+				->deps( 'acf-field-group' )
+				->enqueue();
+			Asset\Asset::get( 'css/acf-qef-field-group.css' )
+				->deps( 'acf-field-group' )
+				->enqueue();
+			// wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
+			// wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
+		}
+	}
 
 	/**
 	 *	@action 'load-edit.php'

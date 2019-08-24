@@ -24,7 +24,7 @@ const qe = {
 qe.form.View = Backbone.View.extend({
 	initialize:function(){
 
-		var self = this;
+		const self = this;
 
 		this.options = arguments[0];
 
@@ -56,7 +56,7 @@ qe.form.View = Backbone.View.extend({
 		this.initValidation();
 	},
 	_setValues:function(values) {
-		var self = this;
+		const self = this;
 		_.each( values, function( val, key ){
 			if ( key in self.fields ) {
 				self.fields[key].setValue( val );
@@ -73,7 +73,7 @@ qe.form.View = Backbone.View.extend({
 		acf.unload.reset();
 	},
 	validationComplete:function( json, $form ) {
-		var self = this;
+		const self = this;
 
 		if ( ! json.valid ) {
 			_.each(json.errors,function(err){
@@ -137,15 +137,15 @@ qe.form.View = Backbone.View.extend({
 });
 qe.form.QuickEdit = qe.form.View.extend({
 	loadValues: function() {
-		var self = this;
+		const self = this;
+		const data = _.extend( {}, acf_qef.options.request, {
+			'object_id' : this.options.object_id,
+			'acf_field_keys' : this.getFieldsToLoad(),
+		} );
 
 		$.post({
 			url:ajaxurl,
-			data:{
-				'action' : 'get_acf_post_meta',
-				'object_id' : this.options.object_id,
-				'acf_field_keys' : this.getFieldsToLoad(),
-			},
+			data: data,
 			success:function(response){
 				self.loadedValues( response );
 			}
@@ -162,7 +162,7 @@ qe.form.BulkEdit = qe.form.View.extend({
 	// todo: do not change
 	initialize:function(){
 
-		var self = this;
+		const self = this;
 
 		qe.form.View.prototype.initialize.apply( this, arguments );
 
@@ -186,7 +186,7 @@ qe.form.BulkEdit = qe.form.View.extend({
 			post_ids.push($(this).val())
 		});
 
-		var self = this;
+		const self = this;
 		$.post({
 			url:ajaxurl,
 			data:{
@@ -213,7 +213,7 @@ qe.field.View = wp.media.View.extend({
 		'change [type="checkbox"][data-is-do-not-change="true"]' : 'dntChanged',
 	},
 	initialize:function(){
-		var self = this;
+		const self = this;
 		Backbone.View.prototype.initialize.apply( this, arguments );
 		this.key = this.$el.attr('data-key');
 		this.parent_key = this.$el.attr('data-parent-key');

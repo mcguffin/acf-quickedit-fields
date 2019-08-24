@@ -112,7 +112,7 @@ qe.field.add_type( {
 qe.field.add_type( {
 	type:'date_picker',
 	initialize:function() {
-		var self = this;
+		const self = this;
 		this.$input		= this.$( '[type="text"]' );
 		this.$hidden	= this.$( '[type="hidden"]' );
 		qe.field.View.prototype.initialize.apply(this,arguments);
@@ -161,7 +161,7 @@ qe.field.add_type( {
 qe.field.add_type( {
 	type:'date_time_picker',
 	initialize:function() {
-		var self = this;
+		const self = this;
 		this.$input		= this.$( '[type="text"]' );
 		this.$hidden	= this.$( '[type="hidden"]' );
 		qe.field.View.prototype.initialize.apply(this,arguments);
@@ -242,7 +242,7 @@ qe.field.add_type( {
 qe.field.add_type( {
 	type:'time_picker',
 	initialize:function() {
-		var self = this;
+		const self = this;
 		this.$input		= this.$( '[type="text"]' );
 		this.$hidden	= this.$( '[type="hidden"]' );
 		qe.field.View.prototype.initialize.apply(this,arguments);
@@ -359,7 +359,7 @@ qe.field.add_type( {
 		this.$button.prop( 'disabled', !editable );
 	},
 	setValue:function( value ) {
-		var self = this;
+		const self = this;
 		this.dntChanged();
 		if ( $.isArray(value) ) {
 			$.each( value, function( idx, val ) {
@@ -480,7 +480,7 @@ qe.field.add_type( {
 		this.$input = this.$('select,input[value!="___do_not_change"]').prop( 'readonly', true );
 	},
 	setValue:function( value ) {
-		var self = this;
+		const self = this;
 		this.dntChanged();
 		if ( 'number' === typeof value ) {
 			value = [ value ];
