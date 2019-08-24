@@ -75,6 +75,7 @@ abstract class Field {
 			// relational
 			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
+			'link'				=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'taxonomy'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'user'				=> array( 
