@@ -77,7 +77,11 @@ abstract class Field {
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'taxonomy'			=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
-			'user'				=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
+			'user'				=> array( 
+				'column'	=> current_user_can('list_users'),	
+				'quickedit'	=> false,
+				'bulkedit'	=> false 
+			),
 
 			// jQuery
 			'google_map'		=> array( 'column' => false,	'quickedit' => false,	'bulkedit' => false ),
