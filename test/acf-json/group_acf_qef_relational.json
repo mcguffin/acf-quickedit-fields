@@ -15,7 +15,11 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array"
+            "return_format": "array",
+            "show_column": 1,
+            "show_column_weight": 1510,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5007e57bd8e2d",
@@ -33,7 +37,9 @@
             "role": "",
             "allow_null": 0,
             "multiple": 0,
-            "return_format": "array"
+            "return_format": "array",
+            "show_column": 1,
+            "show_column_weight": 1520
         },
         {
             "key": "field_5007e544d8e29",
@@ -54,7 +60,7 @@
             "multiple": 0,
             "return_format": "object",
             "show_column": 1,
-            "show_column_weight": 1520,
+            "show_column_weight": 1530,
             "ui": 1
         },
         {
@@ -76,7 +82,7 @@
             "allow_archives": 1,
             "multiple": 0,
             "show_column": 1,
-            "show_column_weight": 1530
+            "show_column_weight": 1540
         },
         {
             "key": "field_5007e55fd8e2b",
@@ -103,7 +109,7 @@
             "max": "",
             "return_format": "object",
             "show_column": 1,
-            "show_column_weight": 1540
+            "show_column_weight": 1550
         },
         {
             "key": "field_5007e56cd8e2c",
@@ -125,7 +131,7 @@
             "load_terms": 0,
             "return_format": "id",
             "show_column": 1,
-            "show_column_weight": 1550,
+            "show_column_weight": 1560,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "multiple": 0,
@@ -161,7 +167,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": 1,
     "description": "",
-    "modified": 1566488786
+    "modified": 1566637132
 }

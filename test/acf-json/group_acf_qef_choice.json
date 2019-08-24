@@ -3,68 +3,6 @@
     "title": "QuickEdit Fields Choice",
     "fields": [
         {
-            "key": "field_5002e5c2126c2",
-            "label": "Select",
-            "name": "select",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "one": "One",
-                "two": "Two",
-                "three": "Three",
-                "four": "Four"
-            },
-            "default_value": [],
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "show_column": 1,
-            "show_column_sortable": 1,
-            "show_column_weight": 1110,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5002e5dc126c3",
-            "label": "Checkbox",
-            "name": "checkbox",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "one": "One",
-                "two": "Two",
-                "three": "Three",
-                "four": "Four"
-            },
-            "allow_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "value",
-            "show_column": 1,
-            "show_column_weight": 1120,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1,
-            "save_custom": 0
-        },
-        {
             "key": "field_5002e5ec126c4",
             "label": "Radio Button",
             "name": "radio_button",
@@ -147,6 +85,68 @@
             "allow_bulkedit": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_5002e5c2126c2",
+            "label": "Select",
+            "name": "select",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5002e5dc126c3",
+            "label": "Checkbox",
+            "name": "checkbox",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "show_column": 1,
+            "show_column_weight": 1120,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "save_custom": 0
         }
     ],
     "location": [
@@ -178,7 +178,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": 0,
     "description": "",
-    "modified": 1566488375
+    "modified": 1566636910
 }
