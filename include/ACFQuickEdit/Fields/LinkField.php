@@ -50,6 +50,7 @@ class LinkField extends Field {
 			$atts = array() + $input_atts;
 			$atts['name'] .= "[{$prop}]";
 			$atts['data-link-prop'] = $prop;
+			$atts['value'] = '';
 			$output .= '<input '. acf_esc_attr( $atts ) .' />';
 		}
 		$output .= '<span class="link-content"></span>';

@@ -102,72 +102,36 @@ class Admin extends Core\Singleton {
 
 			$object_ids = (array) $params['object_id'];
 
-			$is_multiple = count( $object_ids ) > 1;
-
 			$field_keys = array_unique( (array) $params['acf_field_keys'] );
+
+			$object_ids = array_filter( $object_ids, array( $this, 'can_edit_object') );
+
+			$success = true;
+
+			$data = array();
 
 			foreach ( $object_ids as $object_id ) {
 
-				// permission check
-				if ( is_numeric( $object_id ) && ! current_user_can( 'edit_post', $object_id ) ) {
-					// posts
-					$data = null;
-					$message = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
-					break;
-
-				} else if ( ! is_numeric( $object_id ) && preg_match('/^([\w\d-_]+)_(\d+)$/', $object_id, $matches ) ) {
-					// terms
-					list( $obj_id, $taxonomy, $term_id ) = $matches;
-					if ( $taxonomy === 'user' || ! taxonomy_exists( $taxonomy ) || ! current_user_can( 'edit_term', $term_id ) ) {
-						$data = null;
-						$message = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
-						break;
-					}
-				}
-
-				if ( is_numeric( $object_id ) ) {
-					if ( ! current_user_can( 'edit_post', $object_id ) ) {
-						continue;
-					}
-				} else {
-					$term_id_num = preg_replace( '([^\d])', '', $object_id );
-					if ( ! current_user_can( 'edit_term', $term_id_num ) ) {
-						continue;
-					}
-				}
-
-				$success = true;
-				$data = array();
 
 				foreach ( $field_keys as $key ) {
 
 					$field = get_field_object( $key , $object_id );
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
-						if ( $is_multiple ) {
-							if ( ! isset( $data[ $key ] ) ) {
-								$data[ $key ] = array();
-							}
-							$data[ $key ][] = $field_object->get_value( $object_id, false );
-						} else {
+						$value = $field_object->get_value( $object_id, false );
+						if ( ! isset( $data[ $key ] ) ) {
+							// first iteration - always set value
 							$data[ $key ] = $field_object->get_value( $object_id, false );
+						} else {
+							// multiple iterations - no value if values aren't equal
+							if ( $data[ $key ] != $value ) {
+								$data[ $key ] = '';
+							}
 						}
 					}
 				}
 			}
 
-			if ( $is_multiple ) {
-				foreach ( $data as $key => $values ) {
-
-					$values = $this->unique_values( $values );
-
-					if ( 1 === count( $values ) ) {
-						$data[ $key ] = $values[0];
-					} else {
-						$data[ $key ] = null;
-					}
-				}
-			}
 		}
 		return array(
 			'success'				=> $success,
@@ -176,6 +140,22 @@ class Admin extends Core\Singleton {
 		);
 	}
 
+
+	private function can_edit_object($object_id) {
+		if ( is_numeric( $object_id ) ) {
+			return current_user_can( 'edit_post', $object_id );
+		}
+		if ( preg_match('/^([\w\d-_]+)_(\d+)$/', $object_id, $matches ) ) {
+			list( $obj_id, $type, $term_id ) = $matches;
+			if ( $taxonomy === 'user' ) {
+				return false;
+			}
+			if ( taxonomy_exists( $type ) ) {
+				return current_user_can( 'edit_term', $term_id );
+			}
+		}
+		return true;
+	}
 
 	/**
 	 *	@action admin_notices
