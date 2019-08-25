@@ -1,28 +1,7 @@
 import $ from 'jquery';
+import { factory } from 'fields.js';
 
-
-
-const qe = {
-	form:{},
-	field: {
-		_types: {},// field types
-		add_type:function(a) {
-			qe.field._types[a.type] = qe.field.View.extend(a);
-			return qe.field._types[a.type];
-		},
-		factory:function(el,controller){
-			const type = $(el).attr('data-field-type'),
-				types = qe.field._types,
-				field_class = type in types ? types[type] : qe.field.View;
-
-			return new field_class({
-				el:			el,
-				controller:	controller,
-			});
-		}
-	},
-};
-qe.form.View = Backbone.View.extend({
+const View = Backbone.View.extend({
 	events:{
 		'heartbeat-send.wp-refresh-nonces': 'heartbeatListener'
 	},
@@ -37,7 +16,7 @@ qe.form.View = Backbone.View.extend({
 		this.fields = {};
 
 		this.$('.inline-edit-col-qed [data-key]').each(function(i,el){
-			var field = qe.field.factory( el, this );
+			var field = factory( el, this );
 			self.fields[ field.key ] = field;
 		});
 
@@ -50,7 +29,6 @@ qe.form.View = Backbone.View.extend({
 
 	},
 	heartbeatListener: function( e, data ) {
-		console.log(this,arguments)
 		data['wp-refresh-post-nonces'] = {
 			post_id: e.data.options.object_id
 		};
@@ -151,7 +129,8 @@ qe.form.View = Backbone.View.extend({
 		return true;
 	}
 });
-qe.form.QuickEdit = qe.form.View.extend({
+
+const QuickEdit = View.extend({
 	loadValues: function() {
 		const self = this;
 		const data = _.extend( {}, acf_qef.options.request, {
@@ -175,13 +154,13 @@ qe.form.QuickEdit = qe.form.View.extend({
 	}
 });
 
-qe.form.BulkEdit = qe.form.View.extend({
+const BulkEdit = View.extend({
 	// todo: do not change
 	initialize:function(){
 
 		const self = this;
 
-		qe.form.View.prototype.initialize.apply( this, arguments );
+		View.prototype.initialize.apply( this, arguments );
 
 		acf.add_filter( 'prepare_for_ajax', this.prepareForAjax, null, this );
 
@@ -227,49 +206,6 @@ qe.form.BulkEdit = qe.form.View.extend({
 });
 
 
-
-qe.field.View = wp.media.View.extend({
-	events:{
-		'change [type="checkbox"][data-is-do-not-change="true"]' : 'dntChanged',
-	},
-	initialize:function(){
-		const self = this;
-		Backbone.View.prototype.initialize.apply( this, arguments );
-		this.key = this.$el.attr('data-key');
-		this.parent_key = this.$el.attr('data-parent-key');
-
-		if( 'false' === this.parent_key ) {
-			this.parent_key = false;
-		}
-
-		if ( ! this.$input ) {
-			this.$input = this.$('input:not([data-is-do-not-change="true"])')
-		}
-		this.setEditable( false );
-		this.$('*').on('change',function(){self.resetError()})
-	},
-	setValue:function(value){
-		this.dntChanged( );
-		this.$input.val(value);
-		return this;
-	},
-	dntChanged:function(){
-		this.setEditable( ! this.$('[type="checkbox"][data-is-do-not-change="true"]').is(':checked') );
-	},
-	setEditable:function(editable){
-		this.$input.prop( 'readonly', ! editable ).prop( 'disabled', ! editable );
-	},
-	setError:function(message) {
-		this.$el.attr('data-error-message',message);
-		return this;
-	},
-	resetError:function() {
-		this.$el.removeAttr( 'data-error-message' );
-		return this;
-	},
-	unload:function(){}
-});
-
-
-
-module.exports = qe;
+module.exports = {
+	form : { BulkEdit, QuickEdit }
+}

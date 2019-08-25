@@ -75,14 +75,11 @@ class Admin extends Core\Singleton {
 	public function ajax_get_acf_post_meta( $params ) {
 
 //		header('Content-Type: application/json');
+		$success = false;
+		$message = '';
+		$data = null;
 
 		if ( isset( $params['object_id'] , $params['acf_field_keys'] ) ) {
-
-			$result = array();
-			$result_denied = array(
-				'success' => false,
-				'message' => __( 'Insufficient Permission', 'acf-quick-edit-fields' )
-			);
 
 			$object_ids = (array) $params['object_id'];
 
@@ -95,14 +92,16 @@ class Admin extends Core\Singleton {
 				// permission check
 				if ( is_numeric( $object_id ) && ! current_user_can( 'edit_post', $object_id ) ) {
 					// posts
-					$result = $result_denied;
+					$data = null;
+					$message = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
 					break;
 
 				} else if ( ! is_numeric( $object_id ) && preg_match('/^([\w\d-_]+)_(\d+)$/', $object_id, $matches ) ) {
 					// terms
 					list( $obj_id, $taxonomy, $term_id ) = $matches;
 					if ( $taxonomy === 'user' || ! taxonomy_exists( $taxonomy ) || ! current_user_can( 'edit_term', $term_id ) ) {
-						$result = $result_denied;
+						$data = null;
+						$message = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
 						break;
 					}
 				}
@@ -118,37 +117,44 @@ class Admin extends Core\Singleton {
 					}
 				}
 
+				$success = true;
+				$data = array();
+
 				foreach ( $field_keys as $key ) {
 
 					$field = get_field_object( $key , $object_id );
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
 						if ( $is_multiple ) {
-							if ( ! isset( $result[ $key ] ) ) {
-								$result[ $key ] = array();
+							if ( ! isset( $data[ $key ] ) ) {
+								$data[ $key ] = array();
 							}
-							$result[ $key ][] = $field_object->get_value( $object_id, false );
+							$data[ $key ][] = $field_object->get_value( $object_id, false );
 						} else {
-							$result[ $key ] = $field_object->get_value( $object_id, false );
+							$data[ $key ] = $field_object->get_value( $object_id, false );
 						}
 					}
 				}
 			}
 
 			if ( $is_multiple ) {
-				foreach ( $result as $key => $values ) {
+				foreach ( $data as $key => $values ) {
 
 					$values = $this->unique_values( $values );
 
 					if ( 1 === count( $values ) ) {
-						$result[ $key ] = $values[0];
+						$data[ $key ] = $values[0];
 					} else {
-						$result[ $key ] = null;
+						$data[ $key ] = null;
 					}
 				}
 			}
-			return $result;
 		}
+		return array(
+			'success'				=> $success,
+			'message'				=> $message,
+			'data'					=> $data,
+		);
 	}
 
 

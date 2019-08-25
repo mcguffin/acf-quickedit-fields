@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 
-acf.add_action('add_field',function( $el ) {
+acf.add_action('add_field', ( $el ) => {
 
 	// remove quickedit options on repeater/flexible_content sub fields
 
@@ -16,9 +16,9 @@ acf.add_action('add_field',function( $el ) {
 /**
  *	Disable sortable checkbox if column is not visible
  */
-function set_sortable_disabled( i, show_col_inp ) {
+set_sortable_disabled = ( i, show_col_inp ) => {
 
-	var checked = $(show_col_inp).prop('checked'),
+	const checked = $(show_col_inp).prop('checked'),
 		$parent = $(show_col_inp).closest('td.acf-input');
 
 	$parent.find('[data-name="show_column_sortable"] [type="checkbox"]').prop('disabled',!checked);
@@ -27,10 +27,6 @@ function set_sortable_disabled( i, show_col_inp ) {
 }
 
 $(document)
-	.on('change','[data-name="show_column"] [type="checkbox"]',function(e){
-		set_sortable_disabled( 0, e.target );
-	})
-	.ready(function(){
-		$('[data-name="show_column"] [type="checkbox"]').each(set_sortable_disabled);
-	});
+	.on('change','[data-name="show_column"] [type="checkbox"]',(e) => set_sortable_disabled( 0, e.target ))
+	.ready( () => $('[data-name="show_column"] [type="checkbox"]').each( set_sortable_disabled ) );
 

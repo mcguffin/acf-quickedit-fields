@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 $('.acf-qef-gallery-col').on('mousemove',function(e){
-	var $this	= $(this),
+	const $this	= $(this),
 		$img	= $(this).find('img')
 		x		= e.offsetX,
 		num		= $img.length,

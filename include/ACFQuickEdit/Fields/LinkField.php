@@ -26,4 +26,55 @@ class LinkField extends Field {
 	}
 
 
+	/**
+	 *	Render Input element
+	 *
+	 *	@param array $input_attr
+	 *	@param string $column
+	 *	@param bool $is_quickedit
+	 *
+	 *	@return string
+	 */
+	protected function render_input( $input_atts, $is_quickedit = true ) {
+		// hidden
+
+		$input_atts += array(
+			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
+			'type'					=> 'text', // make this hidden later!
+			'data-acf-field-key'	=> $this->acf_field['key'],
+			'name'					=> $this->get_input_name(),
+		);
+
+		$output = '';
+		foreach ( array( 'title', 'url', 'target' ) as $prop ) {
+			$atts = array() + $input_atts;
+			$atts['name'] .= "[{$prop}]";
+			$atts['data-link-prop'] = $prop;
+			$output .= '<input '. acf_esc_attr( $atts ) .' />';
+		}
+		$output .= '<span class="link-content">%s</span>';
+		$output .= sprintf( '<button class="button-secondary remove-link dashicons dashicons-no">%s</button>', __('Remove Link', 'acf-quick-edit-fields') );
+		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quick-edit-fields') );
+		add_action('print_media_templates', array( $this, 'print_media_templates' ) );
+		return $output;
+		// [
+		// 	'title'
+		//	'url'
+		//	'target'
+		// ]
+
+		return '<input '. acf_esc_attr( $input_atts ) .' />';
+	}
+
+	public function print_media_templates() {
+
+		if ( ! class_exists( '\_WP_Editors', false ) ) {
+			require( ABSPATH . WPINC . '/class-wp-editor.php' );
+		}
+
+		\_WP_Editors::wp_link_dialog();
+		printf( '<input type="hidden" value="%s" id="_ajax_linking_nonce" />', wp_create_nonce( 'internal-linking' ) );
+
+	}
+
 }

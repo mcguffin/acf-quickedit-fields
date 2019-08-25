@@ -1,19 +1,18 @@
 import $ from 'jquery';
-import qe from 'qef-fields.js';
-import 'qef-thumbnail-col.js';
+import qe from 'base.js';
+import 'thumbnail-col.js';
 
-//var acf_quickedit = {};
 
 if ( 'undefined' !== typeof inlineEditPost ) {
 	// we create a copy of the WP inline edit post function
-	var _wp_inline_edit_post = inlineEditPost.edit,
+	const _wp_inline_edit_post = inlineEditPost.edit,
 		_wp_inline_edit_save = inlineEditPost.save,
 		_wp_inline_edit_revert = inlineEditPost.revert,
 		_wp_inline_edit_bulk =  inlineEditPost.setBulk;
 
 	// and then we overwrite the function with our own code
 	inlineEditPost.edit = function( id ) {
-		var object_id, $tr, ret;
+		let object_id, $tr, ret;
 
 		acf.validation.active = 1;
 
@@ -48,7 +47,7 @@ if ( 'undefined' !== typeof inlineEditPost ) {
 		return _wp_inline_edit_save.apply( this, arguments );
 	}
 	inlineEditPost.setBulk = function() {
-		var ret = _wp_inline_edit_bulk.apply( this, arguments );
+		const ret = _wp_inline_edit_bulk.apply( this, arguments );
 		this.acf_qed_form = new qe.form.BulkEdit({
 			el: $('#bulk-edit').get(0),
 //				object_id: object_id
@@ -60,13 +59,13 @@ if ( 'undefined' !== typeof inlineEditPost ) {
 // todo: inlineEditTax
 if ( 'undefined' !== typeof inlineEditTax ) {
 
-	var _wp_inline_edit_tax = inlineEditTax.edit,
+	const _wp_inline_edit_tax = inlineEditTax.edit,
 		_wp_inline_edit_save = inlineEditTax.save,
 		_wp_inline_edit_revert = inlineEditTax.revert;
 
 	inlineEditTax.edit = function( id ) {
-		var object_id, $tr, ret,
-			tax = $('input[name="taxonomy"]').val();
+		const tax = $('input[name="taxonomy"]').val();
+		let object_id, $tr, ret;
 
 		ret = _wp_inline_edit_tax.apply( this, arguments );
 
