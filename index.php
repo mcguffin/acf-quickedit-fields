@@ -54,5 +54,3 @@ if ( is_admin() || defined( 'DOING_AJAX' ) ) {
 
 	Admin\Admin::instance();
 }
-
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'test/test.php';
