@@ -20,15 +20,34 @@ class Admin extends Core\Singleton {
 
 	private $core;
 
+	private $css;
+
+	private $js;
+
 	/**
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
 
-		$this->core			= Core\Core::instance();
+		$this->core = Core\Core::instance();
 
-		add_action( 'after_setup_theme' , array( $this , 'setup' ) );
+		$this->js = Asset\Asset::get('js/acf-quickedit.js');
 
+		$this->css = Asset\Asset::get('css/acf-quickedit.css');
+
+		add_action( 'after_setup_theme', array( $this , 'setup' ) );
+
+		// init field group admin
+		add_action( 'acf/field_group/admin_head', [ 'ACFQuickEdit\Admin\FieldGroup', 'instance' ] );
+
+	}
+
+	public function __get( $what ) {
+		switch( $what ) {
+			case 'js':
+			case 'css':
+				return $this->$what;
+		}
 	}
 
 	/**
@@ -57,10 +76,10 @@ class Admin extends Core\Singleton {
 		));
 
 		//
-		add_action( 'load-edit.php' , array( $this, 'enqueue_edit_assets' ) );
-		add_action( 'load-edit-tags.php' , array( $this, 'enqueue_edit_assets' ) );
-		add_action( 'load-users.php' , array( $this, 'enqueue_edit_assets' ) );
-		add_action( 'load-post.php' , array( $this, 'enqueue_post_assets' ) );
+		add_action( 'load-edit.php', 'acf_enqueue_scripts' );
+		add_action( 'load-edit-tags.php', 'acf_enqueue_scripts' );
+		add_action( 'load-users.php', 'acf_enqueue_scripts' );
+		add_action( 'acf/field_group/admin_enqueue_scripts', array( $this, 'enqueue_fieldgroup_assets' ) );
 
 
 		add_action( 'admin_init', array( $this , 'admin_init' ) );
@@ -185,10 +204,6 @@ class Admin extends Core\Singleton {
 	 */
 	public function admin_init() {
 
-		$this->columns->init_acf_settings();
-		$this->quickedit->init_acf_settings();
-		$this->bulkedit->init_acf_settings();
-
 		$this->columns->init_fields();
 		$this->quickedit->init_fields();
 		$this->bulkedit->init_fields();
@@ -210,11 +225,11 @@ class Admin extends Core\Singleton {
 
 
 
-		Asset\Asset::get('css/acf-quickedit.css')->enqueue();
+		$this->css->enqueue();
 
-		Asset\Asset::get('js/acf-quickedit.js')
+		$this->js
 			->footer()
-			->deps( array( 'acf-input' ) )
+			->add_dep( 'acf-input' )
 			->localize( array(
 				/* Script Localization */
 				'options'	=> array(
@@ -222,56 +237,22 @@ class Admin extends Core\Singleton {
 				),
 			), 'acf_qef' )
 			->enqueue();
-
-		$this->enqueue_edit_assets();
+		acf_enqueue_scripts();
 
 	}
 
 	/**
 	 * @action 'load-post.php'
 	 */
-	public function enqueue_post_assets() {
-		global $typenow;
-		if ( 'acf-field-group' === $typenow ) {
-			Asset\Asset::get( 'js/acf-qef-field-group.js' )
-				->deps( 'acf-field-group' )
-				->enqueue();
-			Asset\Asset::get( 'css/acf-qef-field-group.css' )
-				->deps( 'acf-field-group' )
-				->enqueue();
-			// wp_enqueue_script( 'acf-qef-field-group', plugins_url( 'js/acf-qef-field-group.js', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
-			// wp_enqueue_style( 'acf-qef-field-group', plugins_url( 'css/acf-qef-field-group.css', ACF_QUICK_EDIT_FILE ), array( 'acf-field-group' ) );
-		}
-	}
+	public function enqueue_fieldgroup_assets() {
 
-	/**
-	 *	@action 'load-edit.php'
-	 */
-	public function enqueue_edit_assets() {
+		Asset\Asset::get( 'js/acf-qef-field-group.js' )
+			->deps( 'acf-field-group' )
+			->enqueue();
 
-		acf_enqueue_scripts();
-
-		// enqueue features assets
-		$styles = array_unique( array_merge(
-			$this->columns->get_styles(),
-			$this->quickedit->get_styles(),
-			$this->bulkedit->get_styles()
-		) );
-
-		$scripts = array_unique( array_merge(
-			$this->columns->get_scripts(),
-			$this->quickedit->get_scripts(),
-			$this->bulkedit->get_scripts()
-		) );
-
-		foreach ( $styles as $style ) {
-			wp_enqueue_style( $style );
-		}
-		foreach ( $scripts as $script ) {
-			wp_enqueue_script( $script );
-		}
-
-		// enqueue features assets
+		Asset\Asset::get( 'css/acf-qef-field-group.css' )
+			->deps( 'acf-field-group' )
+			->enqueue();
 
 	}
 

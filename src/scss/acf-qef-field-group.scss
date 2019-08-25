@@ -1,3 +1,5 @@
+@import "variables/index";
+
 .acf-field-object {
 	&[data-type="repeater"],
 	&[data-type="flexible_content"] {
@@ -5,6 +7,35 @@
 		.acf-field-setting-allow_quickedit,
 		.acf-field-setting-allow_bulkedit {
 			display:none;
+		}
+	}
+}
+.acf-field-column-setting,
+.acf-field-edit-setting {
+	.acf-field {
+		margin:0;
+		&[data-name="show_column_sortable"] {
+			margin-top:15px;
+		}
+	}
+}
+
+.acf-true-false {
+	input[type="checkbox"]:disabled {
+		opacity:0;
+		& + .acf-switch {
+			color:$wp-gray-dark;
+			&.-on {
+				background-color:$wp-gray;
+				.acf-switch-on {
+					color:$wp-gray-dark;
+					text-shadow:none;
+				}
+				&,
+				.acf-switch-slider {
+					border-color:$wp-gray-dark;
+				}
+			}
 		}
 	}
 }

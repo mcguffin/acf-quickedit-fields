@@ -16,7 +16,7 @@ acf.add_action('add_field', ( $el ) => {
 /**
  *	Disable sortable checkbox if column is not visible
  */
-set_sortable_disabled = ( i, show_col_inp ) => {
+const set_sortable_disabled = ( i, show_col_inp ) => {
 
 	const checked = $(show_col_inp).prop('checked'),
 		$parent = $(show_col_inp).closest('td.acf-input');

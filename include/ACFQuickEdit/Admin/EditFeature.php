@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class EditFeature extends Feature {
 
+	
+
 
 	/**
 	 *	@inheritdoc
@@ -34,9 +36,9 @@ abstract class EditFeature extends Feature {
 
 
 		if ( $content_type == 'taxonomy' ) {
-			$this->scripts[] = 'inline-edit-tax';
+			$this->admin->js->add_dep( 'inline-edit-tax' );
 		} else if ( $content_type == 'post' ) {
-			$this->scripts[] = 'inline-edit-post';
+			$this->admin->js->add_dep( 'inline-edit-post' );
 		}
 
 		wp_enqueue_media();
@@ -70,28 +72,24 @@ abstract class EditFeature extends Feature {
 
 					// deps should be property of field type!
 					if ( $field['type'] === 'date_picker' || $field['type'] === 'time_picker' || $field['type'] === 'date_time_picker' ) {
-						$this->scripts[]	=  'jquery-ui-datepicker';
-						$this->scripts[]	=  'acf-timepicker';
+						$this->admin->js->add_dep( 'jquery-ui-datepicker' );
+						$this->admin->js->add_dep( 'acf-timepicker' );
 
-						$this->styles[] 	=  'acf-datepicker';
-						$this->styles[]		=  'acf-timepicker';
+						$this->admin->css->add_dep( 'acf-datepicker' );
+						$this->admin->css->add_dep( 'acf-timepicker' );
 					}
 					if ( $field['type'] === 'link' ) {
-						$this->scripts[]	=  'wplink';
-						$this->styles[]		=  'editor-buttons';
+						$this->admin->js->add_dep( 'wplink' );
+						$this->admin->css->add_dep( 'editor-buttons' );
 					}
 					if ( $field['type'] === 'color_picker' ) {
-						$this->scripts[]	=  'wp-color-picker';
-						$this->styles[]		=  'wp-color-picker';
+						$this->admin->js->add_dep('wp-color-picker');
+						$this->admin->css->add_dep('wp-color-picker');
 					}
 				}
 			}
 		}
-		$this->scripts[] = 'acf-quickedit';
-		$this->styles[] = 'acf-quickedit';
 
-		$this->scripts = array_unique( $this->scripts );
-		$this->styles = array_unique( $this->styles );
 
 
 		// bind save actions

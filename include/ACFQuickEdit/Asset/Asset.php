@@ -49,6 +49,11 @@ class Asset {
 	private $type;
 
 	/**
+	 *	@var string
+	 */
+	private $handle;
+
+	/**
 	 *	@var array|boolean Localization
 	 */
 	private $l10n = false;
@@ -58,6 +63,9 @@ class Asset {
 	 */
 	private $registered = false;
 
+	/**
+	 *	@var Core\Core
+	 */
 	private $core = null;
 
 	static function get( $asset ) {
@@ -74,6 +82,18 @@ class Asset {
 		$this->varname = str_replace( '-', '_', $this->handle );
 		$this->in_footer = $this->type === 'js';
 		$this->locate();
+	}
+
+	/**
+	 *	Generate script handle.
+	 */
+	private function generate_handle() {
+		$asset = preg_replace( '/^(js|css)\//', '', $this->asset );
+		$pi = pathinfo( $asset );
+		$handle = str_replace( '/', '-', sprintf( '%s-%s', $pi['dirname'], $pi['filename'] ) );
+		$handle = preg_replace( '/[^a-z0-9_]/','-',  $handle );
+		$handle = preg_replace( '/^(-+)/','',  $handle );
+		return $handle;
 	}
 
 	/**
@@ -101,7 +121,28 @@ class Asset {
 	 *	@param array $deps Dependencies
 	 */
 	public function deps( $deps = [] ) {
-		$this->deps = $deps;
+		$this->deps = (array) $deps;
+		return $this;
+	}
+
+	/**
+	 *	Add Dependency
+	 *
+	 *	@param Asset|array|string $dep Dependency slug(s) or Asset instance
+	 */
+	public function add_dep( $dep ) {
+		if ( $dep instanceof self ) {
+			$dep = $dep->handle;
+		}
+		if ( is_array( $dep ) ) {
+			foreach ( $dep as $d ) {
+				$this-add_dep($d);
+			}
+		} else {
+			if ( ! in_array( $dep, $this->deps ) ) {
+				$this->deps[] = $dep;
+			}
+		}
 		return $this;
 	}
 
@@ -136,6 +177,7 @@ class Asset {
 				$args
 			);
 			$this->registered = true;
+
 		}
 		return $this->_localize();
 	}
@@ -207,17 +249,6 @@ class Asset {
 			case 'deps':
 				return array_values( $this->$var );
 		}
-	}
-
-	/**
-	 *	Generate script handle.
-	 */
-	private function generate_handle() {
-		$asset = preg_replace( '/^(js|css)\//', '', $this->asset );
-		$pi = pathinfo( $asset );
-		$handle = str_replace( '/', '-', sprintf( '%s-%s', $pi['dirname'], $pi['filename'] ) );
-		$handle = preg_replace( '/[^a-z0-9_]/','-',  $handle );
-		return $handle;
 	}
 
 }

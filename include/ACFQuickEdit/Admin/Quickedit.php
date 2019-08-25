@@ -25,21 +25,6 @@ class Quickedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_acf_settings( $field ) {
-		// add to quick edit
-		acf_render_field_setting( $field, array(
-			'label'			=> __('Allow QuickEdit','acf-quick-edit-fields'),
-			'instructions'	=> '',
-			'type'			=> 'true_false',
-			'name'			=> 'allow_quickedit',
-			'ui'			=> 1,
-			'message'		=> __("Allow editing this field in QuickEdit mode", 'acf-quick-edit-fields')
-		));
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
 	public function init_fields() {
 
 		parent::init_fields();

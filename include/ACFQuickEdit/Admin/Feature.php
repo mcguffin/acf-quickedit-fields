@@ -8,22 +8,20 @@ use ACFQuickEdit\Fields;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
+/**
+ *	Class 
+ */
 abstract class Feature extends Core\Singleton {
-
-	/**
-	 * @var array styles to enqueue
-	 */
-	protected $styles = array();
-
-	/**
-	 * @var array scripts to enqueue
-	 */
-	protected $scripts = array();
 
 	/**
 	 * @var ACFQuickEdit\Core\Core
 	 */
 	protected $core;
+
+	/**
+	 * @var ACFQuickEdit\Admin\Admin
+	 */
+	protected $admin;
 
 	/**
 	 * @var ACFQuickEdit\Core\Core
@@ -40,6 +38,7 @@ abstract class Feature extends Core\Singleton {
 	 */
 	protected function __construct() {
 		$this->core = Core\Core::instance();
+		$this->admin = Admin::instance();
 		parent::__construct();
 	}
 
@@ -48,19 +47,6 @@ abstract class Feature extends Core\Singleton {
 	 */
 	abstract function get_type();
 
-	/**
-	 *	@return array
-	 */
-	final public function get_styles() {
-		return $this->styles;
-	}
-
-	/**
-	 *	@return array
-	 */
-	final public function get_scripts() {
-		return $this->scripts;
-	}
 
 	/**
 	 *	@return bool
@@ -97,18 +83,7 @@ abstract class Feature extends Core\Singleton {
 		return isset( $types[ $type ] ) && $types[ $type ][ $this->get_type() ];
 	}
 
-	/**
-	 *	Initialize
-	 */
-	public function init_acf_settings() {
-		$types = Fields\Field::get_types();
 
-		foreach ( $types as $type => $supports ) {
-			if ( $supports[ $this->get_type() ] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_acf_settings' ) );
-			}
-		}
-	}
 	/**
 	 *	@param	array	$field_group	ACF Field Group
 	 *	@return	array
@@ -128,11 +103,6 @@ abstract class Feature extends Core\Singleton {
 		return $return_fields;
 
 	}
-
-	/**
-	 *	@action 'acf/render_field_settings/type={$type}'
-	 */
-	abstract function render_acf_settings( $field );
 
 	/**
 	 *	@return null
@@ -168,7 +138,9 @@ abstract class Feature extends Core\Singleton {
 
 
 	/**
-	 * @return null|string	post type
+	 *	Return current post type
+	 *
+	 *	@return null|string	post type
 	 */
 	protected function get_current_post_type() {
 		global $typenow, $pagenow;
@@ -184,13 +156,14 @@ abstract class Feature extends Core\Singleton {
 			if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_post_ajax_actions', array( 'inline-save' ) ) ) ) {
 				return $_REQUEST['post_type'];
 			}
-
 		}
 	}
 
 
 	/**
-	 * @return array acf field gruops
+	 *	Return field groups relevant for the current view
+	 *
+	 *	@return array acf field gruops
 	 */
 	protected function get_available_field_groups() {
 
@@ -279,6 +252,7 @@ abstract class Feature extends Core\Singleton {
 
 	/**
 	 *	@filter 'acf/location/rule_match/post_taxonomy'
+	 *	@return boolean Whether a field group rule matches
 	 */
 	function match_post_taxonomy( $match, $rule, $options ) {
 
@@ -309,6 +283,7 @@ abstract class Feature extends Core\Singleton {
 
 	/**
 	 *	@filter 'acf/location/rule_match/post_format'
+	 *	@return boolean Whether a field group rule matches
 	 */
 	function match_post_format( $match, $rule, $options ) {
 
@@ -322,6 +297,7 @@ abstract class Feature extends Core\Singleton {
 
 	/**
 	 *	@filter 'acf/location/rule_match/post_status'
+	 *	@return boolean Whether a field group rule matches
 	 */
 	function match_post_status( $match, $rule, $options ) {
 
@@ -335,6 +311,7 @@ abstract class Feature extends Core\Singleton {
 
 	/**
 	 *	@filter 'acf/location/rule_match/attachment'
+	 *	@return boolean Whether a field group rule matches
 	 */
 	function match_attachment( $match, $rule, $options ) {
 		if ( isset( $_REQUEST['attachment-filter'] ) ) {

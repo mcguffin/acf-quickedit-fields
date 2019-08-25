@@ -26,23 +26,6 @@ class Bulkedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_acf_settings( $field ) {
-
-		// show column: todo: allow sortable
-		// add to bulk edit
-		acf_render_field_setting( $field, array(
-			'label'			=> __('Allow Bulk Edit','acf-quick-edit-fields'),
-			'instructions'	=> '',
-			'type'			=> 'true_false',
-			'name'			=> 'allow_bulkedit',
-			'ui'			=> 1,
-			'message'		=> __("Allow editing this field in Bulk edit mode", 'acf-quick-edit-fields')
-		));
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
 	public function is_enabled_for_field( $field ) {
 
 		return isset($field['allow_bulkedit']) && $field['allow_bulkedit'];
