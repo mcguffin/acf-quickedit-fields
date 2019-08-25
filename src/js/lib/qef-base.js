@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 
+
 const qe = {
 	form:{},
 	field: {
@@ -22,6 +23,9 @@ const qe = {
 	},
 };
 qe.form.View = Backbone.View.extend({
+	events:{
+		'heartbeat-send.wp-refresh-nonces': 'heartbeatListener'
+	},
 	initialize:function(){
 
 		const self = this;
@@ -36,9 +40,20 @@ qe.form.View = Backbone.View.extend({
 			var field = qe.field.factory( el, this );
 			self.fields[ field.key ] = field;
 		});
+
+		$(document).on('heartbeat-send.wp-refresh-nonces', this, this.heartbeatListener );
+
+		wp.heartbeat.connectNow()
+
 		// load values
 		this.loadValues();
 
+	},
+	heartbeatListener: function( e, data ) {
+		console.log(this,arguments)
+		data['wp-refresh-post-nonces'] = {
+			post_id: e.data.options.object_id
+		};
 	},
 	getFieldsToLoad:function(){
 		var fields = [];
@@ -70,6 +85,7 @@ qe.form.View = Backbone.View.extend({
 		_.each(this.fields,function(field){
 			field.unload();
 		});
+		$(document).off('heartbeat-send.wp-refresh-nonces', this.heartbeatListener );
 		acf.unload.reset();
 	},
 	validationComplete:function( json, $form ) {
@@ -146,8 +162,9 @@ qe.form.QuickEdit = qe.form.View.extend({
 		$.post({
 			url:ajaxurl,
 			data: data,
-			success:function(response){
-				self.loadedValues( response );
+			success:function( response ){
+				// check for response.success && response.message!
+				self.loadedValues( response.data );
 			}
 		});
 
@@ -187,15 +204,18 @@ qe.form.BulkEdit = qe.form.View.extend({
 		});
 
 		const self = this;
+
+		const data = _.extend( {}, acf_qef.options.request, {
+			'object_id' : post_ids,
+			'acf_field_keys' : this.getFieldsToLoad(),
+		} );
+
 		$.post({
-			url:ajaxurl,
-			data:{
-				'action' : 'get_acf_post_meta',
-				'object_id' : post_ids,
-				'acf_field_keys' : this.getFieldsToLoad(),
-			},
-			success:function(response){
-				self.loadedValues( response );
+			url: ajaxurl,
+			data: data,
+			success: function( response ){
+				// check for response.success && response.message!
+				self.loadedValues( response.data );
 			}
 		});
 

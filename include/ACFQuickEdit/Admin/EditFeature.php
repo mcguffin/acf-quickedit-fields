@@ -33,9 +33,6 @@ abstract class EditFeature extends Feature {
 		}
 
 
-
-
-
 		if ( $content_type == 'taxonomy' ) {
 			$this->scripts[] = 'inline-edit-tax';
 		} else if ( $content_type == 'post' ) {
@@ -71,12 +68,17 @@ abstract class EditFeature extends Feature {
 
 					$this->field_groups[ $field_group['ID'] ]['fields'][ $field['key'] ] = $field_object;
 
+					// deps should be property of field type!
 					if ( $field['type'] === 'date_picker' || $field['type'] === 'time_picker' || $field['type'] === 'date_time_picker' ) {
 						$this->scripts[]	=  'jquery-ui-datepicker';
 						$this->scripts[]	=  'acf-timepicker';
 
 						$this->styles[] 	=  'acf-datepicker';
 						$this->styles[]		=  'acf-timepicker';
+					}
+					if ( $field['type'] === 'link' ) {
+						$this->scripts[]	=  'wplink';
+						$this->styles[]		=  'editor-buttons';
 					}
 					if ( $field['type'] === 'color_picker' ) {
 						$this->scripts[]	=  'wp-color-picker';
