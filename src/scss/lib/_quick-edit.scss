@@ -1,0 +1,81 @@
+@import "variables/index";
+
+.inline-edit-col-qed {
+	border-bottom:1px solid $wp-gray-dark;
+	#wpbody-content .inline-edit-row & {
+		float:none;
+		clear: both;
+		margin: 0 -0.5em;
+		width: auto;
+	}
+	input {
+		&[type="radio"],
+		&[type="checkbox"] {
+			height:16px;
+			@media screen and (max-width: 782px) {
+				height:25px;
+			}
+		}
+	}
+	legend {
+		margin:0;
+		#posts-filter & {
+			padding:0.5em 1em;
+		}
+		width:100%;
+		box-sizing: border-box;
+		background:$wp-gray;
+		font-weight:700;
+		border-bottom:1px solid $wp-gray-dark;
+		border-top: 1px solid #ccc;
+    	margin-top: -1px;
+		position:sticky;
+		z-index:1;
+		top:32px;
+		@media screen and (max-width: 782px) {
+			top:47px;
+		}
+		@media screen and (max-width: 600px) {
+			top:1px;
+		}
+	}
+	.qed-fields {
+		display: flex;
+		flex-wrap: wrap;
+		background-color:$wp-gray-lighter;
+
+	}
+	.acf-field {
+		break-inside: avoid;
+		padding:10px;
+		margin:10px;
+		flex:1 1 31%;
+		min-width: 0;
+		@media screen and (max-width: 782px) {
+			flex-basis:45%;
+		}
+		@media screen and (max-width: 600px) {
+			flex-basis:auto;
+		}
+		background-color:$wp-gray-lightest;
+		box-shadow:0 0 3px rgba(0,0,0,0.1);
+	}
+	.acf-input-wrap {
+		display: block;
+	}
+	.inline-edit-group {
+		display: flex;
+		flex-direction: column;
+		.title {
+			float:none;
+			width: auto;
+		}
+	}
+	.acf-checkbox-list,
+	.acf-radio-list {
+		columns:2;
+		@media screen and (max-width: 782px) {
+			columns:1;
+		}
+	}
+}

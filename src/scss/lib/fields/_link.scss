@@ -1,0 +1,75 @@
+@import "variables/index";
+
+[data-field-type="link"] {
+	.acf-input-wrap {
+		display: flex;
+		flex-wrap:wrap;
+	}
+	.link-content {
+		flex:1 1 auto;
+	}
+	.select-link {
+		flex:1 1 100%;
+		order:2;
+	}
+	.remove-link {
+		flex:0 0 auto;
+		position: absolute;
+		right: 0.125em;
+		top: 0.125em;
+		color:$wp-gray-darkest;
+		width: auto;
+		height: auto;
+		line-height: 1em;
+		font-size:24px;
+		&:hover,
+		&:active {
+			color:$wp-red;
+		}
+	}
+
+	.link-content {
+		background: #fff;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		border-bottom-style:none;
+		a {
+			display: flex;
+			flex-direction: row;
+			flex-wrap:wrap;
+
+			padding: 0.5em 1em;
+			text-decoration: none;
+			line-height: 1.4em;
+			vertical-align: top;
+			font-weight:700;
+			position: relative;
+			&::after {
+				content:attr(href);
+				color:$wp-gray-darker;
+				text-decoration: none;
+				font-weight:400;
+				flex:1 1 auto;
+				order:2;
+				break-before: always;
+			}
+			&[target="_blank"] {
+				&::before {
+					content:$dashicon-external;
+					font-family:'dashicons';
+					// position: absolute;
+					// right: 0.125em;
+					// bottom: 0.125em;
+					// color:$wp-gray-darker;
+					font-size:20px;
+					font-weight:400;
+					order:1;
+				}
+			}
+		}
+	}
+	[data-link-prop="url"][value=""] ~ .remove-link,
+	[data-link-prop="url"][value=""] ~ .link-content {
+		display:none;
+	}
+}

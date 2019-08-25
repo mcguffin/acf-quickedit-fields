@@ -111,6 +111,8 @@ abstract class Feature extends Core\Singleton {
 	abstract function init_fields();
 
 	/**
+	 *	Whether the Feature is enabled for specific field
+	 *
 	 *	@return boolean
 	 */
 	abstract function is_enabled_for_field( $field );

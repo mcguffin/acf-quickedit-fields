@@ -1,0 +1,8 @@
+@import "variables/index";
+
+[data-field-type="taxonomy"] {
+	&[data-field-sub-type="checkbox"],
+	&[data-field-sub-type="radio"] {
+		width:98%;
+	}
+}

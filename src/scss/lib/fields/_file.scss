@@ -1,0 +1,67 @@
+@import "variables/index";
+
+[data-field-type="file"],
+[data-field-type="image"] {
+
+	.acf-input-wrap {
+		display: flex;
+		flex-wrap:wrap;
+		overflow: hidden;
+	}
+	.image-content {
+		flex:1 1 auto;
+	}
+	.select-media {
+		flex:1 1 100%;
+		order:2;
+	}
+	.remove-media {
+		flex:0 0 auto;
+		position: absolute;
+		right: 0.125em;
+		top: 0.125em;
+		color:$wp-gray-darkest;
+		width: auto;
+		height: auto;
+		line-height: 1em;
+		font-size:24px;
+		&:hover,
+		&:active {
+			color:$wp-red;
+		}
+	}
+
+	.file-content {
+		background: #fff;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		border-bottom-style:none;
+		flex:1 1;
+		position: relative;
+		text-align: center;
+		img {
+			height:100px;
+			width:100%;
+			margin:10px 0 0 0;
+			object-fit: contain;
+		}
+		.media-mime {
+			color:$wp-gray-darker;
+		}
+		.media-title {
+			line-height:1.2;
+			max-height:3.3em;
+			overflow: hidden;
+			display: block;
+			padding:0.5em 1em;
+			margin-bottom:10px;
+		}
+	}
+	.acf-quick-edit-file,
+	.acf-quick-edit-image {
+		&[value=""] ~ .remove-media,
+		&[value=""] ~ .file-content {
+			display:none;
+		}
+	}
+}

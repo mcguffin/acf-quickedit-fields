@@ -11,6 +11,7 @@ module.exports = {
 	initialize:function() {
 		this.$input = this.$('button');
 		this.$hidden = this.$('[type="hidden"]');
+		this.$img = $('<img />').prependTo( this.$('.file-content') );
 		this.parent().initialize.apply(this,arguments);
 
 		const self = this,
@@ -63,8 +64,24 @@ module.exports = {
 		this.setValue('');
 	},
 	setValue:function(value) {
+		const self = this;
 		this.dntChanged();
 		this.$hidden.val( value );
+		if ( !! value ) {
+			wp.media.attachment( value ).fetch().then( att => {
+				let src;
+				if ( att.sizes ) {
+					src = att.sizes.thumbnail.url;
+				} else {
+					src = att.icon;
+				}
+				self.$img.attr( 'src', src );
+				self.$('.media-mime').text( att.mime );
+				self.$('.media-title').text( att.title );
+			});
+		}
+		// load image
+
 		return this;
 	}
 };

@@ -6,14 +6,15 @@ ACF QuickEdit Fields TODO
  - [x] ESNext JS
  - [x] Drop ACF Legacy support
  - [ ] Refactor Fields & Features
- - [ ] Refactor JS
+     - [ ] class Field extends Core\\Singleton
+ - [x] Refactor JS
  - [ ] Tests
-     - [ ] Add some polylang use cases
-     - [ ] Test again with YoastSEO+Polylang columns
- - [ ] Add Field Support
-     - [ ] Link Field
-     - [ ] User Field
+     - [ ] YoastSEO + Polylang
+ - [x] Add Field Support
+     - [x] Link Field (colum, sortable)
+     - [x] User Field (colum)
  - [ ] Enhacements
+     - [ ] File Column: show icon + name
      - [ ] Image+File: Show Image / File in QuickEdit
  - [x] Use nonce in ajax callback
  - [x] Remove AutoUpdate

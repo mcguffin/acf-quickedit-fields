@@ -20,18 +20,9 @@ const View = Backbone.View.extend({
 			self.fields[ field.key ] = field;
 		});
 
-		$(document).on('heartbeat-send.wp-refresh-nonces', this, this.heartbeatListener );
-
-		wp.heartbeat.connectNow()
-
 		// load values
 		this.loadValues();
 
-	},
-	heartbeatListener: function( e, data ) {
-		data['wp-refresh-post-nonces'] = {
-			post_id: e.data.options.object_id
-		};
 	},
 	getFieldsToLoad:function(){
 		var fields = [];
@@ -63,7 +54,6 @@ const View = Backbone.View.extend({
 		_.each(this.fields,function(field){
 			field.unload();
 		});
-		$(document).off('heartbeat-send.wp-refresh-nonces', this.heartbeatListener );
 		acf.unload.reset();
 	},
 	validationComplete:function( json, $form ) {

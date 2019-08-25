@@ -40,7 +40,7 @@ class LinkField extends Field {
 
 		$input_atts += array(
 			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-			'type'					=> 'text', // make this hidden later!
+			'type'					=> 'hidden',
 			'data-acf-field-key'	=> $this->acf_field['key'],
 			'name'					=> $this->get_input_name(),
 		);
@@ -52,9 +52,9 @@ class LinkField extends Field {
 			$atts['data-link-prop'] = $prop;
 			$output .= '<input '. acf_esc_attr( $atts ) .' />';
 		}
-		$output .= '<span class="link-content">%s</span>';
-		$output .= sprintf( '<button class="button-secondary remove-link dashicons dashicons-no">%s</button>', __('Remove Link', 'acf-quick-edit-fields') );
+		$output .= '<span class="link-content"></span>';
 		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quick-edit-fields') );
+		$output .= sprintf( '<button class="button-link remove-link dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', __('Remove Link', 'acf-quick-edit-fields') );
 		add_action('print_media_templates', array( $this, 'print_media_templates' ) );
 		return $output;
 		// [

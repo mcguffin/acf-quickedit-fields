@@ -1,0 +1,52 @@
+@import "variables/index";
+
+[data-field-type="color_picker"] {
+	.acf-input-wrap {
+		overflow:visible;
+		display:inline-block;
+	}
+	.inline-edit-group {
+		display: block;
+	}
+	.wp-picker-container {
+		//position: relative;
+		[type="button"] {
+			// indicate no color
+			&:before {
+				content: '';
+				transform: rotate(35deg);
+				border-radius: 2px;
+				background-color: rgba(255,40,40,0.9);
+				position: absolute;
+				left: 1px;
+				top: 1px;
+				width: 37px;
+				height: 2px;
+				transform-origin: 1px 1px;
+			}
+			&[style*="background-color:"] {
+
+				&:before {
+					content:none;
+				}
+			}
+		}
+		.wp-picker-holder {
+			position: absolute;
+			bottom:100%;
+			left:0;
+			z-index: 1;
+		}
+		&.wp-picker-active {
+			.wp-color-result {
+
+			}
+			.wp-picker-input-wrap {
+				label {
+					margin-top:-2px;
+					float:left;
+				}
+			}
+		}
+	}
+}

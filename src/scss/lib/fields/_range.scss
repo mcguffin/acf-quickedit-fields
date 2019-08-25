@@ -1,0 +1,10 @@
+@import "variables/index";
+
+[data-field-type="range"] {
+	.acf-range-wrap {
+		display: flex;
+	}
+	[type="range"] {
+		flex:1;
+	}
+}

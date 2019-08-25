@@ -57,10 +57,11 @@ class Quickedit extends EditFeature {
 		foreach ( $this->field_groups as $field_group ) {
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
-
+			echo '<div class="qed-fields">';
 			foreach ( $field_group['fields'] as $sub_field_object ) {
 				$sub_field_object->render_quickedit_field( $post_type, 'quick' );
 			}
+			echo '</div>';
 			echo '</fieldset>';
 		}
 

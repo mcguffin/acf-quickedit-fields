@@ -1,0 +1,154 @@
+
+.edit-php {
+	.acf-error-message {
+		clear:both;
+	}
+}
+
+.column-_acf_qed_ghost {
+	display:none;
+}
+.acf-qef-value-list {
+	margin-top:0;
+	margin-bottom:0;
+	&[data-count-values="1"] {
+		list-style-type:none;
+		margin-left:0;
+	}
+}
+
+
+/**
+ *	Editor
+ */
+.inline-edit-row {
+	.acf-field {
+	}
+	.acf-range-wrap,
+	.acf-input-wrap {
+		display:block;
+		position:relative;
+	}
+	.acf-input-wrap {
+		height:inherit;
+		input {
+			&[type="url"],
+			&[type="email"],
+			&[type="number"],
+			&[type="password"] {
+				width:100%;
+			}
+			&[type="radio"],
+			&[type="checkbox"] {
+				height:16px;
+				@media screen and (max-width: 782px) {
+					height:25px;
+				}
+			}
+		}
+		.wp-picker-input-wrap {
+			input {
+				&[type="text"] {
+					width:65px;
+					vertical-align:top;
+					margin-right:5px;
+				}
+			}
+		}
+	}
+	.iris-picker {
+//		position:absolute;
+		z-index:1;
+	}
+
+	.acf-quick-edit-file[value=""],
+	.acf-quick-edit-image[value=""] {
+		& ~ button.remove-media {
+			display:none;
+		}
+	}
+
+	#wpbody-content & {
+		fieldset.inline-edit-col-qed {
+			//border:1px solid $wp-gray-dark;
+			box-shadow:0 0 2px rgba(0,0,0,0.2);
+			margin-bottom:10px;
+			display:flex;
+			flex-wrap:wrap;
+			background:$wp-gray-lighter;
+
+
+			label.inline-edit-group {
+				span.title {
+					width:100%;
+					float:none;
+				}
+				span.acf-input-wrap {
+					margin-left:0;
+				}
+			}
+
+
+			.acf-checkbox-list {
+				column-count:1;
+				@media screen and (min-width:600px) {
+					column-count:2;
+				}
+				@media screen and (min-width:1250px) {
+					column-count:4;
+				}
+				li {
+					position: relative;
+				}
+				.children {
+					padding-left:1.0em;
+					margin-left: 0.6em;
+					position: relative;
+					&:before {
+						content:'';
+						position: absolute;
+						left: 0;
+						top: -0.5em;
+						bottom:1.2em;
+						border-left: 1px solid #ccc;
+					}
+					&>li {
+						&:before {
+							content:'';
+							position: absolute;
+							left: -1em;
+							top: 1.2em;
+							width: 0.8em;
+							border-top: 1px solid #ccc;
+						}
+					}
+				}
+			}
+
+			& > .acf-field {
+				width:31%;
+				margin:5px;
+				padding:10px;
+				box-sizing:border-box;
+				//border:1px solid $wp-gray-dark;
+				flex:1 0 auto;
+				background:$wp-gray-lightest;
+				box-shadow:0 0 2px rgba(0,0,0,0.2);
+				&:nth-of-type(3n+1) {
+					//clear:left;
+				}
+				&[data-error-message] {
+					border-color:#dd4232;
+					&:before {
+						content:attr(data-error-message);
+						display:block;
+						background-color:#F55E4F;
+						color:#fff;
+						margin:-10px -10px 10px -10px;
+						padding:10px;
+					}
+				}
+			}
+		}
+	}
+}
