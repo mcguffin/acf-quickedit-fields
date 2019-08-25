@@ -61,10 +61,12 @@ class Bulkedit extends EditFeature {
 			echo '<div>' . "\n";
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
+			echo '<div class="qed-fields">';
 
 			foreach ( $field_group['fields'] as $sub_field_object ) {
 				$sub_field_object->render_quickedit_field( $post_type, 'bulk' );
 			}
+			echo '</div>';
 			echo '</fieldset>';
 			echo '</div>' . "\n";
 			echo '<!-- END ACF Quick Edit Fields - Bulk -->';

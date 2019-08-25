@@ -9,7 +9,12 @@ module.exports = {
 			hide: true,
 		}, this.$el );
 		this.$input = this.$('[type="text"]').first().wpColorPicker( args );
+
 		this.parent().initialize.apply(this,arguments);
+	},
+	setEditable:function(editable){
+		this.parent().setEditable.apply(this,arguments);
+		this.$('button.wp-color-result').prop( 'disabled', ! editable );
 	},
 	setValue:function( value ) {
 		this.dntChanged();
