@@ -53,7 +53,7 @@ class Quickedit extends EditFeature {
 			return;
 		}
 
-		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
+		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
 		foreach ( $this->field_groups as $field_group ) {
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );

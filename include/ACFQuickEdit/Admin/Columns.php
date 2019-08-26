@@ -9,6 +9,7 @@ if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 class Columns extends Feature {
+
 	private $_prev_request_uri = false;
 
 	/**
@@ -230,7 +231,7 @@ class Columns extends Feature {
 		foreach ( $this->fields as $field_slug => $field_object ) {
 			$field = $field_object->get_acf_field();
 			if ( in_array( $field['type'], array('image','gallery','file'))) {
-				$field_slug .= '-qef-thumbnail';
+				$field_slug .= ' qef-thumbnail';
 			}
 			$columns[ $field_slug ] = $field['label'];
 		}
@@ -418,7 +419,7 @@ class Columns extends Feature {
 	 */
 	private function _get_column_weight( $column_slug ) {
 
-		$column_slug = str_replace('-qef-thumbnail','',$column_slug);
+		$column_slug = str_replace(' qef-thumbnail','',$column_slug);
 
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
@@ -486,7 +487,7 @@ class Columns extends Feature {
 
 		$args = func_get_args();
 
-		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
+		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
 
 		if ( isset( $this->fields[$column] ) ) {
 			$field_object = $this->fields[$column];

@@ -54,7 +54,7 @@ class Bulkedit extends EditFeature {
 			return;
 		}
 
-		$column = str_replace('-qef-thumbnail','', $wp_column_slug );
+		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
 		foreach ( $this->field_groups as $field_group ) {
 			// we need a div here because WP is prepending tags input to the fieldset:last in the editor
 			echo '<!-- BEGIN ACF Quick Edit Fields - Bulk -->' . "\n";
