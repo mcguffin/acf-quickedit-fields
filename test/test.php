@@ -44,12 +44,13 @@ class PluginTest {
 	 */
 	public function init( $paths ) {
 		register_post_type('acf-quef-test',[
-			'label'		=> 'Quick Edit Tests',
-			'public'	=> true,
-			'supports'	=> ['title'],
+			'label'			=> 'Quick Edit Tests',
+			'public'		=> true,
+			'supports'		=> ['title'],
+			'taxonomies'	=> ['acf-quef-test'],
 		]);
 		register_taxonomy('acf-quef-test','acf-quef-test',[
-			'label'		=> 'Quick Edit Test terms',
+			'label'		=> 'Quick Edit Test Terms',
 			'public'	=> true,
 		]);
 
