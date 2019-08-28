@@ -47,7 +47,6 @@ class PluginTest {
 			'label'			=> 'Quick Edit Tests',
 			'public'		=> true,
 			'supports'		=> ['title'],
-			'taxonomies'	=> ['acf-quef-test'],
 		]);
 		register_taxonomy('acf-quef-test','acf-quef-test',[
 			'label'		=> 'Quick Edit Test Terms',
