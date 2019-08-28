@@ -1,0 +1,172 @@
+{
+    "key": "group_acf_qef_choice_var_grouped",
+    "title": "QuickEdit Fields Choice (Variant) Grouped",
+    "fields": [
+        {
+            "key": "field_5d6654bc828dd",
+            "label": "Choice Group",
+            "name": "choice_group",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5d6393f697454",
+                    "label": "Select",
+                    "name": "select",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "one": "One",
+                        "two": "Two",
+                        "three": "Three",
+                        "four": "Four"
+                    },
+                    "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 1,
+                    "ajax": 1,
+                    "return_format": "value",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1210,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1,
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5d6393f69745f",
+                    "label": "Checkbox",
+                    "name": "checkbox",
+                    "type": "checkbox",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "one": "One",
+                        "two": "Two",
+                        "three": "Three",
+                        "four": "Four"
+                    },
+                    "allow_custom": 1,
+                    "save_custom": 1,
+                    "default_value": [],
+                    "layout": "vertical",
+                    "toggle": 0,
+                    "return_format": "value",
+                    "show_column": 1,
+                    "show_column_weight": 1220,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f697468",
+                    "label": "Radio Button",
+                    "name": "radio_button",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "one": "One",
+                        "two": "Two",
+                        "three": "Three",
+                        "four": "Four"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 1,
+                    "save_other_choice": 1,
+                    "default_value": "",
+                    "layout": "vertical",
+                    "return_format": "value",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1230,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f697470",
+                    "label": "True \/ False",
+                    "name": "true_false",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1240,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1566988249
+}

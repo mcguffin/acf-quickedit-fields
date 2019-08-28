@@ -1,0 +1,197 @@
+{
+    "key": "group_acf_qef_basic_grouped",
+    "title": "QuickEdit Fields Basic Grouped",
+    "fields": [
+        {
+            "key": "field_5d6394b77fc2f",
+            "label": "Basic Group",
+            "name": "basic_group",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5d6393f67749a",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1010,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f6774a9",
+                    "label": "Text Area",
+                    "name": "textarea",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "maxlength": "",
+                    "rows": "",
+                    "new_lines": "",
+                    "show_column": 1,
+                    "show_column_weight": 1020,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f6774b2",
+                    "label": "Number",
+                    "name": "number",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1030,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f6774ba",
+                    "label": "Range",
+                    "name": "range",
+                    "type": "range",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1040,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f6774c3",
+                    "label": "E-Mail",
+                    "name": "e-mail",
+                    "type": "email",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1050,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                },
+                {
+                    "key": "field_5d6393f6774cb",
+                    "label": "URL",
+                    "name": "url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "show_column": 1,
+                    "show_column_sortable": 1,
+                    "show_column_weight": 1060,
+                    "allow_quickedit": 1,
+                    "allow_bulkedit": 1
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "acf-quef-test"
+            }
+        ],
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "",
+    "modified": 1566988004
+}

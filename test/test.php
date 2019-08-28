@@ -7,6 +7,9 @@ class PluginTest {
 	private $current_json_save_path = null;
 
 	public function __construct() {
+
+		add_action( 'init', [ $this, 'init' ] );
+
 		add_filter( 'acf/settings/load_json', [ $this, 'load_json' ] );
 
 		add_filter( 'acf/settings/save_json', [ $this, 'save_json' ] );
@@ -15,8 +18,6 @@ class PluginTest {
 		add_action( 'acf/trash_field_group', [ $this, 'mutate_field_group' ], 9 );
 		add_action( 'acf/untrash_field_group', [ $this, 'mutate_field_group' ], 9 );
 		add_action( 'acf/update_field_group', [ $this, 'mutate_field_group' ], 9 );
-
-		add_action( 'init', [ $this, 'init' ] );
 
 	}
 

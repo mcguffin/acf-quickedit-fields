@@ -51,7 +51,9 @@
                 "one": "One",
                 "two": "Two",
                 "three": "Three",
-                "four": "Four"
+                "four": "Four",
+                "BOOM": "BOOM",
+                "ORX": "ORX"
             },
             "allow_custom": 1,
             "save_custom": 1,
@@ -151,5 +153,5 @@
     "hide_on_screen": "",
     "active": 0,
     "description": "",
-    "modified": 1566488524
+    "modified": 1566988940
 }
