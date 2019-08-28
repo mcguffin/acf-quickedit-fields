@@ -317,13 +317,7 @@ abstract class Field {
 	 */
 	public function get_value( $object_id, $format_value = true ) {
 
-		$dummy_field = $this->acf_field + array();
-
-		if ( isset( $this->parent ) ) {
-
-			$dummy_field['name'] = $this->parent->get_acf_field()['name'] . '_' . $dummy_field['name'];
-
-		}
+		$dummy_field = array( 'name' => $this->get_meta_key() ) + $this->acf_field;
 
 		$value = acf_get_value( $object_id, $dummy_field );
 

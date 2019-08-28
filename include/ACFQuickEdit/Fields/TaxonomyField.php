@@ -14,10 +14,10 @@ class TaxonomyField extends Field {
 		/*
 		$value = get_field( $this->acf_field['key'], $object_id );
 		/*/
-		$value = $this->get_value( $object_id );
+		$value = $this->get_value( $object_id, false );
+
 		//*/
 		$output = '';
-
 		if ( $value ) {
 			$term_names = array();
 			if ( ! is_array( $value ) ) {
