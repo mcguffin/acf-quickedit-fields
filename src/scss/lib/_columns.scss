@@ -1,15 +1,28 @@
 
-.qef-thumbnail {
-	.widefat thead & {
-		width:80px;
+td {
+	&.qef-field-type-file,
+	&.qef-field-type-image,
+	&.qef-field-type-gallery {
+		.widefat thead & {
+			width:80px;
+		}
+		.widefat tbody & {
+			img {
+				max-width:100%;
+				height:auto;
+				width: 80px;
+				height: 80px;
+				object-fit: cover;
+			}
+		}
 	}
-	.widefat tbody & {
-		img {
-			max-width:100%;
-			height:auto;
-			width: 80px;
-			height: 80px;
-			object-fit: cover;
+	&.qef-field-type-file {
+		.widefat tbody & {
+			img {
+				width: 60px;
+				height: 60px;
+				object-fit: contain;
+			}
 		}
 	}
 }

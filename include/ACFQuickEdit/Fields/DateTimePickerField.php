@@ -12,7 +12,7 @@ class DateTimePickerField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
-		$value = $this->get_value( $object_id, false );
+		$value = $this->get_value( $object_id, true );
 
 		if ( is_null( $value ) ) {
 			return __('(No value)', 'acf-quick-edit-fields');
@@ -47,21 +47,6 @@ class DateTimePickerField extends Field {
 		$output .= '</span>';
 
 		return $output;
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
-	public function get_value( $post_id, $format_value = true ) {
-		//*
-		return acf_get_metadata( $post_id, $this->acf_field['name'] );
-		$value = acf_format_date($value,$this->acf_field['display_format']);
-
-		return $value;
-		return acf_get_metadata( $post_id, $this->acf_field['name'] );
-		/*/
-		return get_field( $this->acf_field['name'], $post_id );
-		//*/
 	}
 
 

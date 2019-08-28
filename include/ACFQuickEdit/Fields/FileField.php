@@ -15,7 +15,7 @@ class FileField extends Field {
 		/*
 		$value = get_field( $this->acf_field['key'], $object_id );
 		/*/
-		$value = $this->get_value( $object_id );
+		$value = $this->get_value( $object_id, false );
 		//*/
 
 		if ( ! is_null($value) && ! empty($value) && ( $file = get_post($value) ) ) {

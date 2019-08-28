@@ -31,7 +31,7 @@ class CheckboxField extends ChoiceField {
 		);
 		$this->acf_field['value']	= acf_get_array( $this->acf_field['value'], false );
 
-		$field_name = sprintf( 'acf[%s][]', $this->acf_field['key'] );
+		$field_name = $input_atts['name'] . '[]';
 
 		foreach ( $this->acf_field['choices'] as $value => $label ) {
 			$atts = array(

@@ -230,9 +230,7 @@ class Columns extends Feature {
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
 			$field = $field_object->get_acf_field();
-			if ( in_array( $field['type'], array('image','gallery','file'))) {
-				$field_slug .= ' qef-thumbnail';
-			}
+			$field_slug .= ' qef-field-type-' . $field['type'];
 			$columns[ $field_slug ] = $field['label'];
 		}
 		uksort( $columns, array( $this, '_sort_columns_by_weight' ));
@@ -307,12 +305,14 @@ class Columns extends Feature {
 					add_action( 'manage_posts_extra_tablenav', array( $this, 'restore_request_uri' ) );
 				}
 
+				$column_key = $field_slug . ' qef-field-type-' . $field_object->get_acf_field()['type'];
+
 				// $columns[ $field_slug ][0]: order by, $columns[ $field_slug ][1]: asc | desc
 				// we add aditional query args to what becomes the "orderby" param when WP renders the column header
 				if ( $sortable === true ) {
-					$columns[ $field_slug ] = array( $field_slug . '&meta_key=' . $field_slug, $order );
+					$columns[ $column_key ] = array( $field_slug . '&meta_key=' . $field_slug, $order );
 				} else {
-					$columns[ $field_slug ] = array( $field_slug . '&meta_type=' . $sortable . '&meta_key=' . $field_slug, $order );
+					$columns[ $column_key ] = array( $field_slug . '&meta_type=' . $sortable . '&meta_key=' . $field_slug, $order );
 				}
 			}
 		}
@@ -419,7 +419,7 @@ class Columns extends Feature {
 	 */
 	private function _get_column_weight( $column_slug ) {
 
-		$column_slug = str_replace(' qef-thumbnail','',$column_slug);
+		$column_slug = preg_replace('/\s+(\w+)$/is', '', $column_slug );
 
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
@@ -487,7 +487,7 @@ class Columns extends Feature {
 
 		$args = func_get_args();
 
-		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
+		$column = preg_replace('/\s+([\w-]+)$/is', '', $wp_column_slug );
 
 		if ( isset( $this->fields[$column] ) ) {
 			$field_object = $this->fields[$column];

@@ -40,12 +40,4 @@ class DatePickerField extends DateTimePickerField {
 		return true;
 	}
 
-	/**
-	 *	@inheritdoc
-	 */
-	public function get_value( $post_id, $format_value = true ) {
-		$value = acf_get_metadata( $post_id, $this->acf_field['name'] );
-		return acf_format_date( $value, 'Ymd' );
-	}
-
 }

@@ -47,7 +47,7 @@
 	}
 	.acf-field {
 		break-inside: avoid;
-		padding:10px;
+		padding:8px;
 		margin:10px;
 		flex:1 1 31%;
 		min-width: 0;
@@ -59,6 +59,18 @@
 		}
 		background-color:$wp-gray-lightest;
 		box-shadow:0 0 3px rgba(0,0,0,0.1);
+		border:2px solid transparent;
+		&[data-error-message] {
+			border-color:#dd4232;
+			&::after {
+				content:attr(data-error-message);
+				display:block;
+				background-color:#F55E4F;
+				color:#fff;
+				margin:0 -10px -10px -10px;
+				padding:10px;
+			}
+		}
 	}
 	.acf-input-wrap {
 		display: block;
@@ -78,4 +90,13 @@
 			columns:1;
 		}
 	}
+}
+
+
+
+.acf-notice {
+	#posts-filter & {
+		clear:both;
+	}
+
 }
