@@ -412,6 +412,7 @@ class Columns extends Feature {
 		$a = $b = 0;
 		$a = $this->_get_column_weight( $a_slug );
 		$b = $this->_get_column_weight( $b_slug );
+
 		return $a - $b;
 	}
 
@@ -420,12 +421,14 @@ class Columns extends Feature {
 	 */
 	private function _get_column_weight( $column_slug ) {
 
-		$column_slug = preg_replace('/\s+(\w+)$/is', '', $column_slug );
+		$column_slug = preg_replace('/\s+([\w-]+)$/is', '', $column_slug );
 
+		// wp column
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
 			return intval( $this->_wp_column_weights[ $column_slug ] );
 		}
 
+		// acf column
 		if ( isset( $this->fields[ $column_slug ] ) ) {
 			$field_object = $this->fields[ $column_slug ];
 			$field = $field_object->get_acf_field();

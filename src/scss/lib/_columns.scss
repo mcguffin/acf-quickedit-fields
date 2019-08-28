@@ -3,9 +3,6 @@ td {
 	&.qef-field-type-file,
 	&.qef-field-type-image,
 	&.qef-field-type-gallery {
-		.widefat thead & {
-			width:80px;
-		}
 		.widefat tbody & {
 			img {
 				max-width:100%;
@@ -27,6 +24,15 @@ td {
 	}
 }
 
+th {
+	&.qef-field-type-file,
+	&.qef-field-type-image,
+	&.qef-field-type-gallery {
+		.widefat thead & {
+			width:80px;
+		}
+	}
+}
 
 /**
  *	Columns
