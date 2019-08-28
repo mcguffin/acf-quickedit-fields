@@ -102,9 +102,6 @@ class Columns extends Feature {
 				);
 			}
 			if ( $is_sortable ) {
-				// post query vars
-				add_filter( 'query_vars', array( $this, 'sortable_posts_query_vars' ) );
-
 				// posts
 				add_action( 'pre_get_posts', array( $this, 'parse_query') );
 			}
@@ -131,8 +128,7 @@ class Columns extends Feature {
 			}
 			if ( $is_sortable ) {
 				// terms
-				add_action( 'parse_term_query', array( $this, 'sortable_terms_query_vars' ) );
-
+				add_action( 'parse_term_query', array( $this, 'parse_term_query' ) );
 			}
 
 		} else if ( 'user' == $content_type ) {
@@ -148,7 +144,7 @@ class Columns extends Feature {
 				);
 			}
 			if ( $is_sortable ) {
-				add_filter( 'users_list_table_query_args', array( $this, 'sortable_users_query_vars' ) );
+				add_filter( 'pre_get_users', array( $this, 'pre_get_users' ) );
 			}
 		}
 
@@ -292,108 +288,72 @@ class Columns extends Feature {
 		foreach ( $this->fields as $field_slug => $field_object ) {
 
 			if ( $sortable = $this->get_field_sorted( $field_object ) ) {
-				// $sortable: true | false | 'numeric' | ...
-				$order = isset( $_GET['order'] ) ? strtolower( $_GET['order'] ) === 'asc' : false;
 
-				// WP uses $_SERVER['REQUEST_URI'] when building table header.
-				// We need to reset it first.
-				if ( isset( $_GET['meta_key'] ) && ! $this->_prev_request_uri ) {
-					$this->_prev_request_uri = $_SERVER['REQUEST_URI'];
-					$_SERVER['REQUEST_URI'] = remove_query_arg( array('meta_key','meta_type'), $_SERVER['REQUEST_URI'] );
-
-					// restore $_SERVER['REQUEST_URI'] before pagination links are rendered
-					add_action( 'manage_posts_extra_tablenav', array( $this, 'restore_request_uri' ) );
-				}
-
+				// will affect css class
 				$column_key = $field_slug . ' qef-field-type-' . $field_object->get_acf_field()['type'];
-				$column_meta_key = $field_object->get_meta_key();
 
-				// $columns[ $column_key ][0]: order by, $columns[ $field_slug ][1]: asc | desc
-				// we add aditional query args to what becomes the "orderby" param when WP renders the column header
-				if ( $sortable === true ) {
-					$columns[ $column_key ] = array( $column_meta_key . '&meta_key=' . $column_meta_key, $order );
-				} else {
-					$columns[ $column_key ] = array( $column_meta_key . '&meta_type=' . $sortable . '&meta_key=' . $column_meta_key, $order );
-				}
+				$columns[ $column_key ] = $field_slug;
+
 			}
 		}
 		return $columns;
 	}
 
 	/**
-	 *	@filter manage_posts_extra_tablenav
+	 *	@action pre_get_posts
 	 */
-	public function restore_request_uri( $which ) {
-		if ( $which === 'bottom' && $this->_prev_request_uri ) {
-			$_SERVER['REQUEST_URI'] = $this->_prev_request_uri;
+	public function parse_query( $query ) {
+		if ( ( $by = $query->get('orderby') ) && ( $meta_query = $this->get_meta_query( $by ) ) ) {
+
+			$query->set( 'meta_key', "" );
+			$query->set( 'meta_query', $meta_query );
+		}
+	}
+	/**
+	 *	@action parse_term_query
+	 */
+	public function parse_term_query( $query ) {
+
+		if ( ( $by = $query->query_vars['orderby'] ) && ( $meta_query = $this->get_meta_query( $by ) ) ) {
+			$query->query_vars['meta_key'] = '';
+			$query->query_vars['meta_query'] = $meta_query;
 		}
 	}
 
 	/**
-	 *	@filter query_vars
+	 *	@action pre_get_users
 	 */
-	public function sortable_posts_query_vars( $query_vars ) {
-		$query_vars[] = 'meta_key';
-		$query_vars[] = 'meta_type';
-		return $query_vars;
+	public function pre_get_users( $query ) {
+		if ( ( $by = $query->query_vars['orderby'] ) && ( $meta_query = $this->get_meta_query( $by ) ) ) {
+			$query->query_vars['meta_query'] = $meta_query;
+		}
 	}
 
-	/**
-	 *	@action pre_get_posts
-	 */
-	public function parse_query( $query ) {
-		if ( ( $by = $query->get('orderby') ) && isset( $this->fields,  $this->fields[ $by ] ) ) {
 
-			// Modify meta query to also select NULL values.
-			// The first meta condition will also be used as ORDER BY
 
-			if ( $meta_type = $query->get('meta_type') ) {
-				$type_query = array( 'type' => $meta_type );
+	private function get_meta_query( $by ) {
+		$meta_query = null;
+		if ( isset( $this->fields,  $this->fields[ $by ] ) ) {
+			$sortable = $this->fields[ $by ]->is_sortable();
+			if ( is_string( $sortable ) ) {
+				$type_query = array( 'type' => $sortable );
 			} else {
 				$type_query = array();
 			}
-			$query->set( 'meta_key', false );
-			$query->set( 'meta_query', array(
+			$meta_query = array(
 				'relation'	=> 'OR',
-				array(
+				$by => array(
 					'key'		=> $by,
 					'compare'	=> 'NOT EXISTS',
 				) + $type_query,
 				array(
 					'key'		=> $by,
 					'compare'	=> 'EXISTS',
-				),
-			));
+				) + $type_query,
+			);
 		}
+		return $meta_query;
 	}
-
-
-	/**
-	 * @action users_list_table_query_args
-	 */
-	public function sortable_users_query_vars( $query_vars ) {
-		if ( isset( $_GET['meta_key'] ) ) {
-			$query_vars['meta_key'] = $_GET['meta_key'];
-		}
-		if ( isset( $_GET['meta_type'] ) ) {
-			$query_vars['meta_type'] = $_GET['meta_type'];
-		}
-		return $query_vars;
-	}
-
-	/**
-	 * @action parse_term_query
-	 */
-	public function sortable_terms_query_vars( $term_query ) {
-
-		if ( isset( $_GET['meta_key'] ) ) {
-			$term_query->query_vars['meta_key'] = $_GET['meta_key'];
-		}
-		if ( isset( $_GET['meta_type'] ) ) {
-			$term_query->query_vars['meta_type'] = $_GET['meta_type'];
-		}
-	}
-
 
 	/**
 	 *	@param number
