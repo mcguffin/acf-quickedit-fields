@@ -86,7 +86,7 @@
     },
     "name": "ACF QuickEdit Fields",
     "slug": "acf-quick-edit-fields",
-    "prefix": "acf_duplicate_repeater",
+    "prefix": "acf_quick_edit_fields",
     "textdomain": "acf-quick-edit-fields",
     "namespace": "ACFQuickEdit",
     "author": "mcguffin",
