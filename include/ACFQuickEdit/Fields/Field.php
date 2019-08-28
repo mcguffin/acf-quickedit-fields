@@ -300,6 +300,17 @@ abstract class Field {
 		return $input_name;
 	}
 
+	/**
+	 *	@return string The Meta key
+	 */
+	final public function get_meta_key() {
+		if ( isset( $this->parent ) ) {
+			$name = $this->parent->get_meta_key() . '_' . $this->acf_field['name'];
+		} else {
+			$name = $this->acf_field['name'];
+		}
+		return $name;
+	}
 
 	/**
 	 *	@return mixed value of acf field

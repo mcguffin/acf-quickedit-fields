@@ -306,13 +306,14 @@ class Columns extends Feature {
 				}
 
 				$column_key = $field_slug . ' qef-field-type-' . $field_object->get_acf_field()['type'];
+				$column_meta_key = $field_object->get_meta_key();
 
-				// $columns[ $field_slug ][0]: order by, $columns[ $field_slug ][1]: asc | desc
+				// $columns[ $column_key ][0]: order by, $columns[ $field_slug ][1]: asc | desc
 				// we add aditional query args to what becomes the "orderby" param when WP renders the column header
 				if ( $sortable === true ) {
-					$columns[ $column_key ] = array( $field_slug . '&meta_key=' . $field_slug, $order );
+					$columns[ $column_key ] = array( $column_meta_key . '&meta_key=' . $column_meta_key, $order );
 				} else {
-					$columns[ $column_key ] = array( $field_slug . '&meta_type=' . $sortable . '&meta_key=' . $field_slug, $order );
+					$columns[ $column_key ] = array( $column_meta_key . '&meta_type=' . $sortable . '&meta_key=' . $column_meta_key, $order );
 				}
 			}
 		}
