@@ -68,7 +68,7 @@ module.exports = {
 			this.datePickerArgs.timeFormat,
 			timeObject
 		);
-		this.$hidden.val(formattedDate);
+		this.$hidden.val(value);
 		this.$input.val(formattedDate);
 		/*/
 		// will set form dirty if done like this

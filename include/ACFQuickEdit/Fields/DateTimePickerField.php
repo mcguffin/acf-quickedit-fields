@@ -12,7 +12,7 @@ class DateTimePickerField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
-		$value = $this->get_value( $object_id, true );
+		$value = $this->get_value( $object_id, false );
 
 		if ( is_null( $value ) ) {
 			return __('(No value)', 'acf-quick-edit-fields');
@@ -48,7 +48,6 @@ class DateTimePickerField extends Field {
 
 		return $output;
 	}
-
 
 	/**
 	 *	@inheritdoc

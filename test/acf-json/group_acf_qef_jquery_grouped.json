@@ -30,7 +30,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "d\/m\/Y",
+                    "display_format": "F j, Y",
                     "return_format": "d\/m\/Y",
                     "first_day": 1,
                     "show_column": 1,
@@ -52,8 +52,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "d\/m\/Y g:i a",
-                    "return_format": "d\/m\/Y g:i a",
+                    "display_format": "F j, Y H:i",
+                    "return_format": "F j, Y g:i a",
                     "first_day": 1,
                     "show_column": 1,
                     "show_column_sortable": 1,
@@ -74,8 +74,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "display_format": "g:i a",
-                    "return_format": "H:i:s",
+                    "display_format": "H:i:s",
+                    "return_format": "g:i a",
                     "show_column": 1,
                     "show_column_sortable": 1,
                     "show_column_weight": 1430,
@@ -136,5 +136,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1566990579
+    "modified": 1566998721
 }
