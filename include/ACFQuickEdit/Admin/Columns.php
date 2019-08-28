@@ -155,7 +155,7 @@ class Columns extends Feature {
 		if ( $is_active ) {
 			$cols_filters[] = array(
 				'cb'		=> array( $this, 'add_field_columns' ),
-				'priority'	=> null,
+				'priority'	=> 1000, // we hook in so late because we have to sort the columns when all of them are present
 				'args'		=> null,
 			);
 		}

@@ -19,6 +19,24 @@ class PluginTest {
 		add_action( 'acf/untrash_field_group', [ $this, 'mutate_field_group' ], 9 );
 		add_action( 'acf/update_field_group', [ $this, 'mutate_field_group' ], 9 );
 
+		add_Filter('pll_get_post_types', [ $this, 'pll_content_types'], 10, 2 );
+		add_Filter('pll_get_taxonomies', [ $this, 'pll_content_types'], 10, 2 );
+
+	}
+
+	/**
+	*	@filter pll_get_post_types
+	*	@filter pll_get_taxonomies
+	 */
+	public function pll_content_types( $types, $is_settings ) {
+		if ( $is_settings ) {
+			// hides 'my_cpt' from the list of custom post types in Polylang settings
+			unset( $types['acf-quef-test'] );
+		} else {
+			// enables language and translation management for 'my_cpt'
+			$types['acf-quef-test'] = 'acf-quef-test';
+		}
+		return $types;
 	}
 
 	/**
