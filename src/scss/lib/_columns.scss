@@ -22,7 +22,25 @@ td {
 			}
 		}
 	}
+	&.qef-field-type-textarea {
+		.qef-text {
+		}
+	}
 }
+
+.qef-text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	td.qef-field-type-textarea & {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
+	td.qef-field-type-text & {
+		white-space: nowrap;
+	}
+}
+
 
 th {
 	&.qef-field-type-file,

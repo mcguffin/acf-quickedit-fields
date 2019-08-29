@@ -7,13 +7,14 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TextField extends Field {
 
+
 	/**
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
 
 		if ( $value = $this->get_value( $object_id ) ) {
-			return sprintf( '<pre>%s</pre>', esc_html( $value ) );
+			return sprintf( '<div class="qef-text">%s</div>', esc_html( $value ) );
 		}
 
 		return '';
