@@ -30,5 +30,7 @@ ACF QuickEdit Fields TODO
  - [x] Remove AutoUpdate
  - [x] Remove GithubUpdater Meta
  - [x] Design wporg assets
- - [ ] wporg Readme
- - [ ] Submit to wporg
+ - [x] wporg Readme
+ - [x] Submit to wporg
+ - [ ] Change plugin slug to `acf-quickedit-fields`
+ - [ ] Commit to wporg

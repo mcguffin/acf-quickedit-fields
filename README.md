@@ -3,6 +3,10 @@ ACF QuickEdit Fields
 
 WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields Plugin ([Pro](http://www.advancedcustomfields.com/pro/) and [Free 5+](https://wordpress.org/plugins/advanced-custom-fields/).
 
+**Status**
+
+The plugin is currently undergoing review in the wporg plugin repository. If everything works well, it will be avaialable as [ACF QuickEdit Fields](https://wordpress.org/plugins/acf-quickedit-fields)
+
 Features
 --------
  - Show ACF field values in List views  
