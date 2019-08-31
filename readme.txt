@@ -1,36 +1,94 @@
 === ACF Quick Edit Fields ===
 Contributors: ACF Quick Edit Fields
-Donate link:
-Tags: image, crop, focus point
+Donate link: https://www.msf.org/donate
+Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 4.9.8
-Requires PHP: 5.6
+Tested up to: 5.2
+Requires PHP: 5.4
 Stable tag: 2.4.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Quick Edit ACF fields
+Enable Columns, Quick Edit and Bulk Edit for ACF Fields in WordPress List Tables
 
 == Description ==
 
-WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin (Pro, Version 5+).
-http://www.advancedcustomfields.com/pro/
+WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields Plugin ([Pro](http://www.advancedcustomfields.com/pro/) and [Free 5+](https://wordpress.org/plugins/advanced-custom-fields/).
 
+= Features =
+ - Show ACF field values in List views
+   [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
+ - Supports Post, Term and User list tables
+ - Scalar Columns (Like Text, Number, ...) can be made sortable
+ - Edit ACF Field values in Quick edit and Bulk edit
 
+= Usage =
+
+#### In the Fieldgroup editor:
+
+**Column View:**
+
+ - *Show Column* will sho a column in the WP List Table.
+
+ - *Sortable Column* will make the column sortable. This only works with primitive Field types like Text, Number, Range and so on.
+
+ - *Column weight* gives you an option to take control of the column order. The higher the weight, the more to the right the column will be. Present columns will have defaults weights of multiples of 100 starting with zero for the checkbox column. For example to place an image column between the checkbox (column weight = 0) and title (clumn weight = 100) choose a value between 0 and 100.
+
+**Editing**
+
+Toggle *QuickEdit* and *Bulk Edit* to enable Editing in the List table view.
+
+**Location Rules**
+
+The plugin follows ACFs location rule logic as far as possible. If you have a field group that is only applies to posts in a specific category or with a certain post starus, then columns and quick edit will only show up, if you have filtered the posts by that category ar post status.
+
+[Read more on the WikiPage](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#acf-location-rules)
+
+**Conditional Logic**
+
+Conditional logic is not supported.
+
+= Development =
+Please head over to the source code [on Github](https://github.com/mcguffin/acf-quick-edit-fields).
 
 == Installation ==
 
-Follow the standard [WordPress plugin installation procedere](http://codex.wordpress.org/Managing_Plugins).
+Just follow the [Automatic Plugin Installation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) procedere.
 
 == Frequently asked questions ==
 
-= I am lost. =
+= When will you support the Non-ACF Field XYZ? =
 
-[You'll get no direction from me](https://www.youtube.com/watch?v=kx7vkfnI6jY)
+Presumbly I won't – I'm sorry. However, there are some [plugin filters and actions](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Plugin-Filters) that might come in handy, if you decide to write an implementation by yourself.
+
+I even wrote a [tutorial page](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration) on how to write our own field type integration.
+
+= I found a bug. Where should I post it? =
+
+Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-quick-edit-fields/issues).
+
+I will most likely not maintain the forum support forum on wordpress.org. Anyway, other users might have an answer for you, so it's worth a shot.
+
+= I'd like to suggest a feature. Where should I post it? =
+
+Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-quick-edit-fields/issues)
 
 
 == Screenshots ==
+1. Field Group Admin
+2. Some Columns and QuickEdit
+3. Bulk Editor
+
+== Upgrade Notice ==
+
+On the whole upgrading is always a good idea.
 
 == Changelog ==
 
-...
+= 3.0.0 =
+ - Release at wordpress.org
+ - Feature: Added support for Link and User Field
+ - UI: Improvements in Column view,
+ - Fix: column issue with [Polylang](https://wordpress.org/plugins/polylang) and [Wordpress SEO](http://wordpress.org/plugins/wordpress-seo)
+ - Fix: Datepicker saved wrong value
+ - Fix: Checkbox in group didn't save
