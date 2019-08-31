@@ -1,5 +1,5 @@
 === ACF Quick Edit Fields ===
-Contributors: ACF Quick Edit Fields
+Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
