@@ -1,7 +1,7 @@
 ACF QuickEdit Fields
 ====================
 
-WordPress plugin which extends the functionality of the Advanced Custom Fields Plugin ([Pro](http://www.advancedcustomfields.com/pro/) and [Free 5+](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)).
+WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields Plugin ([Pro](http://www.advancedcustomfields.com/pro/) and [Free 5+](https://wordpress.org/plugins/advanced-custom-fields/).
 
 Features
 --------
@@ -13,31 +13,39 @@ Features
 
 Compatibility
 -------------
- - Requires ACF Free or Pro 5.6+ (ACF Free 4.x won’t work). ACF Free 5.6+ is available via early access. Follow [this guide](https://www.advancedcustomfields.com/resources/upgrade-guide-version-5/)
- - Requires at least PHP 5.3+
- - Requires at least WP 4.7+
- - Tested with WordPress up to 4.9.6
+ - Requires WordPress 4.7+
+ - Requires ACF 5.7+ (Free and Pro)
+ - Requires at least PHP 5.6+
 
 
 Installation
 ------------
 
-### Production (Stand-Alone)
- - Head over to [releases](../../releases)
- - Download 'acf-quick-edit-fields.zip'
- - Upload and activate it like any other WordPress plugin
- - AutoUpdate will run as long as the plugin is active
+#### In WP Admin
+Just follow the [Automatic Plugin Installation](https://wordpress.org/support/article/managing-plugins/#automatic-plugin-installation) procedere.
 
-### Production (using Github Updater – recommended for Multisite)
- - Install [Andy Fragen's GitHub Updater](https://github.com/afragen/github-updater) first.
- - In WP Admin go to Settings / GitHub Updater / Install Plugin. Enter `mcguffin/acf-quick-edit-fields` as a Plugin-URI.
+#### WP-CLI
+```shell
+wp plugin install --activate acf-openstreetmap-field
+```
 
 ### Development
- - cd into your plugin directory
- - $ `git clone git@github.com:mcguffin/acf-quick-edit-fields.git`
- - $ `cd acf-quick-edit-fields`
- - $ `npm install`
- - $ `gulp`
+```shell
+git clone git@github.com:mcguffin/acf-quick-edit-fields.git
+cd acf-quick-edit-fields
+npm install
+npm run dev
+```
+
+Development
+-----------
+npm scripts:
+ - `npm run dev`: Watch css and js soure dirs
+ - `npm run test`: load some test fields
+ - `npm run dev-test`: load some test fields and watch css and js soure dirs
+ - `npm run dashicons`: Generate dashicons scss variables from source
+ - `npm run i18n`: generate `.pot` file
+ - `npm run rollback`: remove last commit (local and remote  – use with caution!)
 
 
 Documentation
@@ -46,4 +54,4 @@ Documentation
  - [Quick Start](https://github.com/mcguffin/acf-quick-edit-fields/wiki)
  - [Filters and Actions](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Plugin-Filters)
  - [Known Issues](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Known-Issues) that can't be fixed
- - [How to Support more Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration)
+ - [How to Support more Field types](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration)

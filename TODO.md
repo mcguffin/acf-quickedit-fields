@@ -5,19 +5,30 @@ ACF QuickEdit Fields TODO
  - [x] Add tests
  - [x] ESNext JS
  - [x] Drop ACF Legacy support
- - [ ] Refactor Fields & Features
-     - [ ] class Field extends Core\\Singleton
  - [x] Refactor JS
- - [ ] Tests
-     - [ ] YoastSEO + Polylang
+ - [x] Refactor Features
+ - [x] Tests
+     - [x] YoastSEO + Polylang
+         - [x] PLL alone: okay
+         - [x] Yoast alone: okay
+         - [x] PLL+Yoast: Post: yoast cols missing
+     - [x] User Columns
+     - [x] Terms
+         - [x] Sorting doesnt work
+     - [x] Grouped Fields
+         - [x] Checkbox doesn't save
+         - [x] Date + Time Fields not displayed
+     - [x] Field Group Location Rules (category, ...)
+     - [x] Saving multiple fields of same type (check for double added filters!)
  - [x] Add Field Support
      - [x] Link Field (colum, sortable)
      - [x] User Field (colum)
- - [ ] Enhacements
-     - [ ] File Column: show icon + name
-     - [ ] Image+File: Show Image / File in QuickEdit
+ - [x] Enhacements
+     - [x] File Column: show icon + name
+     - [x] Image+File: Show Image / File in QuickEdit
  - [x] Use nonce in ajax callback
  - [x] Remove AutoUpdate
  - [x] Remove GithubUpdater Meta
  - [x] Design wporg assets
+ - [ ] wporg Readme
  - [ ] Submit to wporg
