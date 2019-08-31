@@ -81,8 +81,6 @@ class Admin extends Core\Singleton {
 		add_action( 'load-users.php', 'acf_enqueue_scripts' );
 		add_action( 'acf/field_group/admin_enqueue_scripts', array( $this, 'enqueue_fieldgroup_assets' ) );
 
-
-		add_action( 'admin_init', array( $this , 'admin_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this , 'enqueue_assets' ) );
 	}
 
@@ -119,6 +117,8 @@ class Admin extends Core\Singleton {
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
 						$value = $field_object->get_value( $object_id, false );
+
+
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
 							$data[ $key ] = $field_object->get_value( $object_id, false );
@@ -176,18 +176,6 @@ class Admin extends Core\Singleton {
 			?></p>
 		</div>
 		<?php
-	}
-
-	/**
-	 *	Admin init
-	 *	@action admin_init
-	 */
-	public function admin_init() {
-
-		$this->columns->init_fields();
-		$this->quickedit->init_fields();
-		$this->bulkedit->init_fields();
-
 	}
 
 	/**

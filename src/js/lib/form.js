@@ -130,6 +130,7 @@ const QuickEdit = View.extend({
 		const data = _.extend( {}, acf_qef.options.request, {
 			'object_id' : this.options.object_id,
 			'acf_field_keys' : this.getFieldsToLoad(),
+			'_wp_http_referrer': $('[name="_wp_http_referer"]:first').val()
 		} );
 
 		$.post({
@@ -181,6 +182,7 @@ const BulkEdit = View.extend({
 		const data = _.extend( {}, acf_qef.options.request, {
 			'object_id' : post_ids,
 			'acf_field_keys' : this.getFieldsToLoad(),
+			'_wp_http_referrer': $('[name="_wp_http_referer"]:first').val()
 		} );
 
 		$.post({

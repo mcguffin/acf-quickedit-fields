@@ -1,0 +1,53 @@
+{
+    "key": "group_acf_qef_post_tag",
+    "title": "QuickEdit Fields Post Tag",
+    "fields": [
+        {
+            "key": "field_8000e3f0aee8f",
+            "label": "Text Post tag",
+            "name": "text_post_tag",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1000,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+            {
+                "param": "post_taxonomy",
+                "operator": "==",
+                "value": "post_tag:a"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1567251729
+}

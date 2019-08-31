@@ -12,8 +12,9 @@ class TextField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+		$value = $this->get_value( $object_id );
 
-		if ( $value = $this->get_value( $object_id ) ) {
+		if ( $value !== '' ) {
 			return sprintf( '<div class="qef-text">%s</div>', esc_html( $value ) );
 		}
 

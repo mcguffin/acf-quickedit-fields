@@ -19,67 +19,48 @@ class Columns extends Feature {
 		return 'column';
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function get_fieldgroup_option() {
+		return 'show_column';
+	}
+
+
 
 	/**
 	 *	@inheritdoc
 	 */
 	public function init_fields() {
 
-		$is_sortable = false;
+		$is_active = parent::init_fields();
 
-		$field_groups = $this->get_available_field_groups();
-
-		if ( is_null( $field_groups ) ) {
-			return;
-		}
-
-		foreach ( $field_groups as $field_group ) {
-
-			$fields = $this->acf_get_fields( $field_group );
-
-			if ( ! $fields ) {
-				continue;
-			}
-
-			foreach ( $fields as $field ) {
-
-				if ( ! $this->supports( $field[ 'type' ] ) ) {
-					continue;
-				}
-
-				$field_object = Fields\Field::getFieldObject( $field );
-				$is_sortable |= $this->get_field_sorted( $field_object ) !== false;
-
-				// register column display
-				if ( isset($field['show_column']) && $field['show_column'] ) {
-					$this->add_field( $field['name'], $field_object, false );
-				}
-			}
-		}
+		$current_view = CurrentView::instance();
+		$is_sortable = count( $current_view->get_fields( array( 'show_column_sortable' => 1 ) ) );
 
 		$cols_filters = array();
 		$displays_filters = array();
-		$is_active = $this->is_active();
 
-		$content_type = $this->get_current_content_type();
-		if ( 'post' == $content_type ) {
-			$post_type = $this->get_current_post_type();
-			if ( 'post' == $post_type ) {
+		$content_kind = $current_view->get_object_kind();
+		$content_type = $current_view->get_object_type();
+
+		if ( 'post' == $content_kind ) {
+			if ( 'post' == $content_type ) {
 				$cols_hook		= 'manage_posts_columns';
 				$sortable_hook	= 'manage_edit-post_sortable_columns';
 				$display_hook	= 'manage_posts_custom_column';
-			} else if ( 'page' == $post_type ) {
+			} else if ( 'page' == $content_type ) {
 				$cols_hook		= 'manage_pages_columns';
 				$sortable_hook	= 'manage_edit-page_sortable_columns';
 				$display_hook	= 'manage_pages_custom_column';
-			} else if ( 'attachment' == $post_type ) {
+			} else if ( 'attachment' == $content_type ) {
 				$cols_hook		= 'manage_media_columns';
 				$sortable_hook	= 'manage_upload_sortable_columns';
 				$display_hook	= 'manage_media_custom_column';
 			} else {
-				$cols_hook		= "manage_{$post_type}_posts_columns";
-				$sortable_hook	= "manage_edit-{$post_type}_sortable_columns";
-				$display_hook	= "manage_{$post_type}_posts_custom_column";
+				$cols_hook		= "manage_{$content_type}_posts_columns";
+				$sortable_hook	= "manage_edit-{$content_type}_sortable_columns";
+				$display_hook	= "manage_{$content_type}_posts_custom_column";
 			}
 
 			if ( $is_active ) {
@@ -105,12 +86,11 @@ class Columns extends Feature {
 				// posts
 				add_action( 'pre_get_posts', array( $this, 'parse_query') );
 			}
-		} else if ( 'taxonomy' == $content_type ) {
+		} else if ( 'term' == $content_kind ) {
 
-			$taxonomy		= $_REQUEST['taxonomy'];
-			$cols_hook		= "manage_edit-{$taxonomy}_columns";
-			$sortable_hook	= "manage_edit-{$taxonomy}_sortable_columns";
-			$display_hook	= "manage_{$taxonomy}_custom_column";
+			$cols_hook		= "manage_edit-{$content_type}_columns";
+			$sortable_hook	= "manage_edit-{$content_type}_sortable_columns";
+			$display_hook	= "manage_{$content_type}_custom_column";
 
 			if ( $is_active ) {
 				$displays_filters[] = array(
@@ -131,7 +111,7 @@ class Columns extends Feature {
 				add_action( 'parse_term_query', array( $this, 'parse_term_query' ) );
 			}
 
-		} else if ( 'user' == $content_type ) {
+		} else if ( 'user' == $content_kind ) {
 			$cols_hook		= "manage_users_columns";
 			$sortable_hook	= "manage_users_sortable_columns";
 			$display_hook	= "manage_users_custom_column";
@@ -154,9 +134,9 @@ class Columns extends Feature {
 				'priority'	=> 1000, // we hook in so late because we have to sort the columns when all of them are present
 				'args'		=> null,
 			);
-		}
-		if ( $is_sortable ) {
-			add_filter( $sortable_hook, array( $this, 'add_sortable_columns' ) );
+			if ( $is_sortable ) {
+				add_filter( $sortable_hook, array( $this, 'add_sortable_columns' ) );
+			}
 		}
 
 		foreach ( $cols_filters as $filter ) {
@@ -180,15 +160,6 @@ class Columns extends Feature {
 		}
 	}
 
-
-	/**
-	 *	@inheritdoc
-	 */
-	public function is_enabled_for_field( $field ) {
-
-		return isset($field['show_column']) && $field['show_column'];
-
-	}
 
 	/**
 	 *	@filter manage_posts_columns

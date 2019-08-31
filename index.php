@@ -49,8 +49,9 @@ if ( version_compare( phpversion(), '5.6', '<' ) ) {
 	require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/legacy-php.php';
 }
 
-if ( is_admin() || defined( 'DOING_AJAX' ) ) {
+if ( is_admin() || wp_doing_ajax() ) {
 	Core\Core::instance( __FILE__ );
 
 	Admin\Admin::instance();
 }
+

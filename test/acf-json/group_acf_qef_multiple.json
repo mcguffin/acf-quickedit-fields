@@ -1,11 +1,35 @@
 {
-    "key": "group_acf_qef_basic",
-    "title": "QuickEdit Fields Basic",
+    "key": "group_acf_qef_multiple",
+    "title": "QuickEdit Fields Multiple",
     "fields": [
         {
-            "key": "field_5000e3f0aee8f",
-            "label": "Text",
-            "name": "text",
+            "key": "field_6000e3f0aee8f",
+            "label": "Text 1",
+            "name": "text_1",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1000,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
+        },
+        {
+            "key": "field_6001e3f0aee8f",
+            "label": "Text 2",
+            "name": "text_2",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -27,10 +51,10 @@
             "allow_bulkedit": 1
         },
         {
-            "key": "field_5000e3f5aee90",
-            "label": "Text Area",
-            "name": "textarea",
-            "type": "textarea",
+            "key": "field_6002e3f0aee8f",
+            "label": "Text 3",
+            "name": "text_3",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -41,19 +65,20 @@
             },
             "default_value": "",
             "placeholder": "",
+            "prepend": "",
+            "append": "",
             "maxlength": "",
-            "rows": "",
-            "new_lines": "",
             "show_column": 1,
+            "show_column_sortable": 1,
             "show_column_weight": 1020,
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         },
         {
-            "key": "field_5000e409aee91",
-            "label": "Number",
-            "name": "number",
-            "type": "number",
+            "key": "field_6003e3f0aee8f",
+            "label": "Text 4",
+            "name": "text_4",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -66,81 +91,10 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "min": "",
-            "max": "",
-            "step": "",
+            "maxlength": "",
             "show_column": 1,
             "show_column_sortable": 1,
             "show_column_weight": 1030,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1
-        },
-        {
-            "key": "field_5000e417aee92",
-            "label": "Range",
-            "name": "range",
-            "type": "range",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "min": "",
-            "max": "",
-            "step": "",
-            "prepend": "",
-            "append": "",
-            "show_column": 1,
-            "show_column_sortable": 1,
-            "show_column_weight": 1040,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1
-        },
-        {
-            "key": "field_5000e425aee93",
-            "label": "E-Mail",
-            "name": "e-mail",
-            "type": "email",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "show_column": 1,
-            "show_column_sortable": 1,
-            "show_column_weight": 1050,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1
-        },
-        {
-            "key": "field_5000e433aee94",
-            "label": "URL",
-            "name": "url",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "show_column": 1,
-            "show_column_sortable": 1,
-            "show_column_weight": 1060,
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         }
@@ -162,9 +116,45 @@
         ],
         [
             {
+                "param": "attachment",
+                "operator": "==",
+                "value": "image"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "category"
+            }
+        ],
+        [
+            {
                 "param": "user_form",
                 "operator": "==",
-                "value": "all"
+                "value": "edit"
+            },
+            {
+                "param": "current_user_role",
+                "operator": "==",
+                "value": "administrator"
+            },
+            {
+                "param": "current_user",
+                "operator": "==",
+                "value": "viewing_back"
+            },
+            {
+                "param": "user_role",
+                "operator": "==",
+                "value": "subscriber"
             }
         ]
     ],
@@ -174,7 +164,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": 1,
     "description": "",
-    "modified": 1567242877
+    "modified": 1567261923
 }

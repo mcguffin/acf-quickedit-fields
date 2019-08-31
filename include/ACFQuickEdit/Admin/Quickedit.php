@@ -25,6 +25,13 @@ class Quickedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
+	public function get_fieldgroup_option() {
+		return 'allow_quickedit';
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		parent::init_fields();
@@ -37,28 +44,22 @@ class Quickedit extends EditFeature {
 	}
 
 	/**
-	 *	@inheritdoc
-	 */
-	public function is_enabled_for_field( $field ) {
-
-		return isset( $field['allow_quickedit'] ) && $field['allow_quickedit'];
-
-	}
-
-	/**
 	 *	@action quick_edit_custom_box
 	 */
 	function display_quick_edit( $wp_column_slug, $post_type ) {
+
 		if ( $this->did_render ) {
 			return;
 		}
 
 		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
-		foreach ( $this->field_groups as $field_group ) {
+		printf( '<input type="hidden" name="_wp_http_referer" value="%s" />', esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
+		foreach ( $this->fieldsets as $field_group_key => $fields ) {
+			$field_group = acf_get_field_group( $field_group_key );
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
 			echo '<div class="qed-fields">';
-			foreach ( $field_group['fields'] as $sub_field_object ) {
+			foreach ( $fields as $sub_field_object ) {
 				$sub_field_object->render_quickedit_field( $post_type, 'quick' );
 			}
 			echo '</div>';
