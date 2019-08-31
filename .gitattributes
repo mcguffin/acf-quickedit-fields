@@ -7,3 +7,11 @@ package*.json export-ignore
 composer.json export-ignore
 /src export-ignore
 /test export-ignore
+test export-ignore
+.babelrc export-ignore
+.editorconfig export-ignore
+.eslintignore export-ignore
+.eslintrc export-ignore
+.sassrc export-ignore
+.wporg* export-ignore
+*.md export-ignore
