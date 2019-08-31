@@ -185,7 +185,7 @@ class CurrentView extends Core\Singleton {
 			add_filter( 'acf/location/rule_match/attachment', array( $this, 'match_attachment' ), 11, 3 );
 		}
 
-		return $this->field_group_filter;
+		return apply_filters( 'acf_quick_edit_fields_group_filter', $this->field_group_filter );
 	}
 
 	/**
