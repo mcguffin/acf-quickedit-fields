@@ -12,14 +12,15 @@ class LinkField extends Field {
 	 */
 	public function render_column( $object_id ) {
 		$value = $this->get_value( $object_id );
+
 		if ( ! is_array( $value ) ) {
 			return '';
 		}
 
 		return sprintf( '<a href="%s"%s>%s</a>',
-			$value['url'],
-			! empty($value['target']) ? sprintf(' target="%s"', $value['target'] ) : '',
-			! empty($value['title']) ? $value['title'] : $value['url']
+			esc_url( $value['url'] ),
+			! empty($value['target']) ? sprintf(' target="%s"', esc_attr( $value['target'] ) ) : '',
+			! empty($value['title']) ? esc_html( $value['title'] ) : esc_html($value['url'])
 		);
 		$this->get_value( $object_id );
 
@@ -56,17 +57,16 @@ class LinkField extends Field {
 		$output .= '<span class="link-content"></span>';
 		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quick-edit-fields') );
 		$output .= sprintf( '<button class="button-link remove-link dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', __('Remove Link', 'acf-quick-edit-fields') );
-		add_action('print_media_templates', array( $this, 'print_media_templates' ) );
-		return $output;
-		// [
-		// 	'title'
-		//	'url'
-		//	'target'
-		// ]
+		if ( ! has_action('print_media_templates', array( $this, 'print_media_templates' ) ) ) {
+			add_action('print_media_templates', array( $this, 'print_media_templates' ) );
+		}
 
-		return '<input '. acf_esc_attr( $input_atts ) .' />';
+		return $output;
 	}
 
+	/**
+	 *	@action print_media_templates
+	 */
 	public function print_media_templates() {
 
 		if ( ! class_exists( '\_WP_Editors', false ) ) {
@@ -78,4 +78,25 @@ class LinkField extends Field {
 
 	}
 
+
+
+	/**
+	 *	@param mixed $value
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+		$value = (array) $value;
+		$default = array(
+			'title'		=> '',
+			'url'		=> '',
+			'target'	=> '',
+		);
+		extract( $value );
+		$url = esc_url_raw( $url );
+		$title = sanitize_text_field( $title );
+		if ( $target !== 'blank' ) {
+			$target = '';
+		}
+		$value = compact( 'title', 'url', 'target' );
+		return $value;
+	}
 }

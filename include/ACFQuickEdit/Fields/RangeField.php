@@ -21,7 +21,7 @@ class RangeField extends NumberField {
 		$output = '';
 
 		if ( $this->acf_field['prepend'] ) {
-			$output .= sprintf( '<span class="prepend">%s</span>', $this->acf_field['prepend'] );
+			$output .= sprintf( '<span class="prepend">%s</span>', esc_html( $this->acf_field['prepend'] ) );
 		}
 
 		$output .= parent::render_input( array( 'type' => 'range', ), $is_quickedit );
@@ -34,7 +34,7 @@ class RangeField extends NumberField {
 				'style'					=> 'width: ' . (1.8 + $len*0.7) . 'em;'
 			) ) .' />';
 		if ( $this->acf_field['append'] ) {
-			$output .= sprintf( '<span class="append">%s</span>', $this->acf_field['append'] );
+			$output .= sprintf( '<span class="append">%s</span>', esc_html( $this->acf_field['append'] ) );
 		}
 
 		return $output;

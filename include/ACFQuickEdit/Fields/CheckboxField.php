@@ -23,7 +23,7 @@ class CheckboxField extends ChoiceField {
 			) ) );
 		}
 
-		$output .= sprintf( '<ul class="acf-checkbox-list" data-acf-field-key="%s">', $this->acf_field['key'] );
+		$output .= sprintf( '<ul class="acf-checkbox-list" data-acf-field-key="%s">', sanitize_key( $this->acf_field['key'] ) );
 
 		$input_atts		+= array(
 			'class'	=> 'acf-quick-edit',
@@ -98,6 +98,8 @@ class CheckboxField extends ChoiceField {
 		parent::render_bulk_do_not_change( $input_atts );
 
 	}
+
+
 
 
 }

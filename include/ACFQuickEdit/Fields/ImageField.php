@@ -23,13 +23,13 @@ class ImageField extends FileField {
 		if ( $image_id ) {
 			if ( is_array( $image_id ) ) {
 				// Image field is an object
-				$output .= wp_get_attachment_image( $image_id['id'] , array(80,80) );
+				$output .= wp_get_attachment_image( $image_id['id'], array(80,80) );
 			} else if( is_numeric( $image_id ) ) {
 				// Image field is an ID
 				$output .= wp_get_attachment_image( $image_id, 'thumbnail' );
 			} else {
 				// Image field is a url
-				$output .= '<img src="' . $image_id . '" width="80" height="80" />';
+				$output .= '<img src="' . esc_url_raw( $image_id ) . '" width="80" height="80" />';
 			};
 		}
 		return $output;

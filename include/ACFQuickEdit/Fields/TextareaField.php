@@ -28,4 +28,11 @@ class TextareaField extends TextField {
 	}
 
 
+	/**
+	 *	@param mixed $value
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+		return sanitize_textarea_field( $value );
+	}
+
 }

@@ -20,6 +20,28 @@ class GroupField extends Field {
 	 */
 	public function render_column( $object_id ) { }
 
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+
+		$sanitized_value = array();
+
+		foreach ( (array) $value as $field_key => $value ) {
+
+			if ( ! ( $field = get_field_object( $field_key ) ) ) {
+				continue;
+			}
+
+			if ( $field_object = Field::getFieldObject( $field ) ) {
+				$sanitized_value[$field_key] = $field_object->sanitize_value( $value );
+			}
+
+		}
+		return $sanitized_value;
+	}
+
 	/**
 	 *	Update field value
 	 *
@@ -41,7 +63,7 @@ class GroupField extends Field {
 		$param_name = $this->acf_field['key'];
 
 		if ( isset ( $_REQUEST['acf'][ $param_name ] ) ) {
-			$value = $_REQUEST['acf'][ $param_name ];
+			$value = $this->sanitize_value( $_REQUEST['acf'][ $param_name ] );
 		} else {
 			$value = null;
 		}

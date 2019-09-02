@@ -16,7 +16,7 @@ class OembedField extends Field {
 			return;
 		}
 
-		return sprintf( '<a href="%s">%s</a>', $value, parse_url( $value, PHP_URL_HOST ) );
+		return sprintf( '<a href="%s">%s</a>', esc_url( $value ), parse_url( $value, PHP_URL_HOST ) );
 	}
 
 	/**

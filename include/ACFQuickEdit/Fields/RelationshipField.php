@@ -62,11 +62,11 @@ class RelationshipField extends Field {
 		$title = get_the_title( $post_id );
 
 		if ( current_user_can( 'edit_post', $post_id ) ) {
-			$result .= sprintf( '<a href="%s">%s</a>', get_edit_post_link( $post_id ), $title );
+			$result .= sprintf( '<a href="%s">%s</a>', get_edit_post_link( $post_id ), esc_html( $title ) );
 		} else if ( current_user_can( 'read_post', $post_id ) ) {
-			$result .= sprintf( '<a href="%s">%s</a>', get_permalink( $post_id ), $title );
+			$result .= sprintf( '<a href="%s">%s</a>', get_permalink( $post_id ), esc_html( $title ) );
 		} else {
-			$result .= $title;
+			$result .= esc_html( $title );
 		}
 
 		if ( 'attachment' !== get_post_type( $post_id ) && 'private' === get_post_status( $post_id ) ) {

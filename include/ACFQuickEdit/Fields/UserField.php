@@ -22,8 +22,17 @@ class UserField extends Field {
 			} else {
 				$link = get_author_posts_url( $user_id );
 			}
-			return sprintf( '<a href="%s">%s</a>', $link, $userdata->display_name );
+			return sprintf( '<a href="%s">%s</a>', esc_url($link), esc_html( $userdata->display_name ) );
 		}
+
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+
+		return intval( $value );
 
 	}
 

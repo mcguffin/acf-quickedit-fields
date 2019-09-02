@@ -65,6 +65,7 @@ class Generic extends Field {
 		 */
 		return apply_filters( 'acf_qef_get_value_' . $this->acf_field['type'], parent::get_value( $object_id, $format_value ), $object_id, $format_value, $this->acf_field );
 	}
+
 	/**
 	 *	@inheritdoc
 	 */

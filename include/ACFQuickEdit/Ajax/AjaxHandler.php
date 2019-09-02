@@ -91,6 +91,7 @@ class AjaxHandler {
 			'use_nonce'		=> true,
 			'capability'	=> 'manage_options',
 			'callback'		=> null,
+			'sanitize_callback'	=> null,
 		);
 
 		$this->options = (object) wp_parse_args( $args, $defaults );
@@ -162,6 +163,13 @@ class AjaxHandler {
 			$response['message'] = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
 
 		} else if ( is_callable( $this->callback ) ) {
+
+			if ( is_callable( $this->sanitize_callback ) ) {
+				$params = call_user_func( $this->sanitize_callback, $params );
+			} else {
+				$params = $this->sanitize_default( $params );
+			}
+
 			if ( $result = call_user_func( $this->callback, $params ) ) {
 				$response = $result;
 			};
@@ -171,6 +179,32 @@ class AjaxHandler {
 		echo json_encode( $response );
 
 		exit();
+	}
+
+	/**
+	 *	Sanitize params
+	 *
+	 *	@param mixed
+	 *	@return int|string|array|null
+	 */
+	private function sanitize_default( $params ) {
+		if ( is_array( $params ) ) {
+			foreach ( $params as $key => $value ) {
+				$sanitized = $this->sanitize_default( $value );
+				if ( is_null( $sanitized ) ) {
+					unset( $params[$key] );
+				} else {
+					$params[$key] = $sanitized;
+				}
+			}
+		} else if ( is_numeric( $params ) ) {
+			$params = intval( $params );
+		} else if ( is_string( $params ) ) {
+			$params = sanitize_text_field( $params );
+		} else {
+			$params = null;
+		}
+		return $params;
 	}
 
 	/**

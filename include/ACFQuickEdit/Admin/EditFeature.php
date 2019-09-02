@@ -53,20 +53,20 @@ abstract class EditFeature extends Feature {
 
 		// register quick/bulk save actions
 		if ( ! has_action( $action, $callback ) ) {
-			
+
 			wp_enqueue_media();
 
 			add_action( $action, $callback, 10, $count_args );
-			
+
 		}
 
-		
+
 		foreach ( $this->fields as $field ) {
 			$acf_field = $field->get_acf_field();
 			$fieldgroup = $current_view->get_group_of_field( $acf_field );
-			
+
 			if ( ! isset( $this->fieldsets[ $fieldgroup['key'] ] ) ) {
-				$this->fieldsets[ $fieldgroup['key'] ] = array();				
+				$this->fieldsets[ $fieldgroup['key'] ] = array();
 			}
 
 			$this->fieldsets[ $fieldgroup['key'] ][] = $field;

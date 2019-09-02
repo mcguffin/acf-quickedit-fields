@@ -69,10 +69,11 @@ class Admin extends Core\Singleton {
 		$this->quickedit	= Quickedit::instance();
 		$this->bulkedit		= Bulkedit::instance();
 		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', array(
-			'public'		=> false,
-			'use_nonce'		=> true,
-			'capability'	=> 'edit_posts',
-			'callback'		=> array( $this, 'ajax_get_acf_post_meta' ),
+			'public'			=> false,
+			'use_nonce'			=> true,
+			'capability'		=> 'edit_posts',
+			'callback'			=> array( $this, 'ajax_get_acf_post_meta' ),
+			'sanitize_callback'	=> array( $this, 'sanitize_ajax_get_acf_post_meta' ),
 		));
 
 		//
@@ -113,15 +114,18 @@ class Admin extends Core\Singleton {
 
 				foreach ( $field_keys as $key ) {
 
-					$field = get_field_object( $key , $object_id );
+					// ACF-Field must exists
+					if ( ! ( $field = get_field_object( $key , $object_id ) ) ) {
+						continue;
+					}
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
 						$value = $field_object->get_value( $object_id, false );
 
-
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
-							$data[ $key ] = $field_object->get_value( $object_id, false );
+							$val = $field_object->get_value( $object_id, false );
+							$data[ $key ] = $field_object->sanitize_value( $val );
 						} else {
 							// multiple iterations - no value if values aren't equal
 							if ( $data[ $key ] != $value ) {
@@ -140,8 +144,13 @@ class Admin extends Core\Singleton {
 		);
 	}
 
-
-	private function can_edit_object($object_id) {
+	/**
+	 *	Current user can edit
+	 *
+	 *	@param string $object_id
+	 *	@return boolean
+	 */
+	private function can_edit_object( $object_id ) {
 		if ( is_numeric( $object_id ) ) {
 			return current_user_can( 'edit_post', $object_id );
 		}

@@ -23,13 +23,13 @@ class PageLinkField extends Field {
 		}
 
 		if ( is_string( $value ) ) {
-			return sprintf( '<a href="%s">%s</a>', $value, $value );
+			return sprintf( '<a href="%s">%s</a>', esc_url($value), esc_html( $value ) );
 		}
 
 		$output	= '';
 		$output .= '<ol>';
 		foreach ( $value as $link ) {
-			$output .= sprintf( '<li><a href="%s">%s</a></li>', esc_attr($link), $link );
+			$output .= sprintf( '<li><a href="%s">%s</a></li>', esc_url( $link ), esc_html( $link ) );
 		}
 		$output .= '</ol>';
 		return $output;

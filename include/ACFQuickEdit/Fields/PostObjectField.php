@@ -52,12 +52,12 @@ class PostObjectField extends RelationshipField {
 	private function get_post_link( $post ) {
 		$post_title = $post->post_title;
 		if ( empty( trim( $post_title ) ) ) {
-			$post_title = __( '(no title)', 'acf-quick-edit-fields' );
+			$post_title = esc_html__( '(no title)', 'acf-quick-edit-fields' );
 		}
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
-			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), $post_title );
+			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), esc_html( $post_title ) );
 		} else if ( ( $pto = get_post_type_object( $post->post_type ) ) && $pto->public ) {
-			return sprintf('<a href="%s">%s</a>', get_permalink( $post->ID ), $post_title );
+			return sprintf('<a href="%s">%s</a>', get_permalink( $post->ID ), esc_html($post_title) );
 		}
 		return $post_title;
 

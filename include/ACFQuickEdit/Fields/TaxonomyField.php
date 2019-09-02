@@ -25,7 +25,7 @@ class TaxonomyField extends Field {
 			}
 			foreach ( $value as $i => $term ) {
 				if ( $this->acf_field['return_format'] === 'id' ) {
-					$term = get_term($term, $this->acf_field['taxonomy']);
+					$term = get_term( $term, $this->acf_field['taxonomy']);
 				}
 				// fix #63 ?
 				if ( trim( $term->name ) !== '' ) {
@@ -36,9 +36,10 @@ class TaxonomyField extends Field {
 					$term_names[] = $term->id;
 				}
 			}
+			$term_names = array_map( 'esc_html', $term_names );
 			$output .= implode( ', ', $term_names );
 		} else {
-			$output .= __('(No value)', 'acf-quick-edit-fields');
+			$output .= esc_html__('(No value)', 'acf-quick-edit-fields');
 		}
 		return $output;
 	}
@@ -94,11 +95,11 @@ class TaxonomyField extends Field {
 					'value'	=> '',
 					'type'	=> $field_clone['field_type']
 				)) . ' />';
-				$output .= sprintf('<span>%s</span>',__('– No Selection –','acf-quick-edit-fields'));
+				$output .= sprintf('<span>%s</span>', esc_html__('– No Selection –','acf-quick-edit-fields'));
 				$output .= '</label>';
 				$output .= '</li>';
 			}
-			$output .= wp_list_categories($args);
+			$output .= wp_list_categories( $args );
 
 			$output .= '</ul>';
 		} else {
@@ -132,7 +133,7 @@ class TaxonomyField extends Field {
 
 				$term_title .= $term->name;
 
-				$field_clone['choices'][ $term->term_id ] = $term_title;
+				$field_clone['choices'][ $term->term_id ] = esc_html( $term_title );
 			}
 			ob_start();
 			acf_render_field($field_clone);
@@ -142,5 +143,13 @@ class TaxonomyField extends Field {
 		return $output;
 	}
 
+	/**
+	 *	@param mixed $value
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+		$value = array_map( 'intval', $value );
+		$value = array_filter( $value );
+		return array_values( $value );
+	}
 
 }

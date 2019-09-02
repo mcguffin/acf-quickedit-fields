@@ -63,5 +63,12 @@ class TrueFalseField extends Field {
 		return 'unsigned';
 	}
 
+	/**
+	 *	@param mixed $value
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+		return boolval( $value );
+	}
+
 
 }
