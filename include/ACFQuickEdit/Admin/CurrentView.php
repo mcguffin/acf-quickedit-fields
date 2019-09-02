@@ -202,27 +202,53 @@ class CurrentView extends Core\Singleton {
 
 		foreach ( $groups as $field_group ) {
 			$group_fields = acf_get_fields( $field_group );
+
+			$group_fields = $this->filter_fields( $query, $group_fields );
+
 			foreach ( $group_fields as $field )  {
-				$match = true;
-				foreach ( $query as $prop => $value ) {
-					if ( is_bool( $value ) ) {
-						$value = intval($value);
-					}
-					if ( ! isset( $field[ $prop ] ) || $field[ $prop ] !== $value ) {
-						$match = false;
-						break;
-					}
-				}
-				if ( $match ) {
-					$fields[] = $field;
-					$this->field_to_group[ $field['key'] ] = $field_group;
-				}
+				// map to group
+				$this->field_to_group[ $field['key'] ] = $field_group;
+
 			}
+			$fields = array_merge( $fields, $group_fields );
 		}
 
 		return $fields;
 	}
 
+
+	/**
+	 *	Return fields by properties
+	 *
+	 *	@param array $query Field properties
+	 *	@param array $fields
+	 *	@return array
+	 */
+	private function filter_fields( $query, $fields ) {
+		$found_fields = array();
+
+		foreach ( $fields as $field )  {
+			$match = true;
+
+			if ( 'group' === $field['type'] ) {
+
+				$found_fields = array_merge( $found_fields, $this->filter_fields( $query, $field['sub_fields'] ) );
+			}
+			foreach ( $query as $prop => $value ) {
+				if ( is_bool( $value ) ) {
+					$value = intval($value);
+				}
+				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] !== $value ) {
+					$match = false;
+					break;
+				}
+			}
+			if ( $match ) {
+				$found_fields[] = $field;
+			}
+		}
+		return $found_fields;
+	}
 
 	/**
 	 *	Return field groups relevant for the current view
@@ -236,9 +262,9 @@ class CurrentView extends Core\Singleton {
 		if ( is_null( $this->_available_field_groups ) ) {
 
 			$filters = $this->get_fieldgroup_filter();
+
 			if ( $this->is_assoc( $filters ) ) {
 				$this->_available_field_groups = acf_get_field_groups( $filters );
-
 			} else {
 				$this->_available_field_groups = array();
 				foreach ( $filters as $filter ) {
@@ -351,7 +377,6 @@ class CurrentView extends Core\Singleton {
 			$url = $_REQUEST['_wp_http_referer'];
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			$url = $_SERVER['HTTP_REFERER'];
-
 		}
 
 		if ( $url ) {
