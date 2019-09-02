@@ -5,7 +5,7 @@ WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields P
 
 **Status**
 
-The plugin is currently undergoing review in the wporg plugin repository. If everything works well, it will be avaialable as [ACF QuickEdit Fields](https://wordpress.org/plugins/acf-quickedit-fields)
+The plugin is currently undergoing review in the wporg plugin repository. If everything goes well, it will be avaialable as [ACF QuickEdit Fields](https://wordpress.org/plugins/acf-quickedit-fields).
 
 Features
 --------
