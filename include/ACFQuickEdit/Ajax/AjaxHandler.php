@@ -148,8 +148,6 @@ class AjaxHandler {
 	 */
 	public function ajax_callback() {
 
-		$params = $_REQUEST;
-
 		$response = array( 'success' => false );
 
 		if ( $this->use_nonce && ! $this->verify_nonce() ) {
@@ -163,6 +161,8 @@ class AjaxHandler {
 			$response['message'] = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
 
 		} else if ( is_callable( $this->callback ) ) {
+
+			$params = $_REQUEST;
 
 			if ( is_callable( $this->sanitize_callback ) ) {
 				$params = call_user_func( $this->sanitize_callback, $params );
