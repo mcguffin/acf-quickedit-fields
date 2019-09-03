@@ -263,7 +263,7 @@ class Columns extends Feature {
 				// will affect css class
 				$column_key = $field_slug . '--qef-type-' . $field_object->get_acf_field()['type'] . '--';
 
-				$columns[ $column_key ] = $field_slug;
+				$columns[ $column_key ] = $field_object->get_meta_key();
 
 			}
 		}
@@ -274,10 +274,12 @@ class Columns extends Feature {
 	 *	@action pre_get_posts
 	 */
 	public function parse_query( $query ) {
+
 		if ( ( $by = $query->get('orderby') ) && ( $meta_query = $this->get_meta_query( $by ) ) ) {
 
 			$query->set( 'meta_key', "" );
 			$query->set( 'meta_query', $meta_query );
+
 		}
 	}
 	/**
@@ -307,7 +309,7 @@ class Columns extends Feature {
 		if ( isset( $this->fields,  $this->fields[ $by ] ) ) {
 			$sortable = $this->fields[ $by ]->is_sortable();
 			if ( is_string( $sortable ) ) {
-				$type_query = array( 'type' => $sortable );
+				$type_query = array( 'type' => strtoupper( $sortable ) );
 			} else {
 				$type_query = array();
 			}
@@ -323,7 +325,6 @@ class Columns extends Feature {
 				) + $type_query,
 			);
 		}
-var_dump($meta_query);
 		return $meta_query;
 	}
 

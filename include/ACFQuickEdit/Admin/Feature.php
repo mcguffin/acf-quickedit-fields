@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
 /**
- *	Class 
+ *	Class
  */
 abstract class Feature extends Core\Singleton {
 
@@ -43,7 +43,7 @@ abstract class Feature extends Core\Singleton {
 		if ( wp_doing_ajax() ) {
 			add_action( 'admin_init', array( $this, 'init_fields' ) );
 		} else {
-			add_action( 'current_screen', array( $this, 'init_fields' ) );			
+			add_action( 'current_screen', array( $this, 'init_fields' ) );
 		}
 		parent::__construct();
 	}
@@ -115,7 +115,7 @@ abstract class Feature extends Core\Singleton {
 		if ( ! in_array( $current_view->get_object_kind(), ['post','term','user'] ) ) {
 			return false;
 		}
-		
+
 		$fields_query = array();
 		$fields_query[ $this->get_fieldgroup_option() ] = true;
 
@@ -127,7 +127,7 @@ abstract class Feature extends Core\Singleton {
 				continue;
 			}
 			$field_object = Fields\Field::getFieldObject( $field );
-			$this->add_field( $field['name'], $field_object, false );
+			$this->add_field( $field_object->get_meta_key(), $field_object, false );
 		}
 
 		return $this->is_active();
