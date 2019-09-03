@@ -39,6 +39,9 @@ npm install
 npm run dev
 ```
 
+## Migrating from Github to WPORG
+Please note that the plugin slug has chaged from `acf-quick-edit-fields` to `acf-quickedit-fields` (missing a dash in the middle). You can safely delete the old version 2.x and re-install the plugin on plugins page.
+
 Development
 -----------
 npm scripts:
