@@ -55,5 +55,3 @@ if ( is_admin() || wp_doing_ajax() ) {
 	Admin\Admin::instance();
 }
 
-
-include_once __DIR__ . DIRECTORY_SEPARATOR . 'test/test.php';
