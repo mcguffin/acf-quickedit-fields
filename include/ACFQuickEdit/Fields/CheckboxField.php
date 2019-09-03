@@ -54,7 +54,7 @@ class CheckboxField extends ChoiceField {
 		$output .= '</ul>';
 
 		if ( $this->acf_field['allow_custom'] ) {
-			$output .= '<button class="button button-seconday add-choice">' . __('Add Choice','acf-quick-edit-fields') . '</button>';
+			$output .= '<button class="button button-seconday add-choice">' . __('Add Choice','acf-quickedit-fields') . '</button>';
 			$output .= sprintf( '<script type="text/html" id="tmpl-acf-qef-custom-choice-%s">', $this->acf_field['key'] );
 
 			$id = $this->core->prefix( $this->acf_field['key'] . '-other' );

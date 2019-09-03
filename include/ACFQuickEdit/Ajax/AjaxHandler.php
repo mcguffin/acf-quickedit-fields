@@ -153,12 +153,12 @@ class AjaxHandler {
 		if ( $this->use_nonce && ! $this->verify_nonce() ) {
 
 			// check nonce
-			$response['message'] = __( 'Nonce invalid', 'acf-quick-edit-fields' );
+			$response['message'] = __( 'Nonce invalid', 'acf-quickedit-fields' );
 
 		} else if ( $this->capability !== false && ! current_user_can( $this->capability ) ) {
 
 			// check capability
-			$response['message'] = __( 'Insufficient Permission', 'acf-quick-edit-fields' );
+			$response['message'] = __( 'Insufficient Permission', 'acf-quickedit-fields' );
 
 		} else if ( is_callable( $this->callback ) ) {
 

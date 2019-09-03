@@ -10,7 +10,7 @@ The plugin is currently undergoing review in the wporg plugin repository. If eve
 Features
 --------
  - Show ACF field values in List views  
-   [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
+   [Supported ACF Fields](https://github.com/mcguffin/acf-quickedit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
  - Supports Post, Term and User list tables
  - Scalar Columns (Like Text, Number, ...) can be made sortable
  - Edit ACF Field values in Quick edit and Bulk edit
@@ -35,8 +35,8 @@ wp plugin install --activate acf-openstreetmap-field
 
 ### Development
 ```shell
-git clone git@github.com:mcguffin/acf-quick-edit-fields.git
-cd acf-quick-edit-fields
+git clone git@github.com:mcguffin/acf-quickedit-fields.git
+cd acf-quickedit-fields
 npm install
 npm run dev
 ```
@@ -55,7 +55,7 @@ npm scripts:
 Documentation
 -------------
 
- - [Quick Start](https://github.com/mcguffin/acf-quick-edit-fields/wiki)
- - [Filters and Actions](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Plugin-Filters)
- - [Known Issues](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Known-Issues) that can't be fixed
- - [How to Support more Field types](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration)
+ - [Quick Start](https://github.com/mcguffin/acf-quickedit-fields/wiki)
+ - [Filters and Actions](https://github.com/mcguffin/acf-quickedit-fields/wiki/Plugin-Filters)
+ - [Known Issues](https://github.com/mcguffin/acf-quickedit-fields/wiki/Known-Issues) that can't be fixed
+ - [How to Support more Field types](https://github.com/mcguffin/acf-quickedit-fields/wiki/Tutorial:-Custom-Field-Integration)

@@ -21,7 +21,7 @@ class NumberField extends Field {
 		$output = '';
 
 		if ( $value === "" ) {
-			$output .= esc_html__('(No value)', 'acf-quick-edit-fields');
+			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
 		} else {
 			$output .= number_format_i18n( floatval($value), strlen( substr( strrchr( $value, "." ), 1 ) ) ); //
 		}

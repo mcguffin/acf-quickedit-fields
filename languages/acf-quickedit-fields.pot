@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ACF QuickEdit Fields 2.4.19\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quick-edit-fields\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,14 +12,14 @@ msgstr ""
 "POT-Creation-Date: 2019-08-31T15:33:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
-"X-Domain: acf-quick-edit-fields\n"
+"X-Domain: acf-quickedit-fields\n"
 
 #. Plugin Name of the plugin
 msgid "ACF QuickEdit Fields"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://github.com/mcguffin/acf-quick-edit-fields"
+msgid "https://github.com/mcguffin/acf-quickedit-fields"
 msgstr ""
 
 #. Description of the plugin

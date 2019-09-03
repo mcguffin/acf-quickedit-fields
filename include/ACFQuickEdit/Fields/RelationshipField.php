@@ -70,7 +70,7 @@ class RelationshipField extends Field {
 		}
 
 		if ( 'attachment' !== get_post_type( $post_id ) && 'private' === get_post_status( $post_id ) ) {
-			$result .= ' &mdash; ' . __('Private', 'acf-quick-edit-fields' );
+			$result .= ' &mdash; ' . __('Private', 'acf-quickedit-fields' );
 		}
 		return $result;
 	}

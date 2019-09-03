@@ -43,8 +43,8 @@ class FileField extends Field {
 		$output = '';
 		$output .= parent::render_input( $input_atts, $is_quickedit );
 		$output .= '<span class="file-content"><span class="media-mime"></span><span class="media-title"></span></span>';
-		$output .= sprintf( '<button class="button-secondary select-media">%s</button>', esc_html__('Select File', 'acf-quick-edit-fields') );
-		$output .= sprintf( '<button class="button-link remove-media dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Remove File', 'acf-quick-edit-fields') );
+		$output .= sprintf( '<button class="button-secondary select-media">%s</button>', esc_html__('Select File', 'acf-quickedit-fields') );
+		$output .= sprintf( '<button class="button-link remove-media dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Remove File', 'acf-quickedit-fields') );
 		return $output;
 	}
 

@@ -31,12 +31,12 @@ msgstr ""
 "\">ACF Pro</a>. Você pode desabilita-lo e desinstala-lo na <a href=\"%2$s"
 "\">página de Plugins</a>."
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:180
 msgid "Show Column"
 msgstr "Mostrar Coluna"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:184
 msgid "Show a column in the posts list table"
 msgstr "Mostrar coluna na lista de posts"
@@ -56,22 +56,22 @@ msgstr ""
 "por diante. Deixe vazio para posicionar a coluna na posição mais à direita "
 "possível."
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:217
 msgid "Allow QuickEdit"
 msgstr "Permitir edição rápida"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:221
 msgid "Allow editing this field in QuickEdit mode"
 msgstr "Permite editar este campo no modo de Edição Rápida"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:241
 msgid "Allow Bulk Edit"
 msgstr "Permitir edição em massa"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/class-acftoquickedit.php:245
 msgid "Allow editing this field in Bulk edit mode"
 msgstr "Permite editar este campo em massa"

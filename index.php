@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: ACF QuickEdit Fields
-Plugin URI: https://github.com/mcguffin/acf-quick-edit-fields
+Plugin URI: https://github.com/mcguffin/acf-quickedit-fields
 Description: Show Advanced Custom Fields in post list table. Edit field values in Quick Edit and / or Bulk edit.
 Author: mcguffin
 Version: 2.4.19
@@ -10,7 +10,7 @@ Author URI: https://github.com/mcguffin
 License: GPL3
 Requires WP: 4.8
 Requires PHP: 5.6
-Text Domain: acf-quick-edit-fields
+Text Domain: acf-quickedit-fields
 Domain Path: /languages/
 */
 

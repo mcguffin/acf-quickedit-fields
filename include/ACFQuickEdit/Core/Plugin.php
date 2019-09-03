@@ -137,7 +137,7 @@ class Plugin extends Singleton implements ComponentInterface {
 	 */
 	public function load_textdomain() {
 		$path = pathinfo( $this->get_wp_plugin(), PATHINFO_DIRNAME );
-		load_plugin_textdomain( 'acf-quick-edit-fields', false, $path . '/languages' );
+		load_plugin_textdomain( 'acf-quickedit-fields', false, $path . '/languages' );
 	}
 
 

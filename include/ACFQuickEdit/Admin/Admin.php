@@ -176,7 +176,7 @@ class Admin extends Core\Singleton {
 				printf(
 					/* Translators: 1: ACF Pro URL, 2: plugins page url */
 					__( 'The <strong>ACF QuickEdit Fields</strong> plugin requires <a href="%1$s">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
-						'acf-quick-edit-fields'
+						'acf-quickedit-fields'
 					),
 					'http://www.advancedcustomfields.com/',
 					admin_url('plugins.php' )

@@ -55,8 +55,8 @@ class LinkField extends Field {
 			$output .= '<input '. acf_esc_attr( $atts ) .' />';
 		}
 		$output .= '<span class="link-content"></span>';
-		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quick-edit-fields') );
-		$output .= sprintf( '<button class="button-link remove-link dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', __('Remove Link', 'acf-quick-edit-fields') );
+		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quickedit-fields') );
+		$output .= sprintf( '<button class="button-link remove-link dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', __('Remove Link', 'acf-quickedit-fields') );
 		if ( ! has_action('print_media_templates', array( $this, 'print_media_templates' ) ) ) {
 			add_action('print_media_templates', array( $this, 'print_media_templates' ) );
 		}

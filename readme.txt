@@ -17,7 +17,7 @@ WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields P
 
 = Features =
  - Show ACF field values in List views
-   [Supported ACF Fields](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
+   [Supported ACF Fields](https://github.com/mcguffin/acf-quickedit-fields/wiki/Feature-Support-Matrix#supported-acf-fields).
  - Supports Post, Term and User list tables
  - Scalar Columns (Like Text, Number, ...) can be made sortable
  - Edit ACF Field values in Quick edit and Bulk edit
@@ -42,14 +42,14 @@ Toggle *QuickEdit* and *Bulk Edit* to enable Editing in the List table view.
 
 The plugin follows ACFs location rule logic as far as possible. If you have a field group that is only applies to posts in a specific category or with a certain post starus, then columns and quick edit will only show up, if you have filtered the posts by that category ar post status.
 
-[Read more on the WikiPage](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Feature-Support-Matrix#acf-location-rules)
+[Read more on the WikiPage](https://github.com/mcguffin/acf-quickedit-fields/wiki/Feature-Support-Matrix#acf-location-rules)
 
 **Conditional Logic**
 
 Conditional logic is not supported.
 
 = Development =
-Please head over to the source code [on Github](https://github.com/mcguffin/acf-quick-edit-fields).
+Please head over to the source code [on Github](https://github.com/mcguffin/acf-quickedit-fields).
 
 == Installation ==
 
@@ -59,19 +59,19 @@ Just follow the [Automatic Plugin Installation](https://wordpress.org/support/ar
 
 = When will you support the Non-ACF Field XYZ? =
 
-Presumbly I won't – I'm sorry. However, there are some [plugin filters and actions](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Plugin-Filters) that might come in handy, if you decide to write an implementation by yourself.
+Presumbly I won't – I'm sorry. However, there are some [plugin filters and actions](https://github.com/mcguffin/acf-quickedit-fields/wiki/Plugin-Filters) that might come in handy, if you decide to write an implementation by yourself.
 
-I even wrote a [tutorial page](https://github.com/mcguffin/acf-quick-edit-fields/wiki/Tutorial:-Custom-Field-Integration) on how to write our own field type integration.
+I even wrote a [tutorial page](https://github.com/mcguffin/acf-quickedit-fields/wiki/Tutorial:-Custom-Field-Integration) on how to write our own field type integration.
 
 = I found a bug. Where should I post it? =
 
-Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-quick-edit-fields/issues).
+Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-quickedit-fields/issues).
 
 I will most likely not maintain the forum support forum on wordpress.org. Anyway, other users might have an answer for you, so it's worth a shot.
 
 = I'd like to suggest a feature. Where should I post it? =
 
-Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-quick-edit-fields/issues)
+Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-quickedit-fields/issues)
 
 
 == Screenshots ==

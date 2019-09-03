@@ -39,7 +39,7 @@ class TaxonomyField extends Field {
 			$term_names = array_map( 'esc_html', $term_names );
 			$output .= implode( ', ', $term_names );
 		} else {
-			$output .= esc_html__('(No value)', 'acf-quick-edit-fields');
+			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
 		}
 		return $output;
 	}
@@ -95,7 +95,7 @@ class TaxonomyField extends Field {
 					'value'	=> '',
 					'type'	=> $field_clone['field_type']
 				)) . ' />';
-				$output .= sprintf('<span>%s</span>', esc_html__('– No Selection –','acf-quick-edit-fields'));
+				$output .= sprintf('<span>%s</span>', esc_html__('– No Selection –','acf-quickedit-fields'));
 				$output .= '</label>';
 				$output .= '</li>';
 			}
@@ -111,7 +111,7 @@ class TaxonomyField extends Field {
 			$field_clone['ajax']		= false;
 
 			if ( $field_clone['allow_null'] ) {
-				$field_clone['choices'][''] = __('– No Selection –','acf-quick-edit-fields');
+				$field_clone['choices'][''] = __('– No Selection –','acf-quickedit-fields');
 			}
 
 			$terms = acf_get_terms( array(

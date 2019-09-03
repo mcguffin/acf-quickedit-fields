@@ -52,7 +52,7 @@ class PostObjectField extends RelationshipField {
 	private function get_post_link( $post ) {
 		$post_title = $post->post_title;
 		if ( empty( trim( $post_title ) ) ) {
-			$post_title = esc_html__( '(no title)', 'acf-quick-edit-fields' );
+			$post_title = esc_html__( '(no title)', 'acf-quickedit-fields' );
 		}
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
 			return sprintf('<a href="%s">%s</a>', get_edit_post_link( $post->ID ), esc_html( $post_title ) );

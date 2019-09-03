@@ -54,12 +54,12 @@ abstract class ChoiceField extends Field {
 
 		if ( empty( $values ) ) {
 			$output .= '<p>';
-			$output .= __('(No value)', 'acf-quick-edit-fields');
+			$output .= __('(No value)', 'acf-quickedit-fields');
 			$output .= '</p>';
 		} else {
 			$output .= sprintf( '<ol class="acf-qef-value-list" data-count-values="%d">', count( $values ) );
 			foreach ( $values as $val ) {
-				$output .= sprintf( '<li>%s</li>', acf_esc_html( $val ) ); //implode( __(', ', 'acf-quick-edit-fields' ) , $values );
+				$output .= sprintf( '<li>%s</li>', acf_esc_html( $val ) ); //implode( __(', ', 'acf-quickedit-fields' ) , $values );
 			}
 			$output .= '</ol>';
 		}

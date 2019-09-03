@@ -36,12 +36,12 @@ msgstr ""
 msgid "Insufficient Permission"
 msgstr "Keine Berechtigung"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Bulkedit.php:34
 msgid "Allow Bulk Edit"
 msgstr "Massenbearbeitung zulassen"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Bulkedit.php:38
 msgid "Allow editing this field in Bulk edit mode"
 msgstr "Dieses Feld bei der Massenbearbeitung anzeigen"
@@ -50,22 +50,22 @@ msgstr "Dieses Feld bei der Massenbearbeitung anzeigen"
 msgid "Column View"
 msgstr "Spaltenansicht"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Columns.php:41
 msgid "Show a column in the posts list table"
 msgstr "Spalte in der Beitragsliste anzeigen"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Columns.php:64
 msgid "Show Column"
 msgstr "Spalte anzeigen"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Columns.php:68
 msgid "Show column in list tables"
 msgstr "Spalte anzeigen"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Columns.php:76
 msgid "Sortable Column"
 msgstr "Sortierbare Spalte"
@@ -89,12 +89,12 @@ msgstr ""
 "WordPress Spalte hat eine Gewichtung von <em>0</em>, die nächste <em>100</"
 "em> und so weiter. Eine leere Eingabe hängt die Spalte rechts an."
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Quickedit.php:31
 msgid "Allow QuickEdit"
 msgstr "QuickEdit zulassen"
 
-# @ acf-quick-edit-fields
+# @ acf-quickedit-fields
 #: include/ACFQuickEdit/Admin/Quickedit.php:35
 msgid "Allow editing this field in QuickEdit mode"
 msgstr "Die Bearbeitung dieses Feldes in QuickEdit zulassen"

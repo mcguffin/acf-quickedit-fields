@@ -1,5 +1,5 @@
 {
-  "name": "acf-quick-edit-fields",
+  "name": "acf-quickedit-fields",
   "version": "2.4.19",
   "description": "Enter description here.",
   "main": "js/acf-qef-field-group.min.js",
@@ -8,19 +8,19 @@
     "dashicons": "node ./src/run/dashicons.js",
     "test": "node ./src/run/test.js",
     "dev-test": "./src/run/dev-test.sh",
-    "i18n": "wp i18n make-pot . languages/acf-quick-edit-fields.pot --domain=acf-quick-edit-fields --exclude=tmp/*",
+    "i18n": "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp/*",
     "rollback": "git reset --hard HEAD~ && git push origin +master"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mcguffin/acf-quick-edit-fields.git"
+    "url": "git+https://github.com/mcguffin/acf-quickedit-fields.git"
   },
   "author": "Jörn Lund",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/mcguffin/acf-quick-edit-fields/issues"
+    "url": "https://github.com/mcguffin/acf-quickedit-fields/issues"
   },
-  "homepage": "https://github.com/mcguffin/acf-quick-edit-fields#readme",
+  "homepage": "https://github.com/mcguffin/acf-quickedit-fields#readme",
   "browserslist": [
     "last 3 versions",
     "> 0.25%",
@@ -62,7 +62,7 @@
       },
       "git": {
         "user": "mcguffin",
-        "remote": "git@github.com:mcguffin/acf-quick-edit-fields.git"
+        "remote": "git@github.com:mcguffin/acf-quickedit-fields.git"
       },
       "admin": {
         "components": {},
@@ -85,9 +85,9 @@
       }
     },
     "name": "ACF QuickEdit Fields",
-    "slug": "acf-quick-edit-fields",
-    "prefix": "acf_quick_edit_fields",
-    "textdomain": "acf-quick-edit-fields",
+    "slug": "acf-quickedit-fields",
+    "prefix": "acf_quickedit_fields",
+    "textdomain": "acf-quickedit-fields",
     "namespace": "ACFQuickEdit",
     "author": "mcguffin",
     "author_uri": "https://github.com/mcguffin",
@@ -102,7 +102,7 @@
     "type": "plugin",
     "build": {
       "prebuild": [
-        "wp i18n make-pot . languages/acf-quick-edit-fields.pot --domain=acf-quick-edit-fields --exclude=tmp"
+        "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp"
       ],
       "build": [
         "gulp build"

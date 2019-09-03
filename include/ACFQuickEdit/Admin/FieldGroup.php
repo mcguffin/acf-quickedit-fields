@@ -49,11 +49,11 @@ class FieldGroup extends Core\Singleton {
 		// show column: todo: allow sortable
 		//*
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Column View','acf-quick-edit-fields'),
+			'label'			=> __('Column View','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'column_setting',
 			'name'			=> 'column',
-			'message'		=> __("Show a column in the posts list table", 'acf-quick-edit-fields'),
+			'message'		=> __("Show a column in the posts list table", 'acf-quickedit-fields'),
 			'width'			=> 50,
 			'field'			=> $field,
 		));
@@ -75,12 +75,12 @@ class FieldGroup extends Core\Singleton {
 		echo '<div style="width:50%;float:left;">';
 
 		acf_render_field_wrap( array(
-			'label'			=> __('Show Column','acf-quick-edit-fields'),
+			'label'			=> __('Show Column','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'true_false',
 			'name'			=> 'show_column',
 			'ui'			=> 1,
-			'message'		=> __("Show column in list tables", 'acf-quick-edit-fields'),
+			'message'		=> __("Show column in list tables", 'acf-quickedit-fields'),
 			'prefix'		=> $field['prefix'],
 			'value'			=> $field['field']['show_column'],
 		), 'div', 'label' );
@@ -88,12 +88,12 @@ class FieldGroup extends Core\Singleton {
 		if ( $field_object->is_sortable() ) {
 
 			acf_render_field_wrap( array(
-				'label'			=> __('Sortable Column','acf-quick-edit-fields'),
+				'label'			=> __('Sortable Column','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'show_column_sortable',
 				'ui'			=> 1,
-				'message'		=> __("Make this column sortable", 'acf-quick-edit-fields'),
+				'message'		=> __("Make this column sortable", 'acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['show_column_sortable'],
 			), 'div', 'label' );
@@ -103,11 +103,11 @@ class FieldGroup extends Core\Singleton {
 		echo '</div>';
 
 		$weight_field = array(
-			'label'			=> __('Column Weight','acf-quick-edit-fields'),
-			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quick-edit-fields'),
+			'label'			=> __('Column Weight','acf-quickedit-fields'),
+			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quickedit-fields'),
 			'type'			=> 'number',
 			'name'			=> 'show_column_weight',
-			'message'		=> __("Column Weight", 'acf-quick-edit-fields'),
+			'message'		=> __("Column Weight", 'acf-quickedit-fields'),
 			'default_value'	=> '1000',
 			'min'			=> '-10000',
 			'max'			=> '10000',
@@ -141,7 +141,7 @@ class FieldGroup extends Core\Singleton {
 	public function render_edit_settings( $field ) {
 		// add to quick edit
 		acf_render_field_setting( $field, array(
-			'label'			=> __('Editing','acf-quick-edit-fields'),
+			'label'			=> __('Editing','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'edit_setting',
 			'name'			=> 'edit',
@@ -166,13 +166,13 @@ class FieldGroup extends Core\Singleton {
 
 		if ( $types[ $field['field']['type'] ]['quickedit'] ) {
 			acf_render_field_wrap( array(
-				'label'			=> __('QuickEdit','acf-quick-edit-fields'),
+				'label'			=> __('QuickEdit','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'allow_quickedit',
 				'ui'			=> 1,
-				'ui_on_text'	=> __('Enabled','acf-quick-edit-fields'),
-				'ui_off_text'	=> __('Disabled','acf-quick-edit-fields'),
+				'ui_on_text'	=> __('Enabled','acf-quickedit-fields'),
+				'ui_off_text'	=> __('Disabled','acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['allow_quickedit'],
 				'wrapper'		=> array(
@@ -183,13 +183,13 @@ class FieldGroup extends Core\Singleton {
 
 		if ( $types[ $field['field']['type'] ]['bulkedit'] ) {
 			acf_render_field_wrap( array(
-				'label'			=> __('Bulk Edit','acf-quick-edit-fields'),
+				'label'			=> __('Bulk Edit','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
 				'name'			=> 'allow_bulkedit',
 				'ui'			=> 1,
-				'ui_on_text'	=> __('Enabled','acf-quick-edit-fields'),
-				'ui_off_text'	=> __('Disabled','acf-quick-edit-fields'),
+				'ui_on_text'	=> __('Enabled','acf-quickedit-fields'),
+				'ui_off_text'	=> __('Disabled','acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['allow_bulkedit'],
 				'wrapper'		=> array(
