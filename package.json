@@ -97,7 +97,8 @@
     "steps": [
       "build",
       "git",
-      "github"
+      "github",
+      "wporg"
     ],
     "type": "plugin",
     "build": {
@@ -113,7 +114,8 @@
       "user": "mcguffin"
     },
     "wporg": {
-      "assets": ".wporg"
+      "assets": ".wporg",
+      "svn": "https://plugins.svn.wordpress.org/acf-quickedit-fields/"
     }
   }
 }
