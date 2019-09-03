@@ -1,0 +1,13 @@
+@mixin column-type( $types, $cell:'td' ) {
+	$selector: '';
+	@each $type in $types {
+		@if $selector == '' {
+			$selector: '#{$cell}[class*="--qef-type-#{$type}--"]';
+		} @else {
+			$selector: '#{$selector},#{$cell}[class*="--qef-type-#{$type}--"]';
+		}
+	}
+	#{$selector} {
+	 	@content;
+	}
+}

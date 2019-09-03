@@ -168,7 +168,7 @@ class Columns extends Feature {
 	 *	@filter manage_{$post_type}_posts_columns
 	 */
 	public function add_ghost_column( $columns ) {
-		$columns['_acf_qed_ghost'] = '';
+		$columns['_acf_qef_ghost'] = '';
 		return $columns;
 	}
 
@@ -197,7 +197,7 @@ class Columns extends Feature {
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
 			$field = $field_object->get_acf_field();
-			$field_slug .= ' qef-field-type-' . $field['type'];
+			$field_slug .= '--qef-type-' . $field['type'] . '--';
 			$columns[ $field_slug ] = $field['label'];
 		}
 		uksort( $columns, array( $this, '_sort_columns_by_weight' ));
@@ -261,7 +261,7 @@ class Columns extends Feature {
 			if ( $sortable = $this->get_field_sorted( $field_object ) ) {
 
 				// will affect css class
-				$column_key = $field_slug . ' qef-field-type-' . $field_object->get_acf_field()['type'];
+				$column_key = $field_slug . '--qef-type-' . $field_object->get_acf_field()['type'] . '--';
 
 				$columns[ $column_key ] = $field_slug;
 
@@ -323,6 +323,7 @@ class Columns extends Feature {
 				) + $type_query,
 			);
 		}
+var_dump($meta_query);
 		return $meta_query;
 	}
 
@@ -352,7 +353,7 @@ class Columns extends Feature {
 	 */
 	private function _get_column_weight( $column_slug ) {
 
-		$column_slug = preg_replace('/\s+([\w-]+)$/is', '', $column_slug );
+		$column_slug = preg_replace('/--([\w-]+)--$/is', '', $column_slug );
 
 		// wp column
 		if ( isset( $this->_wp_column_weights[ $column_slug ] ) ) {
@@ -422,7 +423,7 @@ class Columns extends Feature {
 
 		$args = func_get_args();
 
-		$column = preg_replace('/\s+([\w-]+)$/is', '', $wp_column_slug );
+		$column = preg_replace('/--([\w-]+)--$/is', '', $wp_column_slug );
 
 		if ( isset( $this->fields[$column] ) ) {
 			$field_object = $this->fields[$column];
