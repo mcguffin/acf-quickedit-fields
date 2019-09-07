@@ -75,6 +75,7 @@
 		position:absolute;
 		left:0;
 		top:0;
+		@include transparency();
 		&:first-child {
 			display:block;
 		}

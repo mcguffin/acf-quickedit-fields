@@ -18,11 +18,25 @@ use ACFQuickEdit\Fields;
 
 class Admin extends Core\Singleton {
 
+	/**
+	 *	@var Core\Core
+	 */
 	private $core;
 
+	/**
+	 *	@var Asset\Asset admin css
+	 */
 	private $css;
 
+	/**
+	 *	@var Asset\Asset admin js (editor)
+	 */
 	private $js;
+
+	/**
+	 *	@var Asset\Asset admin js (columns only)
+	 */
+	private $js_columns;
 
 	/**
 	 *	@inheritdoc
@@ -32,6 +46,8 @@ class Admin extends Core\Singleton {
 		$this->core = Core\Core::instance();
 
 		$this->js = Asset\Asset::get('js/acf-quickedit.js');
+
+		$this->js_columns = Asset\Asset::get('js/acf-columns.js');
 
 		$this->css = Asset\Asset::get('css/acf-quickedit.css');
 
@@ -77,9 +93,9 @@ class Admin extends Core\Singleton {
 		));
 
 		//
-		add_action( 'load-edit.php',  array( $this , 'enqueue_assets' ) );
-		add_action( 'load-edit-tags.php',  array( $this , 'enqueue_assets' ) );
-		add_action( 'load-users.php',  array( $this , 'enqueue_assets' ) );
+		add_action( 'load-edit.php',  array( $this , 'enqueue_edit_assets' ) );
+		add_action( 'load-edit-tags.php',  array( $this , 'enqueue_edit_assets' ) );
+		add_action( 'load-users.php',  array( $this , 'enqueue_columns_assets' ) );
 		add_action( 'acf/field_group/admin_enqueue_scripts', array( $this, 'enqueue_fieldgroup_assets' ) );
 
 	}
@@ -190,9 +206,21 @@ class Admin extends Core\Singleton {
 	 *	Enqueue options Assets
 	 *	@action admin_print_scripts
 	 */
-	public function enqueue_assets() {
+	public function enqueue_columns_assets() {
+		$this->css->enqueue();
+		$this->js_columns->footer()->enqueue();
+	}
+
+	/**
+	 *	Enqueue options Assets
+	 *	@action admin_print_scripts
+	 */
+	public function enqueue_edit_assets() {
 
 		$bulk = Bulkedit::instance();
+
+		wp_enqueue_media();
+		acf_enqueue_scripts();
 
 		// register assets
 		wp_register_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css') );
@@ -208,6 +236,7 @@ class Admin extends Core\Singleton {
 		$this->js
 			->footer()
 			->add_dep( 'acf-input' )
+			->add_dep( 'wp-backbone' )
 			->localize( array(
 				/* Script Localization */
 				'options'	=> array(
@@ -216,8 +245,6 @@ class Admin extends Core\Singleton {
 				),
 			), 'acf_qef' )
 			->enqueue();
-
-		acf_enqueue_scripts();
 
 	}
 

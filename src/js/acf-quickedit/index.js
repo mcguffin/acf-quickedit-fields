@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import qe from 'base.js';
-import 'thumbnail-col.js';
+import '../acf-columns/index.js';
 
 
 if ( 'undefined' !== typeof inlineEditPost ) {
@@ -93,4 +93,3 @@ if ( 'undefined' !== typeof inlineEditTax ) {
 		return _wp_inline_edit_save.apply( this, arguments );
 	}
 }
-

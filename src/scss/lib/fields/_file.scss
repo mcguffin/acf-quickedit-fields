@@ -65,3 +65,10 @@
 		}
 	}
 }
+[data-field-type="image"] {
+	.file-content {
+		img {
+			@include transparency();
+		}
+	}
+}
