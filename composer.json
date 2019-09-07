@@ -5,7 +5,7 @@
     "authors": [
         {
             "name": "Jörn Lund",
-            "email": "joern@flyingletters.com"
+            "homepage": "https://github.com/mcguffin"
         }
     ],
     "minimum-stability": "dev",
