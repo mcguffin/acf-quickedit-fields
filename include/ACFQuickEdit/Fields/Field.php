@@ -224,14 +224,14 @@ abstract class Field {
 		if ( isset( $this->acf_field['field_type'] ) ) {
 			$wrapper_attr['data-field-sub-type'] = $this->acf_field['field_type'];
 		}
+
+		$wrapper_class = explode( ' ', $this->wrapper_class );
+		$wrapper_class = array_map( 'sanitize_html_class', $wrapper_class );
 		?>
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
-				<label class="inline-edit-group">
-					<span class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></span>
-					<?php if ( $mode === 'bulk' ) {
-						$this->render_bulk_do_not_change( $input_atts );
-					} ?>
-					<span class="<?php echo sanitize_html_class( $this->wrapper_class ) ?>">
+				<div class="inline-edit-group">
+					<label for="<?php echo $this->get_input_id( $mode === 'quick' ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
+					<span class="<?php echo implode(' ',$wrapper_class )  ?>">
 						<?php
 
 							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
@@ -240,7 +240,10 @@ abstract class Field {
 
 						?>
 					</span>
-				</label>
+					<?php if ( $mode === 'bulk' ) {
+						$this->render_bulk_do_not_change( $input_atts );
+					} ?>
+				</div>
 			</div>
 		<?php
 
@@ -254,16 +257,16 @@ abstract class Field {
 	protected function render_bulk_do_not_change( $input_atts ) {
 		$bulk = Admin\Bulkedit::instance();
 		?>
-		<span>
+		<label class="bulk-do-not-change">
 			<input <?php echo acf_esc_attr( array(
 				'name'		=> $input_atts['name'],
 				'value' 	=> $bulk->get_dont_change_value(),
 				'type'		=> 'checkbox',
 				'checked'	=> 'checked',
-				'data-is-do-not-change' => 'true',
+				'data-is-do-not-change' => 'true'
 			) ) ?> />
 			<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
-		</span>
+		</label>
 		<?php
 	}
 
@@ -282,6 +285,7 @@ abstract class Field {
 			'type'					=> 'text',
 			'data-acf-field-key'	=> $this->acf_field['key'],
 			'name'					=> $this->get_input_name(),
+			'id'					=> $this->get_input_id( $is_quickedit ),
 		);
 
 		return '<input '. acf_esc_attr( $input_atts ) .' />';
@@ -297,6 +301,13 @@ abstract class Field {
 			$input_name = sprintf( 'acf[%s]', $this->acf_field['key'] );
 		}
 		return $input_name;
+	}
+
+	/**
+	 *	@return	string
+	 */
+	protected function get_input_id( $is_quickedit = true ) {
+		return sanitize_key( $this->get_input_name() ) . ( $is_quickedit ? '-q' : '-b' );
 	}
 
 	/**

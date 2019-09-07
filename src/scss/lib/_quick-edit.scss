@@ -81,6 +81,13 @@
 		.title {
 			float:none;
 			width: auto;
+			order:1;
+		}
+		.bulk-do-not-change {
+			order:2;
+		}
+		.acf-input-wrap {
+			order:3;
 		}
 	}
 	.acf-checkbox-list,
