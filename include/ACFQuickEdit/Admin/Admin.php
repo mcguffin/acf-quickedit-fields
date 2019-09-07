@@ -77,12 +77,11 @@ class Admin extends Core\Singleton {
 		));
 
 		//
-		add_action( 'load-edit.php', 'acf_enqueue_scripts' );
-		add_action( 'load-edit-tags.php', 'acf_enqueue_scripts' );
-		add_action( 'load-users.php', 'acf_enqueue_scripts' );
+		add_action( 'load-edit.php',  array( $this , 'enqueue_assets' ) );
+		add_action( 'load-edit-tags.php',  array( $this , 'enqueue_assets' ) );
+		add_action( 'load-users.php',  array( $this , 'enqueue_assets' ) );
 		add_action( 'acf/field_group/admin_enqueue_scripts', array( $this, 'enqueue_fieldgroup_assets' ) );
 
-		add_action( 'admin_enqueue_scripts', array( $this , 'enqueue_assets' ) );
 	}
 
 
@@ -217,6 +216,7 @@ class Admin extends Core\Singleton {
 				),
 			), 'acf_qef' )
 			->enqueue();
+
 		acf_enqueue_scripts();
 
 	}
