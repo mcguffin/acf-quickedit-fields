@@ -8,6 +8,7 @@ ACF QuickEdit Fields
  - Fix: file/image field without value not displayed properly in editor
  - Fix: JS Error in post editor
  - Fix: Bulk edit overriding values
+ - User List: reduce pageload
 
 2.4.11
 -----

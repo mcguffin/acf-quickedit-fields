@@ -91,7 +91,7 @@ On the whole upgrading is always a good idea.
  - Fix: file/image field without value not displayed properly in editor
  - Fix: JS Error in post editor
  - Fix: Bulk edit overriding values
-
+ - User List: only enqueue necessary assets
 
 = 3.0.0 =
  - Release at wordpress.org
