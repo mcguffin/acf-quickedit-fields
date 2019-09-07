@@ -18,7 +18,7 @@ class PageLinkField extends Field {
 		$value = $this->get_value( $object_id );
 		//*/
 
-		if ( is_null( $value ) ) {
+		if ( ! $value ) {
 			return __('(No value)', 'acf-quickedit-fields');
 		}
 

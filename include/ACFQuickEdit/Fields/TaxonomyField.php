@@ -147,9 +147,12 @@ class TaxonomyField extends Field {
 	 *	@param mixed $value
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
-		$value = array_map( 'intval', $value );
-		$value = array_filter( $value );
-		return array_values( $value );
+		if ( is_array( $value ) ) {
+			$value = array_map( 'intval', $value );
+			$value = array_filter( $value );
+			return array_values( $value );
+		}
+		return sanitize_text_field($value);
 	}
 
 }
