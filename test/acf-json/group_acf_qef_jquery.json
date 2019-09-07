@@ -43,8 +43,8 @@
             "show_column": 1,
             "show_column_sortable": 1,
             "show_column_weight": 1420,
-            "allow_quickedit": 0,
-            "allow_bulkedit": 0
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5004e50214026",

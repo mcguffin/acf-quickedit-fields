@@ -114,7 +114,7 @@
         {
             "key": "field_5007e56cd8e2c",
             "label": "Taxonomy",
-            "name": "taxonomy",
+            "name": "qef_taxonomy",
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
@@ -167,7 +167,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": 1,
     "description": "",
     "modified": 1566806990
 }

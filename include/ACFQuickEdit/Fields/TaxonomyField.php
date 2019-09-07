@@ -25,7 +25,7 @@ class TaxonomyField extends Field {
 			}
 			foreach ( $value as $i => $term ) {
 				if ( $this->acf_field['return_format'] === 'id' ) {
-					$term = get_term( $term, $this->acf_field['taxonomy']);
+					$term = get_term( $term, $this->acf_field['taxonomy'] );
 				}
 				// fix #63 ?
 				if ( trim( $term->name ) !== '' ) {

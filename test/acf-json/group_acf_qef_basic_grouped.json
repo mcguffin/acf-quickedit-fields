@@ -104,8 +104,8 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "min": "",
-                    "max": "",
+                    "min": "0",
+                    "max": "1000",
                     "step": "",
                     "prepend": "",
                     "append": "",
@@ -191,7 +191,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": 0,
     "description": "",
     "modified": 1566988004
 }

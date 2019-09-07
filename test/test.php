@@ -19,9 +19,14 @@ class PluginTest {
 		add_action( 'acf/untrash_field_group', [ $this, 'mutate_field_group' ], 9 );
 		add_action( 'acf/update_field_group', [ $this, 'mutate_field_group' ], 9 );
 
-		add_Filter('pll_get_post_types', [ $this, 'pll_content_types'], 10, 2 );
-		add_Filter('pll_get_taxonomies', [ $this, 'pll_content_types'], 10, 2 );
+		add_filter('pll_get_post_types', [ $this, 'pll_content_types'], 10, 2 );
+		add_filter('pll_get_taxonomies', [ $this, 'pll_content_types'], 10, 2 );
 
+
+		add_filter('acf/fields/google_map/api', function($api){
+			$api['key'] = get_option('google_maps_api_key');
+			return $api;
+		});
 	}
 
 	/**
@@ -50,6 +55,9 @@ class PluginTest {
 		]);
 		register_taxonomy('acf-quef-test','acf-quef-test',[
 			'label'		=> 'Quick Edit Test Terms',
+			'labels'	=> [
+				'no_terms'	=> 'No Terms',
+			],
 			'public'	=> true,
 		]);
 
