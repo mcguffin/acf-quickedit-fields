@@ -8,8 +8,8 @@ module.exports = {
 		this.$('[type="radio"]').prop( 'readonly', true );
 	},
 	setValue:function( value ) {
-	this.dntChanged();
-	this.$('[type="radio"][value="'+value+'"]' )
+		this.dntChanged();
+		this.$('[type="radio"][value="'+Number(value)+'"]' )
 		.prop( 'checked', true );
 	}
 }
