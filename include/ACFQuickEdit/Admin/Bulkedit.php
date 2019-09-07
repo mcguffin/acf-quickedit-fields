@@ -81,6 +81,7 @@ class Bulkedit extends EditFeature {
 			foreach ( $fields as $sub_field_object ) {
 				$sub_field_object->render_quickedit_field( $post_type, 'bulk' );
 			}
+
 			echo '</div>';
 			echo '</fieldset>';
 			echo '</div>' . "\n";
@@ -111,13 +112,21 @@ class Bulkedit extends EditFeature {
 		if ( is_array( $data ) ) {
 			$data = array_filter( $data, array( $this, 'filter_do_not_change' ) );
 			array_walk( $data, array( $this, 'strip_dont_change' ) );
+			$data = array_filter( $data, array( $this, 'filter_ampty_array' ) );
 		}
 	}
 
 	/**
-	 *	array_filter callback - returns false
+	 *	array_filter callback - returns false if $el is do-not-change value
 	 */
 	private function filter_do_not_change( $el ) {
 		return $el !== $this->get_dont_change_value();
+	}
+
+	/**
+	 *	array_filter callback - returns false for empty arrays
+	 */
+	private function filter_ampty_array( $el ) {
+		return ! is_array( $el ) || ( count( $el ) > 0 );
 	}
 }
