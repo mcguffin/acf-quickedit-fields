@@ -365,7 +365,7 @@ abstract class Field {
 		if ( ! is_int( $key ) ) {
 			$key = sanitize_text_field( $key );
 		}
-		$value = sanitize_text_field( $key );
+		$value = sanitize_text_field( $value );
 	}
 
 
