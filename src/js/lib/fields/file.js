@@ -65,8 +65,12 @@ const field = {
 	setValue:function(value) {
 		const self = this;
 		this.dntChanged();
-		this.$hidden.val( value );
-		if ( !! value ) {
+		value = parseInt(value);
+
+		if ( ! value ) {
+			this.$hidden.val( '' );
+		} else {
+			this.$hidden.val( value );
 			wp.media.attachment( value ).fetch().then( att => {
 				let src;
 				if ( att.sizes ) {
