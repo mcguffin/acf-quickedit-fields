@@ -85,6 +85,14 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.1 =
+ - Fix: Some Fields not saved
+ - Fix: Checkbox not displayed properly
+ - Fix: file/image field without value not displayed properly in editor
+ - Fix: JS Error in post editor
+ - Fix: Bulk edit overriding values
+
+
 = 3.0.0 =
  - Release at wordpress.org
  - Feature: Added support for Link and User Field

@@ -1,6 +1,14 @@
 ACF QuickEdit Fields
 ====================
 
+3.0.1
+-----
+ - Fix: Some Fields not saved
+ - Fix: Checkbox not displayed properly
+ - Fix: file/image field without value not displayed properly in editor
+ - Fix: JS Error in post editor
+ - Fix: Bulk edit overriding values
+
 2.4.11
 -----
  - Fix ACF deprecation warning
