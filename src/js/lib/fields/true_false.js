@@ -9,7 +9,9 @@ module.exports = {
 	},
 	setValue:function( value ) {
 		this.dntChanged();
-		this.$('[type="radio"][value="'+Number(value)+'"]' )
-		.prop( 'checked', true );
+		if ( value === true || value === false ) {
+			this.$('[type="radio"][value="'+Number(value)+'"]' )
+				.prop( 'checked', true );
+		}
 	}
 }

@@ -1,11 +1,10 @@
 import $ from 'jquery';
 
-module.exports = {
+const field = {
 	type:'link',
 	events:{
 		'click .select-link' : 'selectLink',
 		'click .remove-link' : 'resetLink',
-		'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 	},
 	initialize:function() {
 		this.$input = this.$('[data-link-prop],button');
@@ -58,3 +57,7 @@ module.exports = {
 		this.$display.html( link );
 	}
 }
+
+field.events['change [type="checkbox"][value="'+acf_qef.options.do_not_change_value+'"]'] = 'dntChanged';
+
+module.exports = field;

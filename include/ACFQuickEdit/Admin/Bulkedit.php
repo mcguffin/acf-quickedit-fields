@@ -17,6 +17,20 @@ class Bulkedit extends EditFeature {
 
 
 	/**
+	 *	Field value will leave fields unchanged
+	 */
+	private $dont_change_value = '___do_not_change';
+
+	/**
+	 *	Get value for do-not-change chackbox
+	 *
+	 *	@return string
+	 */
+	public function get_dont_change_value() {
+		return $this->dont_change_value;
+	}
+
+	/**
 	 *	@inheritdoc
 	 */
 	public function get_type() {
@@ -76,4 +90,34 @@ class Bulkedit extends EditFeature {
 		$this->did_render = true;
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	protected function get_save_data() {
+		// remove do-not-change vaues from $_GET['acf']
+		$data = null;
+		if ( isset( $_GET['acf'] ) && is_array( $_GET['acf'] ) ) {
+			$data = $_GET['acf'];
+			$this->strip_dont_change( $data );
+		}
+		return $data;
+	}
+
+	/**
+	 *	array_walk callback - recursive remove do-not-change values
+	 *	@param mixed $data
+	 */
+	private function strip_dont_change( &$data ) {
+		if ( is_array( $data ) ) {
+			$data = array_filter( $data, array( $this, 'filter_do_not_change' ) );
+			array_walk( $data, array( $this, 'strip_dont_change' ) );
+		}
+	}
+
+	/**
+	 *	array_filter callback - returns false
+	 */
+	private function filter_do_not_change( $el ) {
+		return $el !== $this->get_dont_change_value();
+	}
 }

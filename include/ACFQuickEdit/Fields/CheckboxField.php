@@ -81,25 +81,5 @@ class CheckboxField extends ChoiceField {
 		return $output;
 	}
 
-	/**
-	 *	@inheritdoc
-	 */
-	protected function render_bulk_do_not_change( $input_atts ) {
-
-		// populate $_POST if nothing is selected ...
-		// ... BEFORE the do not change checkbox!
-		printf( '<input %s />', acf_esc_attr( array(
-			'type'					=> 'hidden',
-			'name'					=> $input_atts['name'],
-		) ) );
-
-		$input_atts['name'] .= '[]';
-
-		parent::render_bulk_do_not_change( $input_atts );
-
-	}
-
-
-
 
 }

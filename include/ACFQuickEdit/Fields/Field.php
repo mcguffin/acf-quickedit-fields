@@ -1,6 +1,8 @@
 <?php
 
 namespace ACFQuickEdit\Fields;
+
+use ACFQuickEdit\Admin;
 use ACFQuickEdit\Core;
 
 if ( ! defined( 'ABSPATH' ) )
@@ -33,11 +35,6 @@ abstract class Field {
 	 *	@var array ACFQuickEdit\Fields\Field
 	 */
 	protected $parent;
-
-	/**
-	 *	@var string value for the do-not-change checkbox in bulk edit
-	 */
-	protected $dont_change_value = '___do_not_change';
 
 	/**
 	 *	@var string classname to be wrapped aroud input element
@@ -255,11 +252,12 @@ abstract class Field {
 	 *	@param array $input_atts Field input attributes
 	 */
 	protected function render_bulk_do_not_change( $input_atts ) {
+		$bulk = Admin\Bulkedit::instance();
 		?>
 		<span>
 			<input <?php echo acf_esc_attr( array(
 				'name'		=> $input_atts['name'],
-				'value' 	=> $this->dont_change_value,
+				'value' 	=> $bulk->get_dont_change_value(),
 				'type'		=> 'checkbox',
 				'checked'	=> 'checked',
 				'data-is-do-not-change' => 'true',
@@ -368,60 +366,4 @@ abstract class Field {
 		$value = sanitize_text_field( $value );
 	}
 
-
-
-	/**
-	 *	Update field value if all conditions are met
-	 *
-	 *	@param int $post_id
-	 *
-	 *	@return null
-	 */
-	public function maybe_update( $post_id , $is_quickedit ) {
-
-		if ( $is_quickedit && $this->did_update === true ) {
-			return;
-		}
-
-		if ( isset( $this->parent ) ) {
-			return;
-		}
-
-		if ( ! isset( $_REQUEST['acf'] ) ) {
-			return;
-		}
-
-		$param_name = $this->acf_field['key'];
-
-		if ( isset ( $_REQUEST['acf'][ $param_name ] ) ) {
-			// value is passed to acf_validate_value just a few lines below.
-			$value = $this->sanitize_value( $_REQUEST['acf'][ $param_name ] );
-		} else {
-			$value = null;
-		}
-
-		if ( in_array( $this->dont_change_value, (array) $value ) ) {
-			return;
-		}
-
-		// validate field value
-		if ( ! acf_validate_value( $value, $this->acf_field, sprintf( 'acf[%s]', $param_name ) ) ) {
-			return;
-		}
-
-		$this->update( $value, $post_id );
-	}
-
-	/**
-	 *	Update field value
-	 *
-	 *	@param mixed $value
-	 *	@param int/string $post_id
-	 *
-	 *	@return null
-	 */
-	public function update( $value, $post_id ) {
-		$this->did_update = true;
-		update_field( $this->acf_field['key'], $value, $post_id );
-	}
 }

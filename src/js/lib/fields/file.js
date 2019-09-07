@@ -1,12 +1,11 @@
 import $ from 'jquery';
 
-module.exports = {
+const field = {
 	type:'file',
 	mediaFrameType:'',
 	events:{
 		'click .select-media' : 'selectFile',
 		'click .remove-media' : 'removeFile',
-		'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 	},
 	initialize:function() {
 		this.$input = this.$('button');
@@ -85,3 +84,7 @@ module.exports = {
 		return this;
 	}
 };
+
+field.events['change [type="checkbox"][value="'+acf_qef.options.do_not_change_value+'"]'] = 'dntChanged';
+
+module.exports = field;

@@ -164,7 +164,7 @@ const BulkEdit = View.extend({
 		// remove unchanged values in bulk
 		if ( !! data.acf ) {
 			$.each(data.acf,function(i,val){
-   				if ( val == '___do_not_change') {
+   				if ( val == acf_qef.options.do_not_change_value ) {
 					delete( data.acf[i] );
    				}
    			});

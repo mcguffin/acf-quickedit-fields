@@ -5,7 +5,7 @@ module.exports = {
 	initialize:function() {
 		this.parent().initialize.apply(this,arguments);
 
-		this.$input = this.$('select,input[value!="___do_not_change"]').prop( 'readonly', true );
+		this.$input = this.$('select,input[value!="'+acf_qef.options.do_not_change_value+'"]').prop( 'readonly', true );
 	},
 	setValue:function( value ) {
 		const self = this;

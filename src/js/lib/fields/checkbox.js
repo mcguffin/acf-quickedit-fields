@@ -1,11 +1,10 @@
 import $ from 'jquery';
 
-module.exports = {
+const field = {
 	type:'checkbox',
 	events:{
 		'click .add-choice': 'addChoice',
 		'change [type="checkbox"].custom' : 'removeChoice',
-		'change [type="checkbox"][value="___do_not_change"]' : 'dntChanged',
 	},
 	initialize:function() {
 		this.$input = this.$('[type="checkbox"]:not([value="___do_not_change"])');
@@ -38,5 +37,8 @@ module.exports = {
 	removeChoice:function(e) {
 		$(e.target).closest('li').remove();
 	}
-
 }
+
+field.events['change [type="checkbox"][value="'+acf_qef.options.do_not_change_value+'"]'] = 'dntChanged';
+
+module.exports = field;

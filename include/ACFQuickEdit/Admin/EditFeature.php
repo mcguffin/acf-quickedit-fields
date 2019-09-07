@@ -64,7 +64,9 @@ abstract class EditFeature extends Feature {
 		foreach ( $this->fields as $field ) {
 			$acf_field = $field->get_acf_field();
 			$fieldgroup = $current_view->get_group_of_field( $acf_field );
-
+			if ( is_null( $fieldgroup ) ) {
+				continue;
+			}
 			if ( ! isset( $this->fieldsets[ $fieldgroup['key'] ] ) ) {
 				$this->fieldsets[ $fieldgroup['key'] ] = array();
 			}
@@ -123,13 +125,14 @@ abstract class EditFeature extends Feature {
 	 */
 	public function save_acf_term_meta( $term_id, $tt_id, $taxonomy ) {
 
-		$object_id = sprintf( '%s_%s', $taxonomy, $term_id );
-
 		if ( ! current_user_can( 'edit_term', $term_id ) ) {
 			return;
 		}
 
-		return $this->quickedit_save_acf_meta( $object_id, true );
+		$object_id = sprintf( '%s_%s', $taxonomy, $term_id );
+
+		return acf_save_post( $object_id, $this->get_save_data() );
+
 	}
 
 
@@ -139,33 +142,22 @@ abstract class EditFeature extends Feature {
 	 *	@action save_post
 	 */
 	public function save_acf_post_meta( $post_id ) {
-		if ( 'acf-field' === get_post_type( $post_id ) ) {
-			return;
-		}
-		$is_quickedit = is_admin() && wp_doing_ajax();
 
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
-		return $this->quickedit_save_acf_meta( $post_id, $is_quickedit );
+
+		return acf_save_post( $post_id, $this->get_save_data() );
+
 	}
 
 	/**
-	 *	@param int $post_id
-	 *	@param bool $is_quickedit
+	 *	Request data to be saved.
+	 *	Will be passed to acf_save_post() which falls back to $_POST['acf']
+	 *
+	 *	@return null|array
 	 */
-	private function quickedit_save_acf_meta( $post_id, $is_quickedit = true ) {
-
-		foreach ( $this->fields as $field_name => $field_object ) {
-
-			if ( ( $this instanceof Quickedit && $is_quickedit ) || ($this instanceof Bulkedit && ! $is_quickedit ) ) {
-
-				$field_object->maybe_update( $post_id, $is_quickedit );
-
-			}
-
-		}
-	}
+	abstract protected function get_save_data();
 
 
 }

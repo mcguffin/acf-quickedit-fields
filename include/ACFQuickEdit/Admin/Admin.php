@@ -193,6 +193,8 @@ class Admin extends Core\Singleton {
 	 */
 	public function enqueue_assets() {
 
+		$bulk = Bulkedit::instance();
+
 		// register assets
 		wp_register_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css') );
 
@@ -210,7 +212,8 @@ class Admin extends Core\Singleton {
 			->localize( array(
 				/* Script Localization */
 				'options'	=> array(
-					'request'	=> $this->ajax_handler->request
+					'request'	=> $this->ajax_handler->request,
+					'do_not_change_value'	=> $bulk->get_dont_change_value(),
 				),
 			), 'acf_qef' )
 			->enqueue();
