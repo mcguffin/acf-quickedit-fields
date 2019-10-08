@@ -28,12 +28,12 @@ Just follow the [Automatic Plugin Installation](https://wordpress.org/support/ar
 
 #### WP-CLI
 ```shell
-wp plugin install --activate acf-openstreetmap-field
+wp plugin install --activate acf-quickedit-fields
 ```
 
 #### Using Composer
 ```shell
-wp plugin install --activate acf-openstreetmap-field
+composer require mcguffin/acf-quickedit-fields
 ```
 
 ### Development
