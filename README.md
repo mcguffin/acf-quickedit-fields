@@ -33,7 +33,7 @@ wp plugin install --activate acf-openstreetmap-field
 
 #### Using Composer
 ```shell
-wp plugin install --activate acf-openstreetmap-field
+composer require mcguffin/acf-quickedit-fields
 ```
 
 ### Development
