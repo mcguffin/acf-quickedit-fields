@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+3.0.2
+-----
+ - Fix: Broken 3rd party field integration
+
 3.0.1
 -----
  - Fix: Some Fields not saved

@@ -245,7 +245,8 @@ class Admin extends Core\Singleton {
 				),
 			), 'acf_qef' )
 			->enqueue();
-
+		// 3rd party integration backwards compatibility
+		wp_add_inline_script( $this->js->handle, 'window.acf_quickedit = window.acf_qef;', 'after' );
 	}
 
 	/**

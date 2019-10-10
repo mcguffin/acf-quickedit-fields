@@ -64,7 +64,7 @@ const View = wp.media.View.extend({
 const types = {};
 
 const field = {
-	
+
 	add_type:function(t) {
 		types[t.type] = View.extend( t );
 		return types[t.type];
@@ -77,7 +77,8 @@ const field = {
 			el:			el,
 			controller:	controller,
 		});
-	}
+	},
+	View
 }
 
 
@@ -156,5 +157,7 @@ field.add_type( taxonomy );
  *	field type true_false
  */
 field.add_type( true_false );
+
+console.log(field)
 
 module.exports = field;
