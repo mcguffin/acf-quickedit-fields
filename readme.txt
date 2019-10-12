@@ -85,6 +85,9 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.3 =
+ - Fix: QuickEdit sometimes
+
 = 3.0.2 =
  - Fix: Broken 3rd party field integration
 
