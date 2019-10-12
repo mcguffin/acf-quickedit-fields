@@ -8,7 +8,7 @@ const View = Backbone.View.extend({
 	initialize:function(){
 
 		const self = this;
-
+		this.active = true;
 		this.options = arguments[0];
 
 		Backbone.View.prototype.initialize.apply( this, arguments );
@@ -21,7 +21,9 @@ const View = Backbone.View.extend({
 		});
 
 		// load values
-		this.loadValues();
+		if ( !! Object.keys( this.fields ).length ) {
+			this.loadValues();
+		}
 
 	},
 	getFieldsToLoad:function(){
@@ -40,8 +42,10 @@ const View = Backbone.View.extend({
 		return fields;
 	},
 	loadedValues:function(values) {
-		this._setValues( values );
-		this.initValidation();
+		if ( this.active ) {
+			this._setValues( values );
+			this.initValidation();
+		}
 	},
 	_setValues:function(values) {
 		const self = this;
@@ -58,6 +62,7 @@ const View = Backbone.View.extend({
 		_.each(this.fields,function(field){
 			field.unload();
 		});
+		this.active = false;
 		acf.unload.reset();
 	},
 	validationComplete:function( json, $form ) {
@@ -85,6 +90,10 @@ const View = Backbone.View.extend({
 	initValidation:function() {
 		var $form = this.$el.closest('form'),
 			$button = this.getSaveButton();
+
+		if ( ! $button.length ) {
+			return;
+		}
 
 		acf.update('post_id', this.options.object_id );
 
