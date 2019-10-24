@@ -1,6 +1,7 @@
 {
     "name": "mcguffin/acf-quickedit-fields",
     "description": "WordPress Plugin implementing Column Displaying, QuickEdit and BulkEdit for Advanced Custom Fields (ACF)",
+    "license": "GPL-3.0-or-later",
     "type": "wordpress-plugin",
     "authors": [
         {
