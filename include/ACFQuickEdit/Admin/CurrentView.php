@@ -146,7 +146,7 @@ class CurrentView extends Core\Singleton {
 
 			foreach ( $this->screen_param as $param => $value ) {
 
-				if ( 'post_type' === $param ) {
+				if ( 'post_type' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['post_type'] = $value;
 
 				} else if ( 'attachment-filter' === $param ) {
@@ -154,17 +154,17 @@ class CurrentView extends Core\Singleton {
 					$filtered_type = substr( $filtered_type, strpos( $filtered_type, ':' ) + 1 );
 					$this->field_group_filter['attachment'] = $filtered_type;
 
-				} else if ( in_array( $param, array( 'cat', 'tag' ) ) ) {
+				} else if ( in_array( $param, array( 'cat', 'tag' ) ) && ! empty( $value ) ) {
 					// post_category
 					$this->field_group_filter['post_taxonomy'] = sprintf( 'post_%s:%s', $param, $value );
 
-				} else if ( taxonomy_exists( $param ) ) {
+				} else if ( taxonomy_exists( $param ) && ! empty( $value ) ) {
 					// post_taxonomy => <taxo>:<term_slug>
 					$this->field_group_filter['post_taxonomy'] = sprintf( '%s:%s', $param, $value );
 
-				} else if ( 'taxonomy' === $param ) {
+				} else if ( 'taxonomy' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['taxonomy'] = $value;
-				} else if ( 'role' === $param ) {
+				} else if ( 'role' === $param && ! empty( $value ) ) {
 					//*
 					$this->field_group_filter[] = array( 'user_form' => 'all', 'user_role' => $value );
 					$this->field_group_filter[] = array( 'user_form' => 'edit', 'user_role' => $value );

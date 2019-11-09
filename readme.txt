@@ -85,8 +85,11 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.4 =
+ - Fix: Quick/Bulk Edit not showing when list table filter is used
+
 = 3.0.3 =
- - Fix: QuickEdit sometimes
+ - Fix: QuickEdit sometimes caused a JS Error
 
 = 3.0.2 =
  - Fix: Broken 3rd party field integration
