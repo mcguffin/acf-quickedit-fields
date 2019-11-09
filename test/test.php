@@ -22,12 +22,49 @@ class PluginTest {
 		add_filter('pll_get_post_types', [ $this, 'pll_content_types'], 10, 2 );
 		add_filter('pll_get_taxonomies', [ $this, 'pll_content_types'], 10, 2 );
 
+		add_action( 'restrict_manage_posts', [$this, 'posts_taxonomy_filter'] , 10, 2);
 
 		add_filter('acf/fields/google_map/api', function($api){
 			$api['key'] = get_option('google_maps_api_key');
 			return $api;
 		});
 	}
+
+	function posts_taxonomy_filter( $post_type, $which ) {
+
+		// Apply this only on a specific post type
+		if ( 'acf-quef-test' !== $post_type )
+			return;
+
+		// A list of taxonomy slugs to filter by
+		$taxonomies = ['acf-quef-test', 'acf-quef-test-2'];
+
+		foreach ( $taxonomies as $taxonomy_slug ) {
+
+			// Retrieve taxonomy data
+			$taxonomy_obj = get_taxonomy( $taxonomy_slug );
+			$taxonomy_name = $taxonomy_obj->labels->name;
+
+			// Retrieve taxonomy terms
+			$terms = get_terms( $taxonomy_slug );
+
+			// Display filter HTML
+			echo "<select name='{$taxonomy_slug}' id='{$taxonomy_slug}' class='postform'>";
+			echo '<option value="">' . sprintf( esc_html__( 'Show All %s', 'text_domain' ), $taxonomy_name ) . '</option>';
+			foreach ( $terms as $term ) {
+				printf(
+					'<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+					$term->slug,
+					( ( isset( $_GET[$taxonomy_slug] ) && ( $_GET[$taxonomy_slug] == $term->slug ) ) ? ' selected="selected"' : '' ),
+					$term->name,
+					$term->count
+				);
+			}
+			echo '</select>';
+		}
+
+	}
+
 
 	/**
 	*	@filter pll_get_post_types
@@ -54,11 +91,19 @@ class PluginTest {
 			'supports'		=> ['title'],
 		]);
 		register_taxonomy('acf-quef-test','acf-quef-test',[
-			'label'		=> 'Quick Edit Test Terms',
+			'label'		=> 'QE Test Terms',
 			'labels'	=> [
 				'no_terms'	=> 'No Terms',
 			],
 			'public'	=> true,
+		]);
+		register_taxonomy('acf-quef-test-2','acf-quef-test',[
+			'label'		=> 'QE Test Terms 2',
+			'labels'	=> [
+				'no_terms'	=> 'No Terms',
+			],
+			'public'	=> true,
+			'show_admin_column'	=> true,
 		]);
 
 	}

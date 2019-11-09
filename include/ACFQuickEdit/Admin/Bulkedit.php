@@ -72,7 +72,7 @@ class Bulkedit extends EditFeature {
 		foreach ( $this->fieldsets as $field_group_key => $fields ) {
 			$field_group = acf_get_field_group( $field_group_key );
 			// we need a div here because WP is prepending tags input to the fieldset:last in the editor
-			echo '<!-- BEGIN ACF Quick Edit Fields - Bulk -->' . "\n";
+			echo "<!-- BEGIN ACF Quick Edit Fields - Bulk <{$field_group_key}> -->\n";
 			echo '<div>' . "\n";
 			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
 			printf( '<legend>%s</legend>', $field_group['title'] );
@@ -85,7 +85,7 @@ class Bulkedit extends EditFeature {
 			echo '</div>';
 			echo '</fieldset>';
 			echo '</div>' . "\n";
-			echo '<!-- END ACF Quick Edit Fields - Bulk -->';
+			echo "<!-- END ACF Quick Edit Fields - Bulk {$field_group_key} -->\n";
 		}
 
 		$this->did_render = true;

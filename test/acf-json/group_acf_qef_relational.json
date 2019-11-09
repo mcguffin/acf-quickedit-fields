@@ -136,6 +136,32 @@
             "allow_bulkedit": 1,
             "multiple": 0,
             "allow_null": 0
+        },
+        {
+            "key": "field_5007e56cd8e2d",
+            "label": "Taxonomy",
+            "name": "qef_taxo_2",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "acf-quef-test",
+            "field_type": "checkbox",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "show_column": 1,
+            "show_column_weight": 1570,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "multiple": 0,
+            "allow_null": 0
         }
     ],
     "location": [
