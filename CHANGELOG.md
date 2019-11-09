@@ -1,6 +1,10 @@
 ACF QuickEdit Fields
 ====================
 
+3.0.5
+-----
+ - Fix: Link field JS Error
+
 3.0.4
 -----
  - Fix: Quick/Bulk Edit not showing when list table filter is used
