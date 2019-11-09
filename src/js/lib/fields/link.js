@@ -47,9 +47,9 @@ const field = {
 	},
 	render:function() {
 		let link = '',
-			target = self.$('[data-link-prop="target"]').val(),
-			url = self.$('[data-link-prop="url"]').val(),
-			title = self.$('[data-link-prop="title"]').val() || url;
+			target = this.$('[data-link-prop="target"]').val(),
+			url = this.$('[data-link-prop="url"]').val(),
+			title = this.$('[data-link-prop="title"]').val() || url;
 		if ( !! url ) {
 			target = !! target ? `target="${target}"` : '';
 			link = `<a href="${url}"${target}>${title}</a>`;
