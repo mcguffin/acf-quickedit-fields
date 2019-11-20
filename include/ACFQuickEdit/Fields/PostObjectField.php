@@ -62,4 +62,16 @@ class PostObjectField extends RelationshipField {
 		return $post_title;
 
 	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function sanitize_value( $value, $context = 'db' ) {
+		if ( is_array( $value ) ) {
+			return array_map( 'intval', $value );
+		}
+		return intval( $value );
+	}
+
+
 }
