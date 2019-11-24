@@ -11,25 +11,12 @@ class PostObjectField extends RelationshipField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		$output = '';
-		$input_atts += array(
-			'class' => 'acf-quick-edit widefat',
-			'id' => $this->core->prefix( $this->acf_field['key'] ),
-		);
+		ob_start();
+		$field_type = acf_get_field_type($this->acf_field['type']);
+		$field_type->render_field($this->acf_field);
+		$html = ob_get_clean();
 
-		$input_atts['multiple'] = 'multiple';
-		$input_atts['name']	.= '[]';
-		if ( $this->acf_field['ui'] ) {
-			$input_atts['class'] .= ' ui';
-		}
-		$output .= sprintf( '<select data-ui="1" data-ajax="1" data-type="post_object" data-multiple="1" data-allow_null="%d" multiple="" %s>',
-			acf_esc_attr( $input_atts ),
-			$this->acf_field['allow_null']
-		);
-
-		$output .= '</select>';
-
-		return $output;
+		return apply_filters( 'acf_qef_input_html_' . $this->acf_field['type'], $html, $input_atts, $is_quickedit, $this->acf_field );
 	}
 
 	/**
@@ -85,10 +72,51 @@ class PostObjectField extends RelationshipField {
 	 *	@inheritdoc
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
+		// 2DO - need to re-enable sanitization, we might do this in formatResult() though
+		/*error_log('now sanitizing value ' . var_export($value, 1), 0);
 		if ( is_array( $value ) ) {
 			return array_map( 'intval', $value );
 		}
-		return intval( $value );
+		return intval( $value );*/
+		return $value;
+	}
+
+	/**
+	 *	Value to be loaded into editor, prepare data for select2
+		*
+		*	@param mixed $value
+		*	@param string/int $object_id
+		*	@param bool $format_value
+		*	@param array $acf_field
+		*/
+	public function get_value( $object_id, $format_value = true ) {
+
+		$value = parent::get_value( $object_id, $format_value );
+
+		// prepare field values: get post title and set select2 data format 
+		if( is_array($value) ) {
+			$result = array_map( function( $id ) {
+				return $this->formatResult($id);
+			}, $value );
+		} else {
+			$result = $this->formatResult($value);
+		}
+
+		return apply_filters( 'acf_qef_get_value_' . $this->acf_field['type'], $result, $object_id, $format_value, $this->acf_field );
+	}
+
+	/**
+	 *	Format result data for select2
+		*
+		*	@param mixed $value
+		*	@return StdClass
+		*/
+	private function formatResult($value) {
+		$result = new \StdClass();
+		$result->id = $value;
+		$result->text = get_the_title($value);
+
+		return $result;
 	}
 
 
