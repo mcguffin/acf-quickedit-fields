@@ -11,7 +11,25 @@ class PostObjectField extends RelationshipField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		return '';
+		$output = '';
+		$input_atts += array(
+			'class' => 'acf-quick-edit widefat',
+			'id' => $this->core->prefix( $this->acf_field['key'] ),
+		);
+
+		$input_atts['multiple'] = 'multiple';
+		$input_atts['name']	.= '[]';
+		if ( $this->acf_field['ui'] ) {
+			$input_atts['class'] .= ' ui';
+		}
+		$output .= sprintf( '<select data-ui="1" data-ajax="1" data-type="post_object" data-multiple="1" data-allow_null="%d" multiple="" %s>',
+			acf_esc_attr( $input_atts ),
+			$this->acf_field['allow_null']
+		);
+
+		$output .= '</select>';
+
+		return $output;
 	}
 
 	/**
