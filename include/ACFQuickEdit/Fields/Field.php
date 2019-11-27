@@ -70,7 +70,7 @@ abstract class Field {
 			'button_group'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 
 			// relational
-			'post_object'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
+			'post_object'		=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'page_link'			=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),
 			'link'				=> array( 'column' => true,		'quickedit' => true,	'bulkedit' => true ),
 			'relationship'		=> array( 'column' => true,		'quickedit' => false,	'bulkedit' => false ),

@@ -9,6 +9,7 @@ import date_time_picker from 'fields/date_time_picker.js'
 import file from 'fields/file.js'
 import image from 'fields/image.js'
 import link from 'fields/link.js'
+import post_object from 'fields/post_object.js'
 import radio from 'fields/radio.js'
 import range from 'fields/range.js'
 import select from 'fields/select.js'
@@ -149,6 +150,11 @@ field.add_type( button_group );
 field.add_type( select );
 
 /**
+ *	field type select
+ */
+field.add_type( post_object );
+
+/**
  *	field type taxonomy
  */
 field.add_type( taxonomy );
@@ -158,6 +164,5 @@ field.add_type( taxonomy );
  */
 field.add_type( true_false );
 
-console.log(field)
 
 module.exports = field;
