@@ -11,23 +11,39 @@ class PostObjectField extends RelationshipField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		ob_start();
-		$field_type = acf_get_field_type($this->acf_field['type']);
-		$field_type->render_field($this->acf_field);
-		$html = ob_get_clean();
 
-		return apply_filters( 'acf_qef_input_html_' . $this->acf_field['type'], $html, $input_atts, $is_quickedit, $this->acf_field );
+		$input_atts += array(
+			'data-ui'			=> '1',
+			'data-ajax'			=> '1',
+			'data-type'			=> 'post_object',
+			'data-multiple'		=> $this->acf_field['multiple'],
+			'data-allow_null'	=> $this->acf_field['allow_null'],
+		);
+
+		$output = '';
+
+		// handle empty values
+		$output .= acf_get_hidden_input( array(
+			'name'	=> $input_atts['name'],
+		));
+
+		// handle multiple values
+		if ( $this->acf_field['multiple'] ) {
+			$input_atts['name'] .= '[]';
+		}
+
+		$output .= acf_get_select_input( $input_atts );
+
+		return $output;
+
 	}
 
 	/**
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
+
 		$value = $this->get_value( $object_id, false );
-		//*/
 
 		if ( ! $value ) {
 			return '';
@@ -51,10 +67,13 @@ class PostObjectField extends RelationshipField {
 		$output .= '</ol>';
 		return $output;
 	}
+
 	/**
-	 *
+	 *	@param WP_Post $post
+	 *	@return string
 	 */
 	private function get_post_link( $post ) {
+
 		$post_title = $post->post_title;
 		if ( empty( trim( $post_title ) ) ) {
 			$post_title = esc_html__( '(no title)', 'acf-quickedit-fields' );
@@ -72,51 +91,41 @@ class PostObjectField extends RelationshipField {
 	 *	@inheritdoc
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
-		// 2DO - need to re-enable sanitization, we might do this in formatResult() though
-		/*error_log('now sanitizing value ' . var_export($value, 1), 0);
+
+		$sanitation_cb = $context === 'ajax' ? array( $this, 'sanitize_ajax_result' ) : 'intval';
+
 		if ( is_array( $value ) ) {
-			return array_map( 'intval', $value );
-		}
-		return intval( $value );*/
-		return $value;
-	}
-
-	/**
-	 *	Value to be loaded into editor, prepare data for select2
-		*
-		*	@param mixed $value
-		*	@param string/int $object_id
-		*	@param bool $format_value
-		*	@param array $acf_field
-		*/
-	public function get_value( $object_id, $format_value = true ) {
-
-		$value = parent::get_value( $object_id, $format_value );
-
-		// prepare field values: get post title and set select2 data format 
-		if( is_array($value) ) {
-			$result = array_map( function( $id ) {
-				return $this->formatResult($id);
-			}, $value );
-		} else {
-			$result = $this->formatResult($value);
+			// strip out falsy values
+			$value = array_map( $sanitation_cb, $value );
+			// strip out falsy values
+			$value = array_filter( $value );
+			// reset array keys
+			return array_values( $value );
 		}
 
-		return apply_filters( 'acf_qef_get_value_' . $this->acf_field['type'], $result, $object_id, $format_value, $this->acf_field );
+		return call_user_func( $sanitation_cb, $value );
+
 	}
 
 	/**
 	 *	Format result data for select2
-		*
-		*	@param mixed $value
-		*	@return StdClass
-		*/
-	private function formatResult($value) {
-		$result = new \StdClass();
-		$result->id = $value;
-		$result->text = get_the_title($value);
+	 *
+	 *	@param mixed $value
+	 *	@return string|array If value present and post exists Empty string
+	 */
+	private function sanitize_ajax_result( $value ) {
 
-		return $result;
+		$value = intval( $value );
+
+		// bail if post doesn't exist
+		if ( ! get_post( $value ) ) {
+			return '';
+		}
+
+		return array(
+			'id'	=> $value,
+			'text'	=> esc_html( get_the_title( $value ) ),
+		);
 	}
 
 
