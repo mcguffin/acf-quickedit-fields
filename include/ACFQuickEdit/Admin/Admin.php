@@ -140,7 +140,7 @@ class Admin extends Core\Singleton {
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
 							$val = $field_object->get_value( $object_id, false );
-							$data[ $key ] = $field_object->sanitize_value( $val );
+							$data[ $key ] = $field_object->sanitize_value( $val, 'ajax' );
 						} else {
 							// multiple iterations - no value if values aren't equal
 							if ( $data[ $key ] != $value ) {
