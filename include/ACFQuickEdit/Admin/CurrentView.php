@@ -185,6 +185,18 @@ class CurrentView extends Core\Singleton {
 			add_filter( 'acf/location/rule_match/attachment', array( $this, 'match_attachment' ), 11, 3 );
 		}
 
+		/*
+		ACF get_field_groups filter:
+		[ 'post_type' => 'post' ] --> matches post type
+		[ [ 'post_type' => 'post' ] ] --> doesn't match anything
+		[ 'post_type' => 'post', 'taxonomy' => 'post_tag' ] --> matches post type OR Taxo
+		[ [ 'post_type' => 'post', 'taxonomy' => 'post_tag' ] ] --> matches post type AND Taxo
+		*/
+
+		if ( $this->is_assoc( $this->field_group_filter ) && count( $this->field_group_filter ) > 1 ) {
+			$this->field_group_filter = array( $this->field_group_filter );
+		}
+
 		return apply_filters( 'acf_quick_edit_fields_group_filter', $this->field_group_filter );
 	}
 
@@ -263,17 +275,8 @@ class CurrentView extends Core\Singleton {
 
 			$filters = $this->get_fieldgroup_filter();
 
-			if ( $this->is_assoc( $filters ) ) {
-				$this->_available_field_groups = acf_get_field_groups( $filters );
-			} else {
-				$this->_available_field_groups = array();
-				foreach ( $filters as $filter ) {
-					$this->_available_field_groups = array_merge(
-						$this->_available_field_groups,
-						acf_get_field_groups( $filter )
-					);
-				}
-			}
+			$this->_available_field_groups = acf_get_field_groups( $filters );
+
 		}
 
 		return $this->_available_field_groups;
