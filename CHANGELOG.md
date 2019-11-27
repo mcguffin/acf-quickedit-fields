@@ -3,7 +3,10 @@ ACF QuickEdit Fields
 
 3.0.5
 -----
- - Fix: Link field JS Error
+ - Feature: Support Post Object Bulk and Quick Edit (thanks to [@m0n0mind](https://github.com/m0n0mind))
+ - Fix: Column for Post object with multiple values not displaying
+ - Fix: ACF Field Location rules applied incorrectly
+ - Fix: JS Error with link fields
 
 3.0.4
 -----

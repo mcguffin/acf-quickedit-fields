@@ -85,6 +85,12 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.5 =
+ - Feature: Support Post Object Bulk and Quick Edit (thanks to [@m0n0mind](https://github.com/m0n0mind))
+ - Fix: Column for Post object with multiple values not displaying
+ - Fix: ACF Field Location rules applied incorrectly
+ - Fix: JS Error with link fields
+
 = 3.0.4 =
  - Fix: Quick/Bulk Edit not showing when list table filter is used
 
