@@ -193,9 +193,9 @@ class CurrentView extends Core\Singleton {
 		[ [ 'post_type' => 'post', 'taxonomy' => 'post_tag' ] ] --> matches post type AND Taxo
 		*/
 
-		if ( $this->is_assoc( $this->field_group_filter ) && count( $this->field_group_filter ) > 1 ) {
-			$this->field_group_filter = array( $this->field_group_filter );
-		}
+		// if ( $this->is_assoc( $this->field_group_filter ) && count( $this->field_group_filter ) > 1 ) {
+		// 	$this->field_group_filter = array( $this->field_group_filter );
+		// }
 
 		return apply_filters( 'acf_quick_edit_fields_group_filter', $this->field_group_filter );
 	}
@@ -227,7 +227,6 @@ class CurrentView extends Core\Singleton {
 
 		return $fields;
 	}
-
 
 	/**
 	 *	Return fields by properties
