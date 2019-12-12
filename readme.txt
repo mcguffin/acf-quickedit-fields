@@ -5,7 +5,7 @@ Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 3.0.6
+Stable tag: 3.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,12 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is always a good idea.
 
 == Changelog ==
+
+= 3.0.7 =
+ - Fix: Location rules at taxonomy edit screen
+
+= 3.0.6 =
+ - Fix: Location rules too restrictive
 
 = 3.0.5 =
  - Feature: Support Post Object Bulk and Quick Edit (thanks to [@m0n0mind](https://github.com/m0n0mind))

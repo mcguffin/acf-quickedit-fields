@@ -83,6 +83,8 @@ class CurrentView extends Core\Singleton {
 			$this->screen_param = wp_parse_args( $this->screen_param, array(
 				'taxonomy'	=> 'post_tag',
 			) );
+			// no post type on taxonomies!
+			$this->screen_param = array_diff_key( $this->screen_param, array( 'post_type' => 0 ) );
 		} else if ( $this->object_kind === 'user' ) {
 		}
 
