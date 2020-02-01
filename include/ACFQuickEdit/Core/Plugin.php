@@ -19,6 +19,9 @@ class Plugin extends Singleton implements ComponentInterface {
 	/** @var array metadata from plugin file */
 	private $plugin_meta;
 
+	/** @var string version */
+	private $_version = null;
+
 	/** @var string plugin components which might need upgrade */
 	private static $components = array(
 		'ACFQuickEdit\Compat\Polylang',
@@ -93,7 +96,10 @@ class Plugin extends Singleton implements ComponentInterface {
 	 *	@return string current plugin version
 	 */
 	public function version() {
-		return $this->get_plugin_meta( 'Version' );
+		if ( is_null( $this->_version ) ) {
+			$this->_version = include_once $this->get_plugin_dir() . '/include/version.php';
+		}
+		return $this->_version;
 	}
 
 	/**

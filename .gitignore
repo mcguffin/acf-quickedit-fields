@@ -1,15 +1,57 @@
-## generic files to ignore
-*~
+# Unit tests
+/tmp
+/tests/bin/tmp
+
+# Numerous always-ignore extensions
+.diff
+.err
+.orig
+.log
+.rej
+.swo
+.swp
+.vi
 ~*
-*.lock
-*.DS_Store
-*.swp
-*.out
-*.psd
-!src/wporg/*.psd
-.svn/
-.svnignore
+*~
 .sass-cache
-node_modules/
-/vendor/
-tmp/
+
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.vscode
+*.swp
+
+# Dreamweaver added files
+_notes
+dwsync.xml
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+intermediate
+.idea
+cache
+node_modules
+
+# Ignore compiled stuff
+# assets/dist
+
+# Composer
+vendor/
+!/include/vendor/
+
+# phpcs
+phpcs-report.txt

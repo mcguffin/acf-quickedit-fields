@@ -1,14 +1,31 @@
 {
-    "name": "mcguffin/acf-quickedit-fields",
-    "description": "WordPress Plugin implementing Column Displaying, QuickEdit and BulkEdit for Advanced Custom Fields (ACF)",
-    "license": "GPL-3.0-or-later",
-    "type": "wordpress-plugin",
-    "authors": [
-        {
-            "name": "Jörn Lund",
-            "homepage": "https://github.com/mcguffin"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {}
+	"name": "mcguffin/acf-quickedit-fields",
+	"description": "WordPress Plugin implementing Column Displaying, QuickEdit and BulkEdit for Advanced Custom Fields (ACF)",
+	"license": "GPL-3.0-or-later",
+	"type": "wordpress-plugin",
+	"authors": [
+		{
+			"name": "Jörn Lund",
+			"homepage": "https://github.com/mcguffin"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
+		"composer/installers": "~1.2",
+		"php": ">=5.6.0"
+	},
+	"require-dev": {
+		"squizlabs/php_codesniffer": "*",
+		"wp-coding-standards/wpcs": "*",
+		"phpcompatibility/php-compatibility": "*",
+		"pheromone/phpcs-security-audit":"*"
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"[ -f vendor/bin/phpcs ] && \"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/pheromone/phpcs-security-audit || true"
+		],
+		"post-update-cmd": [
+			"[ -f vendor/bin/phpcs ] && \"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/pheromone/phpcs-security-audit || true"
+		]
+	}
 }

@@ -9,7 +9,10 @@
     "test": "node ./src/run/test.js",
     "dev-test": "./src/run/dev-test.sh",
     "i18n": "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp/*",
-    "rollback": "git reset --hard HEAD~ && git push origin +master"
+    "rollback": "git reset --hard HEAD~ && git push origin +master",
+    "postinstall": "composer install",
+    "audit": "./vendor/squizlabs/php_codesniffer/bin/phpcs . --report=code --standard=./phpcs-security.ruleset.xml -n -s > ./phpcs-report.txt || exit 0",
+    "ver": "echo \"<?php return $(jq .version < ./package.json);\" > include/version.php"
   },
   "repository": {
     "type": "git",
@@ -106,7 +109,8 @@
         "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp"
       ],
       "build": [
-        "gulp build"
+        "gulp build",
+        "npm run ver"
       ]
     },
     "git": {
