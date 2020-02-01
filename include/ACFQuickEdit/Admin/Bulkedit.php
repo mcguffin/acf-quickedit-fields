@@ -70,12 +70,19 @@ class Bulkedit extends EditFeature {
 
 		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
 		foreach ( $this->fieldsets as $field_group_key => $fields ) {
+
 			$field_group = acf_get_field_group( $field_group_key );
 			// we need a div here because WP is prepending tags input to the fieldset:last in the editor
-			echo "<!-- BEGIN ACF Quick Edit Fields - Bulk <{$field_group_key}> -->\n";
+			printf(
+				"<!-- BEGIN ACF Quick Edit Fields - Bulk <%s> -->\n",
+				sanitize_key( $field_group_key )
+			);
 			echo '<div>' . "\n";
-			printf( '<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">', $post_type );
-			printf( '<legend>%s</legend>', $field_group['title'] );
+			printf(
+				'<fieldset class="inline-edit-col-qed inline-edit-%s acf-quick-edit">',
+				sanitize_key( $post_type )
+			);
+			printf( '<legend>%s</legend>', esc_html( $field_group['title'] ) );
 			echo '<div class="qed-fields">';
 
 			foreach ( $fields as $sub_field_object ) {
@@ -85,7 +92,10 @@ class Bulkedit extends EditFeature {
 			echo '</div>';
 			echo '</fieldset>';
 			echo '</div>' . "\n";
-			echo "<!-- END ACF Quick Edit Fields - Bulk {$field_group_key} -->\n";
+			printf(
+				"<!-- END ACF Quick Edit Fields - Bulk {$field_group_key} -->\n",
+				sanitize_key( $field_group_key )
+			);
 		}
 
 		$this->did_render = true;
@@ -98,7 +108,7 @@ class Bulkedit extends EditFeature {
 		// remove do-not-change vaues from $_GET['acf']
 		$data = null;
 		if ( isset( $_GET['acf'] ) && is_array( $_GET['acf'] ) ) {
-			$data = $_GET['acf'];
+			$data = wp_unslash( $_GET['acf'] );
 			$this->strip_dont_change( $data );
 		}
 		return $data;

@@ -381,7 +381,7 @@ class Columns extends Feature {
 	 *	@action manage_{$post_type}_posts_custom_column
 	 */
 	public function display_post_field_column( $wp_column_slug , $object_id ) {
-		echo $this->filter_field_column( '', $wp_column_slug , $object_id );
+		echo wp_kses_post( $this->filter_field_column( '', $wp_column_slug , $object_id ) );
 	}
 
 	/**

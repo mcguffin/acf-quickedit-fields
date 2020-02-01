@@ -376,11 +376,11 @@ class CurrentView extends Core\Singleton {
 	 */
 	private function referer_params() {
 		$url = false;
-		$filter = array();
+		$filter = [];
 		if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-			$url = $_REQUEST['_wp_http_referer'];
+			$url = wp_unslash( $_REQUEST['_wp_http_referer'] );
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-			$url = $_SERVER['HTTP_REFERER'];
+			$url = wp_unslash( $_SERVER['HTTP_REFERER'] );
 		}
 
 		if ( $url ) {

@@ -189,12 +189,18 @@ class Admin extends Core\Singleton {
 		<div class="notice notice-error is-dismissible">
 			<p><?php
 				printf(
-					/* Translators: 1: ACF Pro URL, 2: plugins page url */
-					__( 'The <strong>ACF QuickEdit Fields</strong> plugin requires <a href="%1$s">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
-						'acf-quickedit-fields'
+					wp_kses(
+						/* Translators: 1: ACF Pro URL, 2: plugins page url */
+						__( 'The <strong>ACF QuickEdit Fields</strong> plugin requires <a href="%1$s" target="_blank" rel="noopener noreferrer">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href="%2$s">plugins page</a>.',
+							'acf-quickedit-fields'
+						),
+						[
+							'strong' => [],
+							'a'	=> [ 'href' => [], 'target' => [], 'rel' => '' ]
+						]
 					),
-					'http://www.advancedcustomfields.com/',
-					admin_url('plugins.php' )
+					esc_url( 'https://www.advancedcustomfields.com/' ),
+					esc_url( admin_url('plugins.php' ) )
 
 				);
 			?></p>
@@ -218,16 +224,16 @@ class Admin extends Core\Singleton {
 	public function enqueue_edit_assets() {
 
 		$bulk = Bulkedit::instance();
-
+		$acf_version = acf()->version;
 		wp_enqueue_media();
 		acf_enqueue_scripts();
 
 		// register assets
-		wp_register_style('acf-datepicker', acf_get_url('assets/inc/datepicker/jquery-ui.min.css') );
+		wp_register_style( 'acf-datepicker', acf_get_url( 'assets/inc/datepicker/jquery-ui.min.css' ), [], $acf_version );
 
 		// timepicker. Contains some usefull parsing mathods even for dates.
-		wp_register_script('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.js'), array('jquery-ui-datepicker') );
-		wp_register_style('acf-timepicker', acf_get_url('assets/inc/timepicker/jquery-ui-timepicker-addon.min.css') );
+		wp_register_script('acf-timepicker', acf_get_url( 'assets/inc/timepicker/jquery-ui-timepicker-addon.min.js' ), [ 'jquery-ui-datepicker' ], $acf_version );
+		wp_register_style('acf-timepicker', acf_get_url( 'assets/inc/timepicker/jquery-ui-timepicker-addon.min.css' ), [], $acf_version );
 
 
 

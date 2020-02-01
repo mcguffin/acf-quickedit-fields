@@ -230,8 +230,8 @@ abstract class Field {
 		?>
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<div class="inline-edit-group">
-					<label for="<?php echo $this->get_input_id( $mode === 'quick' ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
-					<span class="<?php echo implode(' ',$wrapper_class )  ?>">
+					<label for="<?php echo esc_attr( $this->get_input_id( $mode === 'quick' ) ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
+					<span class="<?php echo implode(' ', $wrapper_class )  ?>">
 						<?php
 
 							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
@@ -265,7 +265,7 @@ abstract class Field {
 				'checked'	=> 'checked',
 				'data-is-do-not-change' => 'true'
 			) ) ?> />
-			<?php _e( 'Do not change', 'acf-quickedit-fields' ) ?>
+			<?php esc_html_e( 'Do not change', 'acf-quickedit-fields' ) ?>
 		</label>
 		<?php
 	}

@@ -74,7 +74,10 @@ class LinkField extends Field {
 		}
 
 		\_WP_Editors::wp_link_dialog();
-		printf( '<input type="hidden" value="%s" id="_ajax_linking_nonce" />', wp_create_nonce( 'internal-linking' ) );
+		printf(
+			'<input type="hidden" value="%s" id="_ajax_linking_nonce" />',
+			esc_attr( wp_create_nonce( 'internal-linking' ) )
+		);
 
 	}
 
