@@ -22,13 +22,13 @@ class Polylang extends Core\Singleton implements Core\ComponentInterface {
 	 */
 	protected function __construct() {
 		// current action: plugins_loaded
-		add_filter( 'acf_quick_edit_post_ajax_actions', array( $this, 'post_ajax_action' ) );
-		add_filter( 'acf_quick_edit_term_ajax_actions', array( $this, 'term_ajax_action' ) );
-		add_filter( 'acf_quick_edit_post_id_request_param', array( $this, 'post_id_request_params' ) );
+		add_filter( 'acf_quick_edit_post_ajax_actions', [ $this, 'post_ajax_action' ] );
+		add_filter( 'acf_quick_edit_term_ajax_actions', [ $this, 'term_ajax_action' ] );
+		add_filter( 'acf_quick_edit_post_id_request_param', [ $this, 'post_id_request_params' ] );
 
 		if ( defined( 'WPSEO_VERSION' ) ) {
-			add_action( 'wp_ajax_pll_update_post_rows', array( $this, 'handle_wp_seo_columns' ) );
-			add_action( 'wp_ajax_pll_update_term_rows', array( $this, 'handle_wp_seo_columns' ) );
+			add_action( 'wp_ajax_pll_update_post_rows', [ $this, 'handle_wp_seo_columns' ] );
+			add_action( 'wp_ajax_pll_update_term_rows', [ $this, 'handle_wp_seo_columns' ] );
 		}
 
 	}

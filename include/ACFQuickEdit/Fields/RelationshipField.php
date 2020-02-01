@@ -21,7 +21,7 @@ class RelationshipField extends Field {
 		if ( is_a( $value, 'WP_Post' ) ) {
 			$output .= $this->get_post_object_link( $value->ID );
 		} else if ( is_array( $value ) ) {
-			$links = array();
+			$links = [];
 			foreach ( $value as $post ) {
 				$post_id = 0;
 				if ( is_a( $post, 'WP_Post' ) ) {

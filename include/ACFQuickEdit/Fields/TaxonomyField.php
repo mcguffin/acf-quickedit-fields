@@ -19,9 +19,9 @@ class TaxonomyField extends Field {
 		//*/
 		$output = '';
 		if ( $value ) {
-			$term_names = array();
+			$term_names = [];
 			if ( ! is_array( $value ) ) {
-				$value = array( $value );
+				$value = [ $value ];
 			}
 			foreach ( $value as $i => $term ) {
 				if ( $this->acf_field['return_format'] === 'id' ) {
@@ -52,9 +52,9 @@ class TaxonomyField extends Field {
 
 		acf_include('includes/walkers/class-acf-walker-taxonomy-field.php');
 
-		$field_clone = $this->acf_field + array();
+		$field_clone = $this->acf_field + [];
 
-		$field_clone['value'] = array();
+		$field_clone['value'] = [];
 
 		$field_clone['name'] = 'acf';
 
@@ -63,7 +63,7 @@ class TaxonomyField extends Field {
 		}
 		$field_clone['name'] .= sprintf('[%s]', $field_clone['key'] );
 
-		if ( in_array( $field_clone['field_type'], array( 'checkbox', 'multi_select' ) ) ) {
+		if ( in_array( $field_clone['field_type'], [ 'checkbox', 'multi_select' ] ) ) {
 
 			$field_clone['name'] .= '[]';
 
@@ -71,30 +71,30 @@ class TaxonomyField extends Field {
 
 		$taxonomy_obj = get_taxonomy( $field_clone['taxonomy'] );
 
-		$args = array(
+		$args = [
 			'taxonomy'     		=> $field_clone['taxonomy'],
 			'show_option_none'	=> sprintf( _x('No %s', 'No terms', 'acf'), strtolower($taxonomy_obj->labels->name) ),
 			'hide_empty'   		=> false,
 			'style'        		=> 'none',
 			'walker'       		=> new \ACF_Taxonomy_Field_Walker( $field_clone ),
 			'echo'				=> false,
-		);
+		];
 
 		if ( 'radio' === $field_clone['field_type'] || 'checkbox' === $field_clone['field_type'] ) {
 
-			$output .= '<ul ' . acf_esc_attr( array(
+			$output .= '<ul ' . acf_esc_attr( [
 				'class'	=> 'acf-checkbox-list acf-bl',
-			) ) . '>';
+			] ) . '>';
 
 			if ( 'radio' === $field_clone['field_type'] && $field_clone['allow_null'] ) {
 				// add – No Value – option ...
 				$output .= '<li>';
 				$output .= '<label>';
-				$output .= '<input ' . acf_esc_attr(array(
+				$output .= '<input ' . acf_esc_attr( [
 					'name'	=> $field_clone['name'],
 					'value'	=> '',
 					'type'	=> $field_clone['field_type']
-				)) . ' />';
+				] ) . ' />';
 				$output .= sprintf('<span>%s</span>', esc_html__('– No Selection –','acf-quickedit-fields'));
 				$output .= '</label>';
 				$output .= '</li>';
@@ -106,7 +106,7 @@ class TaxonomyField extends Field {
 
 			$field_clone['type']		= 'select';
 			$field_clone['multiple']	= 'multi_select' === $field_clone['field_type'];
-			$field_clone['choices']		= array();
+			$field_clone['choices']		= [];
 			$field_clone['ui']			= false;
 			$field_clone['ajax']		= false;
 
@@ -114,10 +114,10 @@ class TaxonomyField extends Field {
 				$field_clone['choices'][''] = __('– No Selection –','acf-quickedit-fields');
 			}
 
-			$terms = acf_get_terms( array(
+			$terms = acf_get_terms( [
 				'taxonomy'		=> $field_clone['taxonomy'],
 				'hide_empty'	=> false
-			) );
+			] );
 
 			foreach( $terms as $term ) {
 				$term_title = '';

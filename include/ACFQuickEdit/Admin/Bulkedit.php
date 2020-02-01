@@ -53,7 +53,7 @@ class Bulkedit extends EditFeature {
 
 		if ( $this->is_active() ) {
 
-			add_action( 'bulk_edit_custom_box', array( $this , 'display_bulk_edit' ), 200, 2 );
+			add_action( 'bulk_edit_custom_box', [ $this , 'display_bulk_edit' ], 200, 2 );
 
 		}
 
@@ -120,9 +120,9 @@ class Bulkedit extends EditFeature {
 	 */
 	private function strip_dont_change( &$data ) {
 		if ( is_array( $data ) ) {
-			$data = array_filter( $data, array( $this, 'filter_do_not_change' ) );
-			array_walk( $data, array( $this, 'strip_dont_change' ) );
-			$data = array_filter( $data, array( $this, 'filter_ampty_array' ) );
+			$data = array_filter( $data, [ $this, 'filter_do_not_change' ] );
+			array_walk( $data, [ $this, 'strip_dont_change' ] );
+			$data = array_filter( $data, [ $this, 'filter_ampty_array' ] );
 		}
 	}
 

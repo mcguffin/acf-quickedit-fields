@@ -15,9 +15,9 @@ class FieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
-		add_action('acf/render_field/type=column_setting', array( $this, 'render_column_setting' ) );
+		add_action('acf/render_field/type=column_setting', [ $this, 'render_column_setting' ] );
 
-		add_action('acf/render_field/type=edit_setting', array( $this, 'render_edit_setting' ) );
+		add_action('acf/render_field/type=edit_setting', [ $this, 'render_edit_setting' ] );
 
 		$this->init_acf_settings();
 
@@ -34,10 +34,10 @@ class FieldGroup extends Core\Singleton {
 
 		foreach ( $types as $type => $supports ) {
 			if ( $supports[ 'column' ] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_column_settings' ) );
+				add_action( "acf/render_field_settings/type={$type}", [ $this, 'render_column_settings' ] );
 			}
 			if ( $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
-				add_action( "acf/render_field_settings/type={$type}" , array( $this , 'render_edit_settings' ) );
+				add_action( "acf/render_field_settings/type={$type}", [ $this, 'render_edit_settings' ] );
 			}
 		}
 	}
@@ -48,7 +48,7 @@ class FieldGroup extends Core\Singleton {
 	public function render_column_settings( $field ) {
 		// show column: todo: allow sortable
 		//*
-		acf_render_field_setting( $field, array(
+		acf_render_field_setting( $field, [
 			'label'			=> __('Column View','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'column_setting',
@@ -56,7 +56,7 @@ class FieldGroup extends Core\Singleton {
 			'message'		=> __("Show a column in the posts list table", 'acf-quickedit-fields'),
 			'width'			=> 50,
 			'field'			=> $field,
-		));
+		]);
 	}
 
 	/**
@@ -67,14 +67,14 @@ class FieldGroup extends Core\Singleton {
 		$field_object = Fields\Field::getFieldObject( $field['field'] );
 
 		// parse default values
-		$field['field'] = wp_parse_args( $field['field'], array(
+		$field['field'] = wp_parse_args( $field['field'], [
 			'show_column'	=> false,
 			'show_column_sortable'	=> false,
-		) );
+		] );
 
 		echo '<div style="width:50%;float:left;">';
 
-		acf_render_field_wrap( array(
+		acf_render_field_wrap( [
 			'label'			=> __('Show Column','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'true_false',
@@ -83,11 +83,11 @@ class FieldGroup extends Core\Singleton {
 			'message'		=> __("Show column in list tables", 'acf-quickedit-fields'),
 			'prefix'		=> $field['prefix'],
 			'value'			=> $field['field']['show_column'],
-		), 'div', 'label' );
+		], 'div', 'label' );
 
 		if ( $field_object->is_sortable() ) {
 
-			acf_render_field_wrap( array(
+			acf_render_field_wrap( [
 				'label'			=> __('Sortable Column','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
@@ -96,13 +96,13 @@ class FieldGroup extends Core\Singleton {
 				'message'		=> __("Make this column sortable", 'acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['show_column_sortable'],
-			), 'div', 'label' );
+			], 'div', 'label' );
 
 		}
 
 		echo '</div>';
 
-		$weight_field = array(
+		$weight_field = [
 			'label'			=> __('Column Weight','acf-quickedit-fields'),
 			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quickedit-fields'),
 			'type'			=> 'number',
@@ -113,11 +113,11 @@ class FieldGroup extends Core\Singleton {
 			'max'			=> '10000',
 			'step'			=> '1',
 			'placeholder'	=> '',
-			'wrapper'		=> array(
+			'wrapper'		=> [
 				'width'			=> 50,
-			),
+			],
 			'prefix'		=> $field['prefix'],
-		);
+		];
 
 		if ( isset( $field['field']['show_column_weight'] ) ) {
 
@@ -140,13 +140,13 @@ class FieldGroup extends Core\Singleton {
 	 */
 	public function render_edit_settings( $field ) {
 		// add to quick edit
-		acf_render_field_setting( $field, array(
+		acf_render_field_setting( $field, [
 			'label'			=> __('Editing','acf-quickedit-fields'),
 			'instructions'	=> '',
 			'type'			=> 'edit_setting',
 			'name'			=> 'edit',
 			'field'			=> $field,
-		));
+		]);
 	}
 
 	/**
@@ -158,14 +158,14 @@ class FieldGroup extends Core\Singleton {
 		$types = Fields\Field::get_types();
 
 		// parse default values
-		$field['field'] = wp_parse_args( $field['field'], array(
+		$field['field'] = wp_parse_args( $field['field'], [
 			'allow_quickedit'	=> false,
 			'allow_bulkedit'	=> false,
-		) );
+		] );
 
 
 		if ( $types[ $field['field']['type'] ]['quickedit'] ) {
-			acf_render_field_wrap( array(
+			acf_render_field_wrap( [
 				'label'			=> __('QuickEdit','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
@@ -175,14 +175,14 @@ class FieldGroup extends Core\Singleton {
 				'ui_off_text'	=> __('Disabled','acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['allow_quickedit'],
-				'wrapper'		=> array(
+				'wrapper'		=> [
 					'width'	=> 50,
-				),
-			), 'div', 'label' );
+				],
+			], 'div', 'label' );
 		}
 
 		if ( $types[ $field['field']['type'] ]['bulkedit'] ) {
-			acf_render_field_wrap( array(
+			acf_render_field_wrap( [
 				'label'			=> __('Bulk Edit','acf-quickedit-fields'),
 				'instructions'	=> '',
 				'type'			=> 'true_false',
@@ -192,10 +192,10 @@ class FieldGroup extends Core\Singleton {
 				'ui_off_text'	=> __('Disabled','acf-quickedit-fields'),
 				'prefix'		=> $field['prefix'],
 				'value'			=> $field['field']['allow_bulkedit'],
-				'wrapper'		=> array(
+				'wrapper'		=> [
 					'width'	=> 50,
-				),
-			), 'div', 'label' );
+				],
+			], 'div', 'label' );
 		}
 	}
 

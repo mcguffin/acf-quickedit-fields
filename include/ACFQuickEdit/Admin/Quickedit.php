@@ -38,7 +38,7 @@ class Quickedit extends EditFeature {
 
 		if ( $this->is_active() ) {
 
-			add_action( 'quick_edit_custom_box',  array( $this, 'display_quick_edit' ), 10, 2 );
+			add_action( 'quick_edit_custom_box',  [ $this, 'display_quick_edit' ], 10, 2 );
 
 		}
 	}

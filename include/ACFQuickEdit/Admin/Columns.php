@@ -36,10 +36,10 @@ class Columns extends Feature {
 		$is_active = parent::init_fields();
 
 		$current_view = CurrentView::instance();
-		$is_sortable = count( $current_view->get_fields( array( 'show_column_sortable' => 1 ) ) );
+		$is_sortable = count( $current_view->get_fields( [ 'show_column_sortable' => 1 ] ) );
 
-		$cols_filters = array();
-		$displays_filters = array();
+		$cols_filters = [];
+		$displays_filters = [];
 
 		$content_kind = $current_view->get_object_kind();
 		$content_type = $current_view->get_object_type();
@@ -64,27 +64,27 @@ class Columns extends Feature {
 			}
 
 			if ( $is_active ) {
-				$cols_filters[] = array(
-					'cb'		=> array( $this, 'move_date_to_end' ),
+				$cols_filters[] = [
+					'cb'		=> [ $this, 'move_date_to_end' ],
 					'priority'	=> 11,
 					'args'		=> null,
-				);
-				$displays_filters[] = array(
-					'cb'		=> array( $this, 'display_post_field_column' ),
+				];
+				$displays_filters[] = [
+					'cb'		=> [ $this, 'display_post_field_column' ],
 					'priority'	=> 10,
 					'args'		=> 2,
-				);
+				];
 			} else {
 				// we need at least one column for quick/bulk edit
-				$cols_filters[] = array(
-					'cb'		=> array( $this, 'add_ghost_column' ),
+				$cols_filters[] = [
+					'cb'		=> [ $this, 'add_ghost_column' ],
 					'priority'	=> null,
 					'args'		=> null,
-				);
+				];
 			}
 			if ( $is_sortable ) {
 				// posts
-				add_action( 'pre_get_posts', array( $this, 'parse_query') );
+				add_action( 'pre_get_posts', [ $this, 'parse_query' ] );
 			}
 		} else if ( 'term' == $content_kind ) {
 
@@ -93,22 +93,22 @@ class Columns extends Feature {
 			$display_hook	= "manage_{$content_type}_custom_column";
 
 			if ( $is_active ) {
-				$displays_filters[] = array(
-					'cb'		=> array( $this, 'display_term_field_column' ),
+				$displays_filters[] = [
+					'cb'		=> [ $this, 'display_term_field_column' ],
 					'priority'	=> 10,
 					'args'		=> 3,
-				);
+				];
 			} else {
 				// we need at least one column for quick/bulk edit
-				$cols_filters[] = array(
-					'cb'		=> array( $this, 'add_ghost_column' ),
+				$cols_filters[] = [
+					'cb'		=> [ $this, 'add_ghost_column' ],
 					'priority'	=> null,
 					'args'		=> null,
-				);
+				];
 			}
 			if ( $is_sortable ) {
 				// terms
-				add_action( 'parse_term_query', array( $this, 'parse_term_query' ) );
+				add_action( 'parse_term_query', [ $this, 'parse_term_query' ] );
 			}
 
 		} else if ( 'user' == $content_kind ) {
@@ -117,25 +117,25 @@ class Columns extends Feature {
 			$display_hook	= "manage_users_custom_column";
 
 			if ( $is_active ) {
-				$displays_filters[] = array(
-					'cb'		=> array( $this, 'display_user_field_column' ),
+				$displays_filters[] = [
+					'cb'		=> [ $this, 'display_user_field_column' ],
 					'priority'	=> 10,
 					'args'		=> 3,
-				);
+				];
 			}
 			if ( $is_sortable ) {
-				add_filter( 'pre_get_users', array( $this, 'pre_get_users' ) );
+				add_filter( 'pre_get_users', [ $this, 'pre_get_users' ] );
 			}
 		}
 
 		if ( $is_active ) {
-			$cols_filters[] = array(
-				'cb'		=> array( $this, 'add_field_columns' ),
+			$cols_filters[] = [
+				'cb'		=> [ $this, 'add_field_columns' ],
 				'priority'	=> 1000, // we hook in so late because we have to sort the columns when all of them are present
 				'args'		=> null,
-			);
+			];
 			if ( $is_sortable ) {
-				add_filter( $sortable_hook, array( $this, 'add_sortable_columns' ) );
+				add_filter( $sortable_hook, [ $this, 'add_sortable_columns' ] );
 			}
 		}
 
@@ -193,14 +193,14 @@ class Columns extends Feature {
 	 */
 	public function add_field_columns( $columns ) {
 
-		$this->_wp_column_weights = array_map( array( $this, '_mul_100' ) , array_flip( array_keys( $columns ) ) );
+		$this->_wp_column_weights = array_map( [ $this, '_mul_100' ], array_flip( array_keys( $columns ) ) );
 
 		foreach ( $this->fields as $field_slug => $field_object ) {
 			$field = $field_object->get_acf_field();
 			$field_slug .= '--qef-type-' . $field['type'] . '--';
 			$columns[ $field_slug ] = $field['label'];
 		}
-		uksort( $columns, array( $this, '_sort_columns_by_weight' ));
+		uksort( $columns, [ $this, '_sort_columns_by_weight' ] );
 
 		return $columns;
 	}
@@ -309,21 +309,21 @@ class Columns extends Feature {
 		if ( isset( $this->fields,  $this->fields[ $by ] ) ) {
 			$sortable = $this->fields[ $by ]->is_sortable();
 			if ( is_string( $sortable ) ) {
-				$type_query = array( 'type' => strtoupper( $sortable ) );
+				$type_query = [ 'type' => strtoupper( $sortable ) ];
 			} else {
-				$type_query = array();
+				$type_query = [];
 			}
-			$meta_query = array(
+			$meta_query = [
 				'relation'	=> 'OR',
-				$by => array(
+				$by => [
 					'key'		=> $by,
 					'compare'	=> 'NOT EXISTS',
-				) + $type_query,
-				array(
+				] + $type_query,
+				[
 					'key'		=> $by,
 					'compare'	=> 'EXISTS',
-				) + $type_query,
-			);
+				] + $type_query,
+			];
 		}
 		return $meta_query;
 	}

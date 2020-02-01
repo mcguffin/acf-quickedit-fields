@@ -12,20 +12,20 @@ class PostObjectField extends RelationshipField {
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
 
-		$input_atts += array(
+		$input_atts += [
 			'data-ui'			=> '1',
 			'data-ajax'			=> '1',
 			'data-type'			=> 'post_object',
 			'data-multiple'		=> $this->acf_field['multiple'],
 			'data-allow_null'	=> $this->acf_field['allow_null'],
-		);
+		];
 
 		$output = '';
 
 		// handle empty values
-		$output .= acf_get_hidden_input( array(
+		$output .= acf_get_hidden_input( [
 			'name'	=> $input_atts['name'],
-		));
+		]);
 
 		// handle multiple values
 		if ( $this->acf_field['multiple'] ) {
@@ -92,7 +92,7 @@ class PostObjectField extends RelationshipField {
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
 
-		$sanitation_cb = $context === 'ajax' ? array( $this, 'sanitize_ajax_result' ) : 'intval';
+		$sanitation_cb = $context === 'ajax' ? [ $this, 'sanitize_ajax_result' ] : 'intval';
 
 		if ( is_array( $value ) ) {
 			// strip out falsy values
@@ -122,10 +122,10 @@ class PostObjectField extends RelationshipField {
 			return '';
 		}
 
-		return array(
+		return [
 			'id'	=> $value,
 			'text'	=> esc_html( get_the_title( $value ) ),
-		);
+		];
 	}
 
 

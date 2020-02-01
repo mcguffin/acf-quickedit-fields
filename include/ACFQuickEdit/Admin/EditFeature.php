@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) )
 abstract class EditFeature extends Feature {
 
 
-	protected $fieldsets = array();
+	protected $fieldsets = [];
 
 	/**
 	 *	@inheritdoc
@@ -34,7 +34,7 @@ abstract class EditFeature extends Feature {
 		} else if ( $object_kind == 'term' ) {
 			// cb
 			$action = 'edit_term';
-			$callback = array( $this, 'save_acf_term_meta' );
+			$callback = [ $this, 'save_acf_term_meta' ];
 			$count_args = 3;
 
 			// add js deps
@@ -43,7 +43,7 @@ abstract class EditFeature extends Feature {
 
 			// cb
 			$action = 'save_post';
-			$callback = array( $this, 'save_acf_post_meta' );
+			$callback = [ $this, 'save_acf_post_meta' ];
 			$count_args = 1;
 
 			// add js deps
@@ -68,7 +68,7 @@ abstract class EditFeature extends Feature {
 				continue;
 			}
 			if ( ! isset( $this->fieldsets[ $fieldgroup['key'] ] ) ) {
-				$this->fieldsets[ $fieldgroup['key'] ] = array();
+				$this->fieldsets[ $fieldgroup['key'] ] = [];
 			}
 
 			$this->fieldsets[ $fieldgroup['key'] ][] = $field;

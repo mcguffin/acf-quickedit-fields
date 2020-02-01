@@ -86,22 +86,22 @@ class AjaxHandler {
 
 		$this->_action	= $action;
 
-		$defaults = array(
+		$defaults = [
 			'public'		=> false,
 			'use_nonce'		=> true,
 			'capability'	=> 'manage_options',
 			'callback'		=> null,
 			'sanitize_callback'	=> null,
-		);
+		];
 
 		$this->options = (object) wp_parse_args( $args, $defaults );
 
 		if ( $this->public ) {
 			$this->options->capability	= false;
-			add_action( "wp_ajax_nopriv_{$this->action}", array( $this, 'ajax_callback' ) );
+			add_action( "wp_ajax_nopriv_{$this->action}", [ $this, 'ajax_callback' ] );
 		}
 
-		add_action( "wp_ajax_{$this->action}", array( $this, 'ajax_callback' ) );
+		add_action( "wp_ajax_{$this->action}", [ $this, 'ajax_callback' ] );
 	}
 
 	/**
@@ -112,9 +112,9 @@ class AjaxHandler {
 		if ( $prop === 'nonce' ) {
 			return $this->get_nonce();
 		} else if ( $prop === 'request' ) {
-			$req = array(
+			$req = [
 				'action'	=> $this->_action,
-			);
+			];
 			$req[ $this->_nonce_param ] = $this->get_nonce();
 			return $req;
 		} else if ( $prop === 'action' ) {
@@ -148,7 +148,7 @@ class AjaxHandler {
 	 */
 	public function ajax_callback() {
 
-		$response = array( 'success' => false );
+		$response = [ 'success' => false ];
 
 		if ( $this->use_nonce && ! $this->verify_nonce() ) {
 
@@ -212,9 +212,9 @@ class AjaxHandler {
 	 */
 	public function __destruct( ) {
 		if ( $this->public ) {
-			remove_action( "wp_ajax_nopriv_{$this->action}", array( $this, 'ajax_callback' ) );
+			remove_action( "wp_ajax_nopriv_{$this->action}", [ $this, 'ajax_callback' ] );
 		}
-		remove_action( "wp_ajax_{$this->action}", array( $this, 'ajax_callback' ) );
+		remove_action( "wp_ajax_{$this->action}", [ $this, 'ajax_callback' ] );
 	}
 
 }

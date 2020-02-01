@@ -85,6 +85,10 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.8 =
+ - Fix: PHP Warning on Upgrade
+ - Security hardening
+
 = 3.0.7 =
  - Fix: Location rules at taxonomy edit screen
 

@@ -21,7 +21,7 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	protected function __construct() {
 
-		add_action( 'plugins_loaded' , array( $this , 'init_compat' ), 0 );
+		add_action( 'plugins_loaded', [ $this , 'init_compat' ], 0 );
 
 		$args = func_get_args();
 		parent::__construct( ...$args );

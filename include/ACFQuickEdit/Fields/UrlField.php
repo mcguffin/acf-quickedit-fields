@@ -14,7 +14,7 @@ class UrlField extends Field {
 		$output = '';
 		$output .= '<span class="acf-url">';
 		$output .= '<i class="acf-icon -globe small"></i>';
-		$output .= parent::render_input( array( 'type'	=> 'url', ), $is_quickedit );
+		$output .= parent::render_input( [ 'type' => 'url' ], $is_quickedit );
 		$output .= '</span>';
 		return $output;
 	}

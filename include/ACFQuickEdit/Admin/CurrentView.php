@@ -24,11 +24,11 @@ class CurrentView extends Core\Singleton {
 
 	private $object_type = null; // post, term, user
 
-	private $screen_param = array(); // post_type|taxonomy
+	private $screen_param = []; // post_type|taxonomy
 
 	private $field_group_filter = null;
 
-	private $field_to_group = array();
+	private $field_to_group = [];
 
 	/**
 	 *	@inheritdoc
@@ -42,9 +42,9 @@ class CurrentView extends Core\Singleton {
 
 			if ( isset( $_REQUEST['action'] ) ) {
 				$this->screen_param = $this->referer_params();
-				if ( in_array( $_REQUEST['action'], apply_filters('acf_quick_edit_post_ajax_actions',array('inline-save')) ) ) {
+				if ( in_array( $_REQUEST['action'], apply_filters( 'acf_quick_edit_post_ajax_actions', [ 'inline-save' ] ) ) ) {
 					$this->object_kind = 'post';
-				} else if ( in_array( $_REQUEST['action'], apply_filters('acf_quick_edit_term_ajax_actions', array( 'inline-save-tax' ) ) ) ) {
+				} else if ( in_array( $_REQUEST['action'], apply_filters('acf_quick_edit_term_ajax_actions', [ 'inline-save-tax' ] ) ) ) {
 					$this->object_kind = 'term';
 				}
 			}
@@ -76,15 +76,15 @@ class CurrentView extends Core\Singleton {
 
 		// set screen param defaults
 		if ( $this->object_kind === 'post' ) {
-			$this->screen_param = wp_parse_args( $this->screen_param, array(
+			$this->screen_param = wp_parse_args( $this->screen_param, [
 				'post_type'	=> 'post',
-			) );
+			] );
 		} else if ( $this->object_kind === 'term' ) {
-			$this->screen_param = wp_parse_args( $this->screen_param, array(
+			$this->screen_param = wp_parse_args( $this->screen_param, [
 				'taxonomy'	=> 'post_tag',
-			) );
+			] );
 			// no post type on taxonomies!
-			$this->screen_param = array_diff_key( $this->screen_param, array( 'post_type' => 0 ) );
+			$this->screen_param = array_diff_key( $this->screen_param, [ 'post_type' => 0 ] );
 		} else if ( $this->object_kind === 'user' ) {
 		}
 
@@ -144,7 +144,7 @@ class CurrentView extends Core\Singleton {
 	private function get_fieldgroup_filter() {
 
 		if ( is_null( $this->field_group_filter ) ) {
-			$this->field_group_filter = array();
+			$this->field_group_filter = [];
 
 			foreach ( $this->screen_param as $param => $value ) {
 
@@ -156,7 +156,7 @@ class CurrentView extends Core\Singleton {
 					$filtered_type = substr( $filtered_type, strpos( $filtered_type, ':' ) + 1 );
 					$this->field_group_filter['attachment'] = $filtered_type;
 
-				} else if ( in_array( $param, array( 'cat', 'tag' ) ) && ! empty( $value ) ) {
+				} else if ( in_array( $param, [ 'cat', 'tag' ] ) && ! empty( $value ) ) {
 					// post_category
 					$this->field_group_filter['post_taxonomy'] = sprintf( 'post_%s:%s', $param, $value );
 
@@ -168,8 +168,8 @@ class CurrentView extends Core\Singleton {
 					$this->field_group_filter['taxonomy'] = $value;
 				} else if ( 'role' === $param && ! empty( $value ) ) {
 					//*
-					$this->field_group_filter[] = array( 'user_form' => 'all', 'user_role' => $value );
-					$this->field_group_filter[] = array( 'user_form' => 'edit', 'user_role' => $value );
+					$this->field_group_filter[] = [ 'user_form' => 'all', 'user_role' => $value ];
+					$this->field_group_filter[] = [ 'user_form' => 'edit', 'user_role' => $value ];
 					/*/
 					$this->field_group_filter[] = array( 'user_role' => $value );
 					//*/
@@ -177,14 +177,14 @@ class CurrentView extends Core\Singleton {
 			}
 
 			if ( 'user' === $this->object_kind && ! count( $this->field_group_filter ) ) {
-				$this->field_group_filter[] = array( 'user_form' => 'all' );
-				$this->field_group_filter[] = array( 'user_form' => 'edit' );
+				$this->field_group_filter[] = [ 'user_form' => 'all' ];
+				$this->field_group_filter[] = [ 'user_form' => 'edit' ];
 			}
 
-			add_filter( 'acf/location/rule_match/post_taxonomy', array( $this, 'match_post_taxonomy' ), 11, 3 );
-			add_filter( 'acf/location/rule_match/post_format', array( $this, 'match_post_format' ), 11, 3 );
-			add_filter( 'acf/location/rule_match/post_status', array( $this, 'match_post_status' ), 11, 3 );
-			add_filter( 'acf/location/rule_match/attachment', array( $this, 'match_attachment' ), 11, 3 );
+			add_filter( 'acf/location/rule_match/post_taxonomy', [ $this, 'match_post_taxonomy' ], 11, 3 );
+			add_filter( 'acf/location/rule_match/post_format', [ $this, 'match_post_format' ], 11, 3 );
+			add_filter( 'acf/location/rule_match/post_status', [ $this, 'match_post_status' ], 11, 3 );
+			add_filter( 'acf/location/rule_match/attachment', [ $this, 'match_attachment' ], 11, 3 );
 		}
 
 		/*
@@ -208,11 +208,11 @@ class CurrentView extends Core\Singleton {
 	 *	@param array $query Field properties
 	 *	@return array
 	 */
-	public function get_fields( $query = array() ) {
+	public function get_fields( $query = [] ) {
 
 		$groups = $this->get_available_field_groups();
 
-		$fields = array();
+		$fields = [];
 
 		foreach ( $groups as $field_group ) {
 			$group_fields = acf_get_fields( $field_group );
@@ -238,7 +238,7 @@ class CurrentView extends Core\Singleton {
 	 *	@return array
 	 */
 	private function filter_fields( $query, $fields ) {
-		$found_fields = array();
+		$found_fields = [];
 
 		foreach ( $fields as $field )  {
 			$match = true;
@@ -291,11 +291,11 @@ class CurrentView extends Core\Singleton {
 	 *	@return boolean
 	 */
 	private function is_assoc( $arr ) {
-		if(!is_array($arr)) {
-			trigger_error( "Argument should be an array for is_assoc", E_USER_WARNING );
+		if( ! is_array( $arr ) ) {
+			trigger_error( 'Argument should be an array for is_assoc()', E_USER_WARNING );
 			return false;
 		}
-		return count(array_filter(array_keys($arr), 'is_string')) > 0;
+		return count( array_filter( array_keys( $arr ), 'is_string' ) ) > 0;
 	}
 
 

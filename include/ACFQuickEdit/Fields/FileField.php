@@ -22,7 +22,7 @@ class FileField extends Field {
 			$output .= sprintf( '<a href="%s" class="acf-qef-icon" title="%s">%s</a>',
 				get_edit_post_link( $value ) ,
 				esc_html( $file->post_title ),
-				wp_get_attachment_image( $value, array(80,80), true ) );
+				wp_get_attachment_image( $value, [ 80, 80 ], true ) );
 		}
 		return $output;
 

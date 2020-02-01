@@ -12,9 +12,9 @@ class TextareaField extends TextField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		$input_atts += array(
+		$input_atts += [
 			'class'	=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
-		);
+		];
 
 		return '<textarea '. acf_esc_attr( $input_atts ) .'></textarea>';
 

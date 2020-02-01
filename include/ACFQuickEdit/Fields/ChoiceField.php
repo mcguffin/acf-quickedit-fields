@@ -25,19 +25,19 @@ abstract class ChoiceField extends Field {
 		//*/
 
 		if ( '' === $field_value ) {
-			$field_value = array();
+			$field_value = [];
 		}
 		if ( is_string( $field_value ) || ( $is_return_array && isset( $field_value['value'] ) ) ) {
-			$field_value = array( $field_value );
+			$field_value = [ $field_value ];
 		}
 
-		$values = array();
+		$values = [];
 
 		if ( empty( $field_value ) ) {
-			$field_value = array();
+			$field_value = [];
 		}
 		if ( ! is_array( $field_value ) ) {
-			$field_value = array( $field_value );
+			$field_value = [ $field_value ];
 		}
 
 		foreach ( $field_value as $value ) {

@@ -30,7 +30,7 @@ class GalleryField extends Field {
 					if ( $i >= $max_images ) {
 						break;
 					}
-					$output .= wp_get_attachment_image( $image['id'] , array(80, 80) );
+					$output .= wp_get_attachment_image( $image['id'] , [ 80, 80 ] );
 				}
 				$output .= '</div>';
 			}

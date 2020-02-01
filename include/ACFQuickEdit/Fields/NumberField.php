@@ -32,13 +32,13 @@ class NumberField extends Field {
 	 *	@inheritdoc
 	 */
 	protected function render_input( $input_atts, $is_quickedit = true ) {
-		$input_atts += array(
+		$input_atts += [
 			'class'	=> 'acf-quick-edit',
 			'type'	=> 'number',
 			'min'	=> $this->acf_field['min'],
 			'max'	=> $this->acf_field['max'],
 			'step'	=> $this->acf_field['step'],
-		);
+		];
 
 		return parent::render_input( $input_atts, $is_quickedit );
 	}

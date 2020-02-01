@@ -24,10 +24,10 @@ class RangeField extends NumberField {
 			$output .= sprintf( '<span class="prepend">%s</span>', esc_html( $this->acf_field['prepend'] ) );
 		}
 
-		$output .= parent::render_input( array( 'type' => 'range', ), $is_quickedit );
+		$output .= parent::render_input( [ 'type' => 'range' ], $is_quickedit );
 
 		$len = max( 3, strlen( (string) $this->acf_field['max'] ) );
-		$output .= '<input '. acf_esc_attr( array(
+		$output .= '<input '. acf_esc_attr( [
 				'type'					=> 'number',
 				'id'					=> $this->acf_field['key'] . '-alt',
 				'data-acf-field-key'	=> $this->acf_field['key'],
@@ -36,7 +36,7 @@ class RangeField extends NumberField {
 					'min-width: %1$sem;max-width:%1$sem',
 					1.8 + $len * 0.7
 				)
-			) ) .' />';
+			] ) .' />';
 		if ( $this->acf_field['append'] ) {
 			$output .= sprintf( '<span class="append">%s</span>', esc_html( $this->acf_field['append'] ) );
 		}

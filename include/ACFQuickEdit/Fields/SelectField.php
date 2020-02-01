@@ -12,10 +12,10 @@ class SelectField extends ChoiceField {
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		$output = '';
-		$input_atts += array(
+		$input_atts += [
 			'class' => 'acf-quick-edit widefat',
 			'id' => $this->core->prefix( $this->acf_field['key'] ),
-		);
+		];
 
 		if ( $this->acf_field['multiple'] ) {
 			$input_atts['multiple'] = 'multiple';

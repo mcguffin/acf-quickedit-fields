@@ -26,7 +26,7 @@ abstract class Feature extends Core\Singleton {
 	/**
 	 * @var ACFQuickEdit\Core\Core
 	 */
-	protected $fields = array();
+	protected $fields = [];
 
 	/**
 	 * @var null|array
@@ -41,9 +41,9 @@ abstract class Feature extends Core\Singleton {
 		$this->admin = Admin::instance();
 
 		if ( wp_doing_ajax() ) {
-			add_action( 'admin_init', array( $this, 'init_fields' ) );
+			add_action( 'admin_init', [ $this, 'init_fields' ] );
 		} else {
-			add_action( 'current_screen', array( $this, 'init_fields' ) );
+			add_action( 'current_screen', [ $this, 'init_fields' ] );
 		}
 		parent::__construct();
 	}
@@ -89,7 +89,7 @@ abstract class Feature extends Core\Singleton {
 	 *	@return	array
 	 */
 	protected function acf_get_fields( $field_group ) {
-		$return_fields = array();
+		$return_fields = [];
 		if ( $acf_fields = acf_get_fields( $field_group ) ) {
 			foreach ( $acf_fields as $field ) {
 				if ( $field['type'] === 'group' ) {
@@ -116,7 +116,7 @@ abstract class Feature extends Core\Singleton {
 			return false;
 		}
 
-		$fields_query = array();
+		$fields_query = [];
 		$fields_query[ $this->get_fieldgroup_option() ] = true;
 
 		$current_fields = $current_view->get_fields( $fields_query );

@@ -12,7 +12,7 @@ class EmailField extends Field {
 	 */
 	protected function render_input( $input_atts, $is_quickedit = true ) {
 
-		return parent::render_input( array( 'type' => 'email', ), $is_quickedit );
+		return parent::render_input( [ 'type' => 'email' ], $is_quickedit );
 
 	}
 	/**

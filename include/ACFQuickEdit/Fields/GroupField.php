@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class GroupField extends Field {
 
-	private $sub_fields = array();
+	private $sub_fields = [];
 
 
 	/**
@@ -26,7 +26,7 @@ class GroupField extends Field {
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
 
-		$sanitized_value = array();
+		$sanitized_value = [];
 
 		foreach ( (array) $value as $field_key => $value ) {
 

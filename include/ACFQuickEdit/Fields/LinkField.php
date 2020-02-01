@@ -39,16 +39,16 @@ class LinkField extends Field {
 	protected function render_input( $input_atts, $is_quickedit = true ) {
 		// hidden
 
-		$input_atts += array(
+		$input_atts += [
 			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'					=> 'hidden',
 			'data-acf-field-key'	=> $this->acf_field['key'],
 			'name'					=> $this->get_input_name(),
-		);
+		];
 
 		$output = '';
-		foreach ( array( 'title', 'url', 'target' ) as $prop ) {
-			$atts = array() + $input_atts;
+		foreach ( [ 'title', 'url', 'target' ] as $prop ) {
+			$atts = [] + $input_atts;
 			$atts['name'] .= "[{$prop}]";
 			$atts['data-link-prop'] = $prop;
 			$atts['value'] = '';
@@ -57,8 +57,8 @@ class LinkField extends Field {
 		$output .= '<span class="link-content"></span>';
 		$output .= sprintf( '<button class="button-secondary select-link">%s</button>', __('Select Link', 'acf-quickedit-fields') );
 		$output .= sprintf( '<button class="button-link remove-link dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', __('Remove Link', 'acf-quickedit-fields') );
-		if ( ! has_action('print_media_templates', array( $this, 'print_media_templates' ) ) ) {
-			add_action('print_media_templates', array( $this, 'print_media_templates' ) );
+		if ( ! has_action('print_media_templates', [ $this, 'print_media_templates' ] ) ) {
+			add_action('print_media_templates', [ $this, 'print_media_templates' ] );
 		}
 
 		return $output;
@@ -88,11 +88,11 @@ class LinkField extends Field {
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
 		$value = (array) $value;
-		$default = array(
+		$default = [
 			'title'		=> '',
 			'url'		=> '',
 			'target'	=> '',
-		);
+		];
 		extract( $value );
 		$url = esc_url_raw( $url );
 		$title = sanitize_text_field( $title );

@@ -12,17 +12,17 @@ class DatePickerField extends DateTimePickerField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-		$wrap_atts = array(
+		$wrap_atts = [
 			'class'				=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'data-date_format'	=> acf_convert_date_to_js($this->acf_field['display_format']),
 			'data-first_day'	=> $this->acf_field['first_day'],
-		);
-		$display_input_atts	= array(
+		];
+		$display_input_atts	= [
 			'type'	=> 'text',
-		);
-		$input_atts += array(
+		];
+		$input_atts += [
 			'type'	=> 'hidden',
-		);
+		];
 
 		$output = '';
 		$output .= '<span '. acf_esc_attr( $wrap_atts ) .'>';
