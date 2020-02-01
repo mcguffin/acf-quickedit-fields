@@ -128,7 +128,7 @@ class Plugin extends Singleton implements ComponentInterface {
 		// call upgrade
 		if ( version_compare($new_version, $old_version, '>' ) ) {
 
-			$this->upgrade( $new_version, $old_version );
+			$upgrade_result = $this->upgrade( $new_version, $old_version );
 
 			update_site_option( 'acf_duplicate_repeater_version', $new_version );
 
@@ -181,9 +181,9 @@ class Plugin extends Singleton implements ComponentInterface {
 
 		foreach ( self::$components as $component ) {
 			$comp = $component::instance();
-			$upgrade_result = $comp->upgrade( $new_version, $old_version );
-			$result['success'] 		&= $upgrade_result['success'];
-			$result['messages'][]	=  $upgrade_result['message'];
+			$comp->upgrade( $new_version, $old_version );
+			$result['success'] 	&= $upgrade_result['success'];
+			$result['messages']	 = array_merge( $result['messages'], $upgrade_result['message'] );
 		}
 
 		return $result;

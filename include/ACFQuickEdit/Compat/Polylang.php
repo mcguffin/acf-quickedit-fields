@@ -115,6 +115,10 @@ class Polylang extends Core\Singleton implements Core\ComponentInterface {
  	 *	@inheritdoc
 	 */
 	public function upgrade( $new_version, $old_version ) {
+		return [
+			'success'	=> true,
+			'messages'	=> [],
+		];
 	}
 
 }
