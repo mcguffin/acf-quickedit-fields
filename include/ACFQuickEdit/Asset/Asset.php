@@ -188,12 +188,12 @@ class Asset {
 	 *
 	 *	@param array $deps Dependencies
 	 */
-	public function enqueue( $deps = [] ) {
+	public function enqueue() {
 
 		$fn = $this->type === 'js' ? 'wp_enqueue_script' : 'wp_enqueue_style';
 
 		if ( ! $this->registered ) {
-			$this->register( $deps );
+			$this->register();
 		}
 
 		call_user_func( $fn, $this->handle );
