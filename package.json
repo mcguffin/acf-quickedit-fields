@@ -1,6 +1,6 @@
 {
   "name": "acf-quickedit-fields",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Enter description here.",
   "main": "js/acf-qef-field-group.min.js",
   "scripts": {
@@ -105,6 +105,7 @@
     ],
     "type": "plugin",
     "build": {
+      "versionedFiles": null,
       "prebuild": [
         "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp"
       ],
