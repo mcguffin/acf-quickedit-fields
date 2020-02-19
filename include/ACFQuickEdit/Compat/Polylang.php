@@ -15,7 +15,7 @@ if ( ! defined('ABSPATH') ) {
 use ACFQuickEdit\Core;
 
 
-class Polylang extends Core\Singleton implements Core\ComponentInterface {
+class Polylang extends Core\Singleton {
 
 	/**
 	 *	@inheritdoc
@@ -88,37 +88,6 @@ class Polylang extends Core\Singleton implements Core\ComponentInterface {
 	public function post_id_request_params( $params ) {
 		$params[] = 'post_id';
 		return $params;
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
-	 public function activate(){
-
-	 }
-
-	 /**
-	  *	@inheritdoc
-	  */
-	 public function deactivate(){
-
-	 }
-
-	 /**
-	  *	@inheritdoc
-	  */
-	 public static function uninstall() {
-		 // remove content and settings
-	 }
-
-	/**
- 	 *	@inheritdoc
-	 */
-	public function upgrade( $new_version, $old_version ) {
-		return [
-			'success'	=> true,
-			'messages'	=> [],
-		];
 	}
 
 }

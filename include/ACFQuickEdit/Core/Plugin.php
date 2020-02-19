@@ -24,7 +24,6 @@ class Plugin extends Singleton implements ComponentInterface {
 
 	/** @var string plugin components which might need upgrade */
 	private static $components = [
-		'ACFQuickEdit\Compat\Polylang',
 	];
 
 	/**
@@ -181,7 +180,7 @@ class Plugin extends Singleton implements ComponentInterface {
 
 		foreach ( self::$components as $component ) {
 			$comp = $component::instance();
-			$comp->upgrade( $new_version, $old_version );
+			$upgrade_result = $comp->upgrade( $new_version, $old_version );
 			$result['success'] 	&= $upgrade_result['success'];
 			$result['messages']	 = array_merge( $result['messages'], $upgrade_result['message'] );
 		}
