@@ -85,6 +85,9 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.0.9 =
+ - Fix: PHP Warning on Upgrade
+
 = 3.0.8 =
  - Fix: PHP Warning on Upgrade
  - Security hardening
