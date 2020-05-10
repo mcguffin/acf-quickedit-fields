@@ -104,11 +104,13 @@ class TaxonomyField extends Field {
 			$output .= '</ul>';
 		} else {
 
-			$field_clone['type']		= 'select';
+//			$field_clone['type']		= 'select';
 			$field_clone['multiple']	= 'multi_select' === $field_clone['field_type'];
 			$field_clone['choices']		= [];
-			$field_clone['ui']			= false;
-			$field_clone['ajax']		= false;
+			$field_clone['ui']			= true;
+			$field_clone['ajax']		= true;
+			$field_clone['type']		= 'select';
+			$field_clone['ajax_action']		= 'acf/fields/taxonomy/query';
 
 			if ( $field_clone['allow_null'] ) {
 				$field_clone['choices'][''] = __('– No Selection –','acf-quickedit-fields');
@@ -147,12 +149,38 @@ class TaxonomyField extends Field {
 	 *	@param mixed $value
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
+
+		$sanitation_cb = $context === 'ajax' ? [ $this, 'sanitize_ajax_result' ] : 'intval';
+
 		if ( is_array( $value ) ) {
-			$value = array_map( 'intval', $value );
+			$value = array_map( $sanitation_cb, $value );
 			$value = array_filter( $value );
 			return array_values( $value );
 		}
-		return sanitize_text_field($value);
+		return call_user_func( $sanitation_cb, $value );//sanitize_text_field($value);
+	}
+
+	/**
+	 *	Format result data for select2
+	 *
+	 *	@param mixed $value
+	 *	@return string|array If value present and post exists Empty string
+	 */
+	private function sanitize_ajax_result( $value ) {
+
+		$value = intval( $value );
+
+		$term = get_term( $value );
+
+		// bail if term doesn't exist
+		if ( ! $term ) {
+			return '';
+		}
+
+		return [
+			'id'	=> $term->term_id,
+			'text'	=> esc_html( $term->name ),
+		];
 	}
 
 }
