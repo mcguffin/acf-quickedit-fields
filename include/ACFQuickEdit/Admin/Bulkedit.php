@@ -105,7 +105,7 @@ class Bulkedit extends EditFeature {
 	 *	@inheritdoc
 	 */
 	protected function get_save_data() {
-		// remove do-not-change vaues from $_GET['acf']
+		// remove do-not-change values from $_GET['acf']
 		$data = null;
 		if ( isset( $_GET['acf'] ) && is_array( $_GET['acf'] ) ) {
 			$data = wp_unslash( $_GET['acf'] );

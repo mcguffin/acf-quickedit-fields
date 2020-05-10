@@ -37,7 +37,8 @@ abstract class Feature extends Core\Singleton {
 	 *	Constructor
 	 */
 	protected function __construct() {
-		$this->core = Core\Core::instance();
+
+	//	$this->core = Core\Core::instance();
 		$this->admin = Admin::instance();
 
 		if ( wp_doing_ajax() ) {

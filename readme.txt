@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.6
 Stable tag: 3.0.8
 License: GPLv2 or later
@@ -85,8 +85,11 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
-= 3.0.9 =
+= 3.1.0 =
+ - Feature: Ajax load terms in Taxonomy Field
  - Fix: PHP Warning on Upgrade
+ - Fix: avoid infinite loops when something hooks into acf/save_post and saves the post
+ - Dependencies: Remove legacy PHP support
 
 = 3.0.8 =
  - Fix: PHP Warning on Upgrade

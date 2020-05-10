@@ -43,13 +43,10 @@ if ( ! defined('ABSPATH') ) {
 }
 
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
-
-if ( version_compare( phpversion(), '5.6', '<' ) ) {
-	require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/legacy-php.php';
-}
-
 if ( is_admin() || wp_doing_ajax() ) {
+
+	require_once __DIR__ . DIRECTORY_SEPARATOR . 'include/autoload.php';
+
 	Core\Core::instance( __FILE__ );
 
 	Admin\Admin::instance();
