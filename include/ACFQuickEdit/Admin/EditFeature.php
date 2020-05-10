@@ -131,7 +131,14 @@ abstract class EditFeature extends Feature {
 
 		$object_id = sprintf( '%s_%s', $taxonomy, $term_id );
 
-		return acf_save_post( $object_id, $this->get_save_data() );
+		// avoid infinite loop
+		remove_action( 'edit_term', [ $this, 'save_acf_term_meta' ], 10 );
+
+		$ret = acf_save_post( $object_id, $this->get_save_data() );
+
+		add_action( 'edit_term', [ $this, 'save_acf_term_meta' ], 10, 3 );
+
+		return $ret;
 
 	}
 
@@ -147,8 +154,14 @@ abstract class EditFeature extends Feature {
 			return;
 		}
 
-		return acf_save_post( $post_id, $this->get_save_data() );
+		// avoid infinite loop
+		remove_action( 'save_post', [ $this, 'save_acf_post_meta' ], 10 );
 
+		$ret = acf_save_post( $post_id, $this->get_save_data() );
+
+		add_action( 'save_post', [ $this, 'save_acf_post_meta' ], 10, 1 );
+
+		return $ret;
 	}
 
 	/**
