@@ -1,6 +1,6 @@
 {
   "name": "acf-quickedit-fields",
-  "version": "3.0.8",
+  "version": "3.1.0",
   "description": "Enter description here.",
   "main": "js/acf-qef-field-group.min.js",
   "scripts": {
