@@ -149,7 +149,18 @@ abstract class Field {
 
 		$parent_key	= '';
 
-		if ( 'field_' === substr( $this->acf_field['parent'], 0, 6 ) ) {
+
+		if ( is_numeric( $this->acf_field['parent'] ) ) {
+			// int: field stored in DB
+			$parent = get_post( $this->acf_field['parent'] );
+			$parent_key = $parent->post_name;
+		} else {
+			// local json field
+			$parent_key = $this->acf_field['parent'];
+		}
+		// 'field_*' local_json
+		if (  'field_' === substr( $parent_key, 0, 6 ) ) {
+			// local json
 			$this->parent = self::getFieldObject( get_field_object( $this->acf_field['parent'] ) );
 		}
 	}
