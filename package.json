@@ -106,7 +106,6 @@
     ],
     "type": "plugin",
     "build": {
-      "versionedFiles": null,
       "prebuild": [
         "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp"
       ],
@@ -121,6 +120,7 @@
     },
     "wporg": {
       "assets": ".wporg",
+      "svn_user": "podpirate",
       "svn": "https://plugins.svn.wordpress.org/acf-quickedit-fields/"
     }
   }
