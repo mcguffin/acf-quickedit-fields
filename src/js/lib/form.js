@@ -171,17 +171,25 @@ const BulkEdit = View.extend({
 	},
 	prepareForAjax:function(data){
 		// remove unchanged values in bulk
-		if ( !! data.acf ) {
-			$.each(data.acf,function(i,val){
-   				if ( val == acf_qef.options.do_not_change_value ) {
-					delete( data.acf[i] );
-   				}
-   			});
+		const filterDNC = function( obj ) {
+			const ret = {}
+			$.each( obj, (i,val) => {
+				if ( val == acf_qef.options.do_not_change_value ) {
+					delete( obj[i] );
+   				} else if ( 'object' === typeof val ) {
+					filterDNC(val)
+				}
+			})
 		}
+
+		if ( !! data.acf ) {
+			filterDNC(data.acf)
+		}
+
 		return data;
 	},
 	loadValues: function() {
-		var post_ids = [];
+		const post_ids = [];
 		$('[type="checkbox"][name="post[]"]:checked').each(function(){
 			post_ids.push($(this).val())
 		});
