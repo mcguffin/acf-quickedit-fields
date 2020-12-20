@@ -113,7 +113,7 @@
         },
         {
             "key": "field_5007e56cd8e2c",
-            "label": "Taxonomy",
+            "label": "Taxonomy Multi 1",
             "name": "qef_taxonomy",
             "type": "taxonomy",
             "instructions": "",
@@ -139,7 +139,7 @@
         },
         {
             "key": "field_5007e56cd8e2d",
-            "label": "Taxonomy",
+            "label": "Taxonomy Multi 2",
             "name": "qef_taxo_2",
             "type": "taxonomy",
             "instructions": "",
@@ -151,7 +151,8 @@
                 "id": ""
             },
             "taxonomy": "acf-quef-test",
-            "field_type": "checkbox",
+            "field_type": "multi_select",
+            "allow_null": 0,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
@@ -160,8 +161,59 @@
             "show_column_weight": 1570,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
-            "multiple": 0,
-            "allow_null": 0
+            "multiple": 0
+        },
+        {
+            "key": "field_5fdf3ea0efe23",
+            "label": "Taxonomy Single 1",
+            "name": "qef_taxo_3",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "acf-quef-test-2",
+            "field_type": "radio",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "show_column": 0,
+            "show_column_weight": 1570,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_5fdf3eb3efe24",
+            "label": "Taxonomy Single 2",
+            "name": "qef_taxo_4",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "acf-quef-test-2",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "show_column": 0,
+            "show_column_weight": 1570,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "multiple": 0
         }
     ],
     "location": [
@@ -193,7 +245,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1566806990
+    "modified": 1608466339
 }
