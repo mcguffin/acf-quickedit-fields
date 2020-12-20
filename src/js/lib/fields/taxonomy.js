@@ -28,17 +28,23 @@ module.exports = {
 
 		this.dntChanged( );
 
+		const is_select = this.$input.is('select')
 		const self = this;
 		const acfField = new acf.models.TaxonomyField( this.$input.closest('.acf-field') )
-		const append = item => {
-			self.$input.append( new Option( item.text, item.id, true, true ) );
+		const select = item => {
+			if ( is_select ) {
+				self.$input.append( new Option( item.text, item.id, true, true ) );
+			} else {
+				self.$input.filter( `[value="${item.id}"]` ).prop('checked',true)
+			}
 		}
 
-		if( _.isArray( value ) ) {
-			value.map( append )
-		} else if( _.isObject(value) ) {
-			append( value )
+		if( _.isArray( value ) ) { // multiple values
+			value.map( select )
+		} else if( _.isObject(value) ) { // single values
+			select( value )
 		}
+
 
 		// do we need this ..?
 		// self.$input.trigger('change');
