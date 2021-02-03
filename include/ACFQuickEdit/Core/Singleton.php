@@ -40,7 +40,6 @@ abstract class Singleton {
 	 *	Prevent Instantinating
 	 */
 	private function __clone() { }
-	private function __wakeup() { }
 
 	/**
 	 *	Protected constructor
