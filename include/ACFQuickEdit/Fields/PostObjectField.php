@@ -54,6 +54,9 @@ class PostObjectField extends RelationshipField {
 
 		if ( count( $value ) === 1 ) {
 			$post = get_post( $value[0] );
+			if ( is_null( $post ) ) {
+				return '';
+			}
 			return $this->get_post_link( $post );
 		}
 
