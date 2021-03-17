@@ -87,7 +87,7 @@ class Admin extends Core\Singleton {
 		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
-			'capability'		=> 'edit_posts',
+			'capability'		=> apply_filters( 'acf_qef_capability', 'edit_posts' ),
 			'callback'			=> [ $this, 'ajax_get_acf_post_meta' ],
 			'sanitize_callback'	=> [ $this, 'sanitize_ajax_get_acf_post_meta' ],
 		]);
