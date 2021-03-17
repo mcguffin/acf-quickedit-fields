@@ -36,4 +36,11 @@ class UserField extends Field {
 
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function is_sortable() {
+		return 'unsigned';
+	}
+
 }
