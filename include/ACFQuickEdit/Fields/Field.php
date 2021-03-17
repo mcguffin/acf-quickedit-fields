@@ -161,7 +161,7 @@ abstract class Field {
 		// 'field_*' local_json
 		if (  'field_' === substr( $parent_key, 0, 6 ) ) {
 			// local json
-			$this->parent = self::getFieldObject( get_field_object( $this->acf_field['parent'] ) );
+			$this->parent = self::getFieldObject( get_field_object( $parent_key ) );
 		}
 	}
 
