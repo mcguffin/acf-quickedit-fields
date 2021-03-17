@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.6
 Stable tag: 3.1.2
 License: GPLv2 or later
@@ -87,7 +87,9 @@ On the whole upgrading is always a good idea.
 
 = 3.1.2 =
  - Feature: Make user fields sortable (by user ID)
-
+ - Feature: Support Toggle option for checkbox field
+ - Fix: PHP Warning __wakeup
+ - Fix: Grouped fields not shown
 
 = 3.1.2 =
  - Fix: QuickEdit Taxonomy checkboxes looking weird
