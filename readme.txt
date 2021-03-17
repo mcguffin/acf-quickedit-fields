@@ -86,6 +86,10 @@ On the whole upgrading is always a good idea.
 == Changelog ==
 
 = 3.1.2 =
+ - Feature: Make user fields sortable (by user ID)
+
+
+= 3.1.2 =
  - Fix: QuickEdit Taxonomy checkboxes looking weird
  - Fix: BulkEdit grouped fields didn't pass validation
  - Tested with WP 5.6 / jQuery 3
