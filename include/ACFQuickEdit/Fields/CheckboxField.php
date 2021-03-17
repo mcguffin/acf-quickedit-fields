@@ -25,6 +25,14 @@ class CheckboxField extends ChoiceField {
 
 		$output .= sprintf( '<ul class="acf-checkbox-list" data-acf-field-key="%s">', sanitize_key( $this->acf_field['key'] ) );
 
+		if ( $this->acf_field['toggle'] ) {
+			$output .= sprintf( '<li><label><input %s/>%s</label></li>', acf_esc_attr( [
+				'class' => 'acf-checkbox-toggle',
+				'type' => 'checkbox',
+			] ), esc_html__( ' Toggle All', 'acf-quickedit-fields' ) );
+		}
+
+
 		$input_atts		+= [
 			'class'	=> 'acf-quick-edit',
 			'id'	=> $this->core->prefix( $this->acf_field['key'] ),

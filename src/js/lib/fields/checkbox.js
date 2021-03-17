@@ -7,10 +7,13 @@ const field = {
 		'change [type="checkbox"].custom' : 'removeChoice',
 	},
 	initialize:function() {
+		const self = this;
 		this.$input = this.$('[type="checkbox"]:not([value="___do_not_change"])');
 		this.$button = this.$('button.add-choice').prop('disabled',true);
 		this.parent().initialize.apply(this,arguments);
-
+		this.$('.acf-checkbox-toggle[type="checkbox"]').on( 'change', function(e) {
+			self.$('[type="checkbox"][value]').prop( 'checked', $(e.target).prop('checked') )
+		})
 	},
 	setEditable:function(editable){
 		this.$input.prop( 'disabled', !editable );
