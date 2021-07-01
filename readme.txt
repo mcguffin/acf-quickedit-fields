@@ -85,7 +85,11 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
-= 3.1.2 =
+= 3.1.4 =
+ - Introduce filter `acf_qef_capability`
+ - Fix: User columns not being displayed
+
+= 3.1.3 =
  - Feature: Make user fields sortable (by user ID)
  - Feature: Support Toggle option for checkbox field
  - Fix: PHP Warning __wakeup

@@ -167,18 +167,16 @@ class CurrentView extends Core\Singleton {
 				} else if ( 'taxonomy' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['taxonomy'] = $value;
 				} else if ( 'role' === $param && ! empty( $value ) ) {
-					//*
-					$this->field_group_filter[] = [ 'user_form' => 'all', 'user_role' => $value ];
-					$this->field_group_filter[] = [ 'user_form' => 'edit', 'user_role' => $value ];
-					/*/
-					$this->field_group_filter[] = array( 'user_role' => $value );
-					//*/
+					$this->field_group_filter['user_form'] = 'all';
+					$this->field_group_filter['user_form'] = 'edit';
+					$this->field_group_filter['user_role'] = $value;
+
 				}
 			}
 
 			if ( 'user' === $this->object_kind && ! count( $this->field_group_filter ) ) {
-				$this->field_group_filter[] = [ 'user_form' => 'all' ];
-				$this->field_group_filter[] = [ 'user_form' => 'edit' ];
+				$this->field_group_filter['user_form'] = 'all';
+				$this->field_group_filter['user_form'] = 'edit';
 			}
 
 			add_filter( 'acf/location/rule_match/post_taxonomy', [ $this, 'match_post_taxonomy' ], 11, 3 );
