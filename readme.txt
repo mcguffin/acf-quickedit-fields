@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.6
 Stable tag: 3.1.4
 License: GPLv2 or later
@@ -84,6 +84,9 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is always a good idea.
 
 == Changelog ==
+
+= 3.1.5 =
+ - Added Basic support for User field in quick and bulk
 
 = 3.1.4 =
  - Introduce filter `acf_qef_capability`
