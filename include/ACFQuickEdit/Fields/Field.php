@@ -77,8 +77,8 @@ abstract class Field {
 			'taxonomy'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
 			'user'				=> [
 				'column'	=> current_user_can('list_users'),
-				'quickedit'	=> false,
-				'bulkedit'	=> false
+				'quickedit'	=> current_user_can('list_users'),
+				'bulkedit'	=> current_user_can('list_users')
 			],
 
 			// jQuery
@@ -373,19 +373,22 @@ abstract class Field {
 	 *	@param array $arr
 	 */
 	protected function sanitize_strings_array( $arr ) {
-		$arr = $arr;
-		array_walk( $arr, [ $this, '_sanitize_strings_array_cb' ] );
-		return $arr;
+
+		return array_combine(
+			array_map( [ $this, 'sanitize_string_or_leave_int' ], array_keys( $arr ) ),
+			array_map( 'sanitize_text_field', array_values( $arr ) )
+		);
+
 	}
 
 	/**
 	 *	array_walk callback
 	 */
-	private function _sanitize_strings_array_cb( &$value, &$key ) {
-		if ( ! is_int( $key ) ) {
-			$key = sanitize_text_field( $key );
+	private function sanitize_string_or_leave_int( $value ) {
+		if ( is_int( $value ) ) {
+			return $value;
 		}
-		$value = sanitize_text_field( $value );
+		return sanitize_text_field( $value );
 	}
 
 }

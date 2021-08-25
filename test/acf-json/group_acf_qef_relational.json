@@ -39,7 +39,35 @@
             "multiple": 0,
             "return_format": "array",
             "show_column": 1,
-            "show_column_weight": 1520
+            "show_column_sortable": 0,
+            "show_column_weight": 1520,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
+        },
+        {
+            "key": "field_6125fd1f4252e",
+            "label": "User by Role",
+            "name": "user_by_role",
+            "type": "user",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "role": [
+                "administrator"
+            ],
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "array",
+            "show_column": 1,
+            "show_column_sortable": 0,
+            "show_column_weight": 1520,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
         },
         {
             "key": "field_5007e544d8e29",
@@ -247,5 +275,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608466339
+    "modified": 1629880993
 }

@@ -18,6 +18,8 @@ import textarea from 'fields/textarea.js'
 import time_picker from 'fields/time_picker.js'
 import true_false from 'fields/true_false.js'
 
+const user = Object.assign({},select,{type:'user'} );
+
 const View = wp.media.View.extend({
 	events:{
 		'change [type="checkbox"][data-is-do-not-change="true"]' : 'dntChanged',
@@ -150,7 +152,7 @@ field.add_type( button_group );
 field.add_type( select );
 
 /**
- *	field type select
+ *	field type post_object
  */
 field.add_type( post_object );
 
@@ -158,6 +160,11 @@ field.add_type( post_object );
  *	field type taxonomy
  */
 field.add_type( taxonomy );
+
+/**
+ *	field type user
+ */
+field.add_type( user );
 
 /**
  *	field type true_false
