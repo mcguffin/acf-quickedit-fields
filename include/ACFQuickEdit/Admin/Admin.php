@@ -136,7 +136,6 @@ class Admin extends Core\Singleton {
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
 						$value = $field_object->get_value( $object_id, false );
-error_log(var_export($value,true));
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
 							$val = $field_object->get_value( $object_id, false );
