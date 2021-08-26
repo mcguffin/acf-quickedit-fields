@@ -50,14 +50,8 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
-  "dependencies": {
-    "jquery": "^3.5.1",
-    "sass": "^1.30.0"
-  },
-  "engines": {
-    "node": "12.4.0",
-    "npm": "^6.9.0"
-  },
+  "dependencies": {},
+  "engines": {},
   "wpPlugin": {
     "components": {
       "core": {
