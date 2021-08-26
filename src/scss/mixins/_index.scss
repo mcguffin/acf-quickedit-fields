@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin column-type( $types, $cell:'td' ) {
 	$selector: '';
 	@each $type in $types {
@@ -16,7 +18,7 @@
 
   background-color: $c1;
   background-size: $size $size;
-  background-position: 0 0, $size / 2 $size / 2;
+  background-position: 0 0, math.div($size, 2) math.div($size, 2);
   background-image: linear-gradient(45deg, $c2 25%, transparent 25%, transparent 75%, $c2 75%, $c2),
                     linear-gradient(45deg, $c2 25%, transparent 25%, transparent 75%, $c2 75%, $c2);
 

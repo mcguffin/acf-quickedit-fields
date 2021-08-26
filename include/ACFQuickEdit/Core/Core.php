@@ -21,10 +21,26 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	protected function __construct() {
 
-		add_action( 'plugins_loaded', [ $this , 'init_compat' ], 0 );
+		add_action( 'plugins_loaded', [ $this, 'init_compat' ], 0 );
+
+		add_filter('safecss_filter_attr_allow_css', [ $this, 'allow_rgba_css_bg' ],10,2);
 
 		$args = func_get_args();
 		parent::__construct( ...$args );
+	}
+
+	/**
+	 *	Allow rgba+hlsa background colors
+	 *	Required by rgba color picker (since acf 5.10)
+	 *	@see https://core.trac.wordpress.org/ticket/24157
+	 *
+	 *	@filter safecss_filter_attr_allow_css
+	 */
+	public function allow_rgba_css_bg($allow,$css_test_string) {
+		if ( preg_match( '/^background-color:\s*(rgba?|hsla?)\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d\.]+\s*\)$/', $css_test_string ) ) {
+			return true;
+		}
+		return $allow;
 	}
 
 	/**

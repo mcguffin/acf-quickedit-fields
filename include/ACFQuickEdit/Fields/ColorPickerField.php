@@ -21,8 +21,21 @@ class ColorPickerField extends Field {
 			$indicator_class .= ' no-value';
 			$value = 'rgba(255,255,255,0)';
 		}
+		if ( is_array( $value ) ) {
+			$value = sprintf(
+				'rgba(%d,%d,%d,%f)',
+				$value['red'],
+				$value['green'],
+				$value['blue'],
+				$value['alpha']
+			);
+		}
 
-		return sprintf( '<div class="%s" style="background-color:%s"></div>', sanitize_html_class( $indicator_class ), esc_attr( $value ) );
+		return sprintf(
+			'<div class="%s" style="background-color:%s" data-bg-color="%s"></div>',
+			sanitize_html_class( $indicator_class ),
+			esc_attr( $value ),esc_attr( $value )
+		);
 
 	}
 
@@ -34,6 +47,10 @@ class ColorPickerField extends Field {
 			'class'	=> 'wp-color-picker acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
 			'type'	=> 'text',
 		];
+		if ( isset( $this->acf_field['enable_opacity'] ) && $this->acf_field['enable_opacity'] ) {
+			$input_atts['data-alpha-enabled'] = true;
+		}
+
 
 		return parent::render_input( $input_atts );// '<input '. acf_esc_attr( $input_atts ) .' />';
 
