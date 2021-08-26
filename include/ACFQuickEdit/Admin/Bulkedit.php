@@ -93,7 +93,7 @@ class Bulkedit extends EditFeature {
 			echo '</fieldset>';
 			echo '</div>' . "\n";
 			printf(
-				"<!-- END ACF Quick Edit Fields - Bulk {$field_group_key} -->\n",
+				"<!-- END ACF Quick Edit Fields - Bulk %s -->\n",
 				sanitize_key( $field_group_key )
 			);
 		}
@@ -108,7 +108,7 @@ class Bulkedit extends EditFeature {
 		// remove do-not-change values from $_GET['acf']
 		$data = null;
 		if ( isset( $_GET['acf'] ) && is_array( $_GET['acf'] ) ) {
-			$data = wp_unslash( $_GET['acf'] );
+			$data = wp_unslash( $_GET['acf'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$this->strip_dont_change( $data );
 		}
 		return $data;

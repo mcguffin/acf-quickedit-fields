@@ -53,10 +53,12 @@ class Quickedit extends EditFeature {
 		}
 
 		$column = str_replace(' qef-thumbnail','', $wp_column_slug );
-		printf(
-			'<input type="hidden" name="_wp_http_referer" value="%s" />',
-			esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) )
-		);
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			printf(
+				'<input type="hidden" name="_wp_http_referer" value="%s" />',
+				esc_attr( wp_unslash( $_SERVER['REQUEST_URI'] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			);
+		}
 		foreach ( $this->fieldsets as $field_group_key => $fields ) {
 
 			$field_group = acf_get_field_group( $field_group_key );

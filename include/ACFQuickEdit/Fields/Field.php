@@ -242,12 +242,12 @@ abstract class Field {
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<div class="inline-edit-group">
 					<label for="<?php echo esc_attr( $this->get_input_id( $mode === 'quick' ) ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
-					<span class="<?php echo implode(' ', $wrapper_class )  ?>">
+					<span class="<?php echo implode(' ', $wrapper_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?>">
 						<?php
 
 							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
 							// sanitiation happens in render_input()
-							echo $this->render_input( $input_atts, $mode === 'quick' );
+							echo $this->render_input( $input_atts, $mode === 'quick' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 						?>
 					</span>

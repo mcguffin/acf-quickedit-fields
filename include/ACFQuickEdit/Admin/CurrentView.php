@@ -376,9 +376,9 @@ class CurrentView extends Core\Singleton {
 		$url = false;
 		$filter = [];
 		if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-			$url = wp_unslash( $_REQUEST['_wp_http_referer'] );
+			$url = wp_unslash( $_REQUEST['_wp_http_referer'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-			$url = wp_unslash( $_SERVER['HTTP_REFERER'] );
+			$url = wp_unslash( $_SERVER['HTTP_REFERER'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		}
 
 		if ( $url ) {
