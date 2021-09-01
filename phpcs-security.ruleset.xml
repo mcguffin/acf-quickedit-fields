@@ -12,6 +12,8 @@
 	<exclude-pattern>js/*.js</exclude-pattern>
 	<exclude-pattern>css/*.css</exclude-pattern>
 
+	<arg name="parallel" value="20"/>
+
 	<rule ref="Generic.PHP.Syntax"/>
 
 	<!-- Include the WordPress ruleset, with exclusions. -->
@@ -29,7 +31,10 @@
 	</rule>
 	<rule ref="WordPress.Security.EscapeOutput">
 		<properties>
-			<property name="customEscapingFunctions" type="array" value="acf_esc_attr,$this->render_input"/>
+			<property name="customEscapingFunctions" type="array">
+				<element value="acf_esc_attr"/>
+				<element value="$this->render_input"/>
+			</property>
 		</properties>
     </rule>
 	<rule ref="WordPress.Utils">
