@@ -85,6 +85,9 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.1.7 =
+ - Don't sanitize text fields in ajax output
+
 = 3.1.6 =
  - Support ACF RGBA color picker
 
