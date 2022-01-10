@@ -43,7 +43,7 @@ class UserField extends SelectField {
 		$this->acf_field['ui'] = true;
 		$this->acf_field['choices'] = array_combine(
 			array_map( function($user) { return $user->ID; }, $users ),
-			array_map( function($user) { return $user->user_nicename; }, $users ),
+			array_map( function($user) { return $user->user_nicename; }, $users )
 		);
 		return parent::render_input( $input_atts, $is_quickedit );
 
