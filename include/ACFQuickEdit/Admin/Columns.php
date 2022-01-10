@@ -179,10 +179,12 @@ class Columns extends Feature {
 	 *	@filter manage_{$post_type}_posts_columns
 	 */
 	public function move_date_to_end($defaults) {
-	    $date = $defaults['date'];
-	    unset($defaults['date']);
-	    $defaults['date'] = $date;
-	    return $defaults;
+		if ( isset( $defaults['date'] ) ) {
+			$date = $defaults['date'];
+			unset($defaults['date']);
+			$defaults['date'] = $date;
+		}
+		return $defaults;
 	}
 
 
