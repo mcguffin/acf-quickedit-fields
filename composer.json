@@ -27,5 +27,11 @@
 		"post-update-cmd": [
 			"[ -f vendor/bin/phpcs ] && \"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs,vendor/pheromone/phpcs-security-audit || true"
 		]
+	},
+	"config": {
+		"allow-plugins": {
+			"composer/installers": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
