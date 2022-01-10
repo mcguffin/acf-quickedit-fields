@@ -87,6 +87,8 @@ On the whole upgrading is always a good idea.
 
 = 3.1.7 =
  - Don't sanitize text fields in ajax output
+ - Fix: Syntax error in user field (PHP < 7.3)
+ - Fix: PHP warning if post date column is not present
 
 = 3.1.6 =
  - Support ACF RGBA color picker
