@@ -1,15 +1,15 @@
-# Copyright (C) 2021 Jörn Lund
+# Copyright (C) 2022 Jörn Lund
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.1.6\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.1.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-08-26T07:25:10+00:00\n"
+"POT-Creation-Date: 2022-01-10T14:22:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.1-alpha-0d94e07\n"
 "X-Domain: acf-quickedit-fields\n"
@@ -35,7 +35,7 @@ msgid "https://github.com/mcguffin"
 msgstr ""
 
 #. Translators: 1: ACF Pro URL, 2: plugins page url
-#: include/ACFQuickEdit/Admin/Admin.php:193
+#: include/ACFQuickEdit/Admin/Admin.php:192
 msgid "The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href=\"%2$s\">plugins page</a>."
 msgstr ""
 
