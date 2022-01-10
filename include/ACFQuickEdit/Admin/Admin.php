@@ -89,7 +89,6 @@ class Admin extends Core\Singleton {
 			'use_nonce'			=> true,
 			'capability'		=> apply_filters( 'acf_qef_capability', 'edit_posts' ),
 			'callback'			=> [ $this, 'ajax_get_acf_post_meta' ],
-			'sanitize_callback'	=> [ $this, 'sanitize_ajax_get_acf_post_meta' ],
 		]);
 
 		//
