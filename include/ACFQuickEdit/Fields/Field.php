@@ -334,7 +334,7 @@ abstract class Field {
 	}
 
 	/**
-	 *	@return mixed value of acf field
+	 *	@return mixed Unsanitized value of acf field.
 	 */
 	public function get_value( $object_id, $format_value = true ) {
 
@@ -343,11 +343,8 @@ abstract class Field {
 		$value = acf_get_value( $object_id, $dummy_field );
 
 		if ( $format_value ) {
-			// sanitation don in acf_format_value
+			// sanitation done in acf_format_value
 			$value = acf_format_value( $value, $object_id, $dummy_field );
-
-		} else {
-			$value = $this->sanitize_value( $value );
 		}
 
 		return $value;
@@ -364,6 +361,9 @@ abstract class Field {
 	 *	@return mixed Sanitized $value
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
+		if ( 'ajax' === $context ) {
+			return $value;
+		}
 		return sanitize_text_field( $value );
 	}
 
