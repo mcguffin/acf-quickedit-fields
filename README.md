@@ -33,7 +33,7 @@ wp plugin install --activate acf-quickedit-fields
 
 #### Using Composer
 ```shell
-composer require mcguffin/acf-quickedit-fields
+composer require mcguffin/acf-quick-edit-fields
 ```
 
 ### Development
