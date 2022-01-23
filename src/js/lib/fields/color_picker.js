@@ -3,7 +3,7 @@ import $ from 'jquery';
 module.exports = {
 	type:'color_picker',
 	initialize:function() {
-		const args = acf.apply_filters('color_picker_args', {
+		const args = acf.applyFilters('color_picker_args', {
 			defaultColor: false,
 			palettes: true,
 			hide: true,
