@@ -87,12 +87,12 @@ class LinkField extends Field {
 	 *	@param mixed $value
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
-		$value = (array) $value;
-		$default = [
+
+		$value = wp_parse_args( (array) $value, [
 			'title'		=> '',
 			'url'		=> '',
 			'target'	=> '',
-		];
+		] );
 		extract( $value );
 		$url = esc_url_raw( $url );
 		$title = sanitize_text_field( $title );
