@@ -170,10 +170,14 @@ class TaxonomyField extends Field {
 
 		$value = intval( $value );
 
+		if ( ! $value ) {
+			return '';
+		}
+
 		$term = get_term( $value );
 
 		// bail if term doesn't exist
-		if ( ! $term ) {
+		if ( ! $term || is_wp_error( $term ) ) {
 			return '';
 		}
 
