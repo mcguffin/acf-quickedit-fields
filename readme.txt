@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.6
 Stable tag: 3.1.7
 License: GPLv2 or later
@@ -84,6 +84,11 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is always a good idea.
 
 == Changelog ==
+
+= 3.1.8 =
+ - Improvement: Hide WordPress Taxonomy UI from quick/bulk if ACF Taxonomy is present
+ - Fix: PHP warning in taxonomy field
+ - Fix: PHP warning in link field
 
 = 3.1.7 =
  - Don't sanitize text fields in ajax output
