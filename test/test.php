@@ -1,6 +1,6 @@
 <?php
 
-namespace AcfDuplicateRepeater;
+namespace ACFQuickEdit\Test;
 
 class PluginTest {
 
@@ -103,7 +103,9 @@ class PluginTest {
 				'no_terms'	=> 'No Terms',
 			],
 			'public'	=> true,
+			'hierarchical' => true,
 			'show_admin_column'	=> true,
+			'show_in_quick_edit' => true, // Expect WP UI not to show up
 		]);
 
 	}
