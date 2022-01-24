@@ -13,6 +13,8 @@ abstract class EditFeature extends Feature {
 
 	protected $fieldsets = [];
 
+	protected $taxoxnomies = [];
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -73,6 +75,10 @@ abstract class EditFeature extends Feature {
 
 			$this->fieldsets[ $fieldgroup['key'] ][] = $field;
 
+			if ( $acf_field['type'] === 'taxonomy' ) {
+				$this->taxonomies[] = $acf_field['taxonomy'];
+			}
+
 			// deps should be property of field type!
 			if ( $acf_field['type'] === 'date_picker' || $acf_field['type'] === 'time_picker' || $acf_field['type'] === 'date_time_picker' ) {
 				$this->admin->js->add_dep( 'jquery-ui-datepicker' );
@@ -92,9 +98,22 @@ abstract class EditFeature extends Feature {
 
 		}
 
+		$this->taxonomies = array_unique( $this->taxonomies );
+
+		if ( count( $this->taxonomies ) ) {
+			add_filter( 'quick_edit_show_taxonomy', [ $this, 'quick_edit_show_taxonomy' ], 10, 3 );
+		}
+
 	}
 
-
+	/**
+	 *	Hide WP default UI for taxonomy
+	 *
+	 *	@filter quick_edit_show_taxonomy
+	 */
+	public function quick_edit_show_taxonomy( $show, $taxonomy ) {
+		return ! in_array( $taxonomy, $this->taxonomies );
+	}
 
 	/**
 	 *	@param string $key field Key
