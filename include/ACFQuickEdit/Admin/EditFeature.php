@@ -13,7 +13,7 @@ abstract class EditFeature extends Feature {
 
 	protected $fieldsets = [];
 
-	protected $taxoxnomies = [];
+	protected $taxonomies = [];
 
 	/**
 	 *	@inheritdoc

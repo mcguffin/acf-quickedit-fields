@@ -86,6 +86,9 @@ On the whole upgrading is always a good idea.
 == Changelog ==
 
 = 3.1.8 =
+ - Fix: Typo which caused a fatal in PHP 8
+
+= 3.1.8 =
  - Improvement: Hide WordPress Taxonomy UI from quick/bulk if ACF Taxonomy is present
  - Fix: PHP warning in taxonomy field
  - Fix: PHP warning in link field
