@@ -28,11 +28,6 @@ const View = wp.media.View.extend({
 		const self = this;
 		Backbone.View.prototype.initialize.apply( this, arguments );
 		this.key = this.$el.attr('data-key');
-		this.parent_key = this.$el.attr('data-parent-key');
-
-		if( 'false' === this.parent_key ) {
-			this.parent_key = false;
-		}
 
 		if ( ! this.$input ) {
 			this.$input = this.$('input:not([data-is-do-not-change="true"])')

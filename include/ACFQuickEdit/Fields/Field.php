@@ -228,7 +228,6 @@ abstract class Field {
 		$wrapper_attr = [
 			'class'				=> 'acf-field',
 			'data-key' 			=> $this->acf_field['key'],
-			'data-parent-key'	=> isset( $this->parent ) ? $this->parent->get_acf_field()['key'] : 'false',
 			'data-field-type'	=> $this->acf_field['type'],
 			'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
 		];

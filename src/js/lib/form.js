@@ -28,16 +28,8 @@ const View = Backbone.View.extend({
 	},
 	getFieldsToLoad:function(){
 		var fields = [];
-		_.each( this.fields,function( field, key ) {
-			/*
-			if ( field.parent_key ) {
-				fields.push( field.parent_key );
-			} else {
-				fields.push( field.key );
-			}
-			/*/
+		_.each( this.fields, function( field, key ) {
 			fields.push( field.key );
-			//*/
 		});
 		return fields;
 	},
