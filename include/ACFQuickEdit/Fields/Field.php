@@ -32,9 +32,9 @@ abstract class Field {
 	protected $acf_parent;
 
 	/**
-	 *	@var array ACFQuickEdit\Fields\Field
+	 *	@var ACFQuickEdit\Fields\Field
 	 */
-	protected $parent;
+	protected $parent = false;
 
 	/**
 	 *	@var string classname to be wrapped aroud input element
@@ -306,12 +306,18 @@ abstract class Field {
 	 *	@return	string
 	 */
 	protected function get_input_name() {
-		if ( isset( $this->parent ) ) {
-			$input_name = sprintf( 'acf[%s][%s]', $this->parent->get_acf_field()['key'], $this->acf_field['key'] );
-		} else {
-			$input_name = sprintf( 'acf[%s]', $this->acf_field['key'] );
+
+		$parts = [];
+		$current = $this;
+		while ( $current ) {
+			$parts[] = $current->get_acf_field()['key'];
+			$current = $current->get_parent();
 		}
-		return $input_name;
+
+		return 'acf' . implode( '', array_map( function($k){
+			return "[{$k}]";
+		}, array_reverse( $parts ) ) );
+
 	}
 
 	/**
@@ -325,12 +331,16 @@ abstract class Field {
 	 *	@return string The Meta key
 	 */
 	final public function get_meta_key() {
-		if ( isset( $this->parent ) ) {
-			$name = $this->parent->get_meta_key() . '_' . $this->acf_field['name'];
-		} else {
-			$name = $this->acf_field['name'];
+
+		$parts = [];
+		$current = $this;
+		while ( $current ) {
+			$parts[] = $current->get_acf_field()['name'];
+			$current = $current->get_parent();
 		}
-		return $name;
+
+		return implode( '_', array_reverse( $parts ) );
+
 	}
 
 	/**
@@ -349,7 +359,6 @@ abstract class Field {
 
 		return $value;
 
-//		return get_field( $this->acf_field['key'], $post_id, false );
 	}
 
 

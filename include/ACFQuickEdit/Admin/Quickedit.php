@@ -46,7 +46,7 @@ class Quickedit extends EditFeature {
 	/**
 	 *	@action quick_edit_custom_box
 	 */
-	function display_quick_edit( $wp_column_slug, $post_type ) {
+	public function display_quick_edit( $wp_column_slug, $post_type ) {
 
 		if ( $this->did_render ) {
 			return;

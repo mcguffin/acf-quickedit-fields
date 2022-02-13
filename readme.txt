@@ -85,7 +85,10 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
-= 3.1.8 =
+= 3.1.10 =
+ - Fix: Nested groups not saving
+
+= 3.1.9 =
  - Fix: Typo which caused a fatal in PHP 8
 
 = 3.1.8 =
