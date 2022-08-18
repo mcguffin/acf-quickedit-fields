@@ -21,16 +21,16 @@ class GalleryField extends Field {
 			/*
 			$images = get_field( $this->acf_field['key'], $object_id );
 			/*/
-			$images = $this->get_value( $object_id );
+			$images = $this->get_value( $object_id, false ); // get unformatted value
 			//*/
 			if ( $images ) {
 				$class = count($images) > 1 ? 'acf-qef-gallery-col' : 'acf-qef-image-col';
 				$output .= sprintf( '<div class="%s">', $class );
-				foreach ( array_values( $images ) as $i => $image) {
+				foreach ( array_values( $images ) as $i => $image_id ) {
 					if ( $i >= $max_images ) {
 						break;
 					}
-					$output .= wp_get_attachment_image( $image['id'] , [ 80, 80 ] );
+					$output .= wp_get_attachment_image( $image_id, [ 80, 80 ] );
 				}
 				$output .= '</div>';
 			}
