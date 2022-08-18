@@ -85,6 +85,9 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.1.12 =
+ - Fix: Different Gallery field return formats
+
 = 3.1.11 =
  - Fix: PHP Fatal in posts list
 
