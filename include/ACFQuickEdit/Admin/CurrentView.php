@@ -382,7 +382,10 @@ class CurrentView extends Core\Singleton {
 		}
 
 		if ( $url ) {
-			parse_str( parse_url( $url, PHP_URL_QUERY ), $filter );
+			$query = parse_url( $url, PHP_URL_QUERY );
+			if ( is_string( $query ) ) {
+				parse_str( parse_url( $url, PHP_URL_QUERY ), $filter );
+			}
 		}
 
 		return $filter;

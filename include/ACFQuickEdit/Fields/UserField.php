@@ -11,6 +11,7 @@ class UserField extends SelectField {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+
 		if ( ! current_user_can( 'list_users' ) ) {
 			return '';
 		}
@@ -24,7 +25,7 @@ class UserField extends SelectField {
 			}
 			return sprintf( '<a href="%s">%s</a>', esc_url($link), esc_html( $userdata->display_name ) );
 		}
-
+		return '';
 	}
 
 
