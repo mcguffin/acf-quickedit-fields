@@ -23,17 +23,21 @@ class TaxonomyField extends Field {
 			if ( ! is_array( $value ) ) {
 				$value = [ $value ];
 			}
+
 			foreach ( $value as $i => $term ) {
-				if ( $this->acf_field['return_format'] === 'id' ) {
-					$term = get_term( $term, $this->acf_field['taxonomy'] );
-				}
+
+				$term_obj = get_term( $term, $this->acf_field['taxonomy'] );
+
 				// fix #63 ?
-				if ( trim( $term->name ) !== '' ) {
-					$term_names[] = $term->name;
-				} else if ( trim( $term->slug ) !== '' ) {
-					$term_names[] = $term->slug;
+				if ( is_null( $term_obj ) ) {
+					/* translators: Term ID */
+					$term_names[] = sprintf( esc_html__( '(Term ID %d not found)', 'acf-quickedit-fields' ), $term );
+				} else if ( trim( $term_obj->name ) !== '' ) {
+					$term_names[] = $term_obj->name;
+				} else if ( trim( $term_obj->slug ) !== '' ) {
+					$term_names[] = $term_obj->slug;
 				} else {
-					$term_names[] = $term->id;
+					$term_names[] = $term_obj->id;
 				}
 			}
 			$term_names = array_map( 'esc_html', $term_names );
@@ -58,7 +62,7 @@ class TaxonomyField extends Field {
 
 		$field_clone['name'] = 'acf';
 
-		if ( isset( $this->parent ) ) {
+		if ( isset( $this->parent ) && 0 === strpos( 'field_', $field_clone['parent'] ) ) { // must not be a group!
 			$field_clone['name'] .= sprintf('[%s]', $field_clone['parent'] );
 		}
 		$field_clone['name'] .= sprintf('[%s]', $field_clone['key'] );
