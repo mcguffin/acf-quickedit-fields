@@ -244,7 +244,7 @@ abstract class Field {
 					<span class="<?php echo implode(' ', $wrapper_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?>">
 						<?php
 
-							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type  );
+							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type );
 							// sanitiation happens in render_input()
 							echo $this->render_input( $input_atts, $mode === 'quick' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 

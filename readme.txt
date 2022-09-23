@@ -3,9 +3,9 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6
-Stable tag: 3.1.12
+Stable tag: 3.1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,10 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is always a good idea.
 
 == Changelog ==
+
+= 3.1.13 =
+ - Fix PHP 8.1 Deprecation notices
+ - Fix Taxonomy Field display
 
 = 3.1.12 =
  - Fix: Different Gallery field return formats
