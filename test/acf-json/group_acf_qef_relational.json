@@ -153,17 +153,17 @@
                 "id": ""
             },
             "taxonomy": "category",
-            "field_type": "checkbox",
             "add_term": 1,
             "save_terms": 0,
             "load_terms": 0,
-            "return_format": "id",
+            "return_format": "object",
+            "field_type": "checkbox",
             "show_column": 1,
             "show_column_weight": 1560,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
-            "multiple": 0,
-            "allow_null": 0
+            "allow_null": 0,
+            "multiple": 0
         },
         {
             "key": "field_5007e56cd8e2d",
@@ -275,5 +275,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1629880993
+    "show_in_rest": 0,
+    "modified": 1663867068
 }
