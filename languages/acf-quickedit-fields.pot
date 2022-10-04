@@ -2,14 +2,14 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.1.13\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.1.14\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-09-23T08:30:39+00:00\n"
+"POT-Creation-Date: 2022-10-04T10:20:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: acf-quickedit-fields\n"
@@ -35,62 +35,80 @@ msgid "https://github.com/mcguffin"
 msgstr ""
 
 #. Translators: 1: ACF Pro URL, 2: plugins page url
-#: include/ACFQuickEdit/Admin/Admin.php:192
+#: include/ACFQuickEdit/Admin/Admin.php:203
 msgid "The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href=\"%2$s\">plugins page</a>."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:52
-msgid "Column View"
+#: include/ACFQuickEdit/Admin/FieldGroup.php:47
+msgid "List Table Settings"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:56
-msgid "Show a column in the posts list table"
-msgstr ""
-
-#: include/ACFQuickEdit/Admin/FieldGroup.php:78
+#: include/ACFQuickEdit/Admin/FieldGroup.php:64
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:82
 msgid "Show Column"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:83
-msgid "Show column in list tables"
+#: include/ACFQuickEdit/Admin/FieldGroup.php:65
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:60
+msgid "Show a column in the posts list table"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:91
+#: include/ACFQuickEdit/Admin/FieldGroup.php:76
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:95
 msgid "Sortable Column"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:96
+#: include/ACFQuickEdit/Admin/FieldGroup.php:77
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:100
 msgid "Make this column sortable"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:106
-#: include/ACFQuickEdit/Admin/FieldGroup.php:110
+#: include/ACFQuickEdit/Admin/FieldGroup.php:89
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:110
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:114
 msgid "Column Weight"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:107
+#: include/ACFQuickEdit/Admin/FieldGroup.php:90
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:111
 msgid "Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:144
+#: include/ACFQuickEdit/Admin/FieldGroup.php:110
+msgid "Enable QuickEdit"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:125
+msgid "Enable Bulk Edit"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:56
+msgid "Column View"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:87
+msgid "Show column in list tables"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:148
 msgid "Editing"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:169
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:173
 msgid "QuickEdit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:174
-#: include/ACFQuickEdit/Admin/FieldGroup.php:191
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:178
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:195
 msgid "Enabled"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:175
-#: include/ACFQuickEdit/Admin/FieldGroup.php:192
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:179
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:196
 msgid "Disabled"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:186
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:190
 msgid "Bulk Edit"
 msgstr ""
 
