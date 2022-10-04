@@ -1,4 +1,7 @@
 <?php
+/**
+ *	Fieldgroup Admin fields before ACF 6.0.0
+ */
 
 namespace ACFQuickEdit\Admin;
 
@@ -7,6 +10,7 @@ use ACFQuickEdit\Fields;
 
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
+
 
 class LegacyFieldGroup extends Core\Singleton {
 

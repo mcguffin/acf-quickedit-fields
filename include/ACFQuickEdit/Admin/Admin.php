@@ -265,17 +265,24 @@ class Admin extends Core\Singleton {
 	}
 
 	/**
-	 * @action 'load-post.php'
+	 * @action acf/field_group/admin_enqueue_scripts
 	 */
 	public function enqueue_fieldgroup_assets() {
 
-		Asset\Asset::get( 'js/acf-qef-field-group.js' )
-			->deps( 'acf-field-group' )
-			->enqueue();
+		if ( version_compare( acf()->version, '6.0.0', '>=' ) ) {
+			Asset\Asset::get( 'css/acf-qef-field-group.css' )
+				->deps( 'acf-field-group' )
+				->enqueue();
+		} else {
+			LegacyFieldGroup::instance();
+			Asset\Asset::get( 'js/acf-qef-field-group-legacy.js' )
+				->deps( 'acf-field-group' )
+				->enqueue();
 
-		Asset\Asset::get( 'css/acf-qef-field-group.css' )
-			->deps( 'acf-field-group' )
-			->enqueue();
+			Asset\Asset::get( 'css/acf-qef-field-group-legacy.css' )
+				->deps( 'acf-field-group' )
+				->enqueue();
+		}
 
 	}
 

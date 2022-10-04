@@ -29,4 +29,3 @@ const set_sortable_disabled = ( i, show_col_inp ) => {
 $(document)
 	.on('change','[data-name="show_column"] [type="checkbox"]',(e) => set_sortable_disabled( 0, e.target ))
 	.ready( () => $('[data-name="show_column"] [type="checkbox"]').each( set_sortable_disabled ) );
-
