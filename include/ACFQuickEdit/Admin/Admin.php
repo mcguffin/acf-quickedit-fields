@@ -54,7 +54,7 @@ class Admin extends Core\Singleton {
 		add_action( 'after_setup_theme', [ $this , 'setup' ] );
 
 		// init field group admin
-		add_action( 'acf/field_group/admin_head', [ 'ACFQuickEdit\Admin\FieldGroup', 'instance' ] );
+		add_action( 'acf/field_group/admin_head', [ $this, 'field_group_admin_head' ] );
 
 	}
 
@@ -63,6 +63,17 @@ class Admin extends Core\Singleton {
 			case 'js':
 			case 'css':
 				return $this->$what;
+		}
+	}
+
+	/**
+	 *	@action acf/field_group/admin_head
+	 */
+	public function field_group_admin_head() {
+		if ( version_compare( acf()->version, '6.0.0', '>=' ) ) {
+			FieldGroup::instance();
+		} else {
+			LegacyFieldGroup::instance();
 		}
 	}
 
