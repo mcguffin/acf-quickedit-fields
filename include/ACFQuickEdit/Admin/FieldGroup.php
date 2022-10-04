@@ -20,6 +20,9 @@ class FieldGroup extends Core\Singleton {
 		ACF > 6 should call
 		*/
 		foreach ( $types as $type => $supports ) {
+			if ( $supports[ 'column' ] || $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
+				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_headline' ] );
+			}
 			if ( $supports[ 'column' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_column_settings' ] );
 			}
@@ -34,6 +37,20 @@ class FieldGroup extends Core\Singleton {
 		parent::__construct();
 
 	}
+
+	/**
+	 *	@action acf/render_field_settings/type={$type}
+	 */
+	public function render_headline( $field ) {
+
+		acf_render_field_setting( $field, [
+			'label'			=> __('List Table Settings','acf-quickedit-fields'),
+			'instructions'	=> '',
+			'type'			=> 'message',
+			'name'			=> 'list-table-settings-heaadline',
+		]);
+	}
+
 
 	/**
 	 *	@action acf/render_field_settings/type={$type}
