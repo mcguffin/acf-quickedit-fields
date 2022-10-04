@@ -85,6 +85,10 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.1.14 =
+ - Fix Field group settings for ACF 6
+ - Introduce Legacy mode for ACF < 6.0.0
+
 = 3.1.13 =
  - Fix PHP 8.1 Deprecation notices
  - Fix Taxonomy Field display
