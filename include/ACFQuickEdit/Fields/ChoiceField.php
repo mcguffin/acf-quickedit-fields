@@ -12,17 +12,11 @@ abstract class ChoiceField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
-
-
 		$output				= '';
 		$is_multiple 		= ( isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'] ) || $this->acf_field['type'] === 'checkbox';
 		$is_return_array	= 'array' === $this->acf_field['return_format'];
 
-		/*
-		$field_value = get_field( $this->acf_field['key'], $object_id );
-		/*/
 		$field_value = $this->get_value( $object_id );
-		//*/
 
 		if ( '' === $field_value ) {
 			$field_value = [];
@@ -57,11 +51,17 @@ abstract class ChoiceField extends Field {
 			$output .= __('(No value)', 'acf-quickedit-fields');
 			$output .= '</p>';
 		} else {
-			$output .= sprintf( '<ol class="acf-qef-value-list" data-count-values="%d">', count( $values ) );
-			foreach ( $values as $val ) {
-				$output .= sprintf( '<li>%s</li>', acf_esc_html( $val ) ); //implode( __(', ', 'acf-quickedit-fields' ) , $values );
+			if ( $is_multiple ) {
+				$output .= sprintf( '<ol class="acf-qef-value-list" data-count-values="%d">', count( $values ) );
+				foreach ( $values as $val ) {
+					$output .= sprintf( '<li>%s</li>', acf_esc_html( $val ) ); //implode( __(', ', 'acf-quickedit-fields' ) , $values );
+				}
+				$output .= '</ol>';
+			} else {
+				foreach ( $values as $val ) {
+					$output .= sprintf( '<div class="qef-choice">%s</div>', esc_html( $val ) );
+				}
 			}
-			$output .= '</ol>';
 		}
 		return $output;
 
