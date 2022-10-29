@@ -12,7 +12,14 @@ class TrueFalseField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
-		return $this->get_value( $object_id ) ? __('Yes') : __('No');
+		$ui = isset( $this->acf_field['ui'] ) && $this->acf_field['ui'];
+		$yes = $ui && isset( $this->acf_field['ui_on_text'] ) && $this->acf_field['ui_on_text']
+			? acf_esc_html( $this->acf_field['ui_on_text'] )
+			: __( 'Yes', 'acf' );
+		$no = $ui && isset( $this->acf_field['ui_off_text'] ) && $this->acf_field['ui_off_text']
+			? acf_esc_html( $this->acf_field['ui_off_text'] )
+			: __( 'No', 'acf' );
+		return $this->get_value( $object_id ) ? $yes : $no;
 
 	}
 
@@ -36,7 +43,7 @@ class TrueFalseField extends Field {
 
 		$output .= $ui && isset( $this->acf_field['ui_on_text'] ) && $this->acf_field['ui_on_text']
 			? acf_esc_html( $this->acf_field['ui_on_text'] )
-			: __('Yes');
+			: __( 'Yes', 'acf' );
 
 		$output .= '</label></li>';
 
@@ -49,7 +56,7 @@ class TrueFalseField extends Field {
 
 		$output .= $ui && isset( $this->acf_field['ui_off_text'] ) && $this->acf_field['ui_off_text']
 			? acf_esc_html( $this->acf_field['ui_off_text'] )
-			: __('No');
+			: __( 'No', 'acf' );
 
 		$output .= '</label></li>';
 		$output .= '</ul>';
