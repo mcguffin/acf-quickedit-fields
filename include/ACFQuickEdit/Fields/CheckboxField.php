@@ -84,6 +84,14 @@ class CheckboxField extends ChoiceField {
 			$output .= '</label></li>';
 
 			$output .= '</script>';
+			$output .= sprintf( '<script type="text/html" id="tmpl-acf-qef-custom-choice-value-%s">', $this->acf_field['key'] );
+			$output .= sprintf(
+				'<li><label><input data-acf-field-key="%1$s" type="checkbox" value="{{ data.value }}" name="%2$s" id="%3$s-{{ data.value.toLowerCase() }}">{{ data.value }}</label></li>',
+				$this->acf_field['key'],
+				$field_name,
+				$this->core->prefix( $this->acf_field['key'] )
+			);
+			$output .= '</script>';
 		}
 
 		return $output;

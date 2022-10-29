@@ -25,7 +25,11 @@ module.exports = {
 	},
 	setValue:function( value ) {
 		this.dntChanged();
-		this.$('[type="radio"][value="'+value+'"]' )
-			.prop( 'checked', true );
+		var $cb = this.$('[type="radio"][value="'+value+'"]' )
+		if ( ! $cb.length ) {
+			$cb = this.$('[type="radio"][value="other"]' )
+			$cb.next('[type="text"]').prop( 'disabled', false ).val( value )
+		}
+		$cb.prop( 'checked', true );
 	}
 }

@@ -24,18 +24,27 @@ const field = {
 		this.dntChanged();
 		if ( $.isArray(value) ) {
 			$.each( value, function( idx, val ) {
-				self.$( '[type="checkbox"][value="'+val+'"]' )
-					.prop( 'checked', true );
+				self.getChoiceCB(val).prop( 'checked', true );
 			});
 		} else {
-			this.$( '[type="checkbox"][value="'+value+'"]' )
-				.prop( 'checked', true );
+			self.getChoiceCB(value).prop( 'checked', true );
 		}
 	},
 	addChoice:function(e){
 		e.preventDefault();
 		const tpl = wp.template('acf-qef-custom-choice-' + this.$el.attr('data-key'));
 		this.$('ul').append(tpl());
+	},
+	getChoiceCB: function(value) {
+		var $choice,
+			selector = '[type="checkbox"][value="'+value+'"]',
+			$cb = this.$( selector )
+		if ( ! $cb.length ) {
+			$choice = $( wp.template('acf-qef-custom-choice-value-' + this.$el.attr('data-key'))( { value: value } ) );
+			this.$('ul').append( $choice );
+			$cb = $choice.find( selector );
+		}
+		return $cb;
 	},
 	removeChoice:function(e) {
 		$(e.target).closest('li').remove();
