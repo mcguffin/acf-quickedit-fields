@@ -47,54 +47,55 @@ abstract class Field {
 	public static function get_types() {
 		$types = [
 			// basic
-			'text'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'textarea'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'number'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'email'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'url'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'password'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => false ],
-			'range'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
+			'text'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'textarea'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'number'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'email'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'url'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'password'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => false,	'filter' => false, ],
+			'range'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
 
 			// Content
-			'wysiwyg'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'oembed'			=> [ 'column' => true,		'quickedit' => false,	'bulkedit' => false ],
-			'image'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'file'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'gallery'			=> [ 'column' => true,		'quickedit' => false,	'bulkedit' => false ],
+			'wysiwyg'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
+			'oembed'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
+			'image'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false ],
+			'file'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false ],
+			'gallery'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
 
 			// Choice
-			'select'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'checkbox'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'radio'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'true_false'		=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'button_group'		=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
+			'select'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
+			'checkbox'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
+			'radio'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
+			'true_false'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
+			'button_group'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
 
 			// relational
-			'post_object'		=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'page_link'			=> [ 'column' => true,		'quickedit' => false,	'bulkedit' => false ],
-			'link'				=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
-			'relationship'		=> [ 'column' => true,		'quickedit' => false,	'bulkedit' => false ],
-			'taxonomy'			=> [ 'column' => true,		'quickedit' => true,	'bulkedit' => true ],
+			'post_object'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select post filter
+			'page_link'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ],
+			'link'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
+			'relationship'		=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ], // TODO: select post filter
+			'taxonomy'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select term filter
 			'user'				=> [
 				'column'	=> current_user_can('list_users'),
 				'quickedit'	=> current_user_can('list_users'),
-				'bulkedit'	=> current_user_can('list_users')
-			],
+				'bulkedit'	=> current_user_can('list_users'),
+				'filter'	=> false, // current_user_can('list_users'),
+			], // TODO: select user filter
 
 			// jQuery
-			'google_map'		=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'date_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true ],
-			'date_time_picker'	=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true ],
-			'time_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true ],
-			'color_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true ],
+			'google_map'		=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ],
+			'date_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select year/month/day
+			'date_time_picker'	=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select year/month/day
+			'time_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
+			'color_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
 
 			// Layout (unsupported)
-			'message'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'tab'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'repeater'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'group'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'flexible_content'	=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
-			'clone'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false ],
+			'message'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'tab'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'repeater'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'group'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'flexible_content'	=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'clone'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
 		];
 
 		/**
@@ -122,6 +123,7 @@ abstract class Field {
 			'show_column'			=> false,
 			'show_column_weight'	=> 1000,
 			'show_column_sortable'	=> false,
+			'show_column_filter'	=> false,
 		]);
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {
 			$field_class = preg_split( '/[-_]/', $acf_field['type'] );
@@ -189,6 +191,15 @@ abstract class Field {
 
 		return $this->get_value( $object_id );
 
+	}
+
+	/**
+	 *	Render Filter
+	 *
+	 *	@param int|string $object_id
+	 *	@return string
+	 */
+	public function render_filter( $index, $selected = '' ) {
 	}
 
 	/**

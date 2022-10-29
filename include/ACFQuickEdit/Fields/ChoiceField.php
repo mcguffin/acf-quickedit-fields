@@ -68,6 +68,59 @@ abstract class ChoiceField extends Field {
 	}
 
 	/**
+	 *	@param int $index
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		$is_multiple = ( isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'] ) || $this->acf_field['type'] === 'checkbox';
+
+		if ( $is_multiple ) {
+			$selected = trim( $selected, '"' );
+		}
+
+		$out = '';
+		$out .= sprintf( '<input type="hidden" name="meta_query[%d][key]" value="%s" />', $index, esc_attr($this->acf_field['name']) ) . PHP_EOL;
+		$out .= sprintf( '<select name="meta_query[%d][value]">', $index ) . PHP_EOL;
+		$out .= sprintf(
+			'<option value="" %s>%s</option>',
+			$selected === ''
+				? 'selected'
+				: '',
+			esc_html(
+				sprintf(
+					/* translators: acf field label */
+					__( '— %s —', 'acf-quickedit-fields' ),
+					$this->acf_field['label']
+				)
+			)
+		) . PHP_EOL;
+
+		foreach ( $this->acf_field['choices'] as $value => $label ) {
+
+			$out .= sprintf(
+				'<option value="%s" %s>%s</option>',
+				$is_multiple
+					? sprintf('"%s"', $value )
+					: esc_attr( $value ),
+				$selected === $value
+					? 'selected'
+					: '',
+				esc_html( $label )
+			) . PHP_EOL;
+		}
+		$out .= '</select>' . PHP_EOL;
+
+		if ( $is_multiple ) {
+			$out .= sprintf(
+				'<input type="hidden" name="meta_query[%d][compare]" value="LIKE" />',
+				$index
+			) . PHP_EOL;
+		}
+
+		return $out;
+	}
+
+	/**
 	 *	@inheritdoc
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {

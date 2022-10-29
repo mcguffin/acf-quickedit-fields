@@ -50,6 +50,94 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
+	 *	@param string $content_kind
+	 */
+	public function init_meta_query() {
+
+		$content_kind = CurrentView::instance()->get_object_kind();
+
+		if ( 'post' === $content_kind && ! has_action( 'pre_get_posts', [ $this, 'parse_query' ] ) ) {
+
+			add_action( 'pre_get_posts', [ $this, 'parse_query' ] );
+
+		} else if ( 'term' === $content_kind && ! has_action( 'parse_term_query', [ $this, 'parse_term_query' ] ) ) {
+
+			add_action( 'parse_term_query', [ $this, 'parse_term_query' ] );
+
+		} else if ( 'user' === $content_kind && ! has_filter( 'pre_get_users', [ $this, 'pre_get_users' ] )  ) {
+
+			add_filter( 'pre_get_users', [ $this, 'pre_get_users' ] );
+
+		}
+
+	}
+
+	/**
+	 *	@action pre_get_posts
+	 */
+	public function parse_query( $query ) {
+
+		if ( $meta_query = $this->get_meta_query( $query ) ) {
+
+			$query->set( 'meta_key', "" );
+			$query->set( 'meta_query', $meta_query );
+
+		}
+	}
+
+	/**
+	 *	@action parse_term_query
+	 */
+	public function parse_term_query( $query ) {
+
+		// Note: WP_Term_Query does not have a get() method.
+		if ( $meta_query = $this->get_meta_query( $query ) ) {
+			$query->query_vars['meta_key'] = '';
+			$query->query_vars['meta_query'] = $meta_query;
+		}
+	}
+
+	/**
+	 *	@action pre_get_users
+	 */
+	public function pre_get_users( $query ) {
+
+		// Note: WP_User_Query does not have a get() method.
+		if ( $meta_query = $this->get_meta_query( $query ) ) {
+			$query->query_vars['meta_query'] = $meta_query;
+		}
+	}
+
+
+	/**
+	 *	@param string $by Column to sort on
+	 */
+	protected function get_meta_query( $wp_query = null ) {
+
+		if ( ! isset( $_REQUEST['meta_query'] ) ) {
+			if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars['meta_query'] ) ) {
+				return $wp_query->query_vars['meta_query'];
+			} else {
+				return [];
+			}
+		}
+
+		$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+		$meta_query = array_filter( $meta_query, function($clause) {
+			if ( ! is_array( $clause ) ) {
+				return true;
+			}
+			$clause = wp_parse_args( $clause, [ 'value' => '' ] );
+			return $clause['value'] !== '';
+		} );
+		if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
+			$meta_query = [];
+		}
+		return $meta_query;
+	}
+
+
+	/**
 	 *	@return string
 	 */
 	abstract function get_type();

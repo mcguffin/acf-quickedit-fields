@@ -53,6 +53,13 @@ class Generic extends Field {
 	/**
 	 *	@inheritdoc
 	 */
+	public function render_filter( $index, $selected = '' ) {
+		return apply_filters( 'acf_qef_filter_html_' . $this->acf_field['type'], '', $object_id, $this->acf_field );
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
 	public function get_value( $object_id, $format_value = true ) {
 
 		/**

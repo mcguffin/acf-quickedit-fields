@@ -32,6 +32,9 @@ class FieldGroup extends Core\Singleton {
 			if ( $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_bulkedit_settings' ] );
 			}
+			if ( $supports[ 'filter' ] ) {
+				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_filter_settings' ] );
+			}
 		}
 
 		parent::__construct();
@@ -99,6 +102,8 @@ class FieldGroup extends Core\Singleton {
 			'wrapper'		=> [ 'width' => 33, ],
 			'conditional_logic' => [[[ 'field'=> 'show_column', 'operator' => '==', 'value' => 1, ]]],
 		]);
+
+
 	}
 
 	/**
@@ -125,6 +130,21 @@ class FieldGroup extends Core\Singleton {
 			'label'			=> __( 'Enable Bulk Edit', 'acf-quickedit-fields' ),
 			'type'			=> 'true_false',
 			'name'			=> 'allow_bulkedit',
+			'ui'			=> 1,
+			'wrapper'		=> [ 'width' => 33, ],
+		]);
+	}
+
+	/**
+	 *	@action acf/render_field_settings/type={$type}
+	 */
+	public function render_filter_settings( $field ) {
+		// TODO: distinguish between search and filter
+		acf_render_field_setting( $field, [
+			'label'			=> __( 'Enable filter', 'acf-quickedit-fields' ),
+			'instructions'	=> __( 'Filters will work with posts and user list tables. Terms lack an appropriate', 'acf-quickedit-fields'),
+			'type'			=> 'true_false',
+			'name'			=> 'show_column_filter',
 			'ui'			=> 1,
 			'wrapper'		=> [ 'width' => 33, ],
 		]);

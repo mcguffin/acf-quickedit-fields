@@ -95,6 +95,7 @@ class Admin extends Core\Singleton {
 		$this->columns		= Columns::instance();
 		$this->quickedit	= Quickedit::instance();
 		$this->bulkedit		= Bulkedit::instance();
+		$this->filters		= Filters::instance();
 		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,

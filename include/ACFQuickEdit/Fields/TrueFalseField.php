@@ -63,6 +63,56 @@ class TrueFalseField extends Field {
 		return 'unsigned';
 	}
 
+
+
+	/**
+	 *	@param int $index
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		$ui = isset( $this->acf_field['ui'] ) && $this->acf_field['ui'];
+
+		$choices = [
+			'1' => $ui && isset( $this->acf_field['ui_on_text'] ) && $this->acf_field['ui_on_text']
+				? acf_esc_html( $this->acf_field['ui_on_text'] )
+				: __( 'Yes', 'acf' ),
+			'0' => $ui && isset( $this->acf_field['ui_off_text'] ) && $this->acf_field['ui_off_text']
+				? acf_esc_html( $this->acf_field['ui_off_text'] )
+				: __( 'No', 'acf' ),
+		];
+
+		$out = '';
+		$out .= sprintf( '<input type="hidden" name="meta_query[%d][key]" value="%s" />', $index, esc_attr($this->acf_field['name']) ) . PHP_EOL;
+		$out .= sprintf( '<select name="meta_query[%d][value]">', $index ) . PHP_EOL;
+		$out .= sprintf(
+			'<option value="" %s>%s</option>',
+			$selected === ''
+				? 'selected'
+				: '',
+			esc_html(
+				sprintf(
+					/* translators: acf field label, neutral */
+					__( '— Select: %s —', 'acf-quickedit-fields' ),
+					$this->acf_field['label']
+				)
+			)
+		) . PHP_EOL;
+
+		foreach ( $choices as $value => $label ) {
+			$out .= sprintf(
+				'<option value="%s" %s>%s</option>',
+				esc_attr( $value ),
+				$selected === "{$value}"
+					? 'selected'
+					: '',
+				esc_html( $label )
+			) . PHP_EOL;
+		}
+		$out .= '</select>' . PHP_EOL;
+
+		return $out;
+	}
+
 	/**
 	 *	@param mixed $value
 	 */
