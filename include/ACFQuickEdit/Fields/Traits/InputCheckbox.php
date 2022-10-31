@@ -4,7 +4,6 @@ namespace ACFQuickEdit\Fields\Traits;
 
 trait InputCheckbox {
 
-
 	/**
 	 *	Render Input element
 	 *
@@ -103,6 +102,4 @@ trait InputCheckbox {
 
 		return $output;
 	}
-
-
 }

@@ -11,14 +11,10 @@ class ImageField extends FileField {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$image_id = get_field( $this->acf_field['key'], $object_id );
-		/*/
-		$image_id = $this->get_value( $object_id );
-		//*/
-//		$image_id = get_field( $this->acf_field['key'], $object_id );
 
 		$output = '';
+
+		$image_id = $this->get_value( $object_id );
 
 		if ( $image_id ) {
 			if ( is_array( $image_id ) ) {
@@ -34,5 +30,4 @@ class ImageField extends FileField {
 		}
 		return $output;
 	}
-
 }

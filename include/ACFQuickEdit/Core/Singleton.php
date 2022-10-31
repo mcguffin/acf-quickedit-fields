@@ -55,7 +55,4 @@ abstract class Singleton {
 		$arr[] = $this;
 		return $arr;
 	}
-
-
-
 }

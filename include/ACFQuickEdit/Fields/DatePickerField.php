@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) )
 
 class DatePickerField extends DateTimePickerField {
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -39,5 +38,4 @@ class DatePickerField extends DateTimePickerField {
 	public function is_sortable() {
 		return true;
 	}
-
 }

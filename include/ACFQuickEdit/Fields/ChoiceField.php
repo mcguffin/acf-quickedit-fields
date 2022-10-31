@@ -48,7 +48,7 @@ abstract class ChoiceField extends Field {
 
 		if ( empty( $values ) ) {
 			$output .= '<p>';
-			$output .= __('(No value)', 'acf-quickedit-fields');
+			$output .= esc_html__( '(No value)', 'acf-quickedit-fields' );
 			$output .= '</p>';
 		} else {
 			if ( $is_multiple ) {

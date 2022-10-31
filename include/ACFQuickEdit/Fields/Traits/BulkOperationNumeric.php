@@ -44,7 +44,6 @@ trait BulkOperationNumeric {
 		return $this->sanitize_value( $value );
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -62,7 +61,6 @@ trait BulkOperationNumeric {
 		return $value;
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -76,5 +74,4 @@ trait BulkOperationNumeric {
 		}
 		return $valid;
 	}
-
 }

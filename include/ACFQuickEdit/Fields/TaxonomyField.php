@@ -15,7 +15,7 @@ class TaxonomyField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	protected function get_wrapper_attributes($wrapper_attr) {
+	protected function get_wrapper_attributes( $wrapper_attr, $is_quickedit = true ) {
 		$wrapper_attr['data-ajax'] = isset( $this->acf_field['ajax'] )
 			? $this->acf_field['ajax']
 			: '0';
@@ -40,13 +40,11 @@ class TaxonomyField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
+
+		$output = '';
+
 		$value = $this->get_value( $object_id, false );
 
-		//*/
-		$output = '';
 		if ( $value ) {
 			$term_names = [];
 			if ( ! is_array( $value ) ) {
@@ -132,7 +130,6 @@ class TaxonomyField extends Field {
 		}
 
 		return $output;
-
 	}
 
 	/**
@@ -176,5 +173,4 @@ class TaxonomyField extends Field {
 			'text'	=> esc_html( $term->name ),
 		];
 	}
-
 }

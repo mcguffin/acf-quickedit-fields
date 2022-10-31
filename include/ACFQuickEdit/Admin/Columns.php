@@ -26,8 +26,6 @@ class Columns extends Feature {
 		return 'show_column';
 	}
 
-
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -161,7 +159,6 @@ class Columns extends Feature {
 		}
 	}
 
-
 	/**
 	 *	@filter admin_body_class
 	 */
@@ -195,7 +192,6 @@ class Columns extends Feature {
 		}
 		return $defaults;
 	}
-
 
 	/**
 	 * @filter manage_posts_columns
@@ -379,7 +375,6 @@ class Columns extends Feature {
 	 *	@action manage_{$post_type}_posts_custom_column
 	 */
 	public function display_post_field_column( $wp_column_slug , $object_id ) {
-
 		echo wp_kses_post( $this->filter_field_column( '', $wp_column_slug , $object_id ) );
 	}
 
@@ -394,10 +389,9 @@ class Columns extends Feature {
 		$object = get_term( $object_id );
 
 		if ( $object ) {
-
 			return $this->filter_field_column( $content, $wp_column_slug , sprintf( '%s_%s', $object->taxonomy, $object_id ) );
-
 		}
+
 		return $content;
 	}
 
@@ -414,7 +408,6 @@ class Columns extends Feature {
 	}
 
 	/**
-	 *
 	 *	@param string $wp_column_slug
 	 *	@param string $object_id
 	 *	@return string

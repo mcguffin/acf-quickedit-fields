@@ -53,7 +53,6 @@ class UserField extends SelectField {
 		return $output;
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -102,14 +101,10 @@ class UserField extends SelectField {
 		];
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
 	public function is_sortable() {
 		return 'unsigned';
 	}
-
-
-
 }

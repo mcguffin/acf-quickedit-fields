@@ -38,7 +38,6 @@ abstract class Feature extends Core\Singleton {
 	 */
 	protected function __construct() {
 
-	//	$this->core = Core\Core::instance();
 		$this->admin = Admin::instance();
 
 		if ( wp_doing_ajax() ) {
@@ -108,7 +107,6 @@ abstract class Feature extends Core\Singleton {
 		}
 	}
 
-
 	/**
 	 *	@param string $by Column to sort on
 	 */
@@ -136,7 +134,6 @@ abstract class Feature extends Core\Singleton {
 		return $meta_query;
 	}
 
-
 	/**
 	 *	@return string
 	 */
@@ -146,7 +143,6 @@ abstract class Feature extends Core\Singleton {
 	 *	@return string
 	 */
 	abstract function get_fieldgroup_option();
-
 
 	/**
 	 *	@return bool
@@ -172,7 +168,6 @@ abstract class Feature extends Core\Singleton {
 		return isset( $types[ $type ] ) && $types[ $type ][ $this->get_type() ];
 	}
 
-
 	/**
 	 *	@param	array	$field_group	ACF Field Group
 	 *	@return	array
@@ -187,7 +182,6 @@ abstract class Feature extends Core\Singleton {
 					$return_fields[] = $field;
 				}
 			}
-
 		}
 		return $return_fields;
 
@@ -198,7 +192,7 @@ abstract class Feature extends Core\Singleton {
 	 *	@action admin_init
 	 */
 	public function init_fields() {
-		// action admin_init
+
 		$current_view = CurrentView::instance();
 
 		if ( ! in_array( $current_view->get_object_kind(), ['post','term','user'] ) ) {
@@ -220,9 +214,5 @@ abstract class Feature extends Core\Singleton {
 		}
 
 		return $this->is_active();
-
 	}
-
-
-
 }

@@ -18,11 +18,9 @@ class GalleryField extends Field {
 		 * @param int $max_images	Maximum Number of images
 		 */
 		if ( $max_images = apply_filters( 'acf_quick_edit_fields_gallery_col_max_images', 15 ) ) {
-			/*
-			$images = get_field( $this->acf_field['key'], $object_id );
-			/*/
+
 			$images = $this->get_value( $object_id, false ); // get unformatted value
-			//*/
+
 			if ( $images ) {
 				$class = count($images) > 1 ? 'acf-qef-gallery-col' : 'acf-qef-image-col';
 				$output .= sprintf( '<div class="%s">', $class );
@@ -46,7 +44,6 @@ class GalleryField extends Field {
 		return '';
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -56,5 +53,4 @@ class GalleryField extends Field {
 		$value = array_filter( $value );
 		return array_values( $value );
 	}
-
 }

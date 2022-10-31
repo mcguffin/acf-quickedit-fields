@@ -53,16 +53,12 @@ abstract class EditFeature extends Feature {
 			$this->admin->js->add_dep( 'inline-edit-post' );
 		}
 
-
 		// register quick/bulk save actions
 		if ( $this->is_saving() ) {
-
-			wp_enqueue_media();
-
 			add_action( $action, $callback, 10, $count_args );
-
+		} else {
+			wp_enqueue_media();
 		}
-
 
 		foreach ( $this->fields as $field ) {
 			$acf_field = $field->get_acf_field();
@@ -80,7 +76,7 @@ abstract class EditFeature extends Feature {
 				$this->taxonomies[] = $acf_field['taxonomy'];
 			}
 
-			// deps should be property of field type!
+			// TODO: move deps-management to field type
 			if ( $acf_field['type'] === 'date_picker' || $acf_field['type'] === 'time_picker' || $acf_field['type'] === 'date_time_picker' ) {
 				$this->admin->js->add_dep( 'jquery-ui-datepicker' );
 				$this->admin->js->add_dep( 'acf-timepicker' );
@@ -96,7 +92,6 @@ abstract class EditFeature extends Feature {
 				$this->admin->js->add_dep('wp-color-picker');
 				$this->admin->css->add_dep('wp-color-picker');
 			}
-
 		}
 
 		$this->taxonomies = array_unique( $this->taxonomies );
@@ -135,8 +130,6 @@ abstract class EditFeature extends Feature {
 		}
 	}
 
-
-
 	/**
 	 *	@param int $term_id
 	 *	@param int $tt_id
@@ -161,8 +154,6 @@ abstract class EditFeature extends Feature {
 		return $ret;
 
 	}
-
-
 
 	/**
 	 *	@param int $post_id
@@ -192,12 +183,10 @@ abstract class EditFeature extends Feature {
 	 */
 	abstract protected function get_save_data( $post_id );
 
-
 	/**
 	 *	Whether current request will save values
 	 *
 	 *	@return boolean
 	 */
 	abstract protected function is_saving();
-
 }

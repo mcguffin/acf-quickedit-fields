@@ -63,11 +63,11 @@ abstract class Field {
 			'gallery'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
 
 			// Choice
-			'select'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
-			'checkbox'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
-			'radio'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
-			'true_false'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
-			'button_group'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // select filter
+			'select'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'checkbox'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'radio'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'true_false'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'button_group'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
 
 			// relational
 			'post_object'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select post filter
@@ -146,7 +146,6 @@ abstract class Field {
 		}
 
 		return self::$fields[ $acf_field['key'] ];
-
 	}
 
 	/**
@@ -169,7 +168,7 @@ abstract class Field {
 			// local json field
 			$parent_key = $this->acf_field['parent'];
 		}
-		// 'field_*' local_json
+
 		if (  'field_' === substr( $parent_key, 0, 6 ) ) {
 			// local json
 			$this->parent = self::getFieldObject( get_field_object( $parent_key ) );
@@ -227,7 +226,6 @@ abstract class Field {
 		return false;
 	}
 
-
 	/**
 	 *	Render Field Input
 	 *
@@ -260,7 +258,7 @@ abstract class Field {
 			'data-field-type'	=> $this->acf_field['type'],
 			'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
 		];
-		$wrapper_attr = $this->get_wrapper_attributes( $wrapper_attr );
+		$wrapper_attr = $this->get_wrapper_attributes( $wrapper_attr, $mode === 'quick' );
 		if ( isset( $this->acf_field['field_type'] ) ) {
 			$wrapper_attr['data-field-sub-type'] = $this->acf_field['field_type'];
 		}
@@ -289,15 +287,13 @@ abstract class Field {
 				</div>
 			</div>
 		<?php
-
 	}
-
 
 	/**
 	 *	@param array $wrapper_attr Field input attributes
 	 *	@return array
 	 */
-	protected function get_wrapper_attributes($wrapper_attr) {
+	protected function get_wrapper_attributes( $wrapper_attr, $is_quickedit = true ) {
 		return $wrapper_attr;
 	}
 
@@ -342,7 +338,6 @@ abstract class Field {
 
 		return '<input '. acf_esc_attr( $input_atts ) .' />';
 	}
-
 
 	/**
 	 *	Render Input element
@@ -393,7 +388,6 @@ abstract class Field {
 			?>
 		</label>
 		<?php
-
 	}
 
 	/**
@@ -445,7 +439,6 @@ abstract class Field {
 		}
 
 		return implode( '_', array_reverse( $parts ) );
-
 	}
 
 	/**
@@ -463,9 +456,7 @@ abstract class Field {
 		}
 
 		return $value;
-
 	}
-
 
 	/**
 	 *	Sanitize field value before it is written into db
@@ -502,7 +493,6 @@ abstract class Field {
 			array_map( [ $this, 'sanitize_string_or_leave_int' ], array_keys( $arr ) ),
 			array_map( 'sanitize_text_field', array_values( $arr ) )
 		);
-
 	}
 
 	/**
@@ -514,5 +504,4 @@ abstract class Field {
 		}
 		return sanitize_text_field( $value );
 	}
-
 }

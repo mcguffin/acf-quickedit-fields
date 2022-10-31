@@ -4,7 +4,6 @@ namespace ACFQuickEdit\Fields\Traits;
 
 trait InputRadio {
 
-
 	/**
 	 *	Render Input element
 	 *
@@ -27,7 +26,7 @@ trait InputRadio {
 			$acf_field['key']
 		);
 
-		foreach($acf_field['choices'] as $name => $value) {
+		foreach( $acf_field['choices'] as $name => $value) {
 
 			$id = $this->core->prefix( $acf_field['key'] . '-' . $name );
 
@@ -40,7 +39,6 @@ trait InputRadio {
 				'data-acf-field-key'	=> $acf_field['key'],
 				'name'					=> $input_atts['name'],
 			] ), acf_esc_html( $value ) );
-
 
 			$output .= '</label></li>';
 

@@ -14,9 +14,7 @@ class CheckboxField extends ChoiceField {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
-
 		return $this->render_checkbox_input( $input_atts, $this->acf_field, $is_quickedit );
-
 	}
 
 	/**

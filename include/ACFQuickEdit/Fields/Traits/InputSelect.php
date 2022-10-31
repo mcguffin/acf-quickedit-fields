@@ -4,7 +4,6 @@ namespace ACFQuickEdit\Fields\Traits;
 
 trait InputSelect {
 
-
 	/**
 	 *	Render Input element
 	 *
@@ -54,18 +53,12 @@ trait InputSelect {
 			foreach( $acf_field['choices'] as $name => $label) {
 				$output .= sprintf('<option value="%s">%s</option>', esc_attr( $name ), acf_esc_html( $label ) ) . PHP_EOL;
 			}
-
-		} else {
-
 		}
 
 		$output .= '</select>' . PHP_EOL;
 
-
 		return $output;
 	}
-
-
 
 	/**
 	 *	@inheritdoc
@@ -77,16 +70,12 @@ trait InputSelect {
 			: 'sanitize_text_field';
 
 		if ( is_array( $value ) ) {
-			// build items
 			$value = array_map( $sanitation_cb, $value );
-			// strip out falsy values
 			$value = array_filter( $value );
-			// reset array keys
 			return array_values( $value );
 		}
 
 		return parent::sanitize_value( $value, $context );
-
 	}
 
 	/**
@@ -107,5 +96,4 @@ trait InputSelect {
 			'text'	=> $this->acf_field['choices'][ $value ],
 		];
 	}
-
 }

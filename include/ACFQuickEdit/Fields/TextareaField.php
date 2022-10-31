@@ -28,7 +28,6 @@ class TextareaField extends TextField {
 		return false;
 	}
 
-
 	/**
 	 *	@param mixed $value
 	 */
@@ -38,5 +37,4 @@ class TextareaField extends TextField {
 		}
 		return sanitize_textarea_field( $value );
 	}
-
 }

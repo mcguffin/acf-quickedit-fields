@@ -31,8 +31,6 @@ class Filters extends Feature {
 		return 'show_column_filter';
 	}
 
-
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -44,18 +42,14 @@ class Filters extends Feature {
 		$current_view = CurrentView::instance();
 		$content_kind = $current_view->get_object_kind();
 
-
 		if ( 'post' == $content_kind ) {
 
 			add_action( 'restrict_manage_posts', [ $this, 'render_filters' ], 10, 2 );
-
 			add_action( 'pre_get_posts', [ $this, 'parse_query' ] );
 
 		} else if ( 'term' == $content_kind ) {
 
 			add_action( 'admin_footer', [ $this, 'render_terms_filter_form' ], 10 );
-
-			// terms
 			add_action( 'parse_term_query', [ $this, 'parse_term_query' ] );
 
 			$content_type = $current_view->get_object_type();
@@ -65,11 +59,8 @@ class Filters extends Feature {
 		} else if ( 'user' == $content_kind ) {
 
 			add_action( 'restrict_manage_users', [ $this, 'render_filters' ], 10, 2 );
-
 			add_filter( 'pre_get_users', [ $this, 'pre_get_users' ] );
-
 		}
-
 	}
 
 	/**
@@ -96,7 +87,7 @@ class Filters extends Feature {
 		}
 
 		$index = 0;
-		// meta_query[relation]=AND&meta_query[0][key]=select&meta_query[0][value]=one
+
 		?>
 		<input type="hidden" name="meta_query[relation]" value="AND" />
 		<?php
@@ -147,5 +138,4 @@ class Filters extends Feature {
 		<!-- END: ACF QuickEdit Fields -->
 		<?php
 	}
-
 }

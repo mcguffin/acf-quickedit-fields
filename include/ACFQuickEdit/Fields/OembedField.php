@@ -25,6 +25,4 @@ class OembedField extends Field {
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		return '';
 	}
-
-
 }

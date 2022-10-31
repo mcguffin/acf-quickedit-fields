@@ -43,5 +43,4 @@ class RangeField extends NumberField {
 
 		return $output;
 	}
-
 }

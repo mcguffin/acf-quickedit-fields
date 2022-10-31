@@ -13,7 +13,7 @@ class PostObjectField extends RelationshipField {
 	/**
 	 *	@inheritdoc
 	 */
-	protected function get_wrapper_attributes($wrapper_attr) {
+	protected function get_wrapper_attributes( $wrapper_attr, $is_quickedit = true ) {
 		$wrapper_attr['data-ajax'] = '1';
 		$wrapper_attr['data-multiple'] = isset( $this->acf_field['multiple'] )
 			? $this->acf_field['multiple']
@@ -113,6 +113,4 @@ class PostObjectField extends RelationshipField {
 			'text'	=> esc_html( get_the_title( $value ) ),
 		];
 	}
-
-
 }

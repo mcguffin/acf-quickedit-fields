@@ -39,6 +39,4 @@ class PasswordField extends Field {
 		return '<input '. acf_esc_attr( $input_atts ) .' />';
 
 	}
-
-
 }

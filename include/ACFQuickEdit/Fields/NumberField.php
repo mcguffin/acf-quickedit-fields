@@ -14,13 +14,9 @@ class NumberField extends Field {
 	 */
 	public function render_column( $object_id ) {
 
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
-		$value = $this->get_value( $object_id );
-		//*/
-
 		$output = '';
+
+		$value = $this->get_value( $object_id );
 
 		if ( $value === "" ) {
 			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
@@ -51,5 +47,4 @@ class NumberField extends Field {
 	public function is_sortable() {
 		return 'numeric';
 	}
-
 }

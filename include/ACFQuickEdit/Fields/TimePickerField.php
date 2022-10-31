@@ -36,5 +36,4 @@ class TimePickerField extends DateTimePickerField {
 	public function is_sortable() {
 		return true;
 	}
-
 }

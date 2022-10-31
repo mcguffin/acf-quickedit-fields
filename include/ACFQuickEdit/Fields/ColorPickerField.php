@@ -11,12 +11,11 @@ class ColorPickerField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
+
 		$value = $this->get_value( $object_id );
-		//*/
+
 		$indicator_class = 'acf-qef-color-indicator';
+
 		if ( ! $value ) {
 			$indicator_class .= ' no-value';
 			$value = 'rgba(255,255,255,0)';
@@ -36,7 +35,6 @@ class ColorPickerField extends Field {
 			sanitize_html_class( $indicator_class ),
 			esc_attr( $value ),esc_attr( $value )
 		);
-
 	}
 
 	/**
@@ -53,7 +51,6 @@ class ColorPickerField extends Field {
 
 
 		return parent::render_input( $input_atts );// '<input '. acf_esc_attr( $input_atts ) .' />';
-
 	}
 
 	/**
@@ -62,6 +59,4 @@ class ColorPickerField extends Field {
 	public function is_sortable() {
 		return true;
 	}
-
-
 }

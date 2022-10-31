@@ -65,8 +65,6 @@ class Plugin extends Singleton implements ComponentInterface {
 		return plugin_dir_url( $this->get_plugin_file() );
 	}
 
-
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -130,9 +128,7 @@ class Plugin extends Singleton implements ComponentInterface {
 			$upgrade_result = $this->upgrade( $new_version, $old_version );
 
 			update_site_option( 'acf_duplicate_repeater_version', $new_version );
-
 		}
-
 	}
 
 	/**
@@ -144,8 +140,6 @@ class Plugin extends Singleton implements ComponentInterface {
 		$path = pathinfo( $this->get_wp_plugin(), PATHINFO_DIRNAME );
 		load_plugin_textdomain( 'acf-quickedit-fields', false, $path . '/languages' );
 	}
-
-
 
 	/**
 	 *	Fired on plugin activation
@@ -159,7 +153,6 @@ class Plugin extends Singleton implements ComponentInterface {
 			$comp->activate();
 		}
 	}
-
 
 	/**
 	 *	Fired on plugin updgrade
@@ -207,5 +200,4 @@ class Plugin extends Singleton implements ComponentInterface {
 			$comp->uninstall();
 		}
 	}
-
 }

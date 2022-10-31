@@ -31,12 +31,11 @@ class CurrentView extends Core\Singleton {
 	private $field_to_group = [];
 
 	/**
+	 *	Setup object_kind, screen_param and object_type
+	 *
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
-		/**
-		 *	Setup object_kind, screen_param and object_type
-		 */
 		if ( wp_doing_ajax() ) {
 			// get content type by $_REQUEST['action']
 
@@ -135,7 +134,6 @@ class CurrentView extends Core\Singleton {
 		return $this->object_type;
 	}
 
-
 	/**
 	 *	Calculate field group filter for current screen
 	 *
@@ -192,10 +190,6 @@ class CurrentView extends Core\Singleton {
 		[ 'post_type' => 'post', 'taxonomy' => 'post_tag' ] --> matches post type OR Taxo
 		[ [ 'post_type' => 'post', 'taxonomy' => 'post_tag' ] ] --> matches post type AND Taxo
 		*/
-
-		// if ( $this->is_assoc( $this->field_group_filter ) && count( $this->field_group_filter ) > 1 ) {
-		// 	$this->field_group_filter = array( $this->field_group_filter );
-		// }
 
 		return apply_filters( 'acf_quick_edit_fields_group_filter', $this->field_group_filter );
 	}
@@ -281,7 +275,6 @@ class CurrentView extends Core\Singleton {
 		return $this->_available_field_groups;
 	}
 
-
 	/**
 	 *	Whether an arrays has string keys
 	 *
@@ -296,7 +289,6 @@ class CurrentView extends Core\Singleton {
 		return count( array_filter( array_keys( $arr ), 'is_string' ) ) > 0;
 	}
 
-
 	/**
 	 *	Get field group of field
 	 *
@@ -310,8 +302,8 @@ class CurrentView extends Core\Singleton {
 	}
 
 	/**
-	 *	@filter 'acf/location/rule_match/post_taxonomy'
 	 *	@return boolean Whether a field group rule matches
+	 *	@filter 'acf/location/rule_match/post_taxonomy'
 	 */
 	function match_post_taxonomy( $match, $rule, $screen ) {
 
@@ -326,8 +318,8 @@ class CurrentView extends Core\Singleton {
 	}
 
 	/**
-	 *	@filter 'acf/location/rule_match/post_format'
 	 *	@return boolean Whether a field group rule matches
+	 *	@filter 'acf/location/rule_match/post_format'
 	 */
 	function match_post_format( $match, $rule, $screen ) {
 
@@ -340,8 +332,8 @@ class CurrentView extends Core\Singleton {
 	}
 
 	/**
-	 *	@filter 'acf/location/rule_match/post_status'
 	 *	@return boolean Whether a field group rule matches
+	 *	@filter 'acf/location/rule_match/post_status'
 	 */
 	function match_post_status( $match, $rule, $options ) {
 
@@ -354,8 +346,8 @@ class CurrentView extends Core\Singleton {
 	}
 
 	/**
-	 *	@filter 'acf/location/rule_match/attachment'
 	 *	@return boolean Whether a field group rule matches
+	 *	@filter 'acf/location/rule_match/attachment'
 	 */
 	function match_attachment( $match, $rule, $options ) {
 		if ( isset( $screen['attachment'] ) ) {
@@ -363,9 +355,6 @@ class CurrentView extends Core\Singleton {
 		}
 		return $match;
 	}
-
-
-
 
 	/**
 	 *	Set screen params from http referer (prefer _wp_http_referer)
@@ -392,14 +381,11 @@ class CurrentView extends Core\Singleton {
 	}
 
 	/**
-	*	Set screen params from $_GET
-	*
+	 *	Set screen params from $_GET
+	 *
 	 *	@return array $_GET-Params
 	 */
 	private function get_params() {
 		return $_GET;
 	}
-
-
-
 }

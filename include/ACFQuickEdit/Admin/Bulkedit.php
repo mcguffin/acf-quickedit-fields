@@ -15,7 +15,6 @@ class Bulkedit extends EditFeature {
 	 */
 	private $did_render = false;
 
-
 	/**
 	 *	Field value will leave fields unchanged
 	 */
@@ -39,7 +38,6 @@ class Bulkedit extends EditFeature {
 		if ( $operation = $this->get_bulk_operation( $field['key'] ) ) {
 			$valid = Fields\Field::getFieldObject( $field )->validate_bulk_operation_value( $valid, $value, $operation );
 		}
-		// acf_add_validation_error( $input, $message );
 
 		return $valid;
 	}
@@ -203,7 +201,6 @@ class Bulkedit extends EditFeature {
 			$field = Fields\Field::getFieldObject( $key );
 			$data = $field->do_bulk_operation( $op, $data, $post_id );
 		}
-		// error_log(var_export($send_data));
 	}
 
 	/**
@@ -219,6 +216,4 @@ class Bulkedit extends EditFeature {
 	private function filter_ampty_array( $el ) {
 		return ! is_array( $el ) || ( count( $el ) > 0 );
 	}
-
-
 }

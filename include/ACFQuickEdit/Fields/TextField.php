@@ -9,7 +9,6 @@ class TextField extends Field {
 
 	use Traits\BulkOperationText;
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -21,7 +20,6 @@ class TextField extends Field {
 		}
 
 		return '';
-
 	}
 
 	/**
@@ -30,5 +28,4 @@ class TextField extends Field {
 	public function is_sortable() {
 		return true;
 	}
-
 }

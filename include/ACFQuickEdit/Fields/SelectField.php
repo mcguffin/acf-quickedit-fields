@@ -10,11 +10,10 @@ class SelectField extends ChoiceField {
 	use Traits\BulkOperationLists;
 	use Traits\InputSelect;
 
-
 	/**
 	 *	@inheritdoc
 	 */
-	protected function get_wrapper_attributes($wrapper_attr) {
+	protected function get_wrapper_attributes( $wrapper_attr, $is_quickedit = true ) {
 		$wrapper_attr['data-ajax'] = isset( $this->acf_field['ajax'] )
 			? $this->acf_field['ajax']
 			: '0';
@@ -30,7 +29,6 @@ class SelectField extends ChoiceField {
 	public function render_input( $input_atts, $is_quickedit = true ) {
 
 		return $this->render_select_input( $input_atts, $this->acf_field, $is_quickedit );
-
 	}
 
 	/**
@@ -39,5 +37,4 @@ class SelectField extends ChoiceField {
 	public function is_sortable() {
 		return ! $this->acf_field['multiple'];
 	}
-
 }

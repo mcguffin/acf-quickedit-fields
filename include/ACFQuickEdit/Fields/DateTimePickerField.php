@@ -19,7 +19,6 @@ class DateTimePickerField extends Field {
 		}
 
 		return acf_format_date( $value, $this->acf_field['display_format'] );
-
 	}
 
 	/**
@@ -55,6 +54,4 @@ class DateTimePickerField extends Field {
 	public function is_sortable() {
 		return 'datetime';
 	}
-
-
 }

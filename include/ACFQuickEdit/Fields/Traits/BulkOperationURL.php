@@ -127,6 +127,4 @@ trait BulkOperationURL {
 		}
 		return $valid;
 	}
-
-
 }

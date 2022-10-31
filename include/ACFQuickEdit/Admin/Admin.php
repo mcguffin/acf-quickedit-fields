@@ -103,7 +103,6 @@ class Admin extends Core\Singleton {
 			'callback'			=> [ $this, 'ajax_get_acf_post_meta' ],
 		]);
 
-		//
 		add_action( 'load-edit.php', [ $this , 'enqueue_edit_assets' ] );
 		add_action( 'load-edit-tags.php', [ $this , 'enqueue_edit_assets' ] );
 		add_action( 'load-users.php', [ $this, 'enqueue_columns_assets' ] );
@@ -111,14 +110,11 @@ class Admin extends Core\Singleton {
 
 	}
 
-
-
 	/**
 	 * @action 'wp_ajax_get_acf_post_meta'
 	 */
 	public function ajax_get_acf_post_meta( $params ) {
 
-//		header('Content-Type: application/json');
 		$success = false;
 		$message = '';
 		$data = null;
@@ -245,8 +241,6 @@ class Admin extends Core\Singleton {
 		wp_register_script('acf-timepicker', acf_get_url( 'assets/inc/timepicker/jquery-ui-timepicker-addon.min.js' ), [ 'jquery-ui-datepicker' ], $acf_version );
 		wp_register_style('acf-timepicker', acf_get_url( 'assets/inc/timepicker/jquery-ui-timepicker-addon.min.css' ), [], $acf_version );
 
-
-
 		$this->css->enqueue();
 
 		$this->js
@@ -287,7 +281,6 @@ class Admin extends Core\Singleton {
 
 	}
 
-
 	/**
 	 *	@param array $values
 	 *	@return array
@@ -301,6 +294,4 @@ class Admin extends Core\Singleton {
 		}
 		return $ret;
 	}
-
-
 }

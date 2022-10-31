@@ -19,7 +19,6 @@ interface CoreInterface {
 	 */
 	public function version();
 
-
 	/**
 	 *	Return locations where to look for assets and map them to URLs.
 	 *

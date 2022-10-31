@@ -36,7 +36,7 @@ class Core extends Plugin implements CoreInterface {
 	 *
 	 *	@filter safecss_filter_attr_allow_css
 	 */
-	public function allow_rgba_css_bg($allow,$css_test_string) {
+	public function allow_rgba_css_bg( $allow, $css_test_string ) {
 		if ( preg_match( '/^background-color:\s*(rgba?|hsla?)\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d\.]+\s*\)$/', $css_test_string ) ) {
 			return true;
 		}
@@ -51,7 +51,6 @@ class Core extends Plugin implements CoreInterface {
 	 */
 	public function prefix( $str ) {
 		return $this->post_field_prefix . $str;
-
 	}
 
 	/**
@@ -60,10 +59,8 @@ class Core extends Plugin implements CoreInterface {
 	 *  @action plugins_loaded
 	 */
 	public function init_compat() {
-
 		if ( defined('POLYLANG_VERSION') && version_compare( POLYLANG_VERSION, '1.0.0', '>=' ) ) {
 			Compat\Polylang::instance();
 		}
-
 	}
 }

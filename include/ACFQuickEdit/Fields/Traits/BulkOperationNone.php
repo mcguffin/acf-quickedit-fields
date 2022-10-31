@@ -17,5 +17,4 @@ trait BulkOperationNone {
 	public function do_bulk_operation( $operation, $new_value, $object_id ) {
 		return $new_value;
 	}
-
 }

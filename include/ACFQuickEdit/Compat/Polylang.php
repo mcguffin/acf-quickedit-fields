@@ -65,7 +65,6 @@ class Polylang extends Core\Singleton {
 		}
 	}
 
-
 	/**
 	 *	@filter acf_quick_edit_post_ajax_actions
 	 */
@@ -89,5 +88,4 @@ class Polylang extends Core\Singleton {
 		$params[] = 'post_id';
 		return $params;
 	}
-
 }

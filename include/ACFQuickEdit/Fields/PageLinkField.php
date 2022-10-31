@@ -35,13 +35,10 @@ class PageLinkField extends Field {
 		return $output;
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
 		return '';
 	}
-
-
 }

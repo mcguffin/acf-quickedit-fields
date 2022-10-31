@@ -26,7 +26,6 @@ class LinkField extends Field {
 
 	}
 
-
 	/**
 	 *	Render Input element
 	 *
@@ -37,7 +36,6 @@ class LinkField extends Field {
 	 *	@return string
 	 */
 	protected function render_input( $input_atts, $is_quickedit = true ) {
-		// hidden
 
 		$input_atts += [
 			'class'					=> 'acf-quick-edit acf-quick-edit-'.$this->acf_field['type'],
@@ -78,10 +76,7 @@ class LinkField extends Field {
 			'<input type="hidden" value="%s" id="_ajax_linking_nonce" />',
 			esc_attr( wp_create_nonce( 'internal-linking' ) )
 		);
-
 	}
-
-
 
 	/**
 	 *	@param mixed $value

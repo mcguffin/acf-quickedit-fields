@@ -24,7 +24,5 @@ class ButtonGroupField extends RadioField {
 		$output .= parent::render_input( $input_atts, $is_quickedit );
 
 		return $output;
-
 	}
-
 }

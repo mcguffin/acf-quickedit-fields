@@ -29,7 +29,6 @@ class LegacyFieldGroup extends Core\Singleton {
 
 	}
 
-
 	/**
 	 *	Initialize
 	 */
@@ -139,9 +138,6 @@ class LegacyFieldGroup extends Core\Singleton {
 		acf_render_field_wrap( $weight_field, 'div', 'label' );
 	}
 
-
-
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -210,7 +206,7 @@ class LegacyFieldGroup extends Core\Singleton {
 	 *	@action acf/render_field_settings/type={$type}
 	 */
 	public function render_filter_settings( $field ) {
-		// TODO: distinguish between search and filter
+
 		acf_render_field_setting( $field, [
 			'label'			=> __( 'Enable filter', 'acf-quickedit-fields' ),
 			'instructions'	=> __( 'Filters will work with posts and user list tables. Terms lack an appropriate', 'acf-quickedit-fields'),
@@ -220,5 +216,4 @@ class LegacyFieldGroup extends Core\Singleton {
 			'wrapper'		=> [ 'width' => 33, ],
 		]);
 	}
-
 }

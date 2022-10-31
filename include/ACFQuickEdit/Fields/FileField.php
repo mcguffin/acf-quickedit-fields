@@ -11,12 +11,10 @@ class FileField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_column( $object_id ) {
+
 		$output = '';
-		/*
-		$value = get_field( $this->acf_field['key'], $object_id );
-		/*/
+
 		$value = $this->get_value( $object_id, false );
-		//*/
 
 		if ( ! is_null($value) && ! empty($value) && ( $file = get_post($value) ) ) {
 			$output .= sprintf( '<a href="%s" class="acf-qef-icon" title="%s">%s</a>',
@@ -25,7 +23,6 @@ class FileField extends Field {
 				wp_get_attachment_image( $value, [ 80, 80 ], true ) );
 		}
 		return $output;
-
 	}
 
 	/**
@@ -47,7 +44,6 @@ class FileField extends Field {
 		$output .= sprintf( '<button class="button-link remove-media dashicons dashicons-dismiss"><span class="screen-reader-text">%s</span></button>', esc_html__('Remove File', 'acf-quickedit-fields') );
 		return $output;
 	}
-
 
 	/**
 	 *	@inheritdoc

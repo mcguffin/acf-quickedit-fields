@@ -24,6 +24,4 @@ class RadioField extends ChoiceField {
 	public function is_sortable() {
 		return true;
 	}
-
-
 }

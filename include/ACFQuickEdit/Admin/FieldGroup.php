@@ -15,11 +15,7 @@ class FieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
-		$types = Fields\Field::get_types();
-		/*
-		ACF > 6 should call
-		*/
-		foreach ( $types as $type => $supports ) {
+		foreach ( Fields\Field::get_types() as $type => $supports ) {
 			if ( $supports[ 'column' ] || $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_headline' ] );
 			}
@@ -38,7 +34,6 @@ class FieldGroup extends Core\Singleton {
 		}
 
 		parent::__construct();
-
 	}
 
 	/**
@@ -54,13 +49,11 @@ class FieldGroup extends Core\Singleton {
 		]);
 	}
 
-
 	/**
 	 *	@action acf/render_field_settings/type={$type}
 	 */
 	public function render_column_settings( $field ) {
 
-		// render_field_settings()
 		$field_object = Fields\Field::getFieldObject( $field );
 
 		acf_render_field_setting( $field, [
@@ -69,10 +62,9 @@ class FieldGroup extends Core\Singleton {
 			'type'			=> 'true_false',
 			'name'			=> 'show_column',
 			'ui'			=> 1,
-			'message'		=> '',//__("Show column in list tables", 'acf-quickedit-fields'),
+			'message'		=> '',
 			'prefix'		=> $field['prefix'],
 			'wrapper'		=> [ 'width' => 34, ],
-			// 'value'			=> $field['show_column'],
 		]);
 		if ( $field_object->is_sortable() ) {
 			acf_render_field_setting( $field, [
@@ -81,10 +73,9 @@ class FieldGroup extends Core\Singleton {
 				'type'			=> 'true_false',
 				'name'			=> 'show_column_sortable',
 				'ui'			=> 1,
-				'message'		=> '',//__("Make this column sortable", 'acf-quickedit-fields'),
+				'message'		=> '',
 				'prefix'		=> $field['prefix'],
 				'wrapper'		=> [ 'width' => 33, ],
-				// 'value'			=> $field['show_column_sortable'],
 				'conditional_logic' => [[[ 'field'=> 'show_column', 'operator' => '==', 'value' => 1, ]]],
 			]);
 		}
@@ -93,7 +84,7 @@ class FieldGroup extends Core\Singleton {
 			'instructions'	=> __('Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position.','acf-quickedit-fields'),
 			'type'			=> 'number',
 			'name'			=> 'show_column_weight',
-			'message'		=> '',//__("Column Weight", 'acf-quickedit-fields'),
+			'message'		=> '',
 			'default_value'	=> '1000',
 			'min'			=> '-10000',
 			'max'			=> '10000',
@@ -102,8 +93,6 @@ class FieldGroup extends Core\Singleton {
 			'wrapper'		=> [ 'width' => 33, ],
 			'conditional_logic' => [[[ 'field'=> 'show_column', 'operator' => '==', 'value' => 1, ]]],
 		]);
-
-
 	}
 
 	/**
@@ -139,7 +128,7 @@ class FieldGroup extends Core\Singleton {
 	 *	@action acf/render_field_settings/type={$type}
 	 */
 	public function render_filter_settings( $field ) {
-		// TODO: distinguish between search and filter
+
 		acf_render_field_setting( $field, [
 			'label'			=> __( 'Enable filter', 'acf-quickedit-fields' ),
 			'instructions'	=> __( 'Filters will work with posts and user list tables. Terms lack an appropriate', 'acf-quickedit-fields'),
@@ -149,5 +138,4 @@ class FieldGroup extends Core\Singleton {
 			'wrapper'		=> [ 'width' => 33, ],
 		]);
 	}
-
 }

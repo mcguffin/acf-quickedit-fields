@@ -29,7 +29,6 @@ class UrlField extends Field {
 		return true;
 	}
 
-
 	/**
 	 *	@inheritdoc
 	 */
@@ -41,7 +40,6 @@ class UrlField extends Field {
 		return '';
 	}
 
-
 	/**
 	 *	Validate value for Bulk operation
 	 */
@@ -51,6 +49,4 @@ class UrlField extends Field {
 		}
 		return $valid;
 	}
-
-
 }
