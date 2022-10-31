@@ -90,7 +90,14 @@ On the whole upgrading is always a good idea.
  - Feature: Bulk operations
  - UI Improvement: Display non-multiple values
  - UI Improvement: Show UI labels in column view for True/False Fields
+ - UI Improvement: Fix column with in posts list tables
+ - Hooks API: introduce `acf_qef_sanitize_value_{$field_type}` filter
+ - Hooks API: introduce `acf_qef_wrapper_attributes_{$field_type}` filter
+ - Hooks API: introduce `acf_qef_bulk_operations_{$field_type}` filter
+ - Hooks API: introduce `acf_qef_bulk_operation_{$field_type}_{$operation}` filter
+ - Hooks API: introduce `acf_qef_validate_bulk_operation_value_{$field_type}_{$operation}` filter
  - Bugfix: Radio and checkbox fields did not show custom values
+ - Bugfix: sanitize data behind `acf_quick_edit_fields_types`
 
 = 3.1.14 =
  - Fix Field group settings for ACF 6
