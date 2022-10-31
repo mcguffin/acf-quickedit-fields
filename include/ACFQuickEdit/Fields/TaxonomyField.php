@@ -84,10 +84,13 @@ class TaxonomyField extends Field {
 
 		$output = '';
 
+		if ( ! taxonomy_exists($this->acf_field['taxonomy'] ) ) {
+			return $output;
+		}
+
 		$this->acf_field['choices'] = [];
 
 		if ( 'radio' === $this->acf_field['field_type'] ) {
-
 			$output .= $this->render_radio_input(
 				$input_atts,
 				[
