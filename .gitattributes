@@ -15,4 +15,4 @@ test export-ignore
 .sassrc export-ignore
 .wporg* export-ignore
 *.md export-ignore
-phpcs*.xml
+phpcs*.xml export-ignore
