@@ -4,7 +4,7 @@ Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
 Tested up to: 6.0
-Requires PHP: 5.6
+Requires PHP: 7.2
 Stable tag: 3.1.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -84,6 +84,13 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 On the whole upgrading is always a good idea.
 
 == Changelog ==
+
+= 3.2.0 =
+ - Feature: Column filter
+ - Feature: Bulk operations
+ - UI Improvement: Display non-multiple values
+ - UI Improvement: Show UI labels in column view for True/False Fields
+ - Bugfix: Radio and checkbox fields did not show custom values
 
 = 3.1.14 =
  - Fix Field group settings for ACF 6
