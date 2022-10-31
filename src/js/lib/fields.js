@@ -17,6 +17,7 @@ import taxonomy from 'fields/taxonomy.js'
 import textarea from 'fields/textarea.js'
 import time_picker from 'fields/time_picker.js'
 import true_false from 'fields/true_false.js'
+import url from 'fields/url.js'
 
 const user = Object.assign({},select,{type:'user'} );
 
@@ -30,7 +31,7 @@ const View = wp.media.View.extend({
 		this.key = this.$el.attr('data-key');
 
 		if ( ! this.$input ) {
-			this.$input = this.$('input:not([data-is-do-not-change="true"])')
+			this.$input = this.$('.acf-input-wrap input')
 		}
 		this.setEditable( false );
 		this.$('*').on('change',function(){self.resetError()})
@@ -157,14 +158,18 @@ field.add_type( post_object );
 field.add_type( taxonomy );
 
 /**
+ *	field type true_false
+ */
+field.add_type( true_false );
+
+/**
  *	field type user
  */
 field.add_type( user );
 
 /**
- *	field type true_false
+ *	field type url
  */
-field.add_type( true_false );
-
+field.add_type( url );
 
 module.exports = field;

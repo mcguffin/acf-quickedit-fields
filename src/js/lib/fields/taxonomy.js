@@ -3,34 +3,24 @@ import $ from 'jquery';
 module.exports = {
 	type:'taxonomy',
 	initialize:function() {
+		this.acfField = null
+
 		this.parent().initialize.apply(this,arguments);
 
-		this.$input = this.$('select,input[value!="'+acf_qef.options.do_not_change_value+'"]').prop( 'readonly', true );
+		this.$input = this.$('.acf-input-wrap select,.acf-input-wrap input').prop( 'readonly', true );
 	},
 	setValue:function( value ) {
-		/*
-		const self = this;
-		this.dntChanged();
-		if ( 'number' === typeof value || value.match(/^[0-9]+$/g) ) {
-			value = [ value ];
-		}
-		console.log(value,typeof value)
-		$.each( value, function( i, val ) {
-			self.$('[value="'+val+'"]' ).each(function(i,el){
-				if ( $(this).is('[type="radio"],[type="checkbox"]') ) {
-					$(this).prop( 'checked', true );
-				} else if ( $(this).is('option') ) {
-					$(this).prop( 'selected', true );
-				}
-			});
-		});
-		/*/
 
 		this.dntChanged( );
 
 		const is_select = this.$input.is('select')
 		const self = this;
-		const acfField = new acf.models.TaxonomyField( this.$input.closest('.acf-field') )
+		const acfFieldClass = acf.models.TaxonomyField.extend({
+			$input: function () {
+				return this.$('.acf-input-wrap select');
+			},
+		})
+		this.acfField = new acfFieldClass( this.$input.closest('.acf-field') )
 		const select = item => {
 			if ( is_select ) {
 				self.$input.append( new Option( item.text, item.id, true, true ) );
@@ -45,9 +35,8 @@ module.exports = {
 			select( value )
 		}
 
-
-		// do we need this ..?
-		// self.$input.trigger('change');
-		//*/
+	},
+	unload:function(){
+		this.acfField.onRemove()
 	}
 }

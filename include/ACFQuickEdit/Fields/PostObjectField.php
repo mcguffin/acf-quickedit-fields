@@ -7,6 +7,19 @@ if ( ! defined( 'ABSPATH' ) )
 
 class PostObjectField extends RelationshipField {
 
+	use Traits\InputSelect;
+
+	/**
+	 *	@inheritdoc
+	 */
+	protected function get_wrapper_attributes($wrapper_attr) {
+		$wrapper_attr['data-ajax'] = '1';
+		$wrapper_attr['data-multiple'] = isset( $this->acf_field['multiple'] )
+			? $this->acf_field['multiple']
+			: '0';
+		return $wrapper_attr;
+	}
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -19,22 +32,14 @@ class PostObjectField extends RelationshipField {
 			'data-multiple'		=> $this->acf_field['multiple'],
 			'data-allow_null'	=> $this->acf_field['allow_null'],
 		];
-
-		$output = '';
-
-		// handle empty values
-		$output .= acf_get_hidden_input( [
-			'name'	=> $input_atts['name'],
-		]);
-
-		// handle multiple values
-		if ( $this->acf_field['multiple'] ) {
-			$input_atts['name'] .= '[]';
-		}
-
-		$output .= acf_get_select_input( $input_atts );
-
-		return $output;
+		return $this->render_select_input(
+			$input_atts,
+			[
+				'ui' => 1,
+				'ajax' => 1,
+			] + $this->acf_field,
+			$is_quickedit
+		);
 
 	}
 
@@ -93,30 +98,7 @@ class PostObjectField extends RelationshipField {
 	/**
 	 *	@inheritdoc
 	 */
-	public function sanitize_value( $value, $context = 'db' ) {
-
-		$sanitation_cb = $context === 'ajax' ? [ $this, 'sanitize_ajax_result' ] : 'intval';
-
-		if ( is_array( $value ) ) {
-			// strip out falsy values
-			$value = array_map( $sanitation_cb, $value );
-			// strip out falsy values
-			$value = array_filter( $value );
-			// reset array keys
-			return array_values( $value );
-		}
-
-		return call_user_func( $sanitation_cb, $value );
-
-	}
-
-	/**
-	 *	Format result data for select2
-	 *
-	 *	@param mixed $value
-	 *	@return string|array If value present and post exists Empty string
-	 */
-	private function sanitize_ajax_result( $value ) {
+	protected function sanitize_ajax_result( $value ) {
 
 		$value = intval( $value );
 

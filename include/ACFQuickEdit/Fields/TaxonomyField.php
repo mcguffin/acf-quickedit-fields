@@ -7,6 +7,34 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TaxonomyField extends Field {
 
+	use Traits\InputCheckbox;
+	use Traits\InputRadio;
+	use Traits\InputSelect;
+
+	/**
+	 *	@inheritdoc
+	 */
+	protected function get_wrapper_attributes($wrapper_attr) {
+		$wrapper_attr['data-ajax'] = isset( $this->acf_field['ajax'] )
+			? $this->acf_field['ajax']
+			: '0';
+		return $wrapper_attr;
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function get_bulk_operations() {
+		if ( $this->acf_field['multiple'] || in_array( $this->acf_field['field_type'], [ 'multi_select', 'checkbox' ] ) ) {
+			return [
+				'union'        => __('Union','acf-quickedit-fields'),
+				'difference'   => __('Difference','acf-quickedit-fields'),
+				'intersection' => __('Intersection','acf-quickedit-fields'),
+			];
+		}
+		return [];
+	}
+
 	/**
 	 *	@inheritdoc
 	 */
@@ -52,101 +80,55 @@ class TaxonomyField extends Field {
 	 *	@inheritdoc
 	 */
 	public function render_input( $input_atts, $is_quickedit = true ) {
+
 		$output = '';
 
-		acf_include('includes/walkers/class-acf-walker-taxonomy-field.php');
+		$this->acf_field['choices'] = [];
 
-		$field_clone = $this->acf_field + [];
+		if ( 'radio' === $this->acf_field['field_type'] ) {
 
-		$field_clone['value'] = [];
+			$output .= $this->render_radio_input(
+				$input_atts,
+				[
+					'choices' => get_terms([
+						'taxonomy'   => $this->acf_field['taxonomy'],
+						'fields'     => 'id=>name',
+						'hide_empty' => false,
+					]),
+				] + $this->acf_field,
+				$is_quickedit
+			);
 
-		$field_clone['name'] = 'acf';
+		} else if ( 'checkbox' === $this->acf_field['field_type'] ) {
 
-		if ( isset( $this->parent ) && 0 === strpos( 'field_', $field_clone['parent'] ) ) { // must not be a group!
-			$field_clone['name'] .= sprintf('[%s]', $field_clone['parent'] );
-		}
-		$field_clone['name'] .= sprintf('[%s]', $field_clone['key'] );
+			$output .= $this->render_checkbox_input(
+				$input_atts,
+				[
+					'choices' => get_terms([
+						'taxonomy'   => $this->acf_field['taxonomy'],
+						'fields'     => 'id=>name',
+						'hide_empty' => false,
+					]),
+				] + $this->acf_field,
+				$is_quickedit
+			);
 
-		if ( in_array( $field_clone['field_type'], [ 'checkbox', 'multi_select' ] ) ) {
+		} else if ( 'select' === $this->acf_field['field_type'] || 'multi_select' === $this->acf_field['field_type'] ) {
 
-			$field_clone['name'] .= '[]';
-
-		}
-
-		$taxonomy_obj = get_taxonomy( $field_clone['taxonomy'] );
-
-		$args = [
-			'taxonomy'     		=> $field_clone['taxonomy'],
-			'show_option_none'	=> sprintf( _x('No %s', 'No terms', 'acf'), strtolower($taxonomy_obj->labels->name) ),
-			'hide_empty'   		=> false,
-			'style'        		=> 'none',
-			'walker'       		=> new \ACF_Taxonomy_Field_Walker( $field_clone ),
-			'echo'				=> false,
-		];
-
-		if ( 'radio' === $field_clone['field_type'] || 'checkbox' === $field_clone['field_type'] ) {
-
-			$output .= '<ul ' . acf_esc_attr( [
-				'class'	=> 'acf-checkbox-list acf-bl',
-			] ) . '>';
-
-			if ( 'radio' === $field_clone['field_type'] && $field_clone['allow_null'] ) {
-				// add – No Value – option ...
-				$output .= '<li>';
-				$output .= '<label>';
-				$output .= '<input ' . acf_esc_attr( [
-					'name'	=> $field_clone['name'],
-					'value'	=> '',
-					'type'	=> $field_clone['field_type']
-				] ) . ' />';
-				$output .= sprintf('<span>%s</span>', esc_html__('– No Selection –','acf-quickedit-fields'));
-				$output .= '</label>';
-				$output .= '</li>';
-			}
-			$output .= wp_list_categories( $args );
-
-			$output .= '</ul>';
-		} else {
-
-//			$field_clone['type']		= 'select';
-			$field_clone['multiple']	= 'multi_select' === $field_clone['field_type'];
-			$field_clone['choices']		= [];
-			$field_clone['ui']			= true;
-			$field_clone['ajax']		= true;
-			$field_clone['type']		= 'select';
-			$field_clone['ajax_action']		= 'acf/fields/taxonomy/query';
-
-			if ( $field_clone['allow_null'] ) {
-				$field_clone['choices'][''] = __('– No Selection –','acf-quickedit-fields');
-			}
-
-			$terms = acf_get_terms( [
-				'taxonomy'		=> $field_clone['taxonomy'],
-				'hide_empty'	=> false
-			] );
-
-			foreach( $terms as $term ) {
-				$term_title = '';
-
-				// ancestors
-				$ancestors = get_ancestors( $term->term_id, $field_clone['taxonomy'] );
-
-				if( ! empty( $ancestors ) ) {
-
-					$term_title .= str_repeat('- ', count($ancestors));
-
-				}
-
-				$term_title .= $term->name;
-
-				$field_clone['choices'][ $term->term_id ] = esc_html( $term_title );
-			}
-			ob_start();
-			acf_render_field($field_clone);
-			$output .= ob_get_clean();
+			$output .= $this->render_select_input(
+				$input_atts,
+				[
+					'ui' => 1,
+					'ajax' => 1,
+					'multiple' => 'multi_select' === $this->acf_field['field_type'],
+				] + $this->acf_field,
+				$is_quickedit
+			);
 
 		}
+
 		return $output;
+
 	}
 
 	/**

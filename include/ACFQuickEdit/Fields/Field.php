@@ -110,11 +110,14 @@ abstract class Field {
 
 	/**
 	 *	Factory method
-	 *	@param array $acf_field
+	 *	@param string|array $acf_field Field Array or Field key
 	 *	@return ACFQuickEdit\Fields\Field
 	 */
 	public static function getFieldObject( $acf_field ) {
-		if ( ! $acf_field || is_null($acf_field) ) {
+		if ( is_string( $acf_field ) ) {
+			$acf_field = get_field_object( $acf_field );
+		}
+		if ( ! is_array( $acf_field ) ) {
 			return;
 		}
 		$acf_field = wp_parse_args( $acf_field, [
@@ -242,6 +245,7 @@ abstract class Field {
 			'data-field-type'	=> $this->acf_field['type'],
 			'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
 		];
+		$wrapper_attr = $this->get_wrapper_attributes( $wrapper_attr );
 		if ( isset( $this->acf_field['field_type'] ) ) {
 			$wrapper_attr['data-field-sub-type'] = $this->acf_field['field_type'];
 		}
@@ -270,6 +274,15 @@ abstract class Field {
 
 	}
 
+
+	/**
+	 *	@param array $wrapper_attr Field input attributes
+	 *	@return array
+	 */
+	protected function get_wrapper_attributes($wrapper_attr) {
+		return $wrapper_attr;
+	}
+
 	/**
 	 *	Render the Do-Not-Chwnage Chackbox
 	 *
@@ -284,7 +297,8 @@ abstract class Field {
 				'value' 	=> $bulk->get_dont_change_value(),
 				'type'		=> 'checkbox',
 				'checked'	=> 'checked',
-				'data-is-do-not-change' => 'true'
+				'data-is-do-not-change' => 'true',
+				'autocomplete' => 'off',
 			] ) ?> />
 			<?php esc_html_e( 'Do not change', 'acf-quickedit-fields' ) ?>
 		</label>
@@ -295,7 +309,6 @@ abstract class Field {
 	 *	Render Input element
 	 *
 	 *	@param array $input_attr
-	 *	@param string $column
 	 *	@param bool $is_quickedit
 	 *
 	 *	@return string

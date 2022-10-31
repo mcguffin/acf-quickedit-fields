@@ -8,7 +8,7 @@ const field = {
 	},
 	initialize:function() {
 		const self = this;
-		this.$input = this.$('[type="checkbox"]:not([value="___do_not_change"])');
+		this.$input = this.$('.acf-input-wrap [type="checkbox"]');
 		this.$button = this.$('button.add-choice').prop('disabled',true);
 		this.parent().initialize.apply(this,arguments);
 		this.$('.acf-checkbox-toggle[type="checkbox"]').on( 'change', function(e) {
@@ -26,7 +26,7 @@ const field = {
 			$.each( value, function( idx, val ) {
 				self.getChoiceCB(val).prop( 'checked', true );
 			});
-		} else {
+		} else if ( '' !== value ) {
 			self.getChoiceCB(value).prop( 'checked', true );
 		}
 	},

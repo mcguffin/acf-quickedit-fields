@@ -3,11 +3,10 @@ import $ from 'jquery';
 module.exports = {
 	type:'post_object',
 	initialize:function() {
-
-		this.$input = this.$('select').prop( 'readonly', true );
+		this.acfField = null
+		this.$input = this.$('.acf-input-wrap select').prop( 'readonly', true );
 		//
 		this.parent().initialize.apply(this,arguments);
-
 	},
 	setValue:function(value) {
 		// the value has been loded by an ajax request
@@ -15,7 +14,12 @@ module.exports = {
 		this.dntChanged( );
 
 		const self = this;
-		const acfField = new acf.models.PostObjectField( this.$input.closest('.acf-field') )
+		const acfFieldClass = acf.models.PostObjectField.extend({
+			$input: function () {
+				return this.$('.acf-input-wrap select');
+			},
+		})
+		this.acfField = new acfFieldClass( this.$input.closest('.acf-field') )
 		const append = item => {
 			self.$input.append( new Option( item.text, item.id, true, true ) );
 		}
@@ -26,9 +30,9 @@ module.exports = {
 			append( value )
 		}
 
-		// do we need this ..?
-		// self.$input.trigger('change');
-
 		return this;
+	},
+	unload:function(){
+		this.acfField.onRemove()
 	}
 }
