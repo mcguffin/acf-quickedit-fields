@@ -105,7 +105,13 @@ abstract class Field {
 		 *							and an array of supported fetaures as values.
 		 *							Features are 'column', 'quickedit' and 'bulkedit'.
 		 */
-		return apply_filters( 'acf_quick_edit_fields_types', $types );
+		$types = apply_filters( 'acf_quick_edit_fields_types', $types );
+		return array_map( function ( $type ) {
+			return wp_parse_args(
+				$type,
+				[ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ]
+			);
+		}, $types );
 	}
 
 	/**
