@@ -73,6 +73,21 @@ class Generic extends Field {
 		return apply_filters( 'acf_qef_get_value_' . $this->acf_field['type'], parent::get_value( $object_id, $format_value ), $object_id, $format_value, $this->acf_field );
 	}
 
+	/**
+	 *	@inheritdoc
+	 */
+	public function sanitize_value( $value, $context = 'ajax' ) {
+
+		/**
+		 *	Value to be loaded into editor
+		 *
+		 *	@param mixed $value
+		 *	@param string/int $object_id
+		 *	@param bool $format_value
+		 *	@param array $acf_field
+		 */
+		return apply_filters( 'acf_qef_sanitize_value_' . $this->acf_field['type'], parent::sanitize_value( $value, $context ), $context, $this->acf_field );
+	}
 
 	/**
 	 *	@param array $wrapper_attr Field input attributes
@@ -106,7 +121,7 @@ class Generic extends Field {
 	 *	@return mixed
 	 */
 	public function do_bulk_operation( $operation, $new_value, $object_id ) {
-		$old_value = $this->get_value( $object_id, $format_value );
+		$old_value = $this->get_value( $object_id, false );
 		/**
 		 *	Value being stored
 		 *
