@@ -74,6 +74,7 @@ class Columns extends Feature {
 					'priority'	=> 10,
 					'args'		=> 2,
 				];
+				add_filter('admin_body_class', [ $this, 'add_admin_body_class' ] );
 			} else {
 				// we need at least one column for quick/bulk edit
 				$cols_filters[] = [
@@ -160,6 +161,14 @@ class Columns extends Feature {
 		}
 	}
 
+
+	/**
+	 *	@filter admin_body_class
+	 */
+	public function add_admin_body_class( $classes ) {
+		$classes .= ' has-acf-qef-columns';
+		return $classes;
+	}
 
 	/**
 	 *	@filter manage_posts_columns

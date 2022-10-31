@@ -124,3 +124,22 @@
 		}
 	}
 }
+.wp-list-table {
+	&.fixed {
+		.column-posts,
+		.column-parent,
+		.column-links,
+		.column-author,
+		.column-format,
+		.column-response,
+		.column-categories,
+		.column-tags,
+		.column-rel,
+		.column-role,
+		.column-date {
+			.has-acf-qef-columns & {
+				width:auto;
+			}
+		}
+	}
+}
