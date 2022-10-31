@@ -43,6 +43,9 @@ class LegacyFieldGroup extends Core\Singleton {
 			if ( $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_settings/type={$type}", [ $this, 'render_edit_settings' ] );
 			}
+			if ( $supports[ 'filter' ] ) {
+				add_action( "acf/render_field_settings/type={$type}", [ $this, 'render_filter_settings' ] );
+			}
 		}
 	}
 
@@ -203,5 +206,19 @@ class LegacyFieldGroup extends Core\Singleton {
 		}
 	}
 
+	/**
+	 *	@action acf/render_field_settings/type={$type}
+	 */
+	public function render_filter_settings( $field ) {
+		// TODO: distinguish between search and filter
+		acf_render_field_setting( $field, [
+			'label'			=> __( 'Enable filter', 'acf-quickedit-fields' ),
+			'instructions'	=> __( 'Filters will work with posts and user list tables. Terms lack an appropriate', 'acf-quickedit-fields'),
+			'type'			=> 'true_false',
+			'name'			=> 'show_column_filter',
+			'ui'			=> 1,
+			'wrapper'		=> [ 'width' => 33, ],
+		]);
+	}
 
 }
