@@ -100,7 +100,7 @@ abstract class ChoiceField extends Field {
 			$out .= sprintf(
 				'<option value="%s" %s>%s</option>',
 				$is_multiple
-					? sprintf('"%s"', $value )
+					? esc_attr(sprintf('"%s"', $value ))
 					: esc_attr( $value ),
 				$selected === $value
 					? 'selected'
