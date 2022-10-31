@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) )
 
 class NumberField extends Field {
 
+	use Traits\BulkOperationNumeric;
+
 	/**
 	 *	@inheritdoc
 	 */

@@ -18,6 +18,7 @@ const field = {
 	setEditable:function(editable){
 		this.$input.prop( 'disabled', !editable );
 		this.$button.prop( 'disabled', !editable );
+		this.$bulkOperations.prop( 'readonly', ! editable ).prop( 'disabled', ! editable )
 	},
 	setValue:function( value ) {
 		const self = this;

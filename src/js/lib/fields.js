@@ -29,7 +29,7 @@ const View = wp.media.View.extend({
 		const self = this;
 		Backbone.View.prototype.initialize.apply( this, arguments );
 		this.key = this.$el.attr('data-key');
-
+		this.$bulkOperations = this.$('.bulk-operations select,.bulk-operations input')
 		if ( ! this.$input ) {
 			this.$input = this.$('.acf-input-wrap input')
 		}
@@ -39,6 +39,7 @@ const View = wp.media.View.extend({
 	setValue:function(value){
 		this.dntChanged( );
 		this.$input.val(value);
+
 		return this;
 	},
 	dntChanged:function(){
@@ -46,6 +47,7 @@ const View = wp.media.View.extend({
 	},
 	setEditable:function(editable){
 		this.$input.each( (i,el) => $(el).prop( 'readonly', ! editable ).prop( 'disabled', ! editable ) );
+		this.$bulkOperations.prop( 'readonly', ! editable ).prop( 'disabled', ! editable )
 	},
 	setError:function(message) {
 		this.$el.attr('data-error-message',message);

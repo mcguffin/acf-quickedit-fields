@@ -5,7 +5,11 @@ namespace ACFQuickEdit\Fields;
 if ( ! defined( 'ABSPATH' ) )
 	die('Nope.');
 
+use ACFQuickEdit\Admin;
+
 class UrlField extends Field {
+
+	use Traits\BulkOperationURL;
 
 	/**
 	 *	@inheritdoc
@@ -36,4 +40,17 @@ class UrlField extends Field {
 		}
 		return '';
 	}
+
+
+	/**
+	 *	Validate value for Bulk operation
+	 */
+	public function validate_bulk_operation_value( $valid, $new_value, $input) {
+		if ( Admin\Bulkedit::instance()->is_bulk_operation( $field['key'] ) ) {
+			$valid = true;
+		}
+		return $valid;
+	}
+
+
 }

@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TextareaField extends TextField {
 
+	use Traits\BulkOperationText;
 
 	/**
 	 *	@inheritdoc

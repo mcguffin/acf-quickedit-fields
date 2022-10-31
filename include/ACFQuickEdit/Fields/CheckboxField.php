@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class CheckboxField extends ChoiceField {
 
+	use Traits\BulkOperationLists;
 	use Traits\InputCheckbox;
 
 	/**

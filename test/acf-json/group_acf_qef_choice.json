@@ -92,7 +92,7 @@
             "allow_bulkedit": 1,
             "show_column_filter": 1
         },
-        {
+		{
             "key": "field_5002e5c2126c2",
             "label": "Select",
             "name": "select",
@@ -124,6 +124,44 @@
             "allow_bulkedit": 1,
             "show_column_filter": 1,
             "ajax": 0,
+            "placeholder": ""
+        },
+		{
+            "key": "field_635fb00e23388",
+            "label": "Select Multiple UI Ajax",
+            "name": "select_mul_ui",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+				"five": "Five",
+                "six": "Six",
+                "seven": "Seven",
+				"eight": "Eight"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 1,
+            "allow_null": 0,
+            "ui": 1,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 0,
+            "ajax": 1,
             "placeholder": ""
         },
         {
@@ -193,8 +231,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": 0,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1667055495
+    "modified": 1666994207
 }

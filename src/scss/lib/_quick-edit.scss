@@ -76,26 +76,53 @@
 		display: block;
 	}
 	.inline-edit-group {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns:1fr 1fr;
+		grid-template-areas:
+			"dnc op"
+			"label label"
+			"input input";
+
+
+		> * {
+			max-width: initial !important;
+		}
 		.title {
-			float:none;
-			width: auto;
-			order:1;
+			grid-area:label;
 		}
 		.bulk-do-not-change {
-			order:2;
+			grid-area:dnc;
 		}
 		.acf-input-wrap {
-			order:3;
+			grid-area:input;
+		}
+		.bulk-operations {
+			grid-area:op;
 		}
 	}
 	.acf-checkbox-list,
 	.acf-radio-list {
-		columns:2;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		@media screen and (max-width: 782px) {
-			columns:1;
+			grid-template-columns: 1fr;
 		}
+		label {
+			display: grid;
+			grid-template-columns: min-content 1fr;
+			align-items: center;
+			width:100%;
+			#wpbody-content .bulk-edit-row & {
+				max-width: initial;
+			}
+		}
+		input[type="text"] {
+			width: 100%;
+		}
+	}
+
+	[data-field-type="url"] input[type="text"] {
+		padding-left: 27px !important;
 	}
 }
 

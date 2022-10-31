@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class TaxonomyField extends Field {
 
+	use Traits\BulkOperationLists;
 	use Traits\InputCheckbox;
 	use Traits\InputRadio;
 	use Traits\InputSelect;

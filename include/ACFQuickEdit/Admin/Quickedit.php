@@ -88,9 +88,17 @@ class Quickedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
-	protected function get_save_data() {
+	protected function get_save_data( $post_id ) {
 		// fall back to $_POST['acf']
 		return null;
+	}
+
+
+	/**
+	 *	@inheritdoc
+	 */
+	protected function is_saving() {
+		return ( isset( $_POST['action'] ) && $_POST['action'] === 'inline-save');
 	}
 
 

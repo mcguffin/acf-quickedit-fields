@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class SelectField extends ChoiceField {
 
+	use Traits\BulkOperationLists;
 	use Traits\InputSelect;
 
 

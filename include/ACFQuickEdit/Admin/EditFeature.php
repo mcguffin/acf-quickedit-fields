@@ -10,9 +10,10 @@ if ( ! defined( 'ABSPATH' ) )
 
 abstract class EditFeature extends Feature {
 
-
+	/** @var array fieldgroup cache */
 	protected $fieldsets = [];
 
+	/** @var array taxonoomy cache */
 	protected $taxonomies = [];
 
 	/**
@@ -54,7 +55,7 @@ abstract class EditFeature extends Feature {
 
 
 		// register quick/bulk save actions
-		if ( ! has_action( $action, $callback ) ) {
+		if ( $this->is_saving() ) {
 
 			wp_enqueue_media();
 
@@ -153,7 +154,7 @@ abstract class EditFeature extends Feature {
 		// avoid infinite loop
 		remove_action( 'edit_term', [ $this, 'save_acf_term_meta' ], 10 );
 
-		$ret = acf_save_post( $object_id, $this->get_save_data() );
+		$ret = acf_save_post( $object_id, $this->get_save_data( $object_id ) );
 
 		add_action( 'edit_term', [ $this, 'save_acf_term_meta' ], 10, 3 );
 
@@ -176,7 +177,7 @@ abstract class EditFeature extends Feature {
 		// avoid infinite loop
 		remove_action( 'save_post', [ $this, 'save_acf_post_meta' ], 10 );
 
-		$ret = acf_save_post( $post_id, $this->get_save_data() );
+		$ret = acf_save_post( $post_id, $this->get_save_data( $post_id ) );
 
 		add_action( 'save_post', [ $this, 'save_acf_post_meta' ], 10, 1 );
 
@@ -189,7 +190,14 @@ abstract class EditFeature extends Feature {
 	 *
 	 *	@return null|array
 	 */
-	abstract protected function get_save_data();
+	abstract protected function get_save_data( $post_id );
 
+
+	/**
+	 *	Whether current request will save values
+	 *
+	 *	@return boolean
+	 */
+	abstract protected function is_saving();
 
 }

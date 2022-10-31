@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class PostObjectField extends RelationshipField {
 
+	use Traits\BulkOperationLists;
 	use Traits\InputSelect;
 
 	/**

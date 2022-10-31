@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class RangeField extends NumberField {
 
-
+	use Traits\BulkOperationNone;
 	/**
 	 *	@inheritdoc
 	 */

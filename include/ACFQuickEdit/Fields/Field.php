@@ -206,6 +206,15 @@ abstract class Field {
 	}
 
 	/**
+	 *	Bulk operations.
+	 *
+	 *	@return array
+	 */
+	public function get_bulk_operations() {
+		return [];
+	}
+
+	/**
 	 *	@return bool
 	 */
 	public function is_sortable() {
@@ -255,6 +264,9 @@ abstract class Field {
 		?>
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<div class="inline-edit-group">
+					<?php if ( $mode === 'bulk' ) {
+						echo $this->render_bulk_operations();
+					} ?>
 					<label for="<?php echo esc_attr( $this->get_input_id( $mode === 'quick' ) ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
 					<span class="<?php echo implode(' ', $wrapper_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?>">
 						<?php
@@ -323,6 +335,70 @@ abstract class Field {
 		];
 
 		return '<input '. acf_esc_attr( $input_atts ) .' />';
+	}
+
+
+	/**
+	 *	Render Input element
+	 *
+	 *	@return string
+	 */
+	protected function render_bulk_operations() {
+
+		$bulk_operations = $this->get_bulk_operations();
+		if ( 0 === count( $bulk_operations ) ) {
+			return;
+		}
+
+		$bulk = Admin\Bulkedit::instance();
+
+		$input_attr = [
+			'name' => sprintf( 'acf[%s][%s]', $bulk->get_bulk_operation_key(), $this->acf_field['key'] ),
+			'autocomplete' => 'off',
+		];
+
+		?>
+		<label class="bulk-operations">
+			<?php
+
+			if ( 1 === count( $bulk_operations ) ) {
+				$op = array_key_first( $bulk_operations );
+					?>
+					<input <?php echo acf_esc_attr( $input_attr + [
+						'value' 	=> $op,
+						'type'		=> 'checkbox',
+					] ) ?> />
+					<?php echo esc_html( $bulk_operations[$op] ); ?>
+					<?php
+			} else {
+				?>
+				<select <?php echo acf_esc_attr( $input_attr ) ?>>
+					<option value="" selected><?php esc_html_e( '– Operation –', 'acf-quickedit-fields' ); ?></option>
+					<?php
+					foreach ( $bulk_operations as $operation => $label ) {
+						?>
+						<option <?php echo acf_esc_attr( [ 'value' => $operation ] ); ?>><?php echo esc_html($label); ?></option>
+						<?php
+					}
+					?>
+				</select>
+				<?php
+			}
+			?>
+		</label>
+		<?php
+
+	}
+
+	/**
+	 *	Perform a bulk operation
+	 *
+	 *	@param string $operation
+	 *	@param mixed $new_value
+	 *	@return mixed
+	 */
+	public function do_bulk_operation( $operation, $new_value, $object_id ) {
+		return $new_value;
 	}
 
 	/**
@@ -397,6 +473,16 @@ abstract class Field {
 			return $value;
 		}
 		return sanitize_text_field( $value );
+	}
+
+	/**
+	 *	Validate value for Bulk operation
+	 *	@param boolean $valid What ACF vaildation says
+	 *	@param mixed $new_value
+	 *	@param string $operation
+	 */
+	public function validate_bulk_operation_value( $valid, $new_value, $operation ) {
+		return $valid;
 	}
 
 	/**
