@@ -46,7 +46,7 @@ class UserField extends SelectField {
 				} else {
 					$link = get_author_posts_url( $user_id );
 				}
-				$output .= sprintf( '<li><a href="%s">%s</a></li>'.PHP_EOL, esc_url($link), esc_html( $userdata->display_name ) );
+				$output .= sprintf( '<a href="%s">%s</a>'.PHP_EOL, esc_url($link), esc_html( $userdata->display_name ) );
 			}
 
 		}
