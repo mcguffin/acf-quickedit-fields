@@ -72,7 +72,6 @@ class Columns extends Feature {
 					'priority'	=> 10,
 					'args'		=> 2,
 				];
-				add_filter('admin_body_class', [ $this, 'add_admin_body_class' ] );
 			} else {
 				// we need at least one column for quick/bulk edit
 				$cols_filters[] = [
@@ -111,6 +110,7 @@ class Columns extends Feature {
 			}
 
 		} else if ( 'user' == $content_kind ) {
+
 			$cols_hook		= "manage_users_columns";
 			$sortable_hook	= "manage_users_sortable_columns";
 			$display_hook	= "manage_users_custom_column";
@@ -136,6 +136,7 @@ class Columns extends Feature {
 			if ( $is_sortable ) {
 				add_filter( $sortable_hook, [ $this, 'add_sortable_columns' ] );
 			}
+			add_filter('admin_body_class', [ $this, 'add_admin_body_class' ] );
 		}
 
 		foreach ( $cols_filters as $filter ) {
