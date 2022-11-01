@@ -142,7 +142,7 @@ class CurrentView extends Core\Singleton {
 	private function get_fieldgroup_filter() {
 
 		if ( is_null( $this->field_group_filter ) ) {
-			$this->field_group_filter = [ 'active' => 1 ];
+			$this->field_group_filter = [];
 
 			foreach ( $this->screen_param as $param => $value ) {
 
