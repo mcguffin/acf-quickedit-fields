@@ -39,6 +39,7 @@
 		flex:1 1;
 		position: relative;
 		text-align: center;
+		line-height: 1.3;
 		img {
 			height:100px;
 			width:100%;
@@ -49,11 +50,10 @@
 			color:$wp-gray-darker;
 		}
 		.media-title {
-			line-height:1.2;
 			max-height:3.3em;
 			overflow: hidden;
 			display: block;
-			padding:0.5em 1em;
+			// padding:0.5em 1em;
 			margin-bottom:10px;
 		}
 	}
