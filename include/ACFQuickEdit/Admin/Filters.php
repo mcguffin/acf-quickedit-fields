@@ -100,7 +100,7 @@ class Filters extends Feature {
 
 		} else if ( 'user' == $content_kind ) {
 
-			add_action( 'restrict_manage_users', [ $this, 'render_filters' ], 10, 2 );
+			add_action( 'manage_users_extra_tablenav', [ $this, 'render_filter_form' ], 10, 1 );
 			add_filter( 'pre_get_users', [ $this, 'pre_get_users' ] );
 		}
 	}
@@ -118,32 +118,49 @@ class Filters extends Feature {
 	}
 
 	/**
-	 *	@action manage_posts_extra_tablenav
-	 *	@action manage_users_extra_tablenav
+	 *	@action restrict_manage_users
+	 *	@action restrict_manage_posts
 	 *	@action manage_terms_extra_tablenav
 	 */
-	public function render_filters( $post_type, $which ) {
+	public function render_filters( $post_type, $which = null ) {
 
-		if ( 'top' !== $which ) {
+		if ( ( ! is_null( $which ) && 'top' !== $which ) || ( is_null( $which ) && 'top' !== $post_type ) ) {
 			return;
 		}
-
-		$index = 0;
-
 		?>
-		<input type="hidden" name="meta_query[relation]" value="AND" />
-		<?php
-		foreach ( $this->fields as $name => $field ) {
+		<div class="alignleft actions acf-qef-filter-form">
+			<?php
 
-			if ( isset( $_REQUEST['meta_query'] ) && isset( $_REQUEST['meta_query'][$index] ) && isset( $_REQUEST['meta_query'][$index]['value'] ) ) {
-				$selected = wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] );
-			} else {
-				$selected = '';
+			$index = 0;
+
+			?>
+			<input type="hidden" name="meta_query[relation]" value="AND" />
+			<?php
+			foreach ( $this->fields as $name => $field ) {
+
+				if ( isset( $_REQUEST['meta_query'] ) && isset( $_REQUEST['meta_query'][$index] ) && isset( $_REQUEST['meta_query'][$index]['value'] ) ) {
+					$selected = wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] );
+				} else {
+					$selected = '';
+				}
+				echo $field->render_filter( $index++, $selected );
 			}
-			echo $field->render_filter( $index++, $selected );
-		}
-		?>
+			?>
+		</div>
 		<?php
+	}
+
+	/**
+	 *	@action manage_users_extra_tablenav
+	 */
+	public function render_filter_form($which) {
+		if ( 'top' === $which ) {
+			$this->render_filters( '', 'top' );
+			printf(
+				'<button type="submit" name="action" id="term-query-submit" class="button" value="filter">%s</button>',
+				esc_html__( 'Filter', 'acf-quickedit-fields' )
+			);
+		}
 	}
 
 	/**
@@ -158,19 +175,8 @@ class Filters extends Feature {
 		?>
 		<!-- BEGIN: ACF QuickEdit Fields -->
 		<template id="acf-qef-terms-filter-form">
-			<div class="alignleft actions">
-				<input type="hidden" name="delete_tags[]" value="-1" />
-				<?php
-
-				$this->render_filters( '', 'top' );
-
-				printf(
-					'<button type="submit" name="action" id="term-query-submit" class="button" value="filter">%s</button>',
-					esc_html__( 'Filter', 'acf-quickedit-fields' )
-				);
-
-				?>
-			</div>
+			<input type="hidden" name="delete_tags[]" value="-1" />
+			<?php $this->render_filter_form( '', 'top' ); ?>
 		</template>
 		<script>
 		(function($){

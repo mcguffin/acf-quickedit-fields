@@ -17,7 +17,7 @@ trait ColumnLists {
 
 		$output = '';
 
-		if ( $is_multiple && is_array( $value ) ) {
+		if ( $is_multiple && is_array( $value ) && count( $value ) > 0 ) {
 
 			$output .= '<ul>'.PHP_EOL;
 			foreach ( $value as $val ) {

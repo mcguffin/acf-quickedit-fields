@@ -97,6 +97,6 @@ class Quickedit extends EditFeature {
 	 *	@inheritdoc
 	 */
 	protected function is_saving() {
-		return ( isset( $_POST['action'] ) && $_POST['action'] === 'inline-save');
+		return isset( $_POST['action'] ) && in_array( $_POST['action'], ['inline-save','inline-save-tax'] );
 	}
 }

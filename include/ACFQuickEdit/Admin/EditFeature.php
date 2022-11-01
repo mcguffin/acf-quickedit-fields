@@ -21,20 +21,20 @@ abstract class EditFeature extends Feature {
 	 */
 	public function init_fields() {
 
+		$current_view = CurrentView::instance();
+		$object_kind = $current_view->get_object_kind();
+
+		if ( ! in_array( $object_kind, ['post','term'] ) ) {
+			return false;
+		}
+
 		$is_active = parent::init_fields();
 
 		if ( ! $is_active ) {
 			return;
 		}
 
-		$current_view = CurrentView::instance();
-		$object_kind = $current_view->get_object_kind();
-
-
-		if ( $object_kind === 'user' ) {
-			// no QE on user screen
-			return;
-		} else if ( $object_kind == 'term' ) {
+		if ( $object_kind == 'term' ) {
 			// cb
 			$action = 'edit_term';
 			$callback = [ $this, 'save_acf_term_meta' ];

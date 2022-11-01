@@ -121,6 +121,7 @@ abstract class Feature extends Core\Singleton {
 		}
 
 		$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+
 		$meta_query = array_filter( $meta_query, function($clause) {
 			if ( ! is_array( $clause ) ) {
 				return true;
@@ -131,7 +132,7 @@ abstract class Feature extends Core\Singleton {
 		if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
 			$meta_query = [];
 		}
-// var_dump(apply_filters( 'acf_qef_meta_query_request', $meta_query ));exit();
+
 		return apply_filters( 'acf_qef_meta_query_request', $meta_query );
 	}
 
