@@ -39,6 +39,26 @@ class Admin extends Core\Singleton {
 	private $js_columns;
 
 	/**
+	 *	@var Columns
+	 */
+	private $columns = null;
+
+	/**
+	 *	@var Quickedit
+	 */
+	private $quickedit = null;
+
+	/**
+	 *	@var Bulkedit
+	 */
+	private $bulkedit = null;
+
+	/**
+	 *	@var Filters
+	 */
+	private $filters = null;
+
+	/**
 	 *	@inheritdoc
 	 */
 	protected function __construct() {

@@ -11,10 +11,52 @@ if ( ! defined( 'ABSPATH' ) )
 class Filters extends Feature {
 
 	/**
+	 *	Field value will leave fields unchanged
+	 */
+	private $no_value = '___no_value';
+
+	/**
 	 *	@inheritdoc
 	 */
 	protected function __construct() {
+		add_filter( 'acf_qef_meta_query_request', [ $this, 'transform_meta_query' ] );
 		parent::__construct();
+	}
+
+	/**
+	 *	@filter acf_qef_meta_query_request
+	 */
+	public function transform_meta_query( $meta_query ) {
+		return array_map( function( $statement ) {
+			if (
+				! is_array( $statement )
+				|| ! isset( $statement['value'] )
+				|| $statement['value'] !== $this->no_value
+			) {
+				return $statement;
+			}
+			return [
+				'relation' => 'OR',
+				[
+					'key' => $statement['key'],
+					'compare' => 'NOT EXISTS',
+				],
+				[
+					'key' => $statement['key'],
+					'compare' => '=',
+					'value' => '',
+				],
+			];
+		}, $meta_query );
+	}
+
+	/**
+	 *	Get value for do-not-change chackbox
+	 *
+	 *	@return string
+	 */
+	public function get_none_value() {
+		return $this->no_value;
 	}
 
 	/**
@@ -92,6 +134,7 @@ class Filters extends Feature {
 		<input type="hidden" name="meta_query[relation]" value="AND" />
 		<?php
 		foreach ( $this->fields as $name => $field ) {
+
 			if ( isset( $_REQUEST['meta_query'] ) && isset( $_REQUEST['meta_query'][$index] ) && isset( $_REQUEST['meta_query'][$index]['value'] ) ) {
 				$selected = wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] );
 			} else {

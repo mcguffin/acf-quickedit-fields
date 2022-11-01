@@ -2,6 +2,8 @@
 
 namespace ACFQuickEdit\Fields\Traits;
 
+use ACFQuickEdit\Admin;
+
 trait Filter {
 
 	/**
@@ -13,11 +15,14 @@ trait Filter {
 	 */
 	protected function render_filter_dropdown( $index, $selected = '', $is_multiple = false, $choices = [] ) {
 
+		$none_value = Admin\Filters::instance()->get_none_value();
+
 		$out = '';
 
 		if ( ! count( $choices ) ) {
 			return $out;
 		}
+
 
 		$out .= sprintf( '<input type="hidden" name="meta_query[%d][key]" value="%s" />', $index, $this->get_meta_key() ) . PHP_EOL;
 		if ( $is_multiple ) {
@@ -40,6 +45,15 @@ trait Filter {
 					$this->acf_field['label']
 				)
 			)
+		) . PHP_EOL;
+
+		$out .= sprintf(
+			'<option value="%s" %s>%s</option>',
+			esc_attr( $none_value ),
+			$selected === $none_value
+				? 'selected'
+				: '',
+			$this->__no_value()
 		) . PHP_EOL;
 
 		foreach ( $choices as $value => $label ) {
