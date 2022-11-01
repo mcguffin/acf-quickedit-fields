@@ -9,6 +9,31 @@ class SelectField extends ChoiceField {
 
 	use Traits\BulkOperationLists;
 	use Traits\InputSelect;
+	use Traits\ColumnLists;
+	use Traits\Filter;
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		return $this->render_filter_dropdown(
+			$index,
+			$selected,
+			isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'],
+			$this->acf_field['choices']
+		);
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_column( $object_id ) {
+		return $this->render_list_column(
+			$object_id,
+			isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple']
+		);
+	}
 
 	/**
 	 *	@inheritdoc

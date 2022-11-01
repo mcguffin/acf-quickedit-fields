@@ -8,9 +8,26 @@ if ( ! defined( 'ABSPATH' ) )
 class TaxonomyField extends Field {
 
 	use Traits\BulkOperationLists;
+	use Traits\ColumnLists;
 	use Traits\InputCheckbox;
 	use Traits\InputRadio;
 	use Traits\InputSelect;
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_column( $object_id ) {
+
+		if ( ! current_user_can( 'list_users' ) ) {
+			return '';
+		}
+
+		return $this->render_list_column(
+			$object_id,
+			isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'],
+			[ $this, 'render_list_column_item_value_term' ]
+		);
+	}
 
 	/**
 	 *	@inheritdoc
@@ -34,45 +51,6 @@ class TaxonomyField extends Field {
 			];
 		}
 		return [];
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
-	public function render_column( $object_id ) {
-
-		$output = '';
-
-		$value = $this->get_value( $object_id, false );
-
-		if ( $value ) {
-			$term_names = [];
-			if ( ! is_array( $value ) ) {
-				$value = [ $value ];
-			}
-
-			foreach ( $value as $i => $term ) {
-
-				$term_obj = get_term( $term, $this->acf_field['taxonomy'] );
-
-				// fix #63 ?
-				if ( is_null( $term_obj ) ) {
-					/* translators: Term ID */
-					$term_names[] = sprintf( esc_html__( '(Term ID %d not found)', 'acf-quickedit-fields' ), $term );
-				} else if ( trim( $term_obj->name ) !== '' ) {
-					$term_names[] = $term_obj->name;
-				} else if ( trim( $term_obj->slug ) !== '' ) {
-					$term_names[] = $term_obj->slug;
-				} else {
-					$term_names[] = $term_obj->id;
-				}
-			}
-			$term_names = array_map( 'esc_html', $term_names );
-			$output .= implode( ', ', $term_names );
-		} else {
-			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
-		}
-		return $output;
 	}
 
 	/**

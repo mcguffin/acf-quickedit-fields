@@ -2,7 +2,7 @@
     "key": "group_acf_qef_choicoid",
     "title": "QuickEdit Fields Choicoid",
     "fields": [
-		{
+        {
             "key": "field_635fe85da50e4",
             "label": "Text",
             "name": "text",
@@ -27,7 +27,7 @@
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         },
-		{
+        {
             "key": "field_635fe85665e60",
             "label": "Number",
             "name": "number",
@@ -54,7 +54,7 @@
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         },
-		{
+        {
             "key": "field_635fe850d233a",
             "label": "URL",
             "name": "url",
@@ -76,7 +76,7 @@
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         },
-		{
+        {
             "key": "field_635fcdee3dff9",
             "label": "Checkbox",
             "name": "checkbox",
@@ -146,7 +146,7 @@
             "allow_bulkedit": 1,
             "show_column_filter": 1
         },
-		{
+        {
             "key": "field_635fcdf8147a1",
             "label": "Select",
             "name": "select",
@@ -180,7 +180,7 @@
             "ajax": 0,
             "placeholder": ""
         },
-		{
+        {
             "key": "field_635fce004bfaf",
             "label": "Select Multiple UI Ajax",
             "name": "select_mul_ui",
@@ -199,12 +199,12 @@
                 "two": "Two",
                 "three": "Three",
                 "four": "Four",
-				"five": "Five",
+                "five": "Five",
                 "six": "Six",
                 "seven": "Seven",
-				"eight": "Eight"
+                "eight": "Eight"
             },
-            "default_value": false,
+            "default_value": [],
             "return_format": "value",
             "multiple": 1,
             "allow_null": 0,
@@ -218,7 +218,7 @@
             "ajax": 1,
             "placeholder": ""
         },
-		{
+        {
             "key": "field_635fce53c718c",
             "label": "Taxonomy Checkbox",
             "name": "qef_taxonomy",
@@ -326,7 +326,7 @@
             "allow_bulkedit": 1,
             "multiple": 0
         },
-		{
+        {
             "key": "field_635fd67983ab9",
             "label": "Post Object",
             "name": "post_object",
@@ -347,11 +347,11 @@
             "return_format": "object",
             "show_column": 1,
             "show_column_weight": 1530,
-			"allow_quickedit": 1,
+            "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "ui": 1
         },
-		{
+        {
             "key": "field_635fd7f929ec3",
             "label": "User",
             "name": "user",
@@ -374,6 +374,41 @@
             "show_column_weight": 1520,
             "allow_quickedit": 1,
             "allow_bulkedit": 1
+        },
+        {
+            "key": "field_6360e9c76589d",
+            "label": "Relationship",
+            "name": "relationship",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "acf-quef-test"
+            ],
+            "taxonomy": [
+                "acf-quef-test:aaaaa",
+                "acf-quef-test:ad-astra",
+                "acf-quef-test:ad-hoc",
+                "acf-quef-test:freemish"
+            ],
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "return_format": "object",
+            "min": "",
+            "max": "",
+            "elements": "",
+            "show_column": 1,
+            "show_column_weight": 1550
         }
     ],
     "location": [
@@ -405,8 +440,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
     "show_in_rest": 1,
-    "modified": 1666994207
+    "modified": 1667297427
 }

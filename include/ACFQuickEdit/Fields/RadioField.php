@@ -8,6 +8,20 @@ if ( ! defined( 'ABSPATH' ) )
 class RadioField extends ChoiceField {
 
 	use Traits\InputRadio;
+	use Traits\Filter;
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		return $this->render_filter_dropdown(
+			$index,
+			$selected,
+			false,
+			$this->acf_field['choices']
+		);
+	}
 
 	/**
 	 *	@inheritdoc

@@ -8,6 +8,20 @@ if ( ! defined( 'ABSPATH' ) )
 class TrueFalseField extends Field {
 
 	use Traits\InputRadio;
+	use Traits\Filter;
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		return $this->render_filter_dropdown(
+			$index,
+			$selected,
+			false,
+			$this->get_choices()
+		);
+	}
 
 	/**
 	 *	@inheritdoc
@@ -36,47 +50,6 @@ class TrueFalseField extends Field {
 	 */
 	public function is_sortable() {
 		return 'unsigned';
-	}
-
-	/**
-	 *	@param int $index
-	 */
-	public function render_filter( $index, $selected = '' ) {
-
-		$ui = isset( $this->acf_field['ui'] ) && $this->acf_field['ui'];
-
-		$choices = $this->get_choices();
-
-		$out = '';
-		$out .= sprintf( '<input type="hidden" name="meta_query[%d][key]" value="%s" />', $index, esc_attr($this->acf_field['name']) ) . PHP_EOL;
-		$out .= sprintf( '<select name="meta_query[%d][value]">', $index ) . PHP_EOL;
-		$out .= sprintf(
-			'<option value="" %s>%s</option>',
-			$selected === ''
-				? 'selected'
-				: '',
-			esc_html(
-				sprintf(
-					/* translators: acf field label, neutral */
-					__( '— Select: %s —', 'acf-quickedit-fields' ),
-					$this->acf_field['label']
-				)
-			)
-		) . PHP_EOL;
-
-		foreach ( $choices as $value => $label ) {
-			$out .= sprintf(
-				'<option value="%s" %s>%s</option>',
-				esc_attr( $value ),
-				$selected === "{$value}"
-					? 'selected'
-					: '',
-				esc_html( $label )
-			) . PHP_EOL;
-		}
-		$out .= '</select>' . PHP_EOL;
-
-		return $out;
 	}
 
 	/**
