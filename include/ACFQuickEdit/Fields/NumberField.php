@@ -19,7 +19,7 @@ class NumberField extends Field {
 		$value = $this->get_value( $object_id );
 
 		if ( $value === "" ) {
-			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
+			$output .= $this->__no_value();
 		} else {
 			$output .= number_format_i18n( floatval($value), strlen( substr( strrchr( $value, "." ), 1 ) ) ); //
 		}

@@ -19,7 +19,7 @@ class PageLinkField extends Field {
 		//*/
 
 		if ( ! $value ) {
-			return __('(No value)', 'acf-quickedit-fields');
+			return $this->__no_value();
 		}
 
 		if ( is_string( $value ) ) {

@@ -15,7 +15,7 @@ class DateTimePickerField extends Field {
 		$value = $this->get_value( $object_id, false );
 
 		if ( is_null( $value ) ) {
-			return __('(No value)', 'acf-quickedit-fields');
+			return $this->__no_value();
 		}
 
 		return acf_format_date( $value, $this->acf_field['display_format'] );

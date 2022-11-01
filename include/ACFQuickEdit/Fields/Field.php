@@ -442,6 +442,13 @@ abstract class Field {
 	}
 
 	/**
+	 *	@return string No Value
+	 */
+	public function __no_value() {
+		return esc_html__( '(No value)', 'acf-quickedit-fields' );
+	}
+
+	/**
 	 *	@return mixed Unsanitized value of acf field.
 	 */
 	public function get_value( $object_id, $format_value = true ) {

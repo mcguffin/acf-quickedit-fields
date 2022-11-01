@@ -34,7 +34,7 @@ trait ColumnLists {
 
 		} else {
 			// $output .= '<p>';
-			$output .= esc_html__( '(No value)', 'acf-quickedit-fields' );
+			$output .= $this->__no_value();
 			// $output .= '</p>';
 		}
 		return $output;

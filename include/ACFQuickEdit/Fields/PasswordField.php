@@ -19,7 +19,7 @@ class PasswordField extends Field {
 		if ( $value ) {
 			$output .= '<code>********</code>';
 		} else {
-			$output .= esc_html__('(No value)', 'acf-quickedit-fields');
+			$output .= $this->__no_value();
 		}
 		return $output;
 	}
