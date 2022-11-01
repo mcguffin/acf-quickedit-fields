@@ -195,7 +195,7 @@ class Admin extends Core\Singleton {
 		if ( is_numeric( $object_id ) ) {
 			return current_user_can( 'edit_post', $object_id );
 		}
-		if ( preg_match('/^([\w\d-_]+)_(\d+)$/', $object_id, $matches ) ) {
+		if ( preg_match('/^([\w\d\-_]+)_(\d+)$/', $object_id, $matches ) ) {
 			list( $obj_id, $type, $term_id ) = $matches;
 			if ( $taxonomy === 'user' ) {
 				return false;
