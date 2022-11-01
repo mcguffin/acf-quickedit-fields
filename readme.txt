@@ -75,9 +75,10 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 
 
 == Screenshots ==
-1. Field Group Admin
-2. Some Columns and QuickEdit
-3. Bulk Editor
+1. Field group admin
+2. Column view and posts filter
+3. QuickEdit
+4. Bulk editor with bulk operations
 
 == Upgrade Notice ==
 
