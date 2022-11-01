@@ -2,6 +2,76 @@
     "key": "group_acf_qef_jquery",
     "title": "QuickEdit Fields jQuery",
     "fields": [
+		{
+            "key": "field_636149b81b5c5",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "dropzone": 0,
+            "show_column": 1,
+            "show_column_weight": 1310,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1
+        },
+		{
+            "key": "field_63614943e2dc6",
+            "label": "Checkbox",
+            "name": "checkbox",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+                "Baz": "Baz",
+				"D‘Artagnan": "D‘Artagnan",
+				"c'mon": "c'mon",
+				"The \"Pest\"": "The \"Pest\"",
+                "Baque": "Baque",
+                "Borque": "Borque",
+				"s:3:\"one\";": "s:3:\"one\";",
+                "Snoop": "Snoop",
+                "Gurl": "Gurl"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 1,
+            "save_custom": 1,
+            "layout": "vertical",
+            "toggle": 1,
+            "show_column": 1,
+            "show_column_weight": 1120,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 1
+        },
         {
             "key": "field_5004e4ec14024",
             "label": "Date Picker",
@@ -88,28 +158,6 @@
             "show_column_weight": 1440,
             "allow_quickedit": 1,
             "allow_bulkedit": 1
-        },
-        {
-            "key": "field_6127364fac2ec",
-            "label": "Color Picker RGBA",
-            "name": "color_picker_rgba",
-            "type": "color_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "enable_opacity": 1,
-            "return_format": "array",
-            "show_column": 1,
-            "show_column_sortable": 1,
-            "show_column_weight": 1440,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1
         }
     ],
     "location": [
@@ -141,7 +189,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": 1,
     "description": "",
-    "modified": 1629959853
+    "modified": 1667320167
 }

@@ -2,16 +2,16 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.1.14\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-04T10:20:07+00:00\n"
+"POT-Creation-Date: 2022-11-01T16:50:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: acf-quickedit-fields\n"
 
 #. Plugin Name of the plugin
@@ -35,80 +35,94 @@ msgid "https://github.com/mcguffin"
 msgstr ""
 
 #. Translators: 1: ACF Pro URL, 2: plugins page url
-#: include/ACFQuickEdit/Admin/Admin.php:203
+#: include/ACFQuickEdit/Admin/Admin.php:220
 msgid "The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href=\"%2$s\">plugins page</a>."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:47
+#: include/ACFQuickEdit/Admin/FieldGroup.php:45
 msgid "List Table Settings"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:64
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:82
+#: include/ACFQuickEdit/Admin/FieldGroup.php:60
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:84
 msgid "Show Column"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:65
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:60
+#: include/ACFQuickEdit/Admin/FieldGroup.php:61
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:62
 msgid "Show a column in the posts list table"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:76
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:95
+#: include/ACFQuickEdit/Admin/FieldGroup.php:71
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:97
 msgid "Sortable Column"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:77
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:100
+#: include/ACFQuickEdit/Admin/FieldGroup.php:72
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:102
 msgid "Make this column sortable"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:89
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:110
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:114
+#: include/ACFQuickEdit/Admin/FieldGroup.php:83
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:112
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:116
 msgid "Column Weight"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:90
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:111
+#: include/ACFQuickEdit/Admin/FieldGroup.php:84
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:113
 msgid "Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:110
+#: include/ACFQuickEdit/Admin/FieldGroup.php:104
 msgid "Enable QuickEdit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:125
+#: include/ACFQuickEdit/Admin/FieldGroup.php:119
 msgid "Enable Bulk Edit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:56
+#: include/ACFQuickEdit/Admin/FieldGroup.php:133
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:211
+msgid "Enable filter"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:134
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:212
+msgid "Filters will work with posts and user list tables. Terms lack an appropriate"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/Filters.php:161
+msgid "Filter"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:58
 msgid "Column View"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:87
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:89
 msgid "Show column in list tables"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:148
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:147
 msgid "Editing"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:173
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:172
 msgid "QuickEdit"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:177
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:194
+msgid "Enabled"
 msgstr ""
 
 #: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:178
 #: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:195
-msgid "Enabled"
-msgstr ""
-
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:179
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:196
 msgid "Disabled"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:190
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:189
 msgid "Bulk Edit"
 msgstr ""
 
@@ -120,61 +134,138 @@ msgstr ""
 msgid "Insufficient Permission"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/CheckboxField.php:32
-msgid " Toggle All"
+#: include/ACFQuickEdit/Fields/CheckboxField.php:52
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationLists.php:13
+msgid "Merge"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/CheckboxField.php:65
-msgid "Add Choice"
+#: include/ACFQuickEdit/Fields/CheckboxField.php:53
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationLists.php:14
+msgid "Remove"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/ChoiceField.php:57
-#: include/ACFQuickEdit/Fields/DateTimePickerField.php:18
-#: include/ACFQuickEdit/Fields/NumberField.php:24
-#: include/ACFQuickEdit/Fields/PageLinkField.php:22
-#: include/ACFQuickEdit/Fields/PasswordField.php:22
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:46
-msgid "(No value)"
+#: include/ACFQuickEdit/Fields/CheckboxField.php:54
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationLists.php:15
+msgid "Overlap"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/Field.php:278
+#: include/ACFQuickEdit/Fields/Field.php:317
 msgid "Do not change"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/FileField.php:46
+#: include/ACFQuickEdit/Fields/Field.php:377
+msgid "– Operation –"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Field.php:448
+#: include/ACFQuickEdit/Fields/TrueFalseField.php:38
+msgid "(No value)"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/FileField.php:43
 msgid "Select File"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/FileField.php:47
+#: include/ACFQuickEdit/Fields/FileField.php:44
 msgid "Remove File"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/LinkField.php:58
+#: include/ACFQuickEdit/Fields/LinkField.php:56
 msgid "Select Link"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/LinkField.php:59
+#: include/ACFQuickEdit/Fields/LinkField.php:57
 msgid "Remove Link"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/PostObjectField.php:82
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:48
+msgid "Union"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:49
+msgid "Difference"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:50
+msgid "Intersection"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationNumeric.php:12
+msgid "+"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationNumeric.php:13
+msgid "&minus;"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationNumeric.php:14
+msgid "&times;"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationNumeric.php:15
+msgid "&divide;"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationText.php:12
+msgid "Prepend"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationText.php:13
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:12
+msgid "Append"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:13
+msgid "Add GET-Variable"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:14
+msgid "Remove GET-Variable"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:15
+msgid "Add path segment"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:16
+msgid "Remove path segment"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/BulkOperationURL.php:17
+msgid "Replace host"
+msgstr ""
+
+#. translators: Post ID
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:59
+msgid "(Post %s not found)"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:66
 msgid "(no title)"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/RelationshipField.php:73
-msgid "Private"
-msgstr ""
-
-#: include/ACFQuickEdit/Fields/SelectField.php:31
-msgid "— Select —"
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:99
+msgid "(User not found)"
 msgstr ""
 
 #. translators: Term ID
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:34
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:129
 msgid "(Term ID %d not found)"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:102
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:120
-msgid "– No Selection –"
+#. translators: acf field label
+#: include/ACFQuickEdit/Fields/Traits/Filter.php:44
+msgid "— %s —"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/InputCheckbox.php:39
+msgid " Toggle All"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/InputCheckbox.php:72
+msgid "Add Choice"
+msgstr ""
+
+#: include/ACFQuickEdit/Fields/Traits/InputSelect.php:50
+msgid "— Select —"
 msgstr ""
