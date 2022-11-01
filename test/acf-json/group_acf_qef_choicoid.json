@@ -114,8 +114,12 @@
                 "three": "Three",
                 "four": "Four",
                 "Baz": "Baz",
+				"D‘Artagnan": "D‘Artagnan",
+				"c'mon": "c'mon",
+				"The \"Pest\"": "The \"Pest\"",
                 "Baque": "Baque",
                 "Borque": "Borque",
+				"s:3:\"one\";": "s:3:\"one\";",
                 "Snoop": "Snoop",
                 "Gurl": "Gurl"
             },
@@ -149,7 +153,12 @@
                 "one": "One",
                 "two": "Two",
                 "three": "Three",
-                "four": "Four"
+                "four": "Four",
+				"c'mon": "c'mon",
+				"The \"Pest\"": "The \"Pest\"",
+                "Baque": "Baque",
+                "Borque": "Borque",
+				"s:3:\"one\";": "s:3:\"one\";"
             },
             "default_value": "",
             "return_format": "value",
@@ -182,7 +191,12 @@
                 "one": "One",
                 "two": "Two",
                 "three": "Three",
-                "four": "Four"
+                "four": "Four",
+				"c'mon": "c'mon",
+				"The \"Pest\"": "The \"Pest\"",
+                "Baque": "Baque",
+                "Borque": "Borque",
+				"s:3:\"one\";": "s:3:\"one\";"
             },
             "default_value": false,
             "return_format": "value",
@@ -220,7 +234,12 @@
                 "five": "Five",
                 "six": "Six",
                 "seven": "Seven",
-                "eight": "Eight"
+                "eight": "Eight",
+				"c'mon": "c'mon",
+				"The \"Pest\"": "The \"Pest\"",
+                "Baque": "Baque",
+                "Borque": "Borque",
+				"s:3:\"one\";": "s:3:\"one\";"
             },
             "default_value": [],
             "return_format": "value",
