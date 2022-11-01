@@ -126,6 +126,7 @@
 }
 .wp-list-table {
 	&.fixed {
+		.column-slug,
 		.column-posts,
 		.column-parent,
 		.column-links,

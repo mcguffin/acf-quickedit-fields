@@ -176,7 +176,7 @@ class Filters extends Feature {
 		<!-- BEGIN: ACF QuickEdit Fields -->
 		<template id="acf-qef-terms-filter-form">
 			<input type="hidden" name="delete_tags[]" value="-1" />
-			<?php $this->render_filter_form( '', 'top' ); ?>
+			<?php $this->render_filter_form( 'top' ); ?>
 		</template>
 		<script>
 		(function($){

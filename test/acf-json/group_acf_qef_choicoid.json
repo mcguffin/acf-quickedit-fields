@@ -2,6 +2,24 @@
     "key": "group_acf_qef_choicoid",
     "title": "QuickEdit Fields Choicoid",
     "fields": [
+
+		{
+            "key": "field_6361084891eff",
+            "label": "Choicoid Group",
+            "name": "choicoid_group",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+
+
         {
             "key": "field_635fe85da50e4",
             "label": "Text",
@@ -410,6 +428,13 @@
             "show_column": 1,
             "show_column_weight": 1550
         }
+
+
+			],
+			"show_column": 1,
+            "show_column_weight": 1550
+		}
+
     ],
     "location": [
         [
