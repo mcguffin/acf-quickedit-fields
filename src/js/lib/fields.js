@@ -18,8 +18,8 @@ import textarea from 'fields/textarea.js'
 import time_picker from 'fields/time_picker.js'
 import true_false from 'fields/true_false.js'
 import url from 'fields/url.js'
+import user from 'fields/user.js'
 
-const user = Object.assign({},select,{type:'user'} );
 
 const View = wp.media.View.extend({
 	events:{
@@ -165,13 +165,13 @@ field.add_type( taxonomy );
 field.add_type( true_false );
 
 /**
- *	field type user
- */
-field.add_type( user );
-
-/**
  *	field type url
  */
 field.add_type( url );
+
+/**
+ *	field type user
+ */
+field.add_type( user );
 
 module.exports = field;
