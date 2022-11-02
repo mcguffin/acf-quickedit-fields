@@ -29,6 +29,8 @@ module.exports = ( type, fieldBaseClass ) => {
 				value.map( append )
 			} else if( _.isObject(value) ) {
 				append( value )
+			} else if ( (  _.isNumber(value) || _.isString(value) ) && this.$input.find(`[value="${value}"]`).length ) {
+				this.$input.val(value)
 			}
 
 			return this;
