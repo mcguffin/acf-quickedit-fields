@@ -285,7 +285,7 @@ class Columns extends Feature {
 
 		$meta_query = parent::get_meta_query( $wp_query );
 
-		if ( !( $by = $wp_query->query_vars['orderby']) ) {
+		if ( ! isset( $wp_query->query_vars['orderby'] ) || !( $by = $wp_query->query_vars['orderby']) ) {
 			return $meta_query;
 		}
 		if ( ! isset( $this->fields[ $by ] ) ) {
