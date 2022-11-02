@@ -3,13 +3,13 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 7.2
 Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Enable Columns, Quick Edit and Bulk Edit for ACF Fields in WordPress List Tables
+Enable Columns, Filters, Quick Edit and Bulk Edit for ACF Fields in WordPress List Tables
 
 == Description ==
 
@@ -32,7 +32,9 @@ WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields P
 
  - *Sortable Column* will make the column sortable. This only works with primitive Field types like Text, Number, Range and so on.
 
- - *Column weight* gives you an option to take control of the column order. The higher the weight, the more to the right the column will be. Present columns will have defaults weights of multiples of 100 starting with zero for the checkbox column. For example to place an image column between the checkbox (column weight = 0) and title (clumn weight = 100) choose a value between 0 and 100.
+ - *Column weight* gives you an option to take control of the column order. The higher the weight, the more to the right the column will be. Present columns will have defaults weights of multiples of 100 starting with zero for the checkbox column. For example to place an image column between the checkbox (column weight = 0) and title (column weight = 100) choose a value between 0 and 100.
+
+ - *Filter* add a filter to the posts users or terms list.
 
 **Editing**
 
@@ -59,15 +61,23 @@ Just follow the [Automatic Plugin Installation](https://wordpress.org/support/ar
 
 = When will you support the Non-ACF Field XYZ? =
 
-Presumbly I won't – I'm sorry. However, there are some [plugin filters and actions](https://github.com/mcguffin/acf-quickedit-fields/wiki/Plugin-Filters) that might come in handy, if you decide to write an implementation by yourself.
+Presumbly I won't. However, there are some [plugin filters and actions](https://github.com/mcguffin/acf-quickedit-fields/wiki/Plugin-Filters) that might come in handy, if you decide to write an implementation by yourself.
 
 I even wrote a [tutorial page](https://github.com/mcguffin/acf-quickedit-fields/wiki/Tutorial:-Custom-Field-Integration) on how to write our own field type integration.
 
-= I found a bug. Where should I post it? =
+= I'm having trouble. =
 
-Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-quickedit-fields/issues).
+Please use the issues section in the [GitHub-Repository](https://github.com/mcguffin/acf-quickedit-fields/issues). A well described issue that can be reproduced quickly is more likely to be fixed quickly.
 
-I will most likely not maintain the forum support forum on wordpress.org. Anyway, other users might have an answer for you, so it's worth a shot.
+I will most likely not maintain the support forum on wordpress.org. Anyway, other users might have an answer for you, so it's worth a shot.
+
+= I'm having trouble with WooCommerce. =
+
+Welcome to the world of commerce.
+
+If you are located in the EU, you can [hire me](https://flyingletters.net) for the usual market price of an IT guy in central europe.
+
+Outside the EU you can try to fix it yourself or find someone who does. I will likely accept well crafted and tested pull request in the [GitHub-Repository](https://github.com/mcguffin/acf-quickedit-fields).
 
 = I'd like to suggest a feature. Where should I post it? =
 
