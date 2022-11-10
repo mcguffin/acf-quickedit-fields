@@ -14,6 +14,7 @@ trait ColumnLists {
 		}
 
 		$value = (array) $this->get_value( $object_id, false );
+		$value = array_filter( $value );
 
 		$output = '';
 
