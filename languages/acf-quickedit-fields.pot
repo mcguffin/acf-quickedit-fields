@@ -2,14 +2,14 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.2.1\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.2.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-02T13:49:28+00:00\n"
+"POT-Creation-Date: 2022-11-10T18:48:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: acf-quickedit-fields\n"
@@ -178,15 +178,15 @@ msgstr ""
 msgid "Remove Link"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:48
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:107
 msgid "Union"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:49
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:108
 msgid "Difference"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:50
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:109
 msgid "Intersection"
 msgstr ""
 
@@ -236,20 +236,20 @@ msgid "Replace host"
 msgstr ""
 
 #. translators: Post ID
-#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:59
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:62
 msgid "(Post %s not found)"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:66
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:69
 msgid "(no title)"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:99
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:102
 msgid "(User not found)"
 msgstr ""
 
 #. translators: Term ID
-#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:129
+#: include/ACFQuickEdit/Fields/Traits/ColumnLists.php:132
 msgid "(Term ID %d not found)"
 msgstr ""
 

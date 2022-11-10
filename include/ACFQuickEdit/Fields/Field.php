@@ -74,7 +74,7 @@ abstract class Field {
 			'page_link'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ],
 			'link'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
 			'relationship'		=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ], // TODO: select post filter
-			'taxonomy'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ], // TODO: select term filter
+			'taxonomy'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
 			'user'				=> [
 				'column'	=> current_user_can('list_users'),
 				'quickedit'	=> current_user_can('list_users'),
