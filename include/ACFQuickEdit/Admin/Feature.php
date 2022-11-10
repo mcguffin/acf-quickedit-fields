@@ -45,8 +45,17 @@ abstract class Feature extends Core\Singleton {
 		} else {
 			add_action( 'current_screen', [ $this, 'init_fields' ] );
 		}
+
+		add_filter( 'acf/load_field', [ $this, 'load_field' ] );
+
 		parent::__construct();
 	}
+
+
+	/**
+	 *	@filter acf/load_field
+	 */
+	 abstract public function load_field( $field );
 
 	/**
 	 *	@param string $content_kind
@@ -168,25 +177,6 @@ abstract class Feature extends Core\Singleton {
 	public function supports( $type ) {
 		$types = Fields\Field::get_types();
 		return isset( $types[ $type ] ) && $types[ $type ][ $this->get_type() ];
-	}
-
-	/**
-	 *	@param	array	$field_group	ACF Field Group
-	 *	@return	array
-	 */
-	protected function acf_get_fields( $field_group ) {
-		$return_fields = [];
-		if ( $acf_fields = acf_get_fields( $field_group ) ) {
-			foreach ( $acf_fields as $field ) {
-				if ( $field['type'] === 'group' ) {
-					$return_fields = array_merge( $return_fields, $field['sub_fields'] );
-				} else {
-					$return_fields[] = $field;
-				}
-			}
-		}
-		return $return_fields;
-
 	}
 
 	/**

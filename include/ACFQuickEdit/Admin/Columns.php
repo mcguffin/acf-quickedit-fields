@@ -29,6 +29,17 @@ class Columns extends Feature {
 	/**
 	 *	@inheritdoc
 	 */
+	public function load_field( $field ) {
+		return wp_parse_args( $field, [
+			'show_column'			=> false,
+			'show_column_weight'	=> 1000,
+			'show_column_sortable'	=> false,
+		]);
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		$is_active = parent::init_fields();

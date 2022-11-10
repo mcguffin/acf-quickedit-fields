@@ -18,16 +18,22 @@ use ACFQuickEdit\Fields;
 
 class CurrentView extends Core\Singleton {
 
+	/** @var array */
 	private $_available_field_groups = null;
 
-	private $object_kind = null; // post, term, user
+	/** @var string post|term|user */
+	private $object_kind = null;
 
-	private $object_type = null; // post, term, user
+	/** @var string <post_type>|<taxonomy>*/
+	private $object_type = null;
 
-	private $screen_param = []; // post_type|taxonomy
+	/** @var array */
+	private $screen_param = [];
 
+	/** @var array */
 	private $field_group_filter = null;
 
+	/** @var array */
 	private $field_to_group = [];
 
 	/**
@@ -206,14 +212,14 @@ class CurrentView extends Core\Singleton {
 
 		$fields = [];
 
-		foreach ( $groups as $field_group ) {
-			$group_fields = acf_get_fields( $field_group );
+		foreach ( $groups as $field_group_key ) {
+			$group_fields = acf_get_fields( $field_group_key );
 
 			$group_fields = $this->filter_fields( $query, $group_fields );
 
 			foreach ( $group_fields as $field )  {
 				// map to group
-				$this->field_to_group[ $field['key'] ] = $field_group;
+				$this->field_to_group[ $field['key'] ] = $field_group_key;
 
 			}
 			$fields = array_merge( $fields, $group_fields );
@@ -268,7 +274,12 @@ class CurrentView extends Core\Singleton {
 
 			$filters = $this->get_fieldgroup_filter();
 
-			$this->_available_field_groups = acf_get_field_groups( $filters );
+			$this->_available_field_groups = array_map(
+				function( $group ) {
+					return $group['key'];
+				},
+				acf_get_field_groups( $filters )
+			);
 
 		}
 
@@ -297,7 +308,7 @@ class CurrentView extends Core\Singleton {
 	 */
 	public function get_group_of_field( $field ) {
 		if ( isset( $this->field_to_group[ $field['key'] ] ) ) {
-			return $this->field_to_group[ $field['key'] ];
+			return acf_get_store( 'field-groups' )->get( $this->field_to_group[ $field['key'] ] );
 		}
 	}
 

@@ -96,6 +96,9 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+= 3.2.2 =
+ - Enhance memory efficiency
+
 = 3.2.1 =
  - Fix: PHP warning in Admin/CurrentView
  - Fix: select not being selected in QuickEdit
