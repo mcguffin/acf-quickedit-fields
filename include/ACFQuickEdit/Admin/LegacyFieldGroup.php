@@ -72,12 +72,6 @@ class LegacyFieldGroup extends Core\Singleton {
 
 		$field_object = Fields\Field::getFieldObject( $field['field'] );
 
-		// parse default values
-		$field['field'] = wp_parse_args( $field['field'], [
-			'show_column'	=> false,
-			'show_column_sortable'	=> false,
-		] );
-
 		echo '<div style="width:50%;float:left;">';
 
 		acf_render_field_wrap( [

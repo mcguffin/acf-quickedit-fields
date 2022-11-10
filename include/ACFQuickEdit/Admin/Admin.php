@@ -78,6 +78,9 @@ class Admin extends Core\Singleton {
 
 	}
 
+	/**
+	 *	@param string $what
+	 */
 	public function __get( $what ) {
 		switch( $what ) {
 			case 'js':

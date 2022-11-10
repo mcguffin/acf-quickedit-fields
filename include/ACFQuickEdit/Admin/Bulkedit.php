@@ -32,6 +32,15 @@ class Bulkedit extends EditFeature {
 	private $_bulk_operations = [];
 
 	/**
+	 *	@inheritdoc
+	 */
+	public function load_field( $field ) {
+		return wp_parse_args( $field, [
+			'allow_bulkedit'		=> false,
+		]);
+	}
+
+	/**
 	 *	@filter acf/validate_value
 	 */
 	public function validate_value( $valid, $value, $field, $input ) {

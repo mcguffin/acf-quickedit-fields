@@ -34,7 +34,7 @@ class UrlField extends Field {
 	 */
 	public function sanitize_value( $value, $context = 'db' ) {
 
-		if ( true === acf_validate_value( $value, $this->get_acf_field(), null ) ) {
+		if ( true === acf_validate_value( $value, $this->acf_field, null ) ) {
 			return esc_url_raw( $value );
 		}
 		return '';

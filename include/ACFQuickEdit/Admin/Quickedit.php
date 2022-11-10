@@ -32,6 +32,15 @@ class Quickedit extends EditFeature {
 	/**
 	 *	@inheritdoc
 	 */
+	public function load_field( $field ) {
+		return wp_parse_args( $field, [
+			'allow_quickedit'		=> false,
+		]);
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
 	public function init_fields() {
 
 		parent::init_fields();

@@ -96,6 +96,10 @@ On the whole upgrading is always a good idea.
 
 == Changelog ==
 
+
+= 3.2.3 =
+ - Enhance memory efficiency
+
 = 3.2.2 =
  - Feature: Support Taxonomy filter
  - Fix: Multiple selection taxonomy field reporting empty terms

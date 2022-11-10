@@ -24,6 +24,15 @@ class Filters extends Feature {
 	}
 
 	/**
+	 *	@inheritdoc
+	 */
+	public function load_field( $field ) {
+		return wp_parse_args( $field, [
+			'show_column_filter'	=> false,
+		]);
+	}
+
+	/**
 	 *	@filter acf_qef_meta_query_request
 	 */
 	public function transform_meta_query( $meta_query ) {

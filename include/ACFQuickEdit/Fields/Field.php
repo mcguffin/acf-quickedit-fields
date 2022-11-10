@@ -20,12 +20,15 @@ abstract class Field {
 	 */
 	private $did_update = false;
 
+	/**
+	 *	@var Core\Core
+	 */
+	protected $core = null;
 
 	/**
-	 *	@var array ACF field
+	 *	@var string ACF field
 	 */
-	protected $acf_field;
-
+	private $_acf_field_key;
 	/**
 	 *	@var array ACF field
 	 */
@@ -126,14 +129,7 @@ abstract class Field {
 		if ( ! is_array( $acf_field ) ) {
 			return;
 		}
-		$acf_field = wp_parse_args( $acf_field, [
-			'allow_bulkedit'		=> false,
-			'allow_quickedit'		=> false,
-			'show_column'			=> false,
-			'show_column_weight'	=> 1000,
-			'show_column_sortable'	=> false,
-			'show_column_filter'	=> false,
-		]);
+
 		if ( ! isset( self::$fields[ $acf_field['key'] ] ) ) {
 			$field_class = preg_split( '/[-_]/', $acf_field['type'] );
 			$field_class = array_map( 'ucfirst', $field_class );
@@ -172,6 +168,25 @@ abstract class Field {
 		if (  'field_' === substr( $parent_key, 0, 6 ) ) {
 			// local json
 			$this->parent = self::getFieldObject( get_field_object( $parent_key ) );
+		}
+	}
+
+	/**
+	 *	@param string $what
+	 */
+	public function __get( $what ) {
+		if ( 'acf_field' === $what ) {
+			return acf_get_store( 'fields' )->get( $this->_acf_field_key );
+		}
+	}
+
+	/**
+	 *	@param string $what
+	 *	@param string $value
+	 */
+	public function __set( $what, $value ) {
+		if ( 'acf_field' === $what ) {
+			$this->_acf_field_key = $value['key'];
 		}
 	}
 
@@ -409,7 +424,7 @@ abstract class Field {
 		$parts = [];
 		$current = $this;
 		while ( $current ) {
-			$parts[] = $current->get_acf_field()['key'];
+			$parts[] = $current->acf_field['key'];
 			$current = $current->get_parent();
 		}
 
@@ -434,7 +449,7 @@ abstract class Field {
 		$parts = [];
 		$current = $this;
 		while ( $current ) {
-			$parts[] = $current->get_acf_field()['name'];
+			$parts[] = $current->acf_field['name'];
 			$current = $current->get_parent();
 		}
 
