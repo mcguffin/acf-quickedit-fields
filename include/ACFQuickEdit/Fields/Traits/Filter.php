@@ -59,8 +59,8 @@ trait Filter {
 		foreach ( $choices as $value => $label ) {
 
 			$value = $is_multiple
-				? serialize( $value ) // prepare value for LIKE comparision in serialize array
-				: $value;
+				? serialize( trim( "{$value}" ) ) // prepare value for LIKE comparision in serialize array
+				: "{$value}";
 
 			$out .= sprintf(
 				'<option value="%s" %s>%s</option>',

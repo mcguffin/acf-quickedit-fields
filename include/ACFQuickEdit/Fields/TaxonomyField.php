@@ -9,9 +9,68 @@ class TaxonomyField extends Field {
 
 	use Traits\BulkOperationLists;
 	use Traits\ColumnLists;
+	use Traits\Filter;
 	use Traits\InputCheckbox;
 	use Traits\InputRadio;
 	use Traits\InputSelect;
+
+	/**
+	 *	@param WP_Term $term
+	 *	@param array $choices
+	 *	@param int $depth
+	 */
+	private function term_choice( $term, &$choices, $depth = 0 ) {
+		$choices[ $term->term_id ] = str_repeat( '&nbsp;', $depth * 3 ) . $term->name;
+	}
+
+	/**
+	 *	@param WP_Term $term
+	 *	@param array $choices
+	 *	@param int $depth
+	 */
+	private function term_hierarchy_choice( $term, &$choices, $depth = 0 ) {
+
+		$this->term_choice( $term, $choices, $depth );
+
+		$terms = get_terms([
+			'taxonomy'   => $term->taxonomy,
+			'parent'     => $term->term_id,
+			'hide_empty' => false,
+		]);
+
+		foreach ( $terms as $term ) {
+			$this->term_hierarchy_choice( $term, $choices, $depth + 1 );
+		}
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function render_filter( $index, $selected = '' ) {
+
+		$terms = get_terms([
+			'taxonomy' => $this->acf_field['taxonomy'],
+			'hide_empty' => false,
+			'parent' => 0,
+		]);
+		$choices = [];
+		$is_hierarchical = is_taxonomy_hierarchical( $this->acf_field['taxonomy'] );
+
+		foreach ( $terms as $term ) {
+			if ( $is_hierarchical ) {
+				$this->term_hierarchy_choice( $term, $choices );
+			} else {
+				$this->term_choice( $term, $choices );
+			}
+		}
+
+		return $this->render_filter_dropdown(
+			$index,
+			$selected,
+			in_array( $this->acf_field['field_type'], [ 'multi_select', 'checkbox' ] ),
+			$choices
+		);
+	}
 
 	/**
 	 *	@inheritdoc
