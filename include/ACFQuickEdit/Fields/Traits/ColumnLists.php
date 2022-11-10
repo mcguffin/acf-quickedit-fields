@@ -13,7 +13,7 @@ trait ColumnLists {
 			$callback = [ $this, 'render_list_column_item_value' ];
 		}
 
-		$value = $this->get_value( $object_id, false );
+		$value = (array) $this->get_value( $object_id, false );
 
 		$output = '';
 
@@ -30,7 +30,9 @@ trait ColumnLists {
 
 		} else if ( ! empty( $value ) ) {
 
-			$output .= call_user_func( $callback, $value );
+			foreach ( $value as $val ) {
+				$output .= call_user_func( $callback, $val );
+			}
 
 		} else {
 			// $output .= '<p>';

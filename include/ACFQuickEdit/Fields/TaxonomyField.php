@@ -24,7 +24,7 @@ class TaxonomyField extends Field {
 
 		return $this->render_list_column(
 			$object_id,
-			isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'],
+			in_array( $this->acf_field['field_type'], [ 'multi_select', 'checkbox' ] ),
 			[ $this, 'render_list_column_item_value_term' ]
 		);
 	}
