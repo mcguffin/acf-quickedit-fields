@@ -92,10 +92,12 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 
 == Upgrade Notice ==
 
-On the whole upgrading is always a good idea.
+Version 3.2.4 contains a security fix. Registered users who are able to edit posts were able to see arbitrary ACF handled user metadata using an ajax-request. Upgrading is strongly encouraged!
 
 == Changelog ==
 
+= 3.2.4 =
+ - Fix information disclosure vulnerability: ACF-handled user metadata was disclosed via ajax request to registered users having the edit_posts capability.
 
 = 3.2.3 =
  - Lower memory usage

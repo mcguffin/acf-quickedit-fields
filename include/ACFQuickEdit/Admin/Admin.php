@@ -156,7 +156,6 @@ class Admin extends Core\Singleton {
 
 			foreach ( $object_ids as $object_id ) {
 
-
 				foreach ( $field_keys as $key ) {
 
 					// ACF-Field must exists
@@ -191,7 +190,7 @@ class Admin extends Core\Singleton {
 	/**
 	 *	Current user can edit
 	 *
-	 *	@param string $object_id
+	 *	@param string $object_id ACF Object ID
 	 *	@return boolean
 	 */
 	private function can_edit_object( $object_id ) {
@@ -200,8 +199,8 @@ class Admin extends Core\Singleton {
 		}
 		if ( preg_match('/^([\w\d\-_]+)_(\d+)$/', $object_id, $matches ) ) {
 			list( $obj_id, $type, $term_id ) = $matches;
-			if ( $taxonomy === 'user' ) {
-				return false;
+			if ( $type === 'user' ) {
+				return current_user_can('edit_users');
 			}
 			if ( taxonomy_exists( $type ) ) {
 				return current_user_can( 'edit_term', $term_id );
