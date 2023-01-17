@@ -55,6 +55,6 @@ class UrlField extends Field {
 	 */
 	public function render_column( $object_id ) {    
 	    $url = $this->get_value( $object_id );
-		return '< a href="' . $url . '">' . $url . '</a>';
+		return '< a href="' . $url . '" target="_blank">' . $url . '</a>';
 	}
 }
