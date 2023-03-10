@@ -49,4 +49,12 @@ class UrlField extends Field {
 		}
 		return $valid;
 	}
+	
+	/**
+	 * Make URL clickable
+	 */
+	public function render_column( $object_id ) {    
+	    $url = $this->get_value( $object_id );
+		return '< a href="' . $url . '" target="_blank">' . $url . '</a>';
+	}
 }
