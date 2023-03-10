@@ -310,6 +310,7 @@ class CurrentView extends Core\Singleton {
 		if ( isset( $this->field_to_group[ $field['key'] ] ) ) {
 			return acf_get_store( 'field-groups' )->get( $this->field_to_group[ $field['key'] ] );
 		}
+		return array();
 	}
 
 	/**
@@ -346,7 +347,7 @@ class CurrentView extends Core\Singleton {
 	 *	@return boolean Whether a field group rule matches
 	 *	@filter 'acf/location/rule_match/post_status'
 	 */
-	function match_post_status( $match, $rule, $options ) {
+	function match_post_status( $match, $rule, $screen ) {
 
 		if ( isset( $screen['post_status'] ) ) {
 
@@ -360,7 +361,7 @@ class CurrentView extends Core\Singleton {
 	 *	@return boolean Whether a field group rule matches
 	 *	@filter 'acf/location/rule_match/attachment'
 	 */
-	function match_attachment( $match, $rule, $options ) {
+	function match_attachment( $match, $rule, $screen ) {
 		if ( isset( $screen['attachment'] ) ) {
 			return $rule['operator'] == '==' && $rule['value'] == $screen['attachment'];
 		}
