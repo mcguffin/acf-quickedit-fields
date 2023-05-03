@@ -10,7 +10,7 @@ class OembedField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 
 		if ( ! $value = $this->get_value( $object_id, false ) ) {
 			return;

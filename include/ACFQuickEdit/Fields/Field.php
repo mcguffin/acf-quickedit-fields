@@ -211,10 +211,25 @@ abstract class Field {
 	 *	@param int|string $object_id
 	 *	@return string
 	 */
-	public function render_column( $object_id ) {
+	final public function render_column( $object_id ) {
 
+		$column_html = $this->_render_column( $object_id );
+
+		/**
+		 *	Column HTML Content
+		 *
+		 *	@param string $column_html
+		 *	@param string/int $object_id
+		 *	@param array $acf_field
+		 *
+		 *	@since ?
+		 */
+		return apply_filters( 'acf_qef_column_html_' . $this->acf_field['type'], $column_html, $object_id, $this->acf_field );
+
+	}
+
+	protected function _render_column( $object_id ) {
 		return $this->get_value( $object_id );
-
 	}
 
 	/**

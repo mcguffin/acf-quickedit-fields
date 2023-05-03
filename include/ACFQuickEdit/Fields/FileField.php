@@ -10,7 +10,7 @@ class FileField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 
 		$output = '';
 

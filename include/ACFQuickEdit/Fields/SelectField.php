@@ -28,7 +28,7 @@ class SelectField extends ChoiceField {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 		return $this->render_list_column(
 			$object_id,
 			isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple']

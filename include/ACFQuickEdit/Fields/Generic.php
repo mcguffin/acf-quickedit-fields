@@ -42,18 +42,10 @@ class Generic extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 
-		/**
-		 *	Column HTML Content
-		 *
-		 *	@param string $column_html
-		 *	@param string/int $object_id
-		 *	@param array $acf_field
-		 *
-		 *	@since ?
-		 */
-		return apply_filters( 'acf_qef_column_html_' . $this->acf_field['type'], '', $object_id, $this->acf_field );
+		return '';
+
 	}
 
 	/**

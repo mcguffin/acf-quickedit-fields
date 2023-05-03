@@ -10,7 +10,7 @@ class GalleryField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 		$output = '';
 		/**
 		 * Filter number of images to be displayed in Gallery Column

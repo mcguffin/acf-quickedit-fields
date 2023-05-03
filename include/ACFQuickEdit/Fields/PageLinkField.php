@@ -10,7 +10,7 @@ class PageLinkField extends Field {
 	/**
 	 *	@inheritdoc
 	 */
-	public function render_column( $object_id ) {
+	protected function _render_column( $object_id ) {
 
 		/*
 		$value = get_field( $this->acf_field['key'], $object_id );
