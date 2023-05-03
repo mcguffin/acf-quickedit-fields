@@ -58,6 +58,20 @@ class PostObjectField extends SelectField {
 	}
 
 	/**
+	 *	@return mixed Unsanitized value of acf field.
+	 */
+	public function get_value( $object_id, $format_value = true ) {
+
+		$value = parent::get_value( $object_id, $format_value );
+
+		if ( is_scalar( $value ) && ( $post = get_post($value ) ) ) {
+			return (object) ['id' => $value, 'text' => $post->post_title ];
+		}
+
+		return $value;
+	}
+
+	/**
 	 *	@inheritdoc
 	 */
 	protected function sanitize_ajax_result( $value ) {

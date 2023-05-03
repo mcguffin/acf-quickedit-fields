@@ -13,7 +13,11 @@ trait ColumnLists {
 			$callback = [ $this, 'render_list_column_item_value' ];
 		}
 
-		$value = (array) $this->get_value( $object_id, false );
+		$value = $this->get_value( $object_id, false );
+		if ( is_object( $value ) && isset( $value->id ) ) {
+			$value = $value->id;
+		}
+		$value = (array) $value;
 		$value = array_filter( $value );
 
 		$output = '';
