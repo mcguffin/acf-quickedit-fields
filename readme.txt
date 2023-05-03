@@ -97,10 +97,11 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 == Changelog ==
 
 = 3.2.4 =
+ - Feature: Support post category location rule (not just taxonomy)
  - Fix information disclosure vulnerability: ACF-handled user metadata was disclosed via ajax request to registered users having the edit_posts capability.
  - Fix: fix checkbox and radio taxonomy field
  - Fix: PHP 8.2 deprecations
- - Feature: Support post category location rule (not just taxonomy)
+ - Fix: post object value (single) not loaded into ui
 
 = 3.2.3 =
  - Lower memory usage
