@@ -147,6 +147,60 @@
             "show_column": 1,
             "show_column_weight": 1550
         },
+		{
+            "key": "field_635fce53c718c",
+            "label": "Taxonomy Checkbox",
+            "name": "qef_taxonomy",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "category",
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "field_type": "checkbox",
+            "show_column": 1,
+            "show_column_weight": 1560,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "allow_null": 0,
+            "multiple": 0
+        },
+		{
+            "key": "field_5bcf3f00efe23",
+            "label": "Taxonomy Radio",
+            "name": "qef_taxo_4",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "acf-quef-test-2",
+            "field_type": "radio",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "show_column": 1,
+            "show_column_weight": 1571,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "multiple": 0
+        },
         {
             "key": "field_5007e56cd8e2c",
             "label": "Taxonomy Multi 1",
@@ -196,7 +250,7 @@
             "load_terms": 1,
             "return_format": "id",
             "show_column": 1,
-            "show_column_weight": 1570,
+            "show_column_weight": 1572,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "multiple": 1
@@ -223,7 +277,7 @@
             "load_terms": 1,
             "return_format": "id",
             "show_column": 0,
-            "show_column_weight": 1570,
+            "show_column_weight": 1573,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "multiple": 0
@@ -250,7 +304,7 @@
             "load_terms": 1,
             "return_format": "id",
             "show_column": 0,
-            "show_column_weight": 1570,
+            "show_column_weight": 1575,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "multiple": 0
@@ -285,7 +339,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": 1,
     "description": "",
     "show_in_rest": 0,
     "modified": 1667041142
