@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.2
 Stable tag: 3.2.3
 License: GPLv2 or later
@@ -98,6 +98,9 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 = 3.2.4 =
  - Fix information disclosure vulnerability: ACF-handled user metadata was disclosed via ajax request to registered users having the edit_posts capability.
+ - Fix: fix checkbox and radio taxonomy field
+ - Fix: PHP 8.2 deprecations
+ - Feature: Support post category location rule (not just taxonomy)
 
 = 3.2.3 =
  - Lower memory usage

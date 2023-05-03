@@ -155,14 +155,15 @@ abstract class Field {
 
 		$parent_key	= '';
 
-
-		if ( is_numeric( $this->acf_field['parent'] ) ) {
-			// int: field stored in DB
-			$parent = get_post( $this->acf_field['parent'] );
-			$parent_key = $parent->post_name;
-		} else {
-			// local json field
-			$parent_key = $this->acf_field['parent'];
+		if ( !empty( $this->acf_field['parent'] ) ) {
+			if ( is_numeric( $this->acf_field['parent'] ) ) {
+				// int: field stored in DB
+				$parent = get_post( $this->acf_field['parent'] );
+				$parent_key = $parent->post_name;
+			} else {
+				// local json field
+				$parent_key = $this->acf_field['parent'];
+			}
 		}
 
 		if (  'field_' === substr( $parent_key, 0, 6 ) ) {
