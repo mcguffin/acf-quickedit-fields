@@ -160,12 +160,15 @@ class CurrentView extends Core\Singleton {
 					$filtered_type = substr( $filtered_type, strpos( $filtered_type, ':' ) + 1 );
 					$this->field_group_filter['attachment'] = $filtered_type;
 
-				} else if ( in_array( $param, [ 'cat', 'tag' ] ) && ! empty( $value ) ) {
+				} else if ( in_array( $param, [ 'tag' ] ) && ! empty( $value ) ) {
 					// post_category
 					$this->field_group_filter['post_taxonomy'] = sprintf( 'post_%s:%s', $param, $value );
 
 				} else if ( 'category_name' === $param ) {
 					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $value );
+
+				} else if ( ( 'cat' === $param ) && ( $cat = get_category($value) ) ) {
+					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $cat->slug );
 
 				} else if ( taxonomy_exists( $param ) && ! empty( $value ) ) {
 					// post_taxonomy => <taxo>:<term_slug>
