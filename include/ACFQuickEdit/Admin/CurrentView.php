@@ -164,12 +164,16 @@ class CurrentView extends Core\Singleton {
 					// post_category
 					$this->field_group_filter['post_taxonomy'] = sprintf( 'post_%s:%s', $param, $value );
 
+				} else if ( 'category_name' === $param ) {
+					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $value );
+
 				} else if ( taxonomy_exists( $param ) && ! empty( $value ) ) {
 					// post_taxonomy => <taxo>:<term_slug>
 					$this->field_group_filter['post_taxonomy'] = sprintf( '%s:%s', $param, $value );
 
 				} else if ( 'taxonomy' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['taxonomy'] = $value;
+
 				} else if ( 'role' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['user_form'] = 'all';
 					$this->field_group_filter['user_form'] = 'edit';
@@ -183,6 +187,7 @@ class CurrentView extends Core\Singleton {
 				$this->field_group_filter['user_form'] = 'edit';
 			}
 
+			add_filter( 'acf/location/rule_match/post_category', [ $this, 'match_post_category' ], 11, 3 );
 			add_filter( 'acf/location/rule_match/post_taxonomy', [ $this, 'match_post_taxonomy' ], 11, 3 );
 			add_filter( 'acf/location/rule_match/post_format', [ $this, 'match_post_format' ], 11, 3 );
 			add_filter( 'acf/location/rule_match/post_status', [ $this, 'match_post_status' ], 11, 3 );
@@ -312,6 +317,21 @@ class CurrentView extends Core\Singleton {
 		}
 	}
 
+	/**
+	 *	@return boolean Whether a field group rule matches
+	 *	@filter 'acf/location/rule_match/post_category'
+	 */
+	function match_post_category( $match, $rule, $screen ) {
+
+		if ( isset( $screen['post_category'] ) ) {
+
+			// WP categories
+
+			return $rule['operator'] == '==' && $rule['value'] == $screen['post_category'];
+
+		}
+		return $match;
+	}
 	/**
 	 *	@return boolean Whether a field group rule matches
 	 *	@filter 'acf/location/rule_match/post_taxonomy'
