@@ -72,7 +72,7 @@
             "allow_quickedit": 1,
             "allow_bulkedit": 1
         },
-        {
+		{
             "key": "field_5007e544d8e29",
             "label": "Post Object",
             "name": "post_object",
@@ -93,6 +93,31 @@
             "return_format": "object",
             "show_column": 1,
             "show_column_weight": 1530,
+			"allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "ui": 1
+        },
+		{
+            "key": "field_5007f02ad8e29",
+            "label": "Post Object Single",
+            "name": "post_object_single",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": "",
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "object",
+            "show_column": 1,
+            "show_column_weight": 1531,
 			"allow_quickedit": 1,
             "allow_bulkedit": 1,
             "ui": 1
