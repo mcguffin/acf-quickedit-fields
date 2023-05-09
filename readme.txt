@@ -96,6 +96,10 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.2.6 =
+ - Regression: Single post objects not loading
+ - Fix: another PHP 8.2 deprecations
+
 = 3.2.5 =
  - Fix: PHP 8.2 deprecations
 
