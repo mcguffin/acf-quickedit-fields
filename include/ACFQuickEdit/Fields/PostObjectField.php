@@ -65,7 +65,7 @@ class PostObjectField extends SelectField {
 		$value = parent::get_value( $object_id, $format_value );
 
 		if ( is_scalar( $value ) && ( $post = get_post($value ) ) ) {
-			return (object) ['id' => $value, 'text' => $post->post_title ];
+			$value = ['id' => $value, 'text' => $post->post_title ];
 		}
 
 		return $value;
