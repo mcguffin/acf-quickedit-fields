@@ -149,6 +149,8 @@ class Filters extends Feature {
 
 				if ( isset( $_REQUEST['meta_query'] ) && isset( $_REQUEST['meta_query'][$index] ) && isset( $_REQUEST['meta_query'][$index]['value'] ) ) {
 					$selected = wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] );
+				} else if ( 'taxonomy' === $field->acf_field['type'] && $field->acf_field['load_terms'] && isset( $_REQUEST[ $field->acf_field['taxonomy'] ] ) ) {
+					$selected = $_REQUEST[ $field->acf_field['taxonomy'] ];
 				} else {
 					$selected = '';
 				}

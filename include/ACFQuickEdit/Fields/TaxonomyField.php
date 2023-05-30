@@ -19,8 +19,8 @@ class TaxonomyField extends Field {
 	 *	@param array $choices
 	 *	@param int $depth
 	 */
-	private function term_choice( $term, &$choices, $depth = 0 ) {
-		$choices[ $term->term_id ] = str_repeat( '&nbsp;', $depth * 3 ) . $term->name;
+	private function term_choice( $term, &$choices, $depth = 0, $prop = 'term_id' ) {
+		$choices[ $term->$prop ] = str_repeat( '&nbsp;', $depth * 3 ) . $term->name;
 	}
 
 	/**
@@ -28,9 +28,9 @@ class TaxonomyField extends Field {
 	 *	@param array $choices
 	 *	@param int $depth
 	 */
-	private function term_hierarchy_choice( $term, &$choices, $depth = 0 ) {
+	private function term_hierarchy_choice( $term, &$choices, $depth = 0, $prop = 'term_id' ) {
 
-		$this->term_choice( $term, $choices, $depth );
+		$this->term_choice( $term, $choices, $depth, $prop );
 
 		$terms = get_terms([
 			'taxonomy'   => $term->taxonomy,
@@ -39,7 +39,7 @@ class TaxonomyField extends Field {
 		]);
 
 		foreach ( $terms as $term ) {
-			$this->term_hierarchy_choice( $term, $choices, $depth + 1 );
+			$this->term_hierarchy_choice( $term, $choices, $depth + 1, $prop );
 		}
 	}
 
@@ -56,12 +56,23 @@ class TaxonomyField extends Field {
 		$choices = [];
 		$is_hierarchical = is_taxonomy_hierarchical( $this->acf_field['taxonomy'] );
 
+		$term_prop = $this->acf_field['load_terms']
+			? 'slug'
+			: 'term_id';
+
 		foreach ( $terms as $term ) {
 			if ( $is_hierarchical ) {
-				$this->term_hierarchy_choice( $term, $choices );
+				$this->term_hierarchy_choice( $term, $choices, 0, $term_prop );
 			} else {
-				$this->term_choice( $term, $choices );
+				$this->term_choice( $term, $choices, 0, $term_prop );
 			}
+		}
+
+		if ( $this->acf_field['load_terms'] ) {
+			return $this->render_term_filter_dropdown(
+				$selected,
+				$choices
+			);
 		}
 
 		return $this->render_filter_dropdown(
