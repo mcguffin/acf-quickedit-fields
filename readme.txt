@@ -96,6 +96,9 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.2.7 =
+ - Fix: Taxonomy field filter not working
+
 = 3.2.6 =
  - Regression: Single post objects not loading
  - Fix: another PHP 8.2 deprecations

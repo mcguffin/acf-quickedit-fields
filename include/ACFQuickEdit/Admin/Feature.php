@@ -191,6 +191,9 @@ abstract class Feature extends Core\Singleton {
 			return false;
 		}
 
+		$field_store = acf_get_store( 'fields' );
+
+
 		$fields_query = [];
 		$fields_query[ $this->get_fieldgroup_option() ] = true;
 
@@ -201,7 +204,12 @@ abstract class Feature extends Core\Singleton {
 			if ( ! $this->supports( $field[ 'type' ] ) ) {
 				continue;
 			}
+
+			$field = $this->load_field( $field );
+			$field_store->set( $field['key'], $field );
+
 			$field_object = Fields\Field::getFieldObject( $field );
+
 			$this->add_field( $field_object->get_meta_key(), $field_object, false );
 		}
 
