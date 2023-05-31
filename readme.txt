@@ -5,7 +5,7 @@ Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
 Tested up to: 6.2
 Requires PHP: 7.2
-Stable tag: 3.2.6
+Stable tag: 3.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -98,6 +98,7 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 = 3.2.7 =
  - Fix: Taxonomy field filter not working
+ - Fix: PHP warning on early registered fields
 
 = 3.2.6 =
  - Regression: Single post objects not loading

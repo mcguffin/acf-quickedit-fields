@@ -2,14 +2,14 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.2.6\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.2.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-05-09T09:23:39+00:00\n"
+"POT-Creation-Date: 2023-05-31T09:30:25+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: acf-quickedit-fields\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Filters will work with posts and user list tables. Terms lack an appropriate"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/Filters.php:170
+#: include/ACFQuickEdit/Admin/Filters.php:172
 msgid "Filter"
 msgstr ""
 
@@ -178,15 +178,15 @@ msgstr ""
 msgid "Remove Link"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:107
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:118
 msgid "Union"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:108
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:119
 msgid "Difference"
 msgstr ""
 
-#: include/ACFQuickEdit/Fields/TaxonomyField.php:109
+#: include/ACFQuickEdit/Fields/TaxonomyField.php:120
 msgid "Intersection"
 msgstr ""
 
@@ -255,6 +255,7 @@ msgstr ""
 
 #. translators: acf field label
 #: include/ACFQuickEdit/Fields/Traits/Filter.php:44
+#: include/ACFQuickEdit/Fields/Traits/Filter.php:105
 msgid "— %s —"
 msgstr ""
 
