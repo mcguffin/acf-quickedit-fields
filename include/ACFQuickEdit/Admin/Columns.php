@@ -12,6 +12,8 @@ class Columns extends Feature {
 
 	private $_prev_request_uri = false;
 
+	private $_wp_column_weights = [];
+
 	/**
 	 *	@inheritdoc
 	 */

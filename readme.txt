@@ -97,6 +97,9 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 == Changelog ==
 
 = 3.2.7 =
+ - Fix: ... and yet another PHP 8.2 deprecation warning
+
+= 3.2.7 =
  - Fix: Taxonomy field filter not working
  - Fix: PHP warning on early registered fields
 
