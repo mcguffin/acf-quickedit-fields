@@ -29,6 +29,12 @@ abstract class Field {
 	 *	@var string ACF field
 	 */
 	private $_acf_field_key;
+
+	/**
+	 *	@var array ACF field
+	 */
+	protected $acf_field;
+
 	/**
 	 *	@var array ACF field
 	 */
