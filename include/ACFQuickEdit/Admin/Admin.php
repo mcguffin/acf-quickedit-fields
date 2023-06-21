@@ -127,7 +127,7 @@ class Admin extends Core\Singleton {
 		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
-			'capability'		=> apply_filters( 'acf_qef_capability', 'edit_posts' ),
+			'capability'		=> false, // apply_filters( 'acf_qef_capability', 'edit_posts' ),
 			'callback'			=> [ $this, 'ajax_get_acf_post_meta' ],
 		]);
 
@@ -211,7 +211,7 @@ class Admin extends Core\Singleton {
 				return current_user_can( 'edit_term', $term_id );
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**

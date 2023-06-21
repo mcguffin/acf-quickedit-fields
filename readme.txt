@@ -97,6 +97,7 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 == Changelog ==
 
 = 3.2.7 =
+ - Fix: values not loaded on CPT for users not having `edit_posts` capability
  - Fix: ... a few more PHP 8.2 deprecation warnings
 
 = 3.2.7 =
