@@ -88,10 +88,6 @@ class TaxonomyField extends Field {
 	 */
 	protected function _render_column( $object_id ) {
 
-		if ( ! current_user_can( 'list_users' ) ) {
-			return '';
-		}
-
 		return $this->render_list_column(
 			$object_id,
 			in_array( $this->acf_field['field_type'], [ 'multi_select', 'checkbox' ] ),
