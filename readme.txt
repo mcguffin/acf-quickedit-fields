@@ -99,6 +99,7 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 = 3.2.7 =
  - Fix: values not loaded on CPT for users not having `edit_posts` capability
  - Fix: ... a few more PHP 8.2 deprecation warnings
+ - Fix: Closing QuickEdit on ESC caused JS error
 
 = 3.2.7 =
  - Fix: Taxonomy field filter not working

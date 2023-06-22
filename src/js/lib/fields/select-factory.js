@@ -36,7 +36,7 @@ module.exports = ( type, fieldBaseClass ) => {
 			return this;
 		},
 		unload:function(){
-			this.acfField.onRemove()
+			this.acfField && this.acfField.onRemove()
 		}
 	}
 }

@@ -73,6 +73,6 @@ module.exports = {
 		return this;
 	},
 	unload:function(){
-		this.acfField.onRemove()
+		this.acfField && this.acfField.onRemove()
 	}
 }
