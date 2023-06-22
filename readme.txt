@@ -5,7 +5,7 @@ Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
 Tested up to: 6.2
 Requires PHP: 7.2
-Stable tag: 3.2.7
+Stable tag: 3.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -97,9 +97,12 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 == Changelog ==
 
 = 3.2.7 =
+ - Taxonomy column: terms link to filtered view instead of term editor
  - Fix: values not loaded on CPT for users not having `edit_posts` capability
  - Fix: ... a few more PHP 8.2 deprecation warnings
  - Fix: Closing QuickEdit on ESC caused JS error
+ - Fix: Remove dumb capability check in taxonomy field column
+ - Fix: term filter dropdowns were not selected
 
 = 3.2.7 =
  - Fix: Taxonomy field filter not working
