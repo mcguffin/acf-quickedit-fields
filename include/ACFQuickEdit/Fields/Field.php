@@ -33,11 +33,6 @@ abstract class Field {
 	/**
 	 *	@var array ACF field
 	 */
-	protected $acf_field;
-
-	/**
-	 *	@var array ACF field
-	 */
 	protected $acf_parent;
 
 	/**

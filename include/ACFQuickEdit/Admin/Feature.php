@@ -208,9 +208,9 @@ abstract class Feature extends Core\Singleton {
 			$field = $this->load_field( $field );
 			$field_store->set( $field['key'], $field );
 
-			$field_object = Fields\Field::getFieldObject( $field );
-
-			$this->add_field( $field_object->get_meta_key(), $field_object, false );
+			if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
+				$this->add_field( $field_object->get_meta_key(), $field_object, false );
+			}
 		}
 
 		return $this->is_active();
