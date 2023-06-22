@@ -114,22 +114,8 @@ trait ColumnLists {
 	protected function render_list_column_item_value_term( $value ) {
 
 		$term_obj = get_term( $value, $this->acf_field['taxonomy'] );
-		$taxo_obj = get_taxonomy( $this->acf_field['taxonomy'] );
 
 		$is_term = is_a( $term_obj, '\WP_Term' );
-		$is_taxo = is_a( $taxo_obj, '\WP_Taxonomy' );
-		$can_edit = $is_taxo && $is_term && current_user_can( $taxo_obj->cap->edit_terms );
-
-		if ( $can_edit ) {
-			$link = get_edit_term_link( $term_obj ); // null
-		} else if ( $is_term ) {
-			$link = get_term_link( $term_obj ); // WP_Error
-			if ( is_wp_error( $link ) ) {
-				$link = null;
-			}
-		} else {
-			$link = null;
-		}
 
 		if ( ! $is_term ) {
 			/* translators: Term ID */
@@ -140,6 +126,16 @@ trait ColumnLists {
 			$label =  $term_obj->slug;
 		} else {
 			$label =  $term_obj->id;
+		}
+
+		$link = add_query_arg( $term_obj->taxonomy, $term_obj->slug );
+		foreach ( array_keys( $_GET ) as $param ) {
+			if ( $term_obj->taxonomy !== $param && taxonomy_exists( $param ) ) {
+				$link = remove_query_arg( $param, $link );
+			}
+		}
+		if ( is_wp_error( $link ) ) {
+			$link = null;
 		}
 
 		if ( ! is_null( $link ) ) {
