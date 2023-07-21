@@ -11,7 +11,6 @@
 	],
 	"minimum-stability": "dev",
 	"require": {
-		"composer/installers": "~1.2",
 		"php": ">=5.6.0"
 	},
 	"require-dev": {
@@ -33,7 +32,6 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"composer/installers": true,
 			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
