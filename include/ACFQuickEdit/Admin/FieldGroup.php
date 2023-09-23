@@ -131,7 +131,7 @@ class FieldGroup extends Core\Singleton {
 
 		acf_render_field_setting( $field, [
 			'label'			=> __( 'Enable filter', 'acf-quickedit-fields' ),
-			'instructions'	=> __( 'Filters will work with posts and user list tables. Terms lack an appropriate', 'acf-quickedit-fields'),
+			'instructions'	=> __( 'Filters will work with posts and user list tables.', 'acf-quickedit-fields'),
 			'type'			=> 'true_false',
 			'name'			=> 'show_column_filter',
 			'ui'			=> 1,
