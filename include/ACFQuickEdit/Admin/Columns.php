@@ -298,9 +298,11 @@ class Columns extends Feature {
 
 		$meta_query = parent::get_meta_query( $wp_query );
 
-		if ( ! isset( $wp_query->query_vars['orderby'] ) || !( $by = $wp_query->query_vars['orderby']) ) {
+		if ( ! isset( $wp_query->query_vars['orderby'] ) || !( $by = $wp_query->query_vars['orderby']) ||
+			is_array( $by ) ) {
 			return $meta_query;
 		}
+
 		if ( ! isset( $this->fields[ $by ] ) ) {
 			return $meta_query;
 		}
