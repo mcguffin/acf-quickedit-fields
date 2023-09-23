@@ -38,8 +38,10 @@ trait BulkOperationLists {
 		if ( ! count( $value ) ) {
 			$value = null;
 		}
-
-		return array_values($value);
+		if ( is_array( $value ) ) {
+			return array_values($value);
+		}
+		return $value;
 	}
 
 	/**
