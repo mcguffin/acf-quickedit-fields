@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.2
 Stable tag: 3.2.8
 License: GPLv2 or later
@@ -96,7 +96,14 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
-= 3.2.7 =
+= 3.2.9.=
+ - Styles: More compact lists with line clamp
+ - Fix: fix column sort by multiple keys
+ - Fix: Quick edit broken if sorting is enabled
+ - Fix: Fatal error with bulk edit operation on terms
+ - Fix: Show "(no value)" instead of "Post not found" in post object column
+
+= 3.2.8 =
  - Taxonomy column: terms link to filtered view instead of term editor
  - Fix: values not loaded on CPT for users not having `edit_posts` capability
  - Fix: ... a few more PHP 8.2 deprecation warnings
