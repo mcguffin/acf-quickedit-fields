@@ -2,14 +2,14 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.2.8\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.2.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-22T08:12:22+00:00\n"
+"POT-Creation-Date: 2023-09-23T12:42:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: acf-quickedit-fields\n"
@@ -89,7 +89,7 @@ msgstr ""
 
 #: include/ACFQuickEdit/Admin/FieldGroup.php:134
 #: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:206
-msgid "Filters will work with posts and user list tables. Terms lack an appropriate"
+msgid "Filters will work with posts and user list tables."
 msgstr ""
 
 #: include/ACFQuickEdit/Admin/Filters.php:172

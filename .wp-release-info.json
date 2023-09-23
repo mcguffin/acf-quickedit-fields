@@ -1,9 +1,9 @@
 {
   "id": "https://github.com/mcguffin/acf-quickedit-fields/raw/master/.wp-release-info.json",
   "slug": "acf-quickedit-fields",
-  "version": "3.2.8",
+  "version": "3.2.9",
   "url": "https://github.com/mcguffin/acf-quickedit-fields",
-  "package": "https://github.com/mcguffin/acf-quickedit-fields/releases/download/3.2.8/acf-quickedit-fields.zip",
-  "tested": "6.2",
+  "package": "https://github.com/mcguffin/acf-quickedit-fields/releases/download/3.2.9/acf-quickedit-fields.zip",
+  "tested": "6.3",
   "requires_php": "7.2"
 }
