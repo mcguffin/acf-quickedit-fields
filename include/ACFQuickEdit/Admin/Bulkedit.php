@@ -200,8 +200,7 @@ class Bulkedit extends EditFeature {
 			//
 			$data = array_filter( $data, [ $this, 'filter_commands' ] );
 			array_walk( $data, [ $this, 'process_data' ], $post_id );
-
-			$data = array_filter( $data, [ $this, 'filter_ampty_array' ] );
+			$data = array_filter( $data, [ $this, 'filter_empty_array' ] );
 		}
 
 		$op = $this->get_bulk_operation( $key );
@@ -222,7 +221,7 @@ class Bulkedit extends EditFeature {
 	/**
 	 *	array_filter callback - returns false for empty arrays
 	 */
-	private function filter_ampty_array( $el ) {
+	private function filter_empty_array( $el ) {
 		return ! is_array( $el ) || ( count( $el ) > 0 );
 	}
 }
