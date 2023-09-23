@@ -24,7 +24,7 @@ trait ColumnLists {
 
 		if ( $is_multiple && is_array( $value ) && count( $value ) > 0 ) {
 
-			$output .= '<ul>'.PHP_EOL;
+			$output .= '<ul class="qef-list">'.PHP_EOL;
 			foreach ( $value as $val ) {
 				$output .= sprintf(
 					'<li>%s</li>'.PHP_EOL,

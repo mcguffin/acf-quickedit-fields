@@ -40,7 +40,24 @@
 		white-space: nowrap;
 	}
 }
-
+// compact list
+ul.qef-list {
+	.widefat & {
+		margin-top: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	li {
+		display: inline-block;
+		&:not(:last-child) {
+			&::after {
+				content: ',';
+			}
+		}
+	}
+}
 
 .widefat thead  {
 	@include column-type('file' 'image' 'gallery','th') {

@@ -27,7 +27,7 @@ class PageLinkField extends Field {
 		}
 
 		$output	= '';
-		$output .= '<ol>';
+		$output .= '<ol class="qef-list">';
 		foreach ( $value as $link ) {
 			$output .= sprintf( '<li><a href="%s">%s</a></li>', esc_url( $link ), esc_html( $link ) );
 		}
