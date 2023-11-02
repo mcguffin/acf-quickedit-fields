@@ -91,6 +91,7 @@ class CurrentView extends Core\Singleton {
 			// no post type on taxonomies!
 			$this->screen_param = array_diff_key( $this->screen_param, [ 'post_type' => 0 ] );
 		} else if ( $this->object_kind === 'user' ) {
+			// ?
 		}
 
 		$this->object_type = $this->get_object_type(); // current taxonomy
@@ -257,6 +258,7 @@ class CurrentView extends Core\Singleton {
 				if ( is_bool( $value ) ) {
 					$value = intval($value);
 				}
+
 				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] !== $value ) {
 					$match = false;
 					break;
@@ -282,16 +284,29 @@ class CurrentView extends Core\Singleton {
 
 			$filters = $this->get_fieldgroup_filter();
 
+			add_filter('acf/location/rule_match', [ $this, 'location_rule_match' ], 10, 4 );
 			$this->_available_field_groups = array_map(
 				function( $group ) {
 					return $group['key'];
 				},
 				acf_get_field_groups( $filters )
 			);
-
+			remove_filter('acf/location/rule_match', [ $this, 'location_rule_match' ], 10 );
 		}
 
 		return $this->_available_field_groups;
+	}
+
+	/**
+	 *	@filter acf/location/rule_match
+	 */
+	public function location_rule_match( $result, $rule, $screen, $field_group ) {
+		if ( $field_group['qef_simple_location_rules'] ) {
+			if ( ! in_array( $rule['param'], [ 'post_type', 'taxonomy' ] ) ) {
+				$result = true;
+			}
+		}
+		return $result;
 	}
 
 	/**

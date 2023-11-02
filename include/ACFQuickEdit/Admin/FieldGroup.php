@@ -15,6 +15,12 @@ class FieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
+
+		add_filter('acf/field_group/additional_group_settings_tabs', [ $this, 'field_group_tabs' ] );
+		add_action('acf/field_group/render_group_settings_tab/quickedit_fields', [ $this, 'field_group_settings' ] );
+
+		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
+
 		foreach ( Fields\Field::get_types() as $type => $supports ) {
 			if ( $supports[ 'column' ] || $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_headline' ] );
@@ -34,6 +40,39 @@ class FieldGroup extends Core\Singleton {
 		}
 
 		parent::__construct();
+	}
+
+
+	/**
+	 *	@action acf/field_group/additional_group_settings_tabs
+	 */
+	public function field_group_tabs( $tabs ) {
+		$tabs['quickedit_fields'] = __( 'QuickEdit Fields', 'acf-quickedit-fields' );
+		return $tabs;
+	}
+
+	/**
+	 *	@action acf/field_group/render_group_settings_tab/quickedit_fields
+	 */
+	public function field_group_settings( $field_group ) {
+		acf_render_field_wrap( [
+			'label'        => __( 'Simplifed Location Rules', 'acf-quickedit-fields' ),
+			'instructions' => __( 'Forces QuickEdit and columns to display even if Location Rules do not match the current admin screen.', 'acf-quickedit-fields' ),
+			'type'         => 'true_false',
+			'name'         => 'qef_simple_location_rules',
+			'prefix'       => 'acf_field_group',
+			'value'        => $field_group['qef_simple_location_rules'],
+			'ui'           => 1,
+		] );
+	}
+
+	/**
+	 *	@action acf/load_field_group
+	 */
+	public function load_field_group( $field_group ) {
+		return wp_parse_args( $field_group, [
+			'qef_simple_location_rules' => false,
+		]);
 	}
 
 	/**

@@ -19,6 +19,10 @@ class LegacyFieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
+		add_action('acf/render_field_group_settings', [ $this, 'field_group_settings' ] );
+		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
+
+
 		add_action('acf/render_field/type=column_setting', [ $this, 'render_column_setting' ] );
 
 		add_action('acf/render_field/type=edit_setting', [ $this, 'render_edit_setting' ] );
@@ -29,6 +33,29 @@ class LegacyFieldGroup extends Core\Singleton {
 
 	}
 
+	/**
+	 *	@action acf/field_group/render_group_settings_tab/quickedit_fields
+	 */
+	public function field_group_settings( $field_group ) {
+		acf_render_field_wrap( [
+			'label'        => __( 'ACF QuickEdit Fields: Simplifed Location Rules', 'acf-quickedit-fields' ),
+			'instructions' => __( 'Forces QuickEdit and columns to display even if Location Rules do not match the current admin screen.', 'acf-quickedit-fields' ),
+			'type'         => 'true_false',
+			'name'         => 'qef_simple_location_rules',
+			'prefix'       => 'acf_field_group',
+			'value'        => $field_group['qef_simple_location_rules'],
+			'ui'           => 1,
+		] );
+	}
+
+	/**
+	 *	@action acf/load_field_group
+	 */
+	public function load_field_group( $field_group ) {
+		return wp_parse_args( $field_group, [
+			'qef_simple_location_rules' => false,
+		]);
+	}
 	/**
 	 *	Initialize
 	 */

@@ -96,7 +96,10 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
-= 3.2.9.=
+= 3.2.10 =
+ - Introduce simplified location rules
+
+= 3.2.9 =
  - Styles: More compact lists with line clamp
  - Fix: fix column sort by multiple keys
  - Fix: Quick edit broken if sorting is enabled
