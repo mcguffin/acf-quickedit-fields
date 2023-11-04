@@ -1,0 +1,67 @@
+{
+    "key": "group_acf_qef_location",
+    "title": "QuickEdit Fields Location",
+    "fields": [
+        {
+            "key": "field_5123e3f0aee8x",
+            "label": "Location Text",
+            "name": "text_loc",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1010,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "allow_backendsearch": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "!=",
+                "value": "acf-quef-test"
+            },
+			{
+				"param": "post_category",
+				"operator": "!=",
+				"value": "category:fitness"
+			}
+        ],
+		[
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            },
+			{
+				"param": "post_category",
+				"operator": "!=",
+				"value": "category:fitness"
+			}
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1573293514,
+	"qef_simple_location_rules": 0
+}

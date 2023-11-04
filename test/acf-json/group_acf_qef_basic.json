@@ -25,7 +25,8 @@
             "show_column_sortable": 1,
             "show_column_weight": 1010,
             "allow_quickedit": 1,
-            "allow_bulkedit": 1
+            "allow_bulkedit": 1,
+            "allow_backendsearch": 1
         },
         {
             "key": "field_5000e3f5aee90",
@@ -49,7 +50,8 @@
             "show_column": 1,
             "show_column_weight": 1020,
             "allow_quickedit": 1,
-            "allow_bulkedit": 1
+            "allow_bulkedit": 1,
+            "allow_backendsearch": 1
         },
         {
             "key": "field_5000e409aee91",
@@ -126,7 +128,8 @@
             "show_column_sortable": 1,
             "show_column_weight": 1050,
             "allow_quickedit": 1,
-            "allow_bulkedit": 1
+            "allow_bulkedit": 1,
+            "allow_backendsearch": 1
         },
         {
             "key": "field_5000e433aee94",
@@ -148,7 +151,31 @@
             "show_column_sortable": 1,
             "show_column_weight": 1060,
             "allow_quickedit": 1,
-            "allow_bulkedit": 1
+            "allow_bulkedit": 1,
+            "allow_backendsearch": 1
+        },
+        {
+            "key": "field_5000e433aee95",
+            "label": "RTE",
+            "name": "rte",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "show_column": 0,
+            "show_column_sortable": 0,
+            "show_column_weight": 1060,
+            "allow_quickedit": 0,
+            "allow_bulkedit": 0,
+            "allow_backendsearch": 1
         }
     ],
     "location": [

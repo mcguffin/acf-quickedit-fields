@@ -39,7 +39,8 @@
                     "show_column_sortable": 1,
                     "show_column_weight": 1010,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 },
                 {
                     "key": "field_5d6393f6774a9",
@@ -62,7 +63,8 @@
                     "show_column": 1,
                     "show_column_weight": 1020,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 },
                 {
                     "key": "field_5d6393f6774b2",
@@ -88,7 +90,8 @@
                     "show_column_sortable": 1,
                     "show_column_weight": 1030,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 },
                 {
                     "key": "field_5d6393f6774ba",
@@ -113,7 +116,8 @@
                     "show_column_sortable": 1,
                     "show_column_weight": 1040,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 },
                 {
                     "key": "field_5d6393f6774c3",
@@ -136,7 +140,8 @@
                     "show_column_sortable": 1,
                     "show_column_weight": 1050,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 },
                 {
                     "key": "field_5d6393f6774cb",
@@ -157,7 +162,8 @@
                     "show_column_sortable": 1,
                     "show_column_weight": 1060,
                     "allow_quickedit": 1,
-                    "allow_bulkedit": 1
+                    "allow_bulkedit": 1,
+		            "allow_backendsearch": 1
                 }
             ]
         },
