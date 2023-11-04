@@ -16,3 +16,4 @@ test export-ignore
 .wporg* export-ignore
 *.md export-ignore
 phpcs*.xml export-ignore
+.wp-release-info.json export-ignore
