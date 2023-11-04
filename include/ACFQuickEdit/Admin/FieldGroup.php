@@ -19,8 +19,6 @@ class FieldGroup extends Core\Singleton {
 		add_filter('acf/field_group/additional_group_settings_tabs', [ $this, 'field_group_tabs' ] );
 		add_action('acf/field_group/render_group_settings_tab/quickedit_fields', [ $this, 'field_group_settings' ] );
 
-		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
-
 		foreach ( Fields\Field::get_types() as $type => $supports ) {
 			if ( $supports[ 'column' ] || $supports[ 'quickedit' ] || $supports[ 'bulkedit' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_headline' ] );
@@ -64,15 +62,6 @@ class FieldGroup extends Core\Singleton {
 			'value'        => $field_group['qef_simple_location_rules'],
 			'ui'           => 1,
 		] );
-	}
-
-	/**
-	 *	@action acf/load_field_group
-	 */
-	public function load_field_group( $field_group ) {
-		return wp_parse_args( $field_group, [
-			'qef_simple_location_rules' => false,
-		]);
 	}
 
 	/**

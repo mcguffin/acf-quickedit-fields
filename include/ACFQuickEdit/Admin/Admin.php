@@ -81,6 +81,17 @@ class Admin extends Core\Singleton {
 		// init field group admin
 		add_action( 'acf/field_group/admin_head', [ $this, 'field_group_admin_head' ] );
 
+		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
+
+	}
+
+	/**
+	 *	@action acf/load_field_group
+	 */
+	public function load_field_group( $field_group ) {
+		return wp_parse_args( $field_group, [
+			'qef_simple_location_rules' => false,
+		]);
 	}
 
 	/**
