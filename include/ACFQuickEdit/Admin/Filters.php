@@ -18,14 +18,6 @@ class Filters extends Feature {
 	/**
 	 *	@inheritdoc
 	 */
-	protected function __construct() {
-		add_filter( 'acf_qef_meta_query_request', [ $this, 'transform_meta_query' ] );
-		parent::__construct();
-	}
-
-	/**
-	 *	@inheritdoc
-	 */
 	public function load_field( $field ) {
 		return wp_parse_args( $field, [
 			'show_column_filter'	=> false,
@@ -33,9 +25,10 @@ class Filters extends Feature {
 	}
 
 	/**
-	 *	@filter acf_qef_meta_query_request
+	 *	@inheritdoc
 	 */
-	public function transform_meta_query( $meta_query ) {
+	public function get_meta_query( $wp_query = null ) {
+
 		return array_map( function( $statement ) {
 			if (
 				! is_array( $statement )
@@ -56,7 +49,7 @@ class Filters extends Feature {
 					'value' => '',
 				],
 			];
-		}, $meta_query );
+		}, parent::get_meta_query( $wp_query ) );
 	}
 
 	/**

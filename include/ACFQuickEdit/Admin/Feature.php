@@ -117,32 +117,33 @@ abstract class Feature extends Core\Singleton {
 	}
 
 	/**
-	 *	@param string $by Column to sort on
+	 *	@param WP_Query $wp_query
 	 */
 	protected function get_meta_query( $wp_query = null ) {
 
 		if ( ! isset( $_REQUEST['meta_query'] ) ) {
 			if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars['meta_query'] ) ) {
-				return $wp_query->query_vars['meta_query'];
+				// respect previous meta query
+				$meta_query = $wp_query->query_vars['meta_query'];
 			} else {
-				return [];
+				$meta_query = [];
+			}
+		} else {
+			// validate meta query
+			$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+
+			$meta_query = array_filter( $meta_query, function($clause) {
+				if ( ! is_array( $clause ) ) {
+					return true;
+				}
+				$clause = wp_parse_args( $clause, [ 'value' => '' ] );
+				return $clause['value'] !== '';
+			} );
+			if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
+				$meta_query = [];
 			}
 		}
-
-		$meta_query = wp_unslash( $_REQUEST['meta_query'] );
-
-		$meta_query = array_filter( $meta_query, function($clause) {
-			if ( ! is_array( $clause ) ) {
-				return true;
-			}
-			$clause = wp_parse_args( $clause, [ 'value' => '' ] );
-			return $clause['value'] !== '';
-		} );
-		if ( 1 === count( $meta_query ) && isset( $meta_query['relation'] ) ) {
-			$meta_query = [];
-		}
-
-		return apply_filters( 'acf_qef_meta_query_request', $meta_query );
+		return $meta_query;
 	}
 
 	/**
