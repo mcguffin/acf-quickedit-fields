@@ -2,16 +2,16 @@
 # This file is distributed under the GPL3.
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF QuickEdit Fields 3.2.9\n"
+"Project-Id-Version: ACF QuickEdit Fields 3.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/acf-quickedit-fields\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-23T12:42:53+00:00\n"
+"POT-Creation-Date: 2023-11-04T12:43:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: acf-quickedit-fields\n"
 
 #. Plugin Name of the plugin
@@ -35,94 +35,119 @@ msgid "https://github.com/mcguffin"
 msgstr ""
 
 #. Translators: 1: ACF Pro URL, 2: plugins page url
-#: include/ACFQuickEdit/Admin/Admin.php:227
+#: include/ACFQuickEdit/Admin/Admin.php:244
 msgid "The <strong>ACF QuickEdit Fields</strong> plugin requires <a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">ACF version 5.6 or later</a>. You can disable and uninstall it on the <a href=\"%2$s\">plugins page</a>."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:45
-msgid "List Table Settings"
+#: include/ACFQuickEdit/Admin/FieldGroup.php:51
+msgid "QuickEdit Fields"
 msgstr ""
 
 #: include/ACFQuickEdit/Admin/FieldGroup.php:60
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:78
-msgid "Show Column"
+msgid "Simplifed Location Rules"
 msgstr ""
 
 #: include/ACFQuickEdit/Admin/FieldGroup.php:61
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:62
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:42
+msgid "Forces QuickEdit and columns to display even if Location Rules do not match the current admin screen."
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:76
+msgid "List Table Settings"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:91
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:105
+msgid "Show Column"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:92
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:89
 msgid "Show a column in the posts list table"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:71
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:91
+#: include/ACFQuickEdit/Admin/FieldGroup.php:102
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:118
 msgid "Sortable Column"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:72
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:96
+#: include/ACFQuickEdit/Admin/FieldGroup.php:103
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:123
 msgid "Make this column sortable"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:83
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:106
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:110
+#: include/ACFQuickEdit/Admin/FieldGroup.php:114
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:133
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:137
 msgid "Column Weight"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:84
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:107
+#: include/ACFQuickEdit/Admin/FieldGroup.php:115
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:134
 msgid "Columns with a higher weight will be pushed to the right. The leftmost WordPress column has a weight of <em>0</em>, the next one <em>100</em> and so on. Leave empty to place a column to the rightmost position."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:104
+#: include/ACFQuickEdit/Admin/FieldGroup.php:135
 msgid "Enable QuickEdit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:119
+#: include/ACFQuickEdit/Admin/FieldGroup.php:150
 msgid "Enable Bulk Edit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:133
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:205
+#: include/ACFQuickEdit/Admin/FieldGroup.php:164
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:232
 msgid "Enable filter"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/FieldGroup.php:134
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:206
+#: include/ACFQuickEdit/Admin/FieldGroup.php:165
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:233
 msgid "Filters will work with posts and user list tables."
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/Filters.php:172
+#: include/ACFQuickEdit/Admin/FieldGroup.php:179
+msgid "Backend Search"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/FieldGroup.php:180
+msgid "Field value is searchable in WP-Admin."
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/Filters.php:165
 msgid "Filter"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:58
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:41
+msgid "ACF QuickEdit Fields: Simplifed Location Rules"
+msgstr ""
+
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:85
 msgid "Column View"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:83
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:110
 msgid "Show column in list tables"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:141
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:168
 msgid "Editing"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:166
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:193
 msgid "QuickEdit"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:171
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:188
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:198
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:215
 msgid "Enabled"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:172
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:189
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:199
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:216
 msgid "Disabled"
 msgstr ""
 
-#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:183
+#: include/ACFQuickEdit/Admin/LegacyFieldGroup.php:210
 msgid "Bulk Edit"
 msgstr ""
 
