@@ -59,6 +59,11 @@ class Admin extends Core\Singleton {
 	private $filters = null;
 
 	/**
+	 *	@var BackendSearch
+	 */
+	private $backendsearch = null;
+
+	/**
 	 *	@var Ajax\AjaxHandler
 	 */
 	private $ajax_handler = null;
@@ -131,11 +136,12 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
-		$this->columns		= Columns::instance();
-		$this->quickedit	= Quickedit::instance();
-		$this->bulkedit		= Bulkedit::instance();
-		$this->filters		= Filters::instance();
-		$this->ajax_handler = new Ajax\AjaxHandler( 'get_acf_post_meta', [
+		$this->columns			= Columns::instance();
+		$this->quickedit		= Quickedit::instance();
+		$this->bulkedit			= Bulkedit::instance();
+		$this->filters			= Filters::instance();
+		$this->backendsearch	= BackendSearch::instance();
+		$this->ajax_handler 	= new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
 			'capability'		=> false, // apply_filters( 'acf_qef_capability', 'edit_posts' ),

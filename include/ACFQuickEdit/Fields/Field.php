@@ -51,34 +51,34 @@ abstract class Field {
 	public static function get_types() {
 		$types = [
 			// basic
-			'text'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
-			'textarea'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
-			'number'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
-			'email'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
-			'url'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
-			'password'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => false,	'filter' => false, ],
-			'range'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false, ],
+			'text'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
+			'textarea'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
+			'number'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
+			'email'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
+			'url'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
+			'password'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false, ],
+			'range'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => true, ],
 
 			// Content
-			'wysiwyg'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
-			'oembed'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
-			'image'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false ],
-			'file'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false ],
-			'gallery'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false ],
+			'wysiwyg'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => true,  ],
+			'oembed'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false,  ],
+			'image'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,  ],
+			'file'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,  ],
+			'gallery'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false,  ],
 
 			// Choice
-			'select'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
-			'checkbox'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
-			'radio'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
-			'true_false'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
-			'button_group'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'select'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false,   ],
+			'checkbox'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false,   ],
+			'radio'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false,   ],
+			'true_false'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false,   ],
+			'button_group'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false,   ],
 
 			// relational
-			'post_object'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select post filter
-			'page_link'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ],
-			'link'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
-			'relationship'		=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ], // TODO: select post filter
-			'taxonomy'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true  ],
+			'post_object'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false, ], // TODO: select post filter
+			'page_link'			=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false, ],
+			'link'				=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false, ],
+			'relationship'		=> [ 'column' => true,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false, ], // TODO: select post filter
+			'taxonomy'			=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => true,	'backendsearch' => false, ],
 			'user'				=> [
 				'column'	=> current_user_can('list_users'),
 				'quickedit'	=> current_user_can('list_users'),
@@ -87,19 +87,19 @@ abstract class Field {
 			], // TODO: select user filter
 
 			// jQuery
-			'google_map'		=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false  ],
-			'date_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select year/month/day
-			'date_time_picker'	=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ], // TODO: select year/month/day
-			'time_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
-			'color_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false  ],
+			'google_map'		=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false,	'filter' => false,	'backendsearch' => false,   ],
+			'date_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,   ], // TODO: select year/month/day
+			'date_time_picker'	=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,   ], // TODO: select year/month/day
+			'time_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,   ],
+			'color_picker'		=> [ 'column' => true,	'quickedit' => true,	'bulkedit' => true,		'filter' => false,	'backendsearch' => false,   ],
 
 			// Layout (unsupported)
-			'message'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
-			'tab'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
-			'repeater'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
-			'group'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
-			'flexible_content'	=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
-			'clone'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ],
+			'message'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
+			'tab'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
+			'repeater'			=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
+			'group'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
+			'flexible_content'	=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
+			'clone'				=> [ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false,	'backendsearch' => false,   ],
 		];
 
 		/**
@@ -113,7 +113,7 @@ abstract class Field {
 		return array_map( function ( $type ) {
 			return wp_parse_args(
 				$type,
-				[ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false  ]
+				[ 'column' => false,	'quickedit' => false,	'bulkedit' => false, 'filter' => false, 'backendsearch' => false  ]
 			);
 		}, $types );
 	}

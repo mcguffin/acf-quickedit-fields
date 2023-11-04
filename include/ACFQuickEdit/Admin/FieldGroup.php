@@ -35,6 +35,9 @@ class FieldGroup extends Core\Singleton {
 			if ( $supports[ 'filter' ] ) {
 				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_filter_settings' ] );
 			}
+			if ( $supports[ 'backendsearch' ] ) {
+				add_action( "acf/render_field_presentation_settings/type={$type}", [ $this, 'render_backendsearch_settings' ] );
+			}
 		}
 
 		parent::__construct();
@@ -162,6 +165,21 @@ class FieldGroup extends Core\Singleton {
 			'instructions'	=> __( 'Filters will work with posts and user list tables.', 'acf-quickedit-fields'),
 			'type'			=> 'true_false',
 			'name'			=> 'show_column_filter',
+			'ui'			=> 1,
+			'wrapper'		=> [ 'width' => 33, ],
+		]);
+	}
+
+	/**
+	 *	@action acf/render_field_settings/type={$type}
+	 */
+	public function render_backendsearch_settings( $field ) {
+
+		acf_render_field_setting( $field, [
+			'label'			=> __( 'Backend Search', 'acf-quickedit-fields' ),
+			'instructions'	=> __( 'Field value is searchable in WP-Admin.', 'acf-quickedit-fields'),
+			'type'			=> 'true_false',
+			'name'			=> 'allow_backendsearch',
 			'ui'			=> 1,
 			'wrapper'		=> [ 'width' => 33, ],
 		]);
