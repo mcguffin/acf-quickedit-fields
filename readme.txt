@@ -38,11 +38,19 @@ WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields P
 
 **Editing**
 
-Toggle *QuickEdit* and *Bulk Edit* to enable Editing in the List table view.
+Toggle *QuickEdit* and *Bulk Edit* to enable Editing in the list table view.
+
+**Searching**
+
+Enable *Backend Search* to make a field searchable in the list table view.
 
 **Location Rules**
 
 The plugin follows ACFs location rule logic as far as possible. If you have a field group that is only applies to posts in a specific category or with a certain post starus, then columns and quick edit will only show up, if you have filtered the posts by that category ar post status.
+
+Negative rules (like “Post category *is not* equal to X”) will not work – simply because the WP does not provide an admin view for “Posts not in category X”.
+
+With the *Simplifed Location Rules* option enabled for a field group only the post type or taxonomy rules are applied. Any other rule ist skipped. This allows you to always show and edit the fields in list views, regardless of the current list filter. The downside is, that this can make even those fields editable, that are normally hidden in the pst editor.
 
 [Read more on the WikiPage](https://github.com/mcguffin/acf-quickedit-fields/wiki/Feature-Support-Matrix#acf-location-rules)
 
@@ -85,10 +93,11 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 
 
 == Screenshots ==
-1. Field group admin
-2. Column view and posts filter
-3. QuickEdit
-4. Bulk editor with bulk operations
+1. Field group admin with filter option (Select field)
+2. Field group admin with search option (Text field)
+3. Column view and posts filter
+4. QuickEdit
+5. Bulk editor with bulk operations
 
 == Upgrade Notice ==
 
@@ -96,7 +105,7 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
-= 3.2.10 =
+= 3.3.0 =
  - Introduce simplified location rules
 
 = 3.2.9 =
