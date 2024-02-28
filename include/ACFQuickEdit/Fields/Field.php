@@ -16,6 +16,11 @@ abstract class Field {
 	private static $fields = [];
 
 	/**
+	 *	@var array associated acf field
+	 */
+	public $acf_field;
+
+	/**
 	 *	@var bool whether the field was already updated
 	 */
 	private $did_update = false;
