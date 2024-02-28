@@ -49,5 +49,8 @@ if ( is_admin() || wp_doing_ajax() ) {
 
 	Core\Core::instance( __FILE__ );
 
-	Admin\Admin::instance();
+	// performance
+	if ( ! wp_doing_ajax() || in_array( $_REQUEST['action'], [ 'inline-save', 'inline-save-tax', 'get_acf_post_meta' ] ) ) {
+		Admin\Admin::instance();
+	}
 }
