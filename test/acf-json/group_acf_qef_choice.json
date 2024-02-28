@@ -210,6 +210,13 @@
                 "value": "acf-quef-test"
             }
         ],
+		[
+            {
+                "param": "attachment",
+                "operator": "==",
+                "value": "all"
+            }
+        ],
         [
             {
                 "param": "taxonomy",

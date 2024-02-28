@@ -24,10 +24,106 @@ class PluginTest {
 
 		add_action( 'restrict_manage_posts', [$this, 'posts_taxonomy_filter'] , 10, 2);
 
+		add_action('acf/include_fields', [ $this, 'include_fields' ] );
+
 		add_filter('acf/fields/google_map/api', function($api){
 			$api['key'] = get_option('google_maps_api_key');
 			return $api;
 		});
+	}
+
+	function include_fields() {
+		acf_add_local_field_group([
+			'qef_simple_location_rules' => false,
+			'key' => 'group_trutytest',
+			'title' => 'Truty tests',
+			'fields' => array(
+				array(
+					'allow_backendsearch' => true,
+					'show_column_filter' => true,
+					'allow_bulkedit' => true,
+					'allow_quickedit' => true,
+					'show_column' => true,
+					'show_column_weight' => 1000,
+					'show_column_sortable' => true,
+					'key' => 'field_trutytest_strict',
+					'label' => 'Blabla (Boolean)',
+					'name' => 'trutytest_strict',
+					'aria-label' => '',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+				),
+				array(
+					'allow_backendsearch' => 1,
+					'show_column_filter' => 1,
+					'allow_bulkedit' => 1,
+					'allow_quickedit' => 1,
+					'show_column' => 1,
+					'show_column_weight' => 1000,
+					'show_column_sortable' => 1,
+					'key' => 'field_trutytest_loose_num',
+					'label' => 'Blabla (Numeric)',
+					'name' => 'trutytest_loose_num',
+					'aria-label' => '',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+				),
+				array(
+					'allow_backendsearch' => "1",
+					'show_column_filter' => "1",
+					'allow_bulkedit' => "1",
+					'allow_quickedit' => "1",
+					'show_column' => "1",
+					'show_column_weight' => 1000,
+					'show_column_sortable' => "1",
+					'key' => 'field_trutytest_loose_str',
+					'label' => 'Blabla (String)',
+					'name' => 'trutytest_loose_str',
+					'aria-label' => '',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array(
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param' => 'post_type',
+						'operator' => '==',
+						'value' => 'acf-quef-test',
+					),
+				),
+			),
+			'menu_order' => 0,
+			'position' => 'normal',
+			'style' => 'default',
+			'label_placement' => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen' => '',
+			'active' => true,
+			'description' => '',
+			'show_in_rest' => 0,
+		]);
 	}
 
 	function posts_taxonomy_filter( $post_type, $which ) {

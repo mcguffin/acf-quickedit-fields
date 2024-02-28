@@ -336,11 +336,25 @@
         }
     ],
     "location": [
-        [
+		[
             {
                 "param": "post_type",
                 "operator": "==",
                 "value": "acf-quef-test"
+            }
+        ],
+		[
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+		[
+            {
+                "param": "attachment",
+                "operator": "==",
+                "value": "all"
             }
         ],
         [
