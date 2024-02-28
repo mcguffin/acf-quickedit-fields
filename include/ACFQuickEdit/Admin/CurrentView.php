@@ -129,11 +129,15 @@ class CurrentView extends Core\Singleton {
 					}
 				}
 			} else if ( 'post' === $this->object_kind ) {
-				$this->object_type = 'post';
-				foreach ( $this->screen_param as $param => $value ) {
-					if ( 'post_type' === $param ) {
-						$this->object_type = $value;
-						break;
+				if ( $GLOBALS['pagenow'] === 'upload.php' ) {
+					$this->object_type = 'attachment';
+				} else {
+					$this->object_type = 'post';
+					foreach ( $this->screen_param as $param => $value ) {
+						if ( 'post_type' === $param ) {
+							$this->object_type = $value;
+							break;
+						}
 					}
 				}
 			}
@@ -153,7 +157,10 @@ class CurrentView extends Core\Singleton {
 
 			foreach ( $this->screen_param as $param => $value ) {
 
-				if ( 'post_type' === $param && ! empty( $value ) ) {
+				if ( $GLOBALS['pagenow'] === 'upload.php' ) {
+					$this->field_group_filter['attachment'] = 'all';
+
+				} else if ( 'post_type' === $param && ! empty( $value ) ) {
 					$this->field_group_filter['post_type'] = $value;
 
 				} else if ( 'attachment-filter' === $param ) {
