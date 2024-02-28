@@ -259,7 +259,7 @@ class CurrentView extends Core\Singleton {
 					$value = intval($value);
 				}
 
-				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] !== $value ) {
+				if ( ! isset( $field[ $prop ] ) || $field[ $prop ] != $value ) {
 					$match = false;
 					break;
 				}
