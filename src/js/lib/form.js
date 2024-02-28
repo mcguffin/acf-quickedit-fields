@@ -111,6 +111,7 @@ const View = Backbone.View.extend({
 			reset: false,
 			success: function( $form ) {
 				$button.trigger('click');
+				setTimeout( () => $(':not(.inline-edit-save) > [type="submit"][disabled]').each( (i,el) => $(el).removeClass('disabled').removeAttr('disabled') ) )
 			}
 		});
 
