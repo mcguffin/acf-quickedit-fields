@@ -294,24 +294,110 @@ class Columns extends Feature {
 	/**
 	 *	@inheritdoc
 	 */
-	protected function get_meta_query( $wp_query = null ) {
+	public function parse_query( $query ) {
+		parent::parse_query( $query );
 
-		$meta_query = parent::get_meta_query( $wp_query );
-
-		if ( ! isset( $wp_query->query_vars['orderby'] ) || !( $by = $wp_query->query_vars['orderby']) ||
-			is_array( $by ) ) {
-			return $meta_query;
+		if ( $field = $this->get_sort_field( $query ) ) {
+			add_filter( 'posts_clauses', [ $this, 'sort_posts_clauses' ], 10, 2 );
 		}
+	}
 
-		if ( ! isset( $this->fields[ $by ] ) ) {
-			return $meta_query;
-		}
-		if ( isset( $meta_query['relation'] ) && 'AND' === $meta_query['relation'] ) {
-			$meta_query[] = $this->get_meta_query_args( $by );
+	/**
+	 *	@filter posts_clauses
+	 */
+	public function sort_posts_clauses( $clauses, $wp_query ) {
+		global $wpdb;
+
+		$field = $this->get_sort_field( $wp_query );
+		$sortable = $field->is_sortable();
+
+		if ( is_string( $sortable ) ) {
+			$mq = new \WP_Meta_Query([]);
+			$cast = $mq->get_cast_for_type( $sortable );
+
+			$clauses['orderby'] = " CAST(COALESCE(msort.meta_value,0) AS {$cast}) " . $wp_query->get('order');
 		} else {
-			$meta_query = $this->get_meta_query_args( $by );
+			$clauses['orderby'] = " COALESCE(msort.meta_value,0) " . $wp_query->get('order');
 		}
-		return $meta_query;
+		$clauses['join'] .= $wpdb->prepare(
+			" LEFT JOIN {$wpdb->postmeta} AS msort ON {$wpdb->posts}.ID = msort.post_id AND msort.meta_key = %s",
+			$field->get_meta_key()
+		);
+		remove_filter('posts_clauses', [ $this, 'sort_posts_clauses' ], 10 );
+		return $clauses;
+
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function parse_term_query( $query ) {
+		parent::parse_term_query( $query );
+		if ( $field = $this->get_sort_field( $query ) ) {
+			add_filter('terms_clauses', function( $clauses ) use ( $field ) {
+				global $wpdb;
+
+				$sortable = $field->is_sortable();
+
+				if ( is_string( $sortable ) ) {
+					$mq = new \WP_Meta_Query([]);
+					$cast = $mq->get_cast_for_type( $sortable );
+
+					$clauses['orderby'] = "ORDER BY CAST(COALESCE(msort.meta_value,0) AS {$cast}) " . $wp_query->query_vars['order'];
+				} else {
+					$clauses['orderby'] = "ORDER BY COALESCE(msort.meta_value,0) ";
+				}
+				$clauses['join'] .= $wpdb->prepare(
+					" LEFT JOIN {$wpdb->termmeta} AS msort ON t.term_id = msort.term_id AND msort.meta_key = %s",
+					$field->get_meta_key()
+				);
+				return $clauses;
+			}, 10 );
+		}
+	}
+
+	/**
+	 *	@inheritdoc
+	 */
+	public function pre_get_users( $query ) {
+		parent::pre_get_users( $query );
+		if ( $field = $this->get_sort_field( $query ) ) {
+			add_filter( 'users_pre_query', function( $null, $wp_query ) use ( $field ) {
+				global $wpdb;
+
+				$sortable = $field->is_sortable();
+				if ( is_string( $sortable ) ) {
+					$mq = new \WP_Meta_Query([]);
+					$cast = $mq->get_cast_for_type( $sortable );
+
+					$wp_query->query_orderby = "ORDER BY CAST(COALESCE(msort.meta_value,0) AS {$cast}) " . $wp_query->query_vars['order'];
+				} else {
+					$wp_query->query_orderby = "ORDER BY COALESCE(msort.meta_value,0) " . $wp_query->query_vars['order'];
+				}
+
+				$wp_query->query_from .= $wpdb->prepare(
+					" LEFT JOIN {$wpdb->usermeta} AS msort ON {$wpdb->users}.ID = msort.user_id AND msort.meta_key = %s",
+					$field->get_meta_key()
+				);
+				return $null;
+			}, 10, 2 );
+		}
+	}
+
+	/**
+	 *	@param WP_Query|WP_Term_Query|WP_User_Query $query
+	 *	@return boolean|Fields\Field
+	 */
+	private function get_sort_field( $query ) {
+		if ( ! isset( $query->query_vars['orderby'] )
+			|| !( $by = $query->query_vars['orderby'])
+			|| is_array( $by )
+			|| ! isset( $this->fields[ $by ] )
+		) {
+			return false;
+		}
+
+		return $this->fields[ $by ];
 	}
 
 	/**
