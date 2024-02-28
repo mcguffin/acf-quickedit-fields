@@ -143,6 +143,10 @@ abstract class Feature extends Core\Singleton {
 				$meta_query = [];
 			}
 		}
+		if ( empty( $meta_query ) ) {
+			$meta_query = [];
+		}
+
 		return $meta_query;
 	}
 
