@@ -168,7 +168,7 @@ class CurrentView extends Core\Singleton {
 				} else if ( 'category_name' === $param ) {
 					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $value );
 
-				} else if ( ( 'cat' === $param ) && ( $cat = get_category($value) ) ) {
+				} else if ( ( 'cat' === $param ) && ( $cat = get_category($value) ) && ! is_wp_error( $cat ) ) {
 					$this->field_group_filter['post_category'] = sprintf( 'category:%s', $cat->slug );
 
 				} else if ( taxonomy_exists( $param ) && ! empty( $value ) ) {
