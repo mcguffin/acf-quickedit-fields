@@ -50,7 +50,7 @@ if ( is_admin() || wp_doing_ajax() ) {
 	Core\Core::instance( __FILE__ );
 
 	// performance
-	if ( ! wp_doing_ajax() || in_array( $_REQUEST['action'], [ 'inline-save', 'inline-save-tax', 'get_acf_post_meta' ] ) ) {
+	if ( ! wp_doing_ajax() || in_array( $_REQUEST['action'], [ 'inline-save', 'inline-save-tax', 'get_acf_post_meta', 'pll_update_post_rows', 'pll_update_term_rows' ] ) ) {
 		Admin\Admin::instance();
 	}
 }
