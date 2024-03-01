@@ -5,7 +5,7 @@ Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
 Tested up to: 6.3
 Requires PHP: 7.2
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,16 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 Version 3.2.4 contains a security fix. Registered users who are able to edit posts were able to see arbitrary ACF handled user metadata using an ajax-request. Upgrading is strongly encouraged!
 
 == Changelog ==
+
+= 3.3.2 =
+ - Fix: Columns were gone if polylang is active
+
+= 3.3.1 =
+ - Fix: Search buttons disabled after quick edit
+ - FIx: Sorting broken if used together with filters
+ - Fix: Some PHP warnings
+ - Fix: Column View in media list view was gone
+ - Performance: Load admin class only if needed
 
 = 3.3.0 =
  - Introduce simplified location rules
