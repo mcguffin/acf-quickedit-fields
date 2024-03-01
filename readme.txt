@@ -105,6 +105,9 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.3.3 =
+ - quickedit: add none-choice to nullable select fields
+
 = 3.3.2 =
  - Fix: Columns were gone if polylang is active
 
