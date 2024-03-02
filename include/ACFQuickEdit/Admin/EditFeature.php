@@ -108,7 +108,7 @@ abstract class EditFeature extends Feature {
 	 *	@filter quick_edit_show_taxonomy
 	 */
 	public function quick_edit_show_taxonomy( $show, $taxonomy ) {
-		return ! in_array( $taxonomy, $this->taxonomies );
+		return $show && ! in_array( $taxonomy, $this->taxonomies );
 	}
 
 	/**
