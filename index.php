@@ -49,8 +49,19 @@ if ( is_admin() || wp_doing_ajax() ) {
 
 	Core\Core::instance( __FILE__ );
 
+	$acf_qef_ajax_actions = [
+		// QuickEdit
+		 'inline-save',
+		 'inline-save-tax',
+		 'get_acf_post_meta',
+		 // Field group admin
+		 'acf/field_group/render_field_settings',
+		 // Polylang
+		 'pll_update_post_rows',
+		 'pll_update_term_rows',
+	];
 	// performance
-	if ( ! wp_doing_ajax() || in_array( $_REQUEST['action'], [ 'inline-save', 'inline-save-tax', 'get_acf_post_meta', 'pll_update_post_rows', 'pll_update_term_rows' ] ) ) {
+	if ( ! wp_doing_ajax() || in_array( wp_unslash($_REQUEST['action']), $acf_qef_ajax_actions ) ) {
 		Admin\Admin::instance();
 	}
 }

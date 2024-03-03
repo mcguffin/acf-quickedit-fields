@@ -84,10 +84,10 @@ class Admin extends Core\Singleton {
 		add_action( 'after_setup_theme', [ $this , 'setup' ] );
 
 		// init field group admin
-		add_action( 'acf/field_group/admin_head', [ $this, 'field_group_admin_head' ] );
+		add_action( 'acf/field_group/admin_head', [ $this, 'init_field_group' ] );
+		add_action( 'wp_ajax_acf/field_group/render_field_settings', [ $this, 'init_field_group' ], 1 );
 
 		add_filter('acf/load_field_group', [ $this, 'load_field_group' ] );
-
 	}
 
 	/**
@@ -112,8 +112,9 @@ class Admin extends Core\Singleton {
 
 	/**
 	 *	@action acf/field_group/admin_head
+	 *	@action wp_ajax_acf/field_group/render_field_settings
 	 */
-	public function field_group_admin_head() {
+	public function init_field_group() {
 		if ( version_compare( acf()->version, '6.0.0', '>=' ) ) {
 			FieldGroup::instance();
 		} else {
