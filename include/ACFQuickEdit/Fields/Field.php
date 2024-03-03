@@ -157,7 +157,7 @@ abstract class Field {
 
 		$this->core = Core\Core::instance();
 
-		$this->acf_field = $acf_field;
+		$this->acf_field = wp_parse_args( $acf_field, [ 'wrapper' => [ ] ] );
 
 		$parent_key	= '';
 
@@ -289,13 +289,20 @@ abstract class Field {
 		if ( ! apply_filters( 'acf_quick_edit_render_' . $this->acf_field['type'], true, $this->acf_field, $post_type ) ) {
 			return;
 		}
+		$field_wrapper = wp_parse_args( $this->acf_field['wrapper'], [ 'id' => '' ] );
 		$wrapper_attr = [
 			'class'				=> 'acf-field',
 			'data-key' 			=> $this->acf_field['key'],
 			'data-field-type'	=> $this->acf_field['type'],
 			'data-allow-null'	=> isset( $this->acf_field['allow_null'] ) ? $this->acf_field['allow_null'] : 0,
 		];
+
+		if ( $field_wrapper['id'] ) {
+			$wrapper_attr['data-id'] = $field_wrapper['id'];
+		}
+
 		$wrapper_attr = $this->get_wrapper_attributes( $wrapper_attr, $mode === 'quick' );
+
 		if ( isset( $this->acf_field['field_type'] ) ) {
 			$wrapper_attr['data-field-sub-type'] = $this->acf_field['field_type'];
 		}
