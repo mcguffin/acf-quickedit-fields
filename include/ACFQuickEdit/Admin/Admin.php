@@ -129,7 +129,7 @@ class Admin extends Core\Singleton {
 	 */
 	public function setup() {
 
-		// early return if conditions not met
+		// early return if no ACF
 		if ( ! function_exists('acf') || ! class_exists('acf') || version_compare( acf()->version, '5.7', '<' ) ) {
 			if ( current_user_can( 'activate_plugins' ) ) {
 				add_action( 'admin_notices', [ $this, 'print_no_acf_notice' ] );
@@ -137,11 +137,13 @@ class Admin extends Core\Singleton {
 			return;
 		}
 
+		// Features
 		$this->columns			= Columns::instance();
 		$this->quickedit		= Quickedit::instance();
 		$this->bulkedit			= Bulkedit::instance();
 		$this->filters			= Filters::instance();
 		$this->backendsearch	= BackendSearch::instance();
+
 		$this->ajax_handler 	= new Ajax\AjaxHandler( 'get_acf_post_meta', [
 			'public'			=> false,
 			'use_nonce'			=> true,
@@ -154,6 +156,14 @@ class Admin extends Core\Singleton {
 		add_action( 'load-users.php', [ $this, 'enqueue_columns_assets' ] );
 		add_action( 'acf/field_group/admin_enqueue_scripts', [ $this, 'enqueue_fieldgroup_assets' ] );
 
+	}
+
+	public function is_field_group_saving() {
+		return isset( $_SERVER ) && isset( $_SERVER['REQUEST_METHOD'] )
+			&& isset( $_POST['action'] ) && isset( $_POST['_acf_screen'] )
+			&& 'POST' === $_SERVER['REQUEST_METHOD']
+			&& 'editpost' === wp_unslash( $_POST['action'] )
+			&& 'field_group' === wp_unslash( $_POST['_acf_screen'] );
 	}
 
 	/**

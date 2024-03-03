@@ -31,7 +31,7 @@ abstract class EditFeature extends Feature {
 		$is_active = parent::init_fields();
 
 		if ( ! $is_active ) {
-			return;
+			return false;
 		}
 
 		if ( $object_kind == 'term' ) {
@@ -99,7 +99,7 @@ abstract class EditFeature extends Feature {
 		if ( count( $this->taxonomies ) ) {
 			add_filter( 'quick_edit_show_taxonomy', [ $this, 'quick_edit_show_taxonomy' ], 10, 3 );
 		}
-
+		return true;
 	}
 
 	/**

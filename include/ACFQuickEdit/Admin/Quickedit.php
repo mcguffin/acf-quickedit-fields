@@ -43,13 +43,13 @@ class Quickedit extends EditFeature {
 	 */
 	public function init_fields() {
 
-		parent::init_fields();
+		$is_active = parent::init_fields();
 
-		if ( $this->is_active() ) {
-
+		if ( $is_active ) {
 			add_action( 'quick_edit_custom_box',  [ $this, 'display_quick_edit' ], 10, 2 );
-
 		}
+
+		return $is_active;
 	}
 
 	/**

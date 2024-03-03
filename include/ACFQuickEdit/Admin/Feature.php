@@ -42,7 +42,7 @@ abstract class Feature extends Core\Singleton {
 
 		if ( wp_doing_ajax() ) {
 			add_action( 'admin_init', [ $this, 'init_fields' ] );
-		} else {
+		} else if ( ! $this->admin->is_field_group_saving() )  {
 			add_action( 'current_screen', [ $this, 'init_fields' ] );
 		}
 
@@ -197,7 +197,6 @@ abstract class Feature extends Core\Singleton {
 		}
 
 		$field_store = acf_get_store( 'fields' );
-
 
 		$fields_query = [];
 		$fields_query[ $this->get_fieldgroup_option() ] = true;

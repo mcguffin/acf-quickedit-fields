@@ -96,16 +96,15 @@ class Bulkedit extends EditFeature {
 	 */
 	public function init_fields() {
 
-		add_filter( 'acf/validate_value', [ $this, 'validate_value'], 10, 4 );
+		add_filter( 'acf/validate_value', [ $this, 'validate_value' ], 10, 4 );
 
-		parent::init_fields();
+		$is_active = parent::init_fields();
 
-		if ( $this->is_active() ) {
-
+		if ( $is_active ) {
 			add_action( 'bulk_edit_custom_box', [ $this , 'display_bulk_edit' ], 200, 2 );
-
 		}
 
+		return $is_active;
 	}
 
 	/**

@@ -37,9 +37,11 @@ class BackendSearch extends Feature {
 	 *	@inheritdoc
 	 */
 	public function init_fields() {
-		if ( parent::init_fields() ) {
+		$is_active = parent::init_fields();
+		if ( $is_active ) {
 			$this->init_meta_query();
 		}
+		return $is_active;
 	}
 
 

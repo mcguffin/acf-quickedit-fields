@@ -15,7 +15,6 @@ class FieldGroup extends Core\Singleton {
 	 */
 	protected function __construct() {
 
-
 		add_filter('acf/field_group/additional_group_settings_tabs', [ $this, 'field_group_tabs' ] );
 		add_action('acf/field_group/render_group_settings_tab/quickedit_fields', [ $this, 'field_group_settings' ] );
 
@@ -42,7 +41,6 @@ class FieldGroup extends Core\Singleton {
 
 		parent::__construct();
 	}
-
 
 	/**
 	 *	@action acf/field_group/additional_group_settings_tabs

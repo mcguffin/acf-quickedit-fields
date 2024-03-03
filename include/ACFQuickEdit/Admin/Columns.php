@@ -171,6 +171,8 @@ class Columns extends Feature {
 				add_filter( $display_hook, $filter['cb'] );
 			}
 		}
+
+		return true;
 	}
 
 	/**
