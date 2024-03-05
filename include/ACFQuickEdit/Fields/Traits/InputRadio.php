@@ -28,6 +28,7 @@ trait InputRadio {
 		);
 
 		if ( $acf_field['allow_null'] ) {
+			$id = $this->core->prefix( $acf_field['key'] . '---none' );
 			$output .= sprintf( '<li><label for="%s">', $id );
 			$output .= sprintf( '<input %s />%s', acf_esc_attr( [
 				'id'					=> $id,
