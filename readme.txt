@@ -105,6 +105,10 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.3.4 =
+ - Performance: Skip feature init on edit post
+ - Fix: PHP warning, None-labe no clickable in radio fields
+
 = 3.3.3 =
  - QuickEdit: add none-choice to nullable select fields
  - Render `data-id` atrribute on field

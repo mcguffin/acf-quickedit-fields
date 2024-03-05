@@ -155,15 +155,6 @@ class Admin extends Core\Singleton {
 		add_action( 'load-edit-tags.php', [ $this , 'enqueue_edit_assets' ] );
 		add_action( 'load-users.php', [ $this, 'enqueue_columns_assets' ] );
 		add_action( 'acf/field_group/admin_enqueue_scripts', [ $this, 'enqueue_fieldgroup_assets' ] );
-
-	}
-
-	public function is_field_group_saving() {
-		return isset( $_SERVER ) && isset( $_SERVER['REQUEST_METHOD'] )
-			&& isset( $_POST['action'] ) && isset( $_POST['_acf_screen'] )
-			&& 'POST' === $_SERVER['REQUEST_METHOD']
-			&& 'editpost' === wp_unslash( $_POST['action'] )
-			&& 'field_group' === wp_unslash( $_POST['_acf_screen'] );
 	}
 
 	/**

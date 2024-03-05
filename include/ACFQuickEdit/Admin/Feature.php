@@ -40,10 +40,18 @@ abstract class Feature extends Core\Singleton {
 
 		$this->admin = Admin::instance();
 
+
 		if ( wp_doing_ajax() ) {
-			add_action( 'admin_init', [ $this, 'init_fields' ] );
-		} else if ( ! $this->admin->is_field_group_saving() )  {
-			add_action( 'current_screen', [ $this, 'init_fields' ] );
+			$actions = array_merge(
+				apply_filters( 'acf_quick_edit_post_ajax_actions', [ 'inline-save' ] ),
+				apply_filters( 'acf_quick_edit_term_ajax_actions', [ 'inline-save-tax' ] ),
+				[ 'get_acf_post_meta' ]
+			);
+			if ( isset( $_REQUEST['action'] ) && in_array( $_REQUEST['action'], $actions ) ) {
+				add_action( 'admin_init', [ $this, 'init_fields' ] );
+			}
+		} else {
+			add_action( 'current_screen', [ $this, 'current_screen' ] );
 		}
 
 		add_filter( 'acf/load_field', [ $this, 'load_field' ] );
@@ -51,6 +59,18 @@ abstract class Feature extends Core\Singleton {
 		parent::__construct();
 	}
 
+	/**
+	 *	@filter current_screen
+	 */
+	public function current_screen( $current_screen ) {
+		global $pagenow;
+		if (
+			in_array( $pagenow, [ 'edit.php', 'edit-tags.php', 'users.php', 'upload.php' ] )
+			&& 'acf-field-group' !== $current_screen->post_type
+	 	) {
+			$this->init_fields();
+		}
+	}
 
 	/**
 	 *	@filter acf/load_field
