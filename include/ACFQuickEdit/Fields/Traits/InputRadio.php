@@ -45,7 +45,7 @@ trait InputRadio {
 
 		foreach( $acf_field['choices'] as $name => $value) {
 
-			$id = $this->core->prefix( $acf_field['key'] . '-' . $name );
+			$id = $this->core->prefix( $acf_field['key'] . '-' . sanitize_key( $name ) );
 
 			$output .= sprintf( '<li><label for="%s">', $id );
 			$output .= sprintf( '<input %s />%s', acf_esc_attr( [
