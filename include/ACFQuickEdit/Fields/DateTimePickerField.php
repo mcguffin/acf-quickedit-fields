@@ -12,9 +12,9 @@ class DateTimePickerField extends Field {
 	 */
 	protected function _render_column( $object_id ) {
 
-		$value = $this->get_value( $object_id, false );
+		$value = (string) $this->get_value( $object_id, false );
 
-		if ( is_null( $value ) ) {
+		if ( '' === $value ) {
 			return $this->__no_value();
 		}
 
