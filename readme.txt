@@ -107,7 +107,8 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 = 3.3.4 =
  - Performance: Skip feature init on edit post
- - Fix: PHP warning, None-labe no clickable in radio fields
+ - Fix: PHP warning, None label not clickable in radio fields
+ - Fix: show no value in datetime fields
 
 = 3.3.3 =
  - QuickEdit: add none-choice to nullable select fields
