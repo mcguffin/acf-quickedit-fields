@@ -188,11 +188,15 @@ class Admin extends Core\Singleton {
 					}
 
 					if ( $field_object = Fields\Field::getFieldObject( $field ) ) {
-						$value = $field_object->get_value( $object_id, false );
+						$value = $field_object->sanitize_value(
+							$field_object->get_value( $object_id, false ),
+							'ajax'
+						);
 						if ( ! isset( $data[ $key ] ) ) {
 							// first iteration - always set value
-							$val = $field_object->get_value( $object_id, false );
-							$data[ $key ] = $field_object->sanitize_value( $val, 'ajax' );
+							// $val = $field_object->get_value( $object_id, false );
+							$data[ $key ] = $value;
+
 						} else {
 							// multiple iterations - no value if values aren't equal
 							if ( $data[ $key ] != $value ) {

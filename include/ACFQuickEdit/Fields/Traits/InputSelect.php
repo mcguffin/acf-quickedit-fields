@@ -119,12 +119,19 @@ trait InputSelect {
 
 		// bail if post doesn't exist
 		if ( ! isset( $this->acf_field['choices'][ $value ] ) ) {
-			return '';
+			if ( $this->acf_field['allow_custom'] ) {
+				return [
+					'id'   => sanitize_text_field( $value ),
+					'text' => sanitize_text_field( $value ),
+				];
+			} else {
+				return '';
+			}
 		}
 
 		return [
-			'id'	=> $value,
-			'text'	=> $this->acf_field['choices'][ $value ],
+			'id'   => $value,
+			'text' => $this->acf_field['choices'][ $value ],
 		];
 	}
 }

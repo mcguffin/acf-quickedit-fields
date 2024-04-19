@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 6.3
+Tested up to: 6.5
 Requires PHP: 7.2
 Stable tag: 3.3.4
 License: GPLv2 or later
@@ -106,7 +106,8 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 == Changelog ==
 
 = 3.3.5 =
- - Fix: select fields with optgroups
+ - Fix: nested select fields now dispalyed with optgroups. (Notice: Won't work with UI)
+ - Fix: Custom Checkbox values not showing
 
 = 3.3.4 =
  - Performance: Skip feature init on edit post

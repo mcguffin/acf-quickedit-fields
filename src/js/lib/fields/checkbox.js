@@ -38,10 +38,11 @@ const field = {
 	},
 	getChoiceCB: function(value) {
 		var $choice,
-			selector = '[type="checkbox"][value="'+value+'"]',
+			selector = '[type="checkbox"][value="'+value.id+'"]',
 			$cb = this.$( selector )
+		// custom values
 		if ( ! $cb.length ) {
-			$choice = $( wp.template('acf-qef-custom-choice-value-' + this.$el.attr('data-key'))( { value: value } ) );
+			$choice = $( wp.template('acf-qef-custom-choice-value-' + this.$el.attr('data-key'))( { value: value.id } ) );
 			this.$('ul').append( $choice );
 			$cb = $choice.find( selector );
 		}
