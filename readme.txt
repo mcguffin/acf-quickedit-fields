@@ -105,6 +105,9 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.3.5 =
+ - Fix: select fields with optgroups
+
 = 3.3.4 =
  - Performance: Skip feature init on edit post
  - Fix: PHP warning, None label not clickable in radio fields

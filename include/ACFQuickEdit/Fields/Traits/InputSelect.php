@@ -50,15 +50,46 @@ trait InputSelect {
 				$output .= sprintf('<option value="">%s</option>', __( '— Select —', 'acf-quickedit-fields' ) ) . PHP_EOL;
 			}
 
-			foreach( $acf_field['choices'] as $name => $label) {
-				$output .= sprintf('<option value="%s">%s</option>', esc_attr( $name ), acf_esc_html( $label ) ) . PHP_EOL;
-			}
+			$output .= $this->render_select_options( $acf_field['choices'], null, (boolean) $acf_field['multiple'] );
+
 		}
 
 		$output .= '</select>' . PHP_EOL;
 
 		return $output;
 	}
+
+	/**
+	 *	@param array $choices
+	 *	@param string $out
+	 *	@param string $selected
+	 *	@param boolean $is_multiple
+	 */
+	protected function render_select_options( $choices, $selected, $is_multiple = false ) {
+		$out = '';
+		foreach ( $choices as $value => $label ) {
+			if ( is_array( $label ) ) {
+				$out .= sprintf( '<optgroup label="%s">', esc_attr( $value ) ) . PHP_EOL;
+				$out .= $this->render_select_options( $label, $selected, $is_multiple ) . PHP_EOL;
+				$out .= '</optgroup>' . PHP_EOL ;
+			} else {
+				$value = $is_multiple
+					? serialize( trim( "{$value}" ) ) // prepare value for LIKE comparision in serialize array
+					: "{$value}";
+
+				$out .= sprintf(
+					'<option value="%s" %s>%s</option>',
+					esc_attr( $value ),
+					$selected === $value
+						? 'selected'
+						: '',
+					esc_html( $label )
+				) . PHP_EOL;
+			}
+		}
+		return $out;
+	}
+
 
 	/**
 	 *	@inheritdoc

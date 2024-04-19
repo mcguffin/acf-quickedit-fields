@@ -6,6 +6,8 @@ use ACFQuickEdit\Admin;
 
 trait Filter {
 
+	use InputSelect;
+
 	/**
 	 *	@param int $index
 	 *	@param string $selected
@@ -56,21 +58,8 @@ trait Filter {
 			$this->__no_value()
 		) . PHP_EOL;
 
-		foreach ( $choices as $value => $label ) {
+		$out .= $this->render_select_options( $choices, $selected, $is_multiple );
 
-			$value = $is_multiple
-				? serialize( trim( "{$value}" ) ) // prepare value for LIKE comparision in serialize array
-				: "{$value}";
-
-			$out .= sprintf(
-				'<option value="%s" %s>%s</option>',
-				esc_attr( $value ),
-				$selected === $value
-					? 'selected'
-					: '',
-				esc_html( $label )
-			) . PHP_EOL;
-		}
 		$out .= '</select>' . PHP_EOL;
 
 		return $out;
@@ -117,17 +106,8 @@ trait Filter {
 			$this->__no_value()
 		) . PHP_EOL;
 
-		foreach ( $choices as $value => $label ) {
+		$out .= $this->render_select_options( $choices, $selected );
 
-			$out .= sprintf(
-				'<option value="%s" %s>%s</option>',
-				esc_attr( $value ),
-				$selected === $value
-					? 'selected'
-					: '',
-				esc_html( $label )
-			) . PHP_EOL;
-		}
 		$out .= '</select>' . PHP_EOL;
 
 		return $out;
