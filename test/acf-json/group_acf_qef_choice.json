@@ -110,7 +110,20 @@
                 "one": "One",
                 "two": "Two",
                 "three": "Three",
-                "four": "Four"
+                "four": "Four",
+				"First Sub": {
+					"sub1-one": "First Sub One",
+	                "sub1-two": "First Sub Two",
+	                "sub1-three": "First Sub Three",
+	                "sub1-four": "First Sub Four"
+				},
+				"Second Sub": {
+					"sub2-one": "Second Sub One",
+					"sub2-two": "Second Sub Two",
+					"sub2-three": "Second Sub Three",
+					"sub2-four": "Second Sub Four"
+				},
+				"five": "Five"
             },
             "default_value": false,
             "return_format": "value",
@@ -148,7 +161,20 @@
 				"five": "Five",
                 "six": "Six",
                 "seven": "Seven",
-				"eight": "Eight"
+				"eight": "Eight",
+				"First Sub": {
+					"sub1-one": "First Sub One",
+	                "sub1-two": "First Sub Two",
+	                "sub1-three": "First Sub Three",
+	                "sub1-four": "First Sub Four"
+				},
+				"Second Sub": {
+					"sub2-one": "Second Sub One",
+					"sub2-two": "Second Sub Two",
+					"sub2-three": "Second Sub Three",
+					"sub2-four": "Second Sub Four"
+				},
+				"nine": "Nine"
             },
             "default_value": false,
             "return_format": "value",
@@ -160,7 +186,7 @@
             "show_column_weight": 1110,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
-            "show_column_filter": 0,
+            "show_column_filter": 1,
             "ajax": 1,
             "placeholder": ""
         },
@@ -238,7 +264,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+    "active": 1,
     "description": "",
     "show_in_rest": 1,
     "modified": 1666994207
