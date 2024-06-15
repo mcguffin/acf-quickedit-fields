@@ -61,7 +61,7 @@ if ( is_admin() || wp_doing_ajax() ) {
 		 'pll_update_term_rows',
 	];
 	// performance
-	if ( ! wp_doing_ajax() || in_array( wp_unslash($_REQUEST['action']), $acf_qef_ajax_actions ) ) {
+	if ( ! wp_doing_ajax() || ( isset($_REQUEST['action']) && in_array( wp_unslash($_REQUEST['action']), $acf_qef_ajax_actions ) ) ) {
 		Admin\Admin::instance();
 	}
 }
