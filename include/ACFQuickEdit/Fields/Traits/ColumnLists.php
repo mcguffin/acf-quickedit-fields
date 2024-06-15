@@ -16,6 +16,8 @@ trait ColumnLists {
 		$value = $this->get_value( $object_id, false );
 		if ( is_object( $value ) && isset( $value->id ) ) {
 			$value = $value->id;
+		} else if  ( is_array( $value ) && isset( $value['id'] ) ) {
+			$value = $value['id'];
 		}
 		$value = (array) $value;
 		$value = array_filter( $value );
