@@ -264,7 +264,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": 0,
     "description": "",
     "show_in_rest": 1,
     "modified": 1666994207
