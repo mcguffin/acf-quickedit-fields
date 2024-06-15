@@ -105,6 +105,10 @@ Version 3.2.4 contains a security fix. Registered users who are able to edit pos
 
 == Changelog ==
 
+= 3.3.6 =
+ - Fix: PHP warning
+ - Fix: Post object column shows garbage
+
 = 3.3.5 =
  - Fix: nested select fields now dispalyed with optgroups. (Notice: Won't work with UI)
  - Fix: Custom Checkbox values not showing
