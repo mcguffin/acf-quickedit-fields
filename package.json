@@ -43,7 +43,7 @@
     "browserify": "^16.3.0",
     "browserify-shim": "^3.8.14",
     "event-stream": "^4.0.1",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^3.0.0",
