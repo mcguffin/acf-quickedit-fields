@@ -1,0 +1,64 @@
+name: Bug Report
+description: Open a bug report
+title: "[Bug] "
+labels: ["Bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Please tell us what happens instead of the expected behavior.
+      placeholder: Tell us what you see
+    validations:
+      required: true
+  - type: textarea
+    id: what-should-actually-happen
+    attributes:
+      label: What should happen?
+      description: Please tell us what should happen. How has this issue affected you? What are you trying to accomplish?
+      placeholder: Tell us what you expect to see
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: How can this be reproduced?
+      description: Please describe in detail what to do to reproduce the issue.
+      placeholder: Steps to reproduce, e.g. "Open QuickEdit, change a field, "
+    validations:
+      required: true
+  - type: textarea
+    id: fieldgroup
+    attributes:
+      label: JSON Export of your Fieldgroup(s)
+      description: Please paste the json export of the field group causing this issue.
+      render: json
+  - type: textarea
+    id: context
+    attributes:
+      label: Additinal context
+      description: Please provide additional context screenshots, the out put of your JS Conasole or error messages from the server.
+      render: markdown
+    validations:
+      required: false
+  - type: input
+    id: version
+    attributes:
+      label: WordPress version
+      description: What version of WordPress are you running?
+    validations:
+      required: true
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version
+      description: What version of PHP are you running? (You can find this under Tools > Seite health)
+    validations:
+      required: true
+  - type: input
+    id: server-os
+    attributes:
+      label: Server operating system
+      description: What server operating system are you using?
+    validations:
+      required: false
