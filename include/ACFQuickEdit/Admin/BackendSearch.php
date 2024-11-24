@@ -58,8 +58,8 @@ class BackendSearch extends Feature {
 
 		add_filter( 'posts_search', function( $search ) use ( $sql ) {
 			$meta_where = preg_replace( '/(^ AND \(|\)$)/', '', $sql['where']);
-			$search = preg_replace( '/\)\)\s?$/', '', $search );
-			$search = "$search OR $meta_where))";
+			$search     = preg_replace( '/\)\s?$/', '', $search );
+			$search     = "$search OR $meta_where)";
 
 			return $search;
 		});
