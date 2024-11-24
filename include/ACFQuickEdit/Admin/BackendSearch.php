@@ -52,20 +52,58 @@ class BackendSearch extends Feature {
 		if ( ! $query->get('s') ) {
 			return;
 		}
+
 		global $wpdb;
 
-		$sql = $this->get_search_query($query->get('s'))->get_sql( 'post', $wpdb->posts, 'ID', $query );
+		/**
+		 *	@return string `AND ( ( ( post_title LIKE ... ) OR ( post_content LIKE ... ) ) )`
+		 */
+		add_filter( 'posts_search', function( $search ) use ( $query, $wpdb ) {
 
-		add_filter( 'posts_search', function( $search ) use ( $sql ) {
-			$meta_where = preg_replace( '/(^ AND \(|\)$)/', '', $sql['where']);
-			$search     = preg_replace( '/\)\s?$/', '', $search );
-			$search     = "$search OR $meta_where)";
+			$all_sql = [];
 
-			return $search;
+			foreach( array_values( $query->get('search_terms') ) as $i => $term ) {
+				$terms_sql = [];
+				$terms_join = '';
+
+				// stolen from wp_query
+				$default_search_columns = array( 'post_title', 'post_excerpt', 'post_content' );
+				$search_columns         = ! empty( $q['search_columns'] ) ? $q['search_columns'] : $default_search_columns;
+				if ( ! is_array( $search_columns ) ) {
+					$search_columns = array( $search_columns );
+				}
+				$search_columns = (array) apply_filters( 'post_search_columns', $search_columns, $search, $query );
+				$search_columns = array_intersect( $search_columns, $default_search_columns );
+				if ( empty( $search_columns ) ) {
+					$search_columns = $default_search_columns;
+				}
+				// END stolen from wp_query
+
+				$terms_sql[] = $wpdb->prepare(
+					"(meta{$i}.meta_value LIKE %s)",
+					'%'. $wpdb->esc_like($term) . '%'
+				);
+
+				foreach ( $search_columns as $search_column ) {
+					$terms_sql[] = $wpdb->prepare(
+						"({$wpdb->posts}.$search_column LIKE %s)",
+						'%'. $wpdb->esc_like($term) . '%'
+					);
+				}
+				$all_sql[] = '( ' . "\n" . implode( "\n" . ' OR ', $terms_sql ) . "\n" . ' )';
+
+			}
+			return ' AND (' . "\n" . implode(' AND ', $all_sql ) . "\n" . ')';
 		});
-		add_filter( 'posts_join', function($join) use ( $sql ) {
-			if ( strpos( $join, $sql['join'] ) === false ) {
-				$join .=  $sql['join'];
+
+		add_filter( 'posts_join', function($join) use ( $query, $wpdb ) {
+			foreach( array_values( $query->get('search_terms') ) as $i => $term ) {
+				$join .=  sprintf(
+					" LEFT JOIN {$wpdb->postmeta} AS meta{$i} ON (meta{$i}.meta_key IN (%s) AND {$wpdb->posts}.ID = meta{$i}.post_id)",
+					implode( ',', array_map( function($field) use ( $term, $wpdb ){
+						return $wpdb->prepare('%s', $field->get_meta_key() );
+					}, $this->fields ))
+				);
 			}
 			return $join;
 		});
