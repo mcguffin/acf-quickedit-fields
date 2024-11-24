@@ -58,7 +58,13 @@ trait Filter {
 			$this->__no_value()
 		) . PHP_EOL;
 
-		$out .= $this->render_select_options( $choices, $selected, $is_multiple );
+		$value_cb = $is_multiple
+			? function( $val ) {
+				return serialize( trim( "{$val}" ) );
+			}
+			: null;
+
+		$out .= $this->render_select_options( $choices, $selected, $is_multiple, $value_cb );
 
 		$out .= '</select>' . PHP_EOL;
 

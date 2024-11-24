@@ -1,8 +1,8 @@
 import $ from 'jquery';
 
 module.exports = {
-	type:'radio',
-	initialize:function() {
+	type: 'radio',
+	initialize: function() {
 		let $other, is_other;
 
 		this.$input = this.$('[type="radio"]');
@@ -23,7 +23,7 @@ module.exports = {
 			})
 		}
 	},
-	setValue:function( value ) {
+	setValue: function( value ) {
 		this.dntChanged();
 		var $cb = this.$('[type="radio"][value="'+value+'"]' )
 		if ( ! $cb.length ) {

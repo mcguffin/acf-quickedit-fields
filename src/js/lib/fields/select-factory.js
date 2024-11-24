@@ -14,23 +14,43 @@ module.exports = ( type, fieldBaseClass ) => {
 
 			this.dntChanged( );
 
-			const self = this;
-			const acfFieldClass = fieldBaseClass.extend({
-				$input: function () {
-					return this.$('.acf-input-wrap select');
-				},
-			})
+			const self        = this,
+				ui            = !! this.$input.data('ui'),
+				multiple      = !! this.$input.data('multiple'),
+				acfFieldClass = fieldBaseClass.extend({
+					$input: function () {
+						return this.$('.acf-input-wrap select');
+					},
+				})
+
 			this.acfField = new acfFieldClass( this.$input.closest('.acf-field') )
-			const append = item => {
-				self.$input.append( new Option( item.text, item.id, true, true ) );
+
+			const getSelect2 = () => {
+				const select2Id = this.$input.attr('data-select2-id')
+				return $(`#${select2Id}`);
 			}
 
+			const appendOrSelect = item => {
+
+				let $input = ui
+					? getSelect2()
+					: self.$input
+
+				const $option = $input.find(`[value="${item.id}"]`)
+
+				if ( $option.length ) {
+					$option.prop( 'selected', true )
+				} else {
+					$input.append( new Option( item.text, item.id, true, true ) );
+				}
+				$input.trigger('change')
+			}
+
+
 			if( _.isArray( value ) ) {
-				value.map( append )
+				value.map( appendOrSelect )
 			} else if( _.isObject(value) ) {
-				append( value )
-			} else if ( (  _.isNumber(value) || _.isString(value) ) && this.$input.find(`[value="${value}"]`).length ) {
-				this.$input.val(value)
+				appendOrSelect( value )
 			}
 
 			return this;

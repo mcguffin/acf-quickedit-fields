@@ -68,7 +68,7 @@ trait InputSelect {
 	 *	@param string $selected
 	 *	@param boolean $is_multiple
 	 */
-	protected function render_select_options( $choices, $selected, $is_multiple = false ) {
+	protected function render_select_options( $choices, $selected, $is_multiple = false, $value_cb = null ) {
 		$out = '';
 		foreach ( $choices as $value => $label ) {
 			if ( is_array( $label ) ) {
@@ -76,10 +76,9 @@ trait InputSelect {
 				$out .= $this->render_select_options( $label, $selected, $is_multiple ) . PHP_EOL;
 				$out .= '</optgroup>' . PHP_EOL ;
 			} else {
-				$value = $is_multiple
-					? serialize( trim( "{$value}" ) ) // prepare value for LIKE comparision in serialize array
-					: "{$value}";
-
+				if ( is_callable( $value_cb ) ) {
+					$value = $value_cb( $value );
+				}
 				$out .= sprintf(
 					'<option value="%s" %s>%s</option>',
 					esc_attr( $value ),
@@ -103,11 +102,7 @@ trait InputSelect {
 			? [ $this, 'sanitize_ajax_result' ]
 			: 'sanitize_text_field';
 
-		if ( is_array( $value ) ) {
-			$value = array_map( $sanitation_cb, $value );
-			$value = array_filter( $value );
-			return array_values( $value );
-		}
+		$value = $sanitation_cb( $value );
 
 		return parent::sanitize_value( $value, $context );
 	}
@@ -119,22 +114,61 @@ trait InputSelect {
 	 *	@return string|array If value present and post exists Empty string
 	 */
 	protected function sanitize_ajax_result( $value ) {
+		// multiple x custom
+		$values = $this->search_value_in_choices( $value, $this->acf_field['choices'] );
 
-		// bail if post doesn't exist
-		if ( ! isset( $this->acf_field['choices'][ $value ] ) ) {
-			if ( $this->acf_field['allow_custom'] ) {
-				return [
-					'id'   => sanitize_text_field( $value ),
-					'text' => sanitize_text_field( $value ),
-				];
-			} else {
-				return '';
+		if ( $this->acf_field['multiple'] || 'checkbox' === $this->acf_field['type'] ) {
+			$value = (array) $value;
+			if (
+				$this->acf_field['allow_custom'] && (
+					! count( $values )
+					|| count( $value ) > count( $values )
+				)
+			) {
+				$values = array_merge(
+					$values,
+					array_map(
+						function( $val ) {
+							return [
+								'id'   => sanitize_text_field( $val ),
+								'text' => sanitize_text_field( $val ),
+							];
+						},
+						$value
+					)
+				);
 			}
+
+
+		} else {
+			// flatten single values
+			$values = current( $values );
 		}
 
-		return [
-			'id'   => $value,
-			'text' => $this->acf_field['choices'][ $value ],
-		];
+		return $values;
+	}
+
+	/**
+	 *	Search value-objects in multidimensional arrays
+	 *
+	 *	@param mixed $value
+	 *	@return string|array If value present and post exists Empty string
+	 */
+	private function search_value_in_choices( $value, $choices, $ret = [] ) {
+		foreach ( (array) $value as $val ) {
+			if ( isset( $choices[$val] ) ) {
+				$ret[] = [
+					'id'   => sanitize_text_field( $val ),
+					'text' => sanitize_text_field( $choices[ $val ] ),
+				];
+			}
+		}
+		// multidimensional arrays
+		foreach ( $choices as $choice ) {
+			if ( is_array( $choice ) ) {
+				$ret = $this->search_value_in_choices( $value, $choice, $ret );
+			}
+		}
+		return $ret;
 	}
 }
