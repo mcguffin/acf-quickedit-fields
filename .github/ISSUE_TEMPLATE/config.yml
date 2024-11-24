@@ -2,4 +2,4 @@ blank_issues_enabled: true
 contact_links:
   - name: Bug Report
     url: https://github.com/mcguffin/acf-quickedit-fields/issues/new
-    about: File a bug report.
+    about: Open a bug report.
