@@ -38,10 +38,10 @@ trait InputSelect {
 			$input_atts['multiple'] = 'multiple';
 			$input_atts['name']	.= '[]';
 		}
-		
+
 		if ( $acf_field['ui'] ) {
 			$input_atts['class'] .= ' ui';
-			$input_atts['data-nonce'] = wp_create_nonce( $acf_field['key'] );
+			$input_atts['data-nonce'] = wp_create_nonce( 'acf_field_' . $acf_field['type'] . '_' . $acf_field['key'] );
 			$input_atts['data-query-nonce'] = wp_create_nonce( $acf_field['key'] ); // backwards compatibility ACF < 6.3.1
 		}
 
