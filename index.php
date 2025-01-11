@@ -54,6 +54,7 @@ if ( is_admin() || wp_doing_ajax() ) {
 		 'inline-save',
 		 'inline-save-tax',
 		 'get_acf_post_meta',
+		 'acf/validate_save_post',
 		 // Field group admin
 		 'acf/field_group/render_field_settings',
 		 // Polylang
