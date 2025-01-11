@@ -106,6 +106,6 @@ class Quickedit extends EditFeature {
 	 *	@inheritdoc
 	 */
 	protected function is_saving() {
-		return isset( $_POST['action'] ) && in_array( $_POST['action'], ['inline-save','inline-save-tax'] );
+		return isset( $_POST['action'] ) && in_array( $_POST['action'], ['inline-save','inline-save-tax'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- no processing, just status check
 	}
 }

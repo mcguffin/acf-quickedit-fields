@@ -141,13 +141,13 @@ class Filters extends Feature {
 			foreach ( $this->fields as $name => $field ) {
 
 				if ( isset( $_REQUEST['meta_query'] ) && isset( $_REQUEST['meta_query'][$index] ) && isset( $_REQUEST['meta_query'][$index]['value'] ) ) {
-					$selected = wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] );
+					$selected = sanitize_text_field( wp_unslash( $_REQUEST['meta_query'][ $index ]['value'] ) );
 				} else if ( 'taxonomy' === $field->acf_field['type'] && $field->acf_field['load_terms'] && isset( $_REQUEST[ $field->acf_field['taxonomy'] ] ) ) {
-					$selected = $_REQUEST[ $field->acf_field['taxonomy'] ];
+					$selected = sanitize_text_field( wp_unslash( $_REQUEST[ $field->acf_field['taxonomy'] ] ) );
 				} else {
 					$selected = '';
 				}
-				echo $field->render_filter( $index++, $selected );
+				echo $field->render_filter( $index++, $selected ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 		</div>

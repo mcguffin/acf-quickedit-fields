@@ -115,8 +115,8 @@ class Bulkedit extends EditFeature {
 			&& is_array( $_REQUEST['acf'] )
 			&& isset( $_REQUEST['acf'][ $this->get_bulk_operation_key() ] )
 			&& is_array( $_REQUEST['acf'][ $this->get_bulk_operation_key() ] )
-			&& isset( $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key] )
-			&& ! empty( $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key] );
+			&& isset( $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key ] )
+			&& ! empty( $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key ] );
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Bulkedit extends EditFeature {
 	 */
 	public function get_bulk_operation( $field_key ) {
 		return $this->is_bulk_operation( $field_key )
-		 	? $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key]
+			? sanitize_text_field( wp_unslash( $_REQUEST['acf'][ $this->get_bulk_operation_key() ][ $field_key ] ) ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated -- already checked in is_bulk_operation()
 			: false;
 	}
 

@@ -313,10 +313,10 @@ abstract class Field {
 			<div <?php echo acf_esc_attr( $wrapper_attr ) ?>>
 				<div class="inline-edit-group">
 					<?php if ( $mode === 'bulk' ) {
-						echo $this->render_bulk_operations();
+						$this->render_bulk_operations();
 					} ?>
-					<label for="<?php echo esc_attr( $this->get_input_id( $mode === 'quick' ) ) ?>" class="title"><?php esc_html_e( $this->acf_field['label'] ); ?></label>
-					<span class="<?php echo implode(' ', $wrapper_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped  ?>">
+					<label for="<?php echo esc_attr( $this->get_input_id( $mode === 'quick' ) ) ?>" class="title"><?php echo esc_html( $this->acf_field['label'] ); ?></label>
+					<span class="<?php echo implode(' ', $wrapper_class ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- already sanitized ?>">
 						<?php
 
 							do_action( 'acf_quick_edit_field_' . $this->acf_field['type'], $this->acf_field, $post_type );

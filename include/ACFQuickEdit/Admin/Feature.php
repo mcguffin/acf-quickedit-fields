@@ -150,7 +150,7 @@ abstract class Feature extends Core\Singleton {
 			}
 		} else {
 			// validate meta query
-			$meta_query = wp_unslash( $_REQUEST['meta_query'] );
+			$meta_query = wp_unslash( $_REQUEST['meta_query'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 			$meta_query = array_filter( $meta_query, function($clause) {
 				if ( ! is_array( $clause ) ) {

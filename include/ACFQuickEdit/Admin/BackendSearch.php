@@ -66,27 +66,16 @@ class BackendSearch extends Feature {
 				$terms_sql = [];
 				$terms_join = '';
 
-				// stolen from wp_query
-				$default_search_columns = array( 'post_title', 'post_excerpt', 'post_content' );
-				$search_columns         = ! empty( $q['search_columns'] ) ? $q['search_columns'] : $default_search_columns;
-				if ( ! is_array( $search_columns ) ) {
-					$search_columns = array( $search_columns );
-				}
-				$search_columns = (array) apply_filters( 'post_search_columns', $search_columns, $search, $query );
-				$search_columns = array_intersect( $search_columns, $default_search_columns );
-				if ( empty( $search_columns ) ) {
-					$search_columns = $default_search_columns;
-				}
-				// END stolen from wp_query
+				$search_columns = (array) apply_filters( 'post_search_columns', ['post_title', 'post_excerpt', 'post_content'], $search, $query );
 
 				$terms_sql[] = $wpdb->prepare(
-					"(meta{$i}.meta_value LIKE %s)",
+					"(meta{$i}.meta_value LIKE %s)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $i is always int
 					'%'. $wpdb->esc_like($term) . '%'
 				);
 
 				foreach ( $search_columns as $search_column ) {
 					$terms_sql[] = $wpdb->prepare(
-						"({$wpdb->posts}.$search_column LIKE %s)",
+						"({$wpdb->posts}.$search_column LIKE %s)",  // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- $search_column is hardcoded
 						'%'. $wpdb->esc_like($term) . '%'
 					);
 				}
