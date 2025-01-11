@@ -3,7 +3,7 @@ Contributors: podpirate
 Donate link: https://www.msf.org/donate
 Tags: acf, quickedit, columns, bulk edit
 Requires at least: 4.7
-Tested up to: 6.5
+Tested up to: 6.7
 Requires PHP: 7.2
 Stable tag: 3.3.7
 License: GPLv2 or later
@@ -21,6 +21,11 @@ WordPress plugin which adds Quick Edit functionality to Advanced Custom Fields P
  - Supports Post, Term and User list tables
  - Scalar Columns (Like Text, Number, ...) can be made sortable
  - Edit ACF Field values in Quick edit and Bulk edit
+
+= Known Limitations =
+ - Bulk Edit seems to be incompatible with [Search & Filter Pro](https://searchandfilter.com/) @see [Issue #145](https://github.com/mcguffin/acf-quickedit-fields/issues/145)
+ - Might show a message if ACF Pro comes in bundle with another plugin. @see [Issue #146](https://github.com/mcguffin/acf-quickedit-fields/issues/145)
+ - The plugin is not tested against wooCommerce, so some issues may occur. @see [Issue #135](https://github.com/mcguffin/acf-quickedit-fields/issues/135), [Issue #173](https://github.com/mcguffin/acf-quickedit-fields/issues/173). I will happily accept pull request, fixing such issues.
 
 = Usage =
 
@@ -104,6 +109,12 @@ Please post an issue in the [GitHub-Repository](https://github.com/mcguffin/acf-
 Version 3.2.4 contains a security fix. Registered users who are able to edit posts were able to see arbitrary ACF handled user metadata using an ajax-request. Upgrading is strongly encouraged!
 
 == Changelog ==
+
+= 3.3.8 =
+ - Fix: Messed up media library. Kudos to [tflight](https://github.com/tflight)
+ - Fix: Select values not loading after ACF Update
+ - Fix: Backend Search not working
+ - Fix: Some Bulk Operations not validating
 
 = 3.3.7 =
  - Fix: Ajax loading broken with select fields on ACF 6.3.2+
