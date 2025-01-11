@@ -3,7 +3,7 @@
     "title": "QuickEdit Fields Choice",
     "fields": [
         {
-            "key": "field_5002e5ec126c4",
+			"key": "field_choice_radio",
             "label": "Radio Button",
             "name": "radio_button",
             "aria-label": "",
@@ -36,7 +36,7 @@
             "show_column_filter": 1
         },
         {
-            "key": "field_5002e5f8126c5",
+			"key": "field_choice_buttongroup",
             "label": "Button Group",
             "name": "button_group",
             "aria-label": "",
@@ -67,7 +67,7 @@
             "show_column_filter": 1
         },
         {
-            "key": "field_5002e605126c6",
+			"key": "field_choice_truefalse",
             "label": "True \/ False",
             "name": "true_false",
             "aria-label": "",
@@ -93,9 +93,9 @@
             "show_column_filter": 1
         },
 		{
-            "key": "field_5002e5c2126c2",
-            "label": "Select",
-            "name": "select",
+			"key": "field_choice_select",
+			"label": "Select",
+			"name": "select",
             "aria-label": "",
             "type": "select",
             "instructions": "",
@@ -129,19 +129,152 @@
             "return_format": "value",
             "multiple": 0,
             "allow_null": 1,
-            "ui": 0,
+			"ui": 0,
             "show_column": 1,
             "show_column_sortable": 1,
             "show_column_weight": 1110,
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "show_column_filter": 1,
-            "ajax": 0,
+			"ajax": 0,
             "placeholder": ""
         },
 		{
-            "key": "field_635fb00e23388",
-            "label": "Select Multiple UI Ajax",
+			"key": "field_choice_select_ui",
+			"label": "Select UI",
+			"name": "select_ui",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+				"First Sub": {
+					"sub1-one": "First Sub One",
+	                "sub1-two": "First Sub Two",
+	                "sub1-three": "First Sub Three",
+	                "sub1-four": "First Sub Four"
+				},
+				"Second Sub": {
+					"sub2-one": "Second Sub One",
+					"sub2-two": "Second Sub Two",
+					"sub2-three": "Second Sub Three",
+					"sub2-four": "Second Sub Four"
+				},
+				"five": "Five"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+			"ui": 1,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 1,
+			"ajax": 0,
+            "placeholder": ""
+        },
+		{
+			"key": "field_choice_select_ui_ajax",
+			"label": "Select UI Ajax",
+			"name": "select_ui_ajax",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+				"five": "Five"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 1,
+			"ui": 1,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 1,
+			"ajax": 1,
+            "placeholder": ""
+        },
+		{
+			"key": "field_choice_select_multiple",
+            "label": "Select Multiple",
+            "name": "select_mul",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+				"five": "Five",
+                "six": "Six",
+                "seven": "Seven",
+				"eight": "Eight",
+				"First Sub": {
+					"sub1-one": "First Sub One",
+	                "sub1-two": "First Sub Two",
+	                "sub1-three": "First Sub Three",
+	                "sub1-four": "First Sub Four"
+				},
+				"Second Sub": {
+					"sub2-one": "Second Sub One",
+					"sub2-two": "Second Sub Two",
+					"sub2-three": "Second Sub Three",
+					"sub2-four": "Second Sub Four"
+				},
+				"nine": "Nine"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 1,
+            "allow_null": 0,
+			"ui": 0,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 1,
+			"ajax": 0,
+            "placeholder": ""
+        },
+		{
+			"key": "field_choice_select_multiple_ui",
+            "label": "Select Multiple UI",
             "name": "select_mul_ui",
             "aria-label": "",
             "type": "select",
@@ -174,6 +307,45 @@
 					"sub2-three": "Second Sub Three",
 					"sub2-four": "Second Sub Four"
 				},
+				"nine": "Nine"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 1,
+            "allow_null": 0,
+            "ui": 1,
+            "show_column": 1,
+            "show_column_sortable": 1,
+            "show_column_weight": 1110,
+            "allow_quickedit": 1,
+            "allow_bulkedit": 1,
+            "show_column_filter": 1,
+			"ajax": 0,
+            "placeholder": ""
+        },
+		{
+			"key": "field_choice_select_multiple_ui_ajax",
+            "label": "Select Multiple UI Ajax",
+			"name": "select_mul_ui_ajax",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "one": "One",
+                "two": "Two",
+                "three": "Three",
+                "four": "Four",
+				"five": "Five",
+                "six": "Six",
+                "seven": "Seven",
+				"eight": "Eight",
 				"nine": "Nine"
             },
             "default_value": false,
@@ -264,7 +436,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+	"active": 0,
     "description": "",
     "show_in_rest": 1,
     "modified": 1666994207

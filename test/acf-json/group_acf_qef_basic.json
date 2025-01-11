@@ -3,8 +3,8 @@
     "title": "QuickEdit Fields Basic",
     "fields": [
         {
-            "key": "field_5000e3f0aee8f",
-            "label": "Text",
+			"key": "field_basic_text",
+			"label": "Searchable Text",
             "name": "text",
             "aria-label": "",
             "type": "text",
@@ -29,7 +29,7 @@
             "allow_backendsearch": 1
         },
         {
-            "key": "field_5000e3f5aee90",
+			"key": "field_basic_textarea",
             "label": "Text Area",
             "name": "textarea",
             "aria-label": "",
@@ -54,7 +54,7 @@
             "allow_backendsearch": 1
         },
         {
-            "key": "field_5000e409aee91",
+			"key": "field_basic_number",
             "label": "Number",
             "name": "number",
             "aria-label": "",
@@ -81,7 +81,7 @@
             "allow_bulkedit": 1
         },
         {
-            "key": "field_5000e417aee92",
+			"key": "field_basic_range",
             "label": "Range",
             "name": "range",
             "aria-label": "",
@@ -207,7 +207,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 0,
+	"active": 1,
     "description": "",
     "show_in_rest": 0,
     "modified": 1667041142

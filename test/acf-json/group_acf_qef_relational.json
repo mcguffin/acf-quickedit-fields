@@ -3,7 +3,7 @@
     "title": "QuickEdit Fields Relational",
     "fields": [
         {
-            "key": "field_5007e53bd8e28",
+			"key": "field_rel_link",
             "label": "Link",
             "name": "link",
             "aria-label": "",
@@ -23,7 +23,7 @@
             "allow_bulkedit": 1
         },
         {
-            "key": "field_5007e57bd8e2d",
+			"key": "field_rel_user",
             "label": "User",
             "name": "user",
             "aria-label": "",
@@ -47,7 +47,7 @@
             "allow_bulkedit": 1
         },
         {
-            "key": "field_6125fd1f4252e",
+			"key": "field_rel_user_by_role",
             "label": "User by Role",
             "name": "user_by_role",
             "aria-label": "",
@@ -73,9 +73,34 @@
             "allow_bulkedit": 1
         },
 		{
-            "key": "field_5007e544d8e29",
+			"key": "field_rel_postobject",
             "label": "Post Object",
             "name": "post_object",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": "",
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "object",
+			"show_column": 1,
+            "show_column_weight": 1531,
+			"allow_quickedit": 1,
+            "allow_bulkedit": 1,
+			"ui": 0
+        },
+		{
+			"key": "field_rel_postobject_mul",
+			"label": "Post Object Multiple",
+			"name": "post_object_mul",
             "aria-label": "",
             "type": "post_object",
             "instructions": "",
@@ -97,33 +122,8 @@
             "allow_bulkedit": 1,
             "ui": 1
         },
-		{
-            "key": "field_5007f02ad8e29",
-            "label": "Post Object Single",
-            "name": "post_object_single",
-            "aria-label": "",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "multiple": 0,
-            "return_format": "object",
-            "show_column": 1,
-            "show_column_weight": 1531,
-			"allow_quickedit": 1,
-            "allow_bulkedit": 1,
-            "ui": 1
-        },
         {
-            "key": "field_5007e551d8e2a",
+			"key": "field_rel_pagelink",
             "label": "Page Link",
             "name": "page_link",
             "aria-label": "",
@@ -145,7 +145,7 @@
             "show_column_weight": 1540
         },
         {
-            "key": "field_5007e55fd8e2b",
+			"key": "field_rel_relationship",
             "label": "Relationship",
             "name": "relationship",
             "aria-label": "",
@@ -173,9 +173,9 @@
             "show_column_weight": 1550
         },
 		{
-            "key": "field_635fce53c718c",
+			"key": "field_rel_term_cb",
             "label": "Taxonomy Checkbox",
-            "name": "qef_taxonomy",
+            "name": "term_cb",
             "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
@@ -188,8 +188,8 @@
             },
             "taxonomy": "category",
             "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
+			"save_terms": 1,
+			"load_terms": 1,
             "return_format": "object",
             "field_type": "checkbox",
             "show_column": 1,
@@ -200,9 +200,9 @@
             "multiple": 0
         },
 		{
-            "key": "field_5bcf3f00efe23",
+			"key": "field_rel_term_radio",
             "label": "Taxonomy Radio",
-            "name": "qef_taxo_4",
+			"name": "term_radio",
             "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
@@ -227,9 +227,9 @@
             "multiple": 0
         },
         {
-            "key": "field_5007e56cd8e2c",
-            "label": "Taxonomy Multi 1",
-            "name": "qef_taxonomy",
+			"key": "field_rel_term_select",
+			"label": "Taxonomy Select",
+			"name": "term_select",
             "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
@@ -245,7 +245,7 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "object",
-            "field_type": "checkbox",
+			"field_type": "select",
             "show_column": 1,
             "show_column_weight": 1560,
             "allow_quickedit": 1,
@@ -254,9 +254,9 @@
             "multiple": 0
         },
         {
-            "key": "field_5007e56cd8e2d",
-            "label": "Taxonomy Multi 2",
-            "name": "qef_taxo_2",
+			"key": "field_rel_term_select_mul",
+			"label": "Taxonomy Select Multi",
+			"name": "term_select_mul",
             "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
@@ -279,60 +279,6 @@
             "allow_quickedit": 1,
             "allow_bulkedit": 1,
             "multiple": 1
-        },
-        {
-            "key": "field_5fdf3ea0efe23",
-            "label": "Taxonomy Single 1",
-            "name": "qef_taxo_3",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "acf-quef-test-2",
-            "field_type": "radio",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "id",
-            "show_column": 0,
-            "show_column_weight": 1573,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1,
-            "multiple": 0
-        },
-        {
-            "key": "field_5fdf3eb3efe24",
-            "label": "Taxonomy Single 2",
-            "name": "qef_taxo_4",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "acf-quef-test-2",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "id",
-            "show_column": 0,
-            "show_column_weight": 1575,
-            "allow_quickedit": 1,
-            "allow_bulkedit": 1,
-            "multiple": 0
         }
     ],
     "location": [
@@ -348,6 +294,13 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "post"
+            }
+        ],
+		[
+            {
+                "param": "post_type",
+                "operator": "==",
+				"value": "page"
             }
         ],
 		[
@@ -378,7 +331,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+	"active": 1,
     "description": "",
     "show_in_rest": 0,
     "modified": 1667041142

@@ -184,7 +184,7 @@ class PluginTest {
 		register_post_type('acf-quef-test',[
 			'label'			=> 'Quick Edit Tests',
 			'public'		=> true,
-			'supports'		=> ['title'],
+			'supports'		=> ['title','excerpt'],
 		]);
 		register_taxonomy('acf-quef-test','acf-quef-test',[
 			'label'		=> 'QE Test Terms',
