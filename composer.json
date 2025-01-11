@@ -16,9 +16,7 @@
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "*",
-		"wp-coding-standards/wpcs": "*",
-		"phpcompatibility/php-compatibility": "*",
-		"pheromone/phpcs-security-audit":"*"
+		"wp-coding-standards/wpcs": "*"
 	},
 	"scripts": {
 		"post-install-cmd": [

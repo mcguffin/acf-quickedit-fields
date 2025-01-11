@@ -11,7 +11,7 @@
     "i18n": "wp i18n make-pot . languages/acf-quickedit-fields.pot --domain=acf-quickedit-fields --exclude=tmp/*",
     "rollback": "git reset --hard HEAD~ && git push origin +master",
     "postinstall": "composer install",
-    "audit": "./vendor/squizlabs/php_codesniffer/bin/phpcs . --report=code --standard=./phpcs-security.ruleset.xml -n -s > ./phpcs-report.txt || exit 0",
+    "audit": "./vendor/squizlabs/php_codesniffer/bin/phpcs . --report=code --standard=./phpcs.ruleset.xml -n -s > ./phpcs-report.txt || exit 0",
     "ver": "echo \"<?php return $(jq .version < ./package.json);\" > include/version.php",
     "fieldkey": "php -r \"echo uniqid(\\\"field_\\\") . \\\"\n\\\";\""
   },
