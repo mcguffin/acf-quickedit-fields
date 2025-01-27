@@ -117,7 +117,7 @@ trait InputSelect {
 		// multiple x custom
 		$values = $this->search_value_in_choices( $value, $this->acf_field['choices'] );
 
-		if ( $this->acf_field['multiple'] || 'checkbox' === $this->acf_field['type'] ) {
+		if ( ( isset( $this->acf_field['multiple'] ) && $this->acf_field['multiple'] ) || 'checkbox' === $this->acf_field['type'] ) {
 			$value = (array) $value;
 			if (
 				$this->acf_field['allow_custom'] && (
